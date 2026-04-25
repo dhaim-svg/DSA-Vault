@@ -155,6 +155,48 @@
 | [[holterdipolter\|HOLTERDIPOLTER]] | — | C | Umwelt | 119 |
 | [[horriphobus-schreckgestalt\|HORRIPHOBUS SCHRECKGESTALT]] | — | C | Einfluss | 120 |
 
-### I–Z
+### I
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[ignifaxius-flammenstrahl\|IGNIFAXIUS FLAMMENSTRAHL]] | — | C | Schaden, Elementar (Feuer) | 121 |
+| [[ignisphaero-feuerball\|IGNISPHAERO FEUERBALL]] | — | D | Elementar (Feuer), Schaden, Telekinese | 123 |
+| [[ignorantia-ungesehn\|IGNORANTIA UNGESEHN]] | — | D | Einfluss, Illusion | 124 |
+| [[illusion-aufloesen\|ILLUSION AUFLÖSEN]] | — | B | Antimagie, Illusion | 125 |
+| [[immortalis-lebenszeit\|IMMORTALIS LEBENSZEIT]] | — | F | Form, Temporal | 126 |
+| [[imperavi-handlungszwang\|IMPERAVI HANDLUNGSZWANG]] | — | E | Herrschaft | 127 |
+| [[impersona-maskenbild\|IMPERSONA MASKENBILD]] | — | D | Illusion | 128 |
+| [[infinitum-immerdar\|INFINITUM IMMERDAR]] | — | F | Metamagie, Temporal | 129 |
+| [[invercano-spiegeltrick\|INVERCANO SPIEGELTRICK]] | — | F | Antimagie, Kraft, Metamagie | 130 |
+| [[invocatio-maior\|INVOCATIO MAIOR]] | — | E | Beschwörung, Dämonisch | 131 |
+| [[invocatio-minor\|INVOCATIO MINOR]] | — | D | Beschwörung, Dämonisch | 132 |
+| [[iribaars-hand\|IRIBAARS HAND]] | — | D | Einfluss, Schaden | 133 |
+
+### J
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[juckreiz-daemlicher\|JUCKREIZ, DÄMLICHER!]] | — | B | Einfluss | 134 |
+
+### K
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[karnifilo-raserei\|KARNIFILO RASEREI]] | — | C | Einfluss, Eigenschaften | 135 |
+| [[katzenaugen\|KATZENAUGEN]] | — | C | Eigenschaften | 136 |
+| [[klarum-purum\|KLARUM PURUM]] | — | D | Form, Heilung | 137 |
+| [[klickeradomms\|KLICKERADOMMS]] | — | A | Telekinese | 138 |
+| [[koboldgeschenk\|KOBOLDGESCHENK]] | — | C | Herrschaft | 139 |
+| [[koboldovision\|KOBOLDOVISION]] | — | D | Hellsicht, Limbus | 140 |
+| [[komm-kobold-komm\|KOMM KOBOLD KOMM]] | — | C | Herbeirufung | 141 |
+| [[koerperlose-reise\|KÖRPERLOSE REISE]] | — | E | Limbus, Verständigung | 142 |
+| [[krabbelnder-schrecken\|KRABBELNDER SCHRECKEN]] | — | C | Herbeirufung, Dämonisch (Mishkhara) | 143 |
+| [[kraft-des-erzes\|KRAFT DES ERZES]] | — | D | Elementar (Erz), Objekt | 144 |
+| [[kraehenruf\|KRÄHENRUF]] | — | C | Einfluss, Herbeirufung, Limbus | 145 |
+| [[kroetensprung\|KRÖTENSPRUNG]] | — | B | Eigenschaften | 147 |
+| [[kulminatio-kugelblitz\|KULMINATIO KUGELBLITZ]] | — | D | Schaden | 148 |
+| [[kusch\|KUSCH!]] | — | B | Einfluss | 149 |
+
+### L–Z
 
 *(wird in folgenden Sessions befüllt)*
