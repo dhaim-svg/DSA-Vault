@@ -69,6 +69,36 @@
 | [[cryptographo\|CRYPTOGRAPHO]] | Zauberschrift | C | Objekt, Verständigung | 61 |
 | [[custodosigil\|CUSTODOSIGIL]] | Diebesbann | C | Objekt, Metamagie, Elementar (Feuer) | 62 |
 
-### D–Z
+### D
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[daemonenbann\|DÄMONENBANN]] | — | C | Antimagie, Dämonisch | 63 |
+| [[delicioso\|DELICIOSO]] | Gaumenschmaus | D | Illusion | 64 |
+| [[desintegratus\|DESINTEGRATUS]] | Pulverstaub | D | Objekt, Schaden | 65 |
+| [[destructibo\|DESTRUCTIBO]] | Arcanitas | E | Antimagie, Metamagie, Kraft | 66 |
+| [[dichter-und-denker\|DICHTER UND DENKER]] | — | C | Herrschaft | 67 |
+| [[dschinnenruf\|DSCHINNENRUF]] | — | E | Elementar, Herbeirufung | 68 |
+| [[dunkelheit\|DUNKELHEIT]] | — | C | Umwelt | 69 |
+| [[duplicatus\|DUPLICATUS]] | Doppelbild | C | Illusion | 70 |
+
+### E
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[ecliptifactus\|ECLIPTIFACTUS]] | Schattenkraft | D | Dämonisch, Form | 71 |
+| [[eigenschaft-wiederherstellen\|EIGENSCHAFT WIEDERHERSTELLEN]] | — | C | Antimagie, Eigenschaften | 72 |
+| [[eigne-aengste-quaelen-dich\|EIGNE ÄNGSTE QUÄLEN DICH!]] | — | C | Einfluss, Eigenschaften | 73 |
+| [[einfluss-bannen\|EINFLUSS BANNEN]] | — | B | Antimagie, Einfluss | 74 |
+| [[eins-mit-der-natur\|EINS MIT DER NATUR]] | — | C | Eigenschaften, Elementar | 75 |
+| [[eisenrost-und-patina\|EISENROST UND PATINA]] | — | C | Objekt, Temporal | 76 |
+| [[eiseskaelte-kaempferherz\|EISESKÄLTE KÄMPFERHERZ]] | — | C | Eigenschaften | 77 |
+| [[elementarbann\|ELEMENTARBANN]] | — | C | Antimagie, Elementar | 78 |
+| [[elementarer-diener\|ELEMENTARER DIENER]] | — | D | Elementar, Herbeirufung | 79 |
+| [[elfenstimme\|ELFENSTIMME]] | Flötenton | D | Verständigung | 80 |
+| [[erinnerung-verlasse-dich\|ERINNERUNG VERLASSE DICH!]] | — | D | Herrschaft | 81 |
+| [[exposami\|EXPOSAMI]] | Lebenskraft | B | Hellsicht | 82 |
+
+### F–Z
 
 *(wird in folgenden Sessions befüllt)*
