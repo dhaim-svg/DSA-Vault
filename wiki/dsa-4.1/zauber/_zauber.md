@@ -34,6 +34,41 @@
 | [[auris-nasus-oculus\|AURIS NASUS OCULUS]] | — | D | Illusion | 35 |
 | [[axxeleratus\|AXXELERATUS]] | Blitzgeschwind | C | Eigenschaften | 36 |
 
-### B–Z
+### B
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[balsam-salabunde\|BALSAM SALABUNDE]] | — | C | Heilung, Form | 37 |
+| [[band-und-fessel\|BAND UND FESSEL]] | — | C | Einfluss | 38 |
+| [[bannbaladin\|BANNBALADIN]] | — | B | Einfluss | 39 |
+| [[baerenruhe\|BÄRENRUHE]] | Winterschlaf | D | Form | 40 |
+| [[beherrschung-brechen\|BEHERRSCHUNG BRECHEN]] | — | C | Antimagie, Herrschaft | 41 |
+| [[beschwoerung-vereiteln\|BESCHWÖRUNG VEREITELN]] | — | C | Antimagie, Beschwörung | 42 |
+| [[bewegung-stoeren\|BEWEGUNG STÖREN]] | — | C | Antimagie, Telekinese | 43 |
+| [[blendwerk\|BLENDWERK]] | — | C | Illusion | 44 |
+| [[blick-aufs-wesen\|BLICK AUFS WESEN]] | — | C | Hellsicht | 45 |
+| [[blick-durch-fremde-augen\|BLICK DURCH FREMDE AUGEN]] | — | E | Hellsicht, Verständigung | 46 |
+| [[blick-in-die-gedanken\|BLICK IN DIE GEDANKEN]] | — | D | Hellsicht | 47 |
+| [[blick-in-die-vergangenheit\|BLICK IN DIE VERGANGENHEIT]] | — | D | Hellsicht, Temporal | 48 |
+| [[blitz-dich-find\|BLITZ DICH FIND]] | — | B | Einfluss | 49 |
+| [[boeser-blick\|BÖSER BLICK]] | — | C | Einfluss | 50 |
+| [[brenne-toter-stoff\|BRENNE, TOTER STOFF!]] | — | C | Objekt, Elementar (Feuer) | 51 |
+
+### C
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[caldofrigo\|CALDOFRIGO]] | Heiss und Kalt | E | Objekt, Umwelt, Elementar (Feuer/Eis) | 52 |
+| [[chamaelioni\|CHAMAELIONI]] | Mimikry | C | Illusion | 54 |
+| [[chimaeroform\|CHIMAEROFORM]] | Hybridgestalt | F | Dämonisch (Asfaloth), Form | 55 |
+| [[chronoklassis\|CHRONOKLASSIS]] | Urfossil | F | Herbeirufung, Temporal | 56 |
+| [[chrononautos\|CHRONONAUTOS]] | Zeitenfahrt | F | Temporal | 57 |
+| [[claudibus\|CLAUDIBUS]] | Clavistibor | C | Objekt | 58 |
+| [[corpofesso\|CORPOFESSO]] | Gliederschmerz | C | Eigenschaften | 59 |
+| [[corpofrigo\|CORPOFRIGO]] | Kälteschock | C | Eigenschaften, Elementar (Eis) | 60 |
+| [[cryptographo\|CRYPTOGRAPHO]] | Zauberschrift | C | Objekt, Verständigung | 61 |
+| [[custodosigil\|CUSTODOSIGIL]] | Diebesbann | C | Objekt, Metamagie, Elementar (Feuer) | 62 |
+
+### D–Z
 
 *(wird in folgenden Sessions befüllt)*
