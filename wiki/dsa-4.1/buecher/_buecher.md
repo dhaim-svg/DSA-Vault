@@ -12,5 +12,5 @@
 | Wege der Götter *(ausstehend)* | WdG | — | Geweihte & Götter |
 | Wege der Alchimie *(ausstehend)* | WdA | — | Alchimie |
 | Wege des Entdeckers *(ausstehend)* | WdE | — | Geographie & Aventurien |
-| Liber Cantiones *(ausstehend)* | LC | — | Zauberkompendium |
+| [[liber-cantiones\|Liber Cantiones]] | LC | 304 | Zauberkompendium (~200 Zauber A–Z) |
 | Liber Liturgium *(ausstehend)* | LL | — | Liturgienkompendium |

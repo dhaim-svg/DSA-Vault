@@ -16,7 +16,7 @@ Reihenfolge: Pilot → Kampf → Magie → Götter → Alchimie → Aventurien.
 | 1 | Wege der Helden | WdH | `DSA 4.1 - Wege der Helden.pdf` | ✅ fertig |
 | 2 | Wege des Schwertes | WdS | `DSA 4.1 - Wege des Schwertes.pdf` | ✅ fertig |
 | 3 | Wege der Zauberei | WdZ | `DSA 4.1 - Wege der Zauberei.pdf` | 🟢 in Arbeit |
-| 3a | Liber Cantiones | LC | `C01 - Liber Cantiones.pdf` | ⚪ offen (parallel zu WdZ) |
+| 3a | Liber Cantiones | LC | `C01 - Liber Cantiones.pdf` | 🟢 in Arbeit |
 | 4 | Wege der Götter | WdG | `DSA 4.1 - Wege der Goetter.pdf` | ⚪ offen |
 | 4a | Liber Liturgium | LL | `C02 - Liber Liturgium.pdf` | ⚪ offen (parallel zu WdG) |
 | 5 | Wege der Alchimie | WdA | `DSA 4.1 - Wege der Alchimie.pdf` | ⚪ offen |
@@ -26,7 +26,28 @@ Legende: 🟢 in Arbeit · 🟡 pausiert · ✅ fertig · ⚪ offen · ⏭️ ü
 
 ---
 
-## Aktives Buch: Wege des Schwertes
+## Aktives Buch: Liber Cantiones
+
+PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\C01 - Liber Cantiones.pdf`  
+Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
+
+### Kapitel-Fortschritt (LC)
+
+| Session | Inhalt | Artikel | Status |
+|---------|--------|---------|--------|
+| LC-01 | Buchprofil + A-Zauber (S. 11–36) | `buecher/liber-cantiones.md` + 23 Zauber-Artikel | ✅ fertig |
+| LC-02 | B + C-Zauber (ca. S. 37–51) | — | ⚪ offen |
+| LC-03 | D-Zauber | — | ⚪ offen |
+| LC-04 | E–G-Zauber | — | ⚪ offen |
+| LC-05 | H–K-Zauber | — | ⚪ offen |
+| LC-06 | L–M-Zauber | — | ⚪ offen |
+| LC-07 | N–R-Zauber | — | ⚪ offen |
+| LC-08 | S-Zauber | — | ⚪ offen |
+| LC-09 | T–Z-Zauber | — | ⚪ offen |
+
+---
+
+## Aktives Buch (vorher): Wege des Schwertes
 
 PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\DSA 4.1 - Wege des Schwertes.pdf`  
 Bulk-Text: `raw/pdf-extracted/wege-des-schwertes/full.txt`  
@@ -120,6 +141,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-25:** Session LC-01 abgeschlossen — Liber Cantiones gestartet. Buchprofil `buecher/liber-cantiones.md` erstellt. 23 A-Zauber-Artikel angelegt (S. 11–36): abvenenum, accuratum, adamantium, adlerauge, adlerschwinge, aeolitus, aerofugo, aerogelo, alpgestalt, analys, aengste-lindern, animatio, applicatus, arachnea, arcanovi, armatrutz, atemnot, attributo, aufgeblasen, auge-des-limbus, aureolus, auris-nasus-oculus, axxeleratus. `_zauber.md` A-Sektion befüllt. Nächste Session: LC-02 (B + C-Zauber).
 - **2026-04-25:** Session WdZ-10 abgeschlossen — 2 neue Artikel aus WdZ Kapitel 15 (S. 407–413): `magie/magische-kreaturen.md` (13 Wesen: Basilisk Versteinernder-Blick-Regelung, Borbaradmoskito ERINNERUNG-Gift, Gargyle Immunitäten, Gestaltwandler Daimonide, Ghule Lähmungsgift/Mistel-Gegenmaßnahme, Hippogriff Zeitenflug, Ikanariaschmetterlinge Hochelfen-Zucht, Iribaarslilie Amazeroth-Unheiligtum, Klammermoloch Schadenweiterleitung, Nachtwinde Magiegespür, Werwesen vollst. Immunität/Silber/Mondsilber-Regeln/Myrkkeijanuan, Zitterrochen FULMINICTUS-artig, Wiedergänger AuP+1000/Verfall-Tabelle/Ende als Gefesselte Seele), `magie/legenden-der-magie.md` (~30 Mysterien: Rohals Enigma 7-Scheiben-Schloss, Erstes Schwarzes Auge Primoptolith, Naranda Ulthagi, Yrando-Emblem Magus-Maximus, Aldinor-Diktat, Verhüllte Meister, Orden d. Sechs Flügel Menacors Limbus-Burg, Maday'kha Chosen-One-Plot, Dunkle Pforten Sphärentunnel-Netz, Zitadelle der Kraft, Stein der Weisen, Adamantenes Herz, Große Werke der Alchimie Roter Leu/Elixier des Lebens/Alkahest, Carhelan-Trank, Sumus Kate, Sultan der Geister, Hüter der Erde, Brandans Stein). `_magie.md` aktualisiert. WdZ Kapitel 15 ✅. WdZ abgeschlossen (nur Index übrig → übersprungen).
 - **2026-04-25:** Session WdZ-09 abgeschlossen — 3 neue Artikel aus WdZ Kapitel 14 (S. 369–386): `magie/satinav-zeitmagie.md` (Zeitempfinden der Rassen, Satinav-Mythologie Schiff der Zeit/Ymra/Fatas, Zeitgesetze keine Paradoxe, CHRONONAUTOS-Zeitreise-Regeln, 7 Formeln der Zeit, historische Zeitfrevel, vollst. Zeiteinheiten-Tabelle), `magie/elemente-hexalogien.md` (6 Elemente Essenz/Zuordnung, Zitadellen, Affinitäten/Gegensatzpaare, Paramanthus-Analogien-Tabelle, 7-stufige Reinheitsskala, Traditionen-Übersicht, Hexalogien-Mechanik + vollst. Hexalogien-Katalog ~12 Einträge, element. Sekundärschäden-Tabelle, Mindergeister), `magie/edelsteine-wahre-namen.md` (Kristallomantie-Geschichte, spieltechn. Nutzung, Edelstein-Katalog 21 Steine mit Gott/Wirkung/Heilkunde, Wahre Namen: MR 0/¾ AsP, Wesen-Übersicht: Kobolde/Einhörner/Gargyle/Drachen). `_magie.md` aktualisiert. WdZ Kapitel 14 ✅.
 - **2026-04-25:** Session WdZ-08 abgeschlossen — 1 neuer Artikel aus WdZ Kapitel 13 (S. 354–368): `magie/welt-sphaeren.md` (Weltbilder 10+ Völker, Sieben-Sphären-Modell vollständig mit allen 7 Sphären, Limbus-Spielregeln: Schaden/AsP/Kampf/Magie-Tabellen, 6-Ebenen-Struktur, Globulen + 7 Beispiele inkl. Tharun/Lichtwelt/Feenwelten, Parallelwelten 3 Beispiele, Kraftlinien: LS/KS-System SF Kraftlinienmagie I/II, 5 bedeutende Linien, Kritische Essenz-Tabelle 26-Stufen). `_magie.md` aktualisiert. WdZ Kapitel 13 ✅.
