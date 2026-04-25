@@ -288,6 +288,41 @@
 | [[reversalis-revidum\|REVERSALIS REVIDUM]] | — | E | Metamagie | 219 |
 | [[ruhe-koerper-ruhe-geist\|RUHE KÖRPER, RUHE GEIST]] | — | B | Heilung | 220 |
 
-### S–Z
+### S
 
-*(wird in folgenden Sessions befüllt)*
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[salander-mutander\|SALANDER MUTANDER]] | — | E | Form | 221 |
+| [[sanftmut\|SANFTMUT]] | — | B | Einfluss | 222 |
+| [[sapefacta-zauberschwamm\|SAPEFACTA ZAUBERSCHWAMM]] | — | C | Telekinese, Elementar (Luft), Elementar (Wasser) | 223 |
+| [[satuarias-herrlichkeit\|SATUARIAS HERRLICHKEIT]] | — | B | Eigenschaften, Illusion | 224 |
+| [[schabernack\|SCHABERNACK]] | — | B | Einfluss | 225 |
+| [[schadenszauber-bannen\|SCHADENSZAUBER BANNEN]] | — | C | Antimagie, Schaden | 226 |
+| [[schelmenkleister\|SCHELMENKLEISTER]] | — | C | Umwelt | 227 |
+| [[schelmenlaune\|SCHELMENLAUNE]] | — | D | Einfluss | 228 |
+| [[schelmenmaske\|SCHELMENMASKE]] | — | D | Illusion | 229 |
+| [[schelmenrausch\|SCHELMENRAUSCH]] | — | C | Einfluss | 230 |
+| [[schleier-der-unwissenheit\|SCHLEIER DER UNWISSENHEIT]] | Aurarcania Deleatur | D | Eigenschaften, Metamagie | 231 |
+| [[schwarz-und-rot\|SCHWARZ UND ROT]] | — | D | Eigenschaften, Schaden | 232 |
+| [[schwarzer-schrecken\|SCHWARZER SCHRECKEN]] | — | D | Einfluss | 233 |
+| [[seelentier-erkennen\|SEELENTIER ERKENNEN]] | — | C | Hellsicht | 234 |
+| [[seelenwanderung\|SEELENWANDERUNG]] | — | F | Eigenschaften, Verständigung | 235 |
+| [[seidenweich-schuppengleich\|SEIDENWEICH SCHUPPENGLEICH]] | — | C | Illusion | 236 |
+| [[seidenzunge-elfenwort\|SEIDENZUNGE ELFENWORT]] | — | B | Einfluss | 237 |
+| [[sensattacco-meisterstreich\|SENSATTACCO MEISTERSTREICH]] | — | D | Eigenschaften, Hellsicht | 238 |
+| [[sensibar-empathicus\|SENSIBAR EMPATHICUS]] | — | C | Hellsicht | 239 |
+| [[serpentialis-schlangenleib\|SERPENTIALIS SCHLANGENLEIB]] | — | D | Form | 240 |
+| [[silentium-schweigekreis\|SILENTIUM SCHWEIGEKREIS]] | — | B | Umwelt | 241 |
+| [[sinesigil-unerkannt\|SINESIGIL UNERKANNT]] | — | D | Illusion | 242 |
+| [[skelettarius-totenherr\|SKELETTARIUS TOTENHERR]] | — | C | Dämonisch (Thargunitoth) | 243 |
+| [[solidirid-weg-aus-licht\|SOLIDIRID WEG AUS LICHT]] | — | D | Umwelt, Elementar (Luft) | 245 |
+| [[somnigravis-tiefer-schlaf\|SOMNIGRAVIS TIEFER SCHLAF]] | — | B | Einfluss | 246 |
+| [[spinnenlauf\|SPINNENLAUF]] | — | C | Eigenschaften | 247 |
+| [[spurlos-trittlos\|SPURLOS TRITTLOS]] | — | C | Umwelt | 248 |
+| [[standfest-katzengleich\|STANDFEST KATZENGLEICH]] | — | C | Eigenschaften | 249 |
+| [[staub-wandle\|STAUB WANDLE!]] | — | E | Elementar (Erz) | 250 |
+| [[stein-wandle\|STEIN WANDLE!]] | — | E | Beschwörung, Dämonisch | 251 |
+| [[stillstand\|STILLSTAND]] | — | E | Elementar (Eis), Umwelt | 252 |
+| [[sumus-elixiere\|SUMUS ELIXIERE]] | — | C | Elementar (Humus) | 253 |
+
+### T–Z *(wird in folgenden Sessions befüllt)*
