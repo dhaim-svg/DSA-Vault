@@ -42,8 +42,8 @@ Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
 | LC-05 | G (Forts.) + H-Zauber (S. 94–120) | 26 Zauber-Artikel | ✅ fertig |
 | LC-06 | I–K-Zauber (S. 121–149) | 27 Zauber-Artikel | ✅ fertig |
 | LC-07 | L–M-Zauber (S. 150–184) | 29 Zauber-Artikel | ✅ fertig |
-| LC-08 | N–R-Zauber | — | 🟢 nächste Session |
-| LC-09 | S-Zauber | — | ⚪ offen |
+| LC-08 | N–R-Zauber (S. 185–220) | 32 Zauber-Artikel | ✅ fertig |
+| LC-09 | S-Zauber | — | 🟢 nächste Session |
 | LC-10 | T–Z-Zauber | — | ⚪ offen |
 
 ---
@@ -142,6 +142,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-25:** Session LC-08 abgeschlossen — 32 N–R-Zauber-Artikel angelegt (S. 185–220): nackedei, nebelleib, nebelwand-und-morgendunst, nekropathia-seelenreise, nihilogravo-schwerelos, nuntiovolo-botenvogel, objecto-obscuro, objectofixo, objectovoco, objekt-entzaubern, oculus-astralis, odem-arcanum, pandaemonium, panik-ueberkomme-euch, papperlapapp, paralysis-starr-wie-stein, pectetondo-zauberhaar, penetrizzel-tiefenblick, pentagramma-sphaerenban, pestilenz-erspueren, pfeil-des-elements, planastrale-anderwelt, plumbumbarum-schwerer-arm, projektimago-ebenbild, protectionis-kontrabann, psychostabilis, radau, reflectimago-spiegelschein, reptilea-natternnest, respondami-wahrheitszwang, reversalis-revidum, ruhe-koerper-ruhe-geist. `_zauber.md` N + O + P + R-Sektion befüllt. Nächste Session: LC-09 (S-Zauber).
 - **2026-04-25:** Session LC-07 abgeschlossen — 29 L–M-Zauber-Artikel angelegt (S. 150–184): lach-dich-gesund, lachkrampf, langer-lulatsch, last-des-alters, leib-der-erde, leib-der-wogen, leib-des-eises, leib-des-erzes, leib-des-feuers, leib-des-windes, leidensbund, levthans-feuer, limbus-versiegeln, lockruf-und-feenfuesse, lunge-des-leviatan, madas-spiegel, magischer-raub, mahlstrom, manifesto-element, meister-der-elemente, meister-minderer-geister, memorabia-falsifir, memorans-gedaechtniskraft, menetekel-flammenschrift, metamagie-neutralisieren, metamorpho-gletscherform, motoricus-geisteshand, movimento-dauerlauf, murks-und-patz. `_zauber.md` L + M-Sektion befüllt. Nächste Session: LC-08 (N–R-Zauber).
 - **2026-04-25:** Session LC-06 abgeschlossen — 27 I–K-Zauber-Artikel angelegt (S. 121–149): ignifaxius-flammenstrahl, ignisphaero-feuerball, ignorantia-ungesehn, illusion-aufloesen, immortalis-lebenszeit, imperavi-handlungszwang, impersona-maskenbild, infinitum-immerdar, invercano-spiegeltrick, invocatio-maior, invocatio-minor, iribaars-hand, juckreiz-daemlicher, karnifilo-raserei, katzenaugen, klarum-purum, klickeradomms, koboldgeschenk, koboldovision, komm-kobold-komm, koerperlose-reise, krabbelnder-schrecken, kraft-des-erzes, kraehenruf, kroetensprung, kulminatio-kugelblitz, kusch. `_zauber.md` I + J + K-Sektion befüllt. Nächste Session: LC-07 (L–M-Zauber, S. 150+).
 - **2026-04-25:** Session LC-05 abgeschlossen — 26 G (Forts.) + H-Zauber-Artikel angelegt (S. 94–120): gefaess-der-jahre, gefunden, geisterbann, geisterruf, granit-und-marmor, grosse-gier, grosse-verwirrung, halluzination, harmlose-gestalt, hartes-schmelze, haselbusch-und-ginsterkraut, heilkraft-bannen, hellsicht-trueben, herbeirufung-vereiteln, herr-ueber-das-tierreich, herzschlag-ruhe, hexenblick, hexengalle, hexenholz, hexenknoten, hexenkrallen, hexenspeichel, hilfreiche-tatze-rettende-schwinge, hoellenpein-zerreisse-dich, holterdipolter, horriphobus-schreckgestalt. `_zauber.md` G-Fortsetzung + H-Sektion befüllt. Nächste Session: LC-06 (I–K-Zauber, S. 121–149).

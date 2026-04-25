@@ -236,6 +236,58 @@
 | [[movimento-dauerlauf\|MOVIMENTO DAUERLAUF]] | — | A | Eigenschaften | 182 |
 | [[murks-und-patz\|MURKS UND PATZ]] | — | C | Einfluss | 183 |
 
-### N–Z
+### N
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[nackedei\|NACKEDEI]] | — | D | Objekt, Telekinese | 185 |
+| [[nebelleib\|NEBELLEIB]] | — | D | Form, Elementar (Wasser), Elementar (Luft) | 186 |
+| [[nebelwand-und-morgendunst\|NEBELWAND UND MORGENDUNST]] | — | C | Umwelt, Elementar (Wasser), Elementar (Luft) | 187 |
+| [[nekropathia-seelenreise\|NEKROPATHIA SEELENREISE]] | — | E | Geisterwesen, Verständigung | 188 |
+| [[nihilogravo-schwerelos\|NIHILOGRAVO SCHWERELOS]] | — | E | Umwelt | 189 |
+| [[nuntiovolo-botenvogel\|NUNTIOVOLO BOTENVOGEL]] | — | C | Beschwörung, Dämonisch | 190 |
+
+### O
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[objecto-obscuro\|OBJECTO OBSCURO]] | — | D | Objekt | 191 |
+| [[objectofixo\|OBJECTOFIXO]] | — | D | Objekt, Temporal | 192 |
+| [[objectovoco\|OBJECTOVOCO]] | — | C | Verständigung | 193 |
+| [[objekt-entzaubern\|OBJEKT ENTZAUBERN]] | — | C | Antimagie, Objekt | 194 |
+| [[oculus-astralis\|OCULUS ASTRALIS]] | — | E | Hellsicht, Kraft, Limbus, Metamagie | 196 |
+| [[odem-arcanum\|ODEM ARCANUM]] | — | A | Hellsicht, Kraft | 197 |
+
+### P
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[pandaemonium\|PANDAEMONIUM]] | — | D | Beschwörung, Dämonisch | 199 |
+| [[panik-ueberkomme-euch\|PANIK ÜBERKOMME EUCH!]] | — | E | Einfluss | 200 |
+| [[papperlapapp\|PAPPERLAPAPP]] | — | D | Einfluss | 201 |
+| [[paralysis-starr-wie-stein\|PARALYSIS STARR WIE STEIN]] | — | C | Form, Elementar (Erz) | 202 |
+| [[pectetondo-zauberhaar\|PECTETONDO ZAUBERHAAR]] | — | B | Form | 203 |
+| [[penetrizzel-tiefenblick\|PENETRIZZEL TIEFENBLICK]] | — | C | Hellsicht | 204 |
+| [[pentagramma-sphaerenban\|PENTAGRAMMA SPHÄRENBANN]] | — | D | Antimagie, Beschwörung, Dämonisch, Geisterwesen | 205 |
+| [[pestilenz-erspueren\|PESTILENZ ERSPÜREN]] | — | C | Hellsicht | 207 |
+| [[pfeil-des-elements\|PFEIL DES (ELEMENTS)]] | — | C | Elementar, Objekt | 208 |
+| [[planastrale-anderwelt\|PLANASTRALE ANDERWELT]] | — | F | Limbus | 210 |
+| [[plumbumbarum-schwerer-arm\|PLUMBUMBARUM SCHWERER ARM]] | — | B | Einfluss | 211 |
+| [[projektimago-ebenbild\|PROJEKTIMAGO EBENBILD]] | — | D | Illusion, Verständigung | 212 |
+| [[protectionis-kontrabann\|PROTECTIONIS KONTRABANN]] | — | F | Antimagie, Kraft, Metamagie | 213 |
+| [[psychostabilis\|PSYCHOSTABILIS]] | — | C | Antimagie, Eigenschaften | 214 |
+
+### R
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[radau\|RADAU]] | — | C | Elementar (Luft), Telekinese | 215 |
+| [[reflectimago-spiegelschein\|REFLECTIMAGO SPIEGELSCHEIN]] | — | B | Illusion | 216 |
+| [[reptilea-natternnest\|REPTILEA NATTERNNEST]] | — | D | Herbeirufung | 217 |
+| [[respondami-wahrheitszwang\|RESPONDAMI WAHRHEITSZWANG]] | — | B | Herrschaft | 218 |
+| [[reversalis-revidum\|REVERSALIS REVIDUM]] | — | E | Metamagie | 219 |
+| [[ruhe-koerper-ruhe-geist\|RUHE KÖRPER, RUHE GEIST]] | — | B | Heilung | 220 |
+
+### S–Z
 
 *(wird in folgenden Sessions befüllt)*
