@@ -197,6 +197,45 @@
 | [[kulminatio-kugelblitz\|KULMINATIO KUGELBLITZ]] | — | D | Schaden | 148 |
 | [[kusch\|KUSCH!]] | — | B | Einfluss | 149 |
 
-### L–Z
+### L
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[lach-dich-gesund\|LACH DICH GESUND]] | — | C | Heilung, Einfluss | 150 |
+| [[lachkrampf\|LACHKRAMPF]] | — | C | Einfluss | 151 |
+| [[langer-lulatsch\|LANGER LULATSCH]] | — | D | Form, Objekt | 152 |
+| [[last-des-alters\|LAST DES ALTERS]] | — | E | Temporal, Form | 153 |
+| [[leib-der-erde\|LEIB DER ERDE]] | — | D | Form, Elementar (Humus) | 154 |
+| [[leib-der-wogen\|LEIB DER WOGEN]] | — | E | Form, Elementar (Wasser) | 156 |
+| [[leib-des-eises\|LEIB DES EISES]] | — | E | Form, Elementar (Eis) | 158 |
+| [[leib-des-erzes\|LEIB DES ERZES]] | — | E | Form, Elementar (Erz) | 159 |
+| [[leib-des-feuers\|LEIB DES FEUERS]] | — | E | Form, Elementar (Feuer) | 161 |
+| [[leib-des-windes\|LEIB DES WINDES]] | — | E | Form, Elementar (Luft) | 163 |
+| [[leidensbund\|LEIDENSBUND]] | — | C | Heilung, Verständigung | 164 |
+| [[levthans-feuer\|LEVTHANS FEUER]] | — | D | Einfluss, Verständigung | 165 |
+| [[limbus-versiegeln\|LIMBUS VERSIEGELN]] | — | E | Antimagie, Limbus | 166 |
+| [[lockruf-und-feenfuesse\|LOCKRUF UND FEENFÜSSE]] | — | B | Telekinese, Illusion | 167 |
+| [[lunge-des-leviatan\|LUNGE DES LEVIATAN]] | — | C | Heilung | 168 |
+
+### M
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[madas-spiegel\|MADAS SPIEGEL]] | — | D | Verständigung, Hellsicht | 169 |
+| [[magischer-raub\|MAGISCHER RAUB]] | — | D | Kraft, Verständigung | 170 |
+| [[mahlstrom\|MAHLSTROM]] | — | D | Elementar (Wasser), Umwelt | 171 |
+| [[manifesto-element\|MANIFESTO ELEMENT]] | — | A | Elementar | 172 |
+| [[meister-der-elemente\|MEISTER DER ELEMENTE]] | — | F | Elementar, Herbeirufung | 173 |
+| [[meister-minderer-geister\|MEISTER MINDERER GEISTER]] | — | B | Herbeirufung | 174 |
+| [[memorabia-falsifir\|MEMORABIA FALSIFIR]] | — | E | Herrschaft | 175 |
+| [[memorans-gedaechtniskraft\|MEMORANS GEDÄCHTNISKRAFT]] | — | C | Hellsicht, Eigenschaften | 176 |
+| [[menetekel-flammenschrift\|MENETEKEL FLAMMENSCHRIFT]] | — | B | Illusion | 177 |
+| [[metamagie-neutralisieren\|METAMAGIE NEUTRALISIEREN]] | — | F | Antimagie, Metamagie | 178 |
+| [[metamorpho-gletscherform\|METAMORPHO GLETSCHERFORM]] | — | C | Elementar (Eis), Objekt | 179 |
+| [[motoricus-geisteshand\|MOTORICUS GEISTESHAND]] | — | C | Telekinese | 180 |
+| [[movimento-dauerlauf\|MOVIMENTO DAUERLAUF]] | — | A | Eigenschaften | 182 |
+| [[murks-und-patz\|MURKS UND PATZ]] | — | C | Einfluss | 183 |
+
+### N–Z
 
 *(wird in folgenden Sessions befüllt)*

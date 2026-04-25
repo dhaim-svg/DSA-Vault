@@ -41,8 +41,8 @@ Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
 | LC-04 | F + G-Zauber (S. 83–93) | 10 Zauber-Artikel | ✅ fertig |
 | LC-05 | G (Forts.) + H-Zauber (S. 94–120) | 26 Zauber-Artikel | ✅ fertig |
 | LC-06 | I–K-Zauber (S. 121–149) | 27 Zauber-Artikel | ✅ fertig |
-| LC-07 | L–M-Zauber | — | 🟢 nächste Session |
-| LC-08 | N–R-Zauber | — | ⚪ offen |
+| LC-07 | L–M-Zauber (S. 150–184) | 29 Zauber-Artikel | ✅ fertig |
+| LC-08 | N–R-Zauber | — | 🟢 nächste Session |
 | LC-09 | S-Zauber | — | ⚪ offen |
 | LC-10 | T–Z-Zauber | — | ⚪ offen |
 
@@ -142,6 +142,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-25:** Session LC-07 abgeschlossen — 29 L–M-Zauber-Artikel angelegt (S. 150–184): lach-dich-gesund, lachkrampf, langer-lulatsch, last-des-alters, leib-der-erde, leib-der-wogen, leib-des-eises, leib-des-erzes, leib-des-feuers, leib-des-windes, leidensbund, levthans-feuer, limbus-versiegeln, lockruf-und-feenfuesse, lunge-des-leviatan, madas-spiegel, magischer-raub, mahlstrom, manifesto-element, meister-der-elemente, meister-minderer-geister, memorabia-falsifir, memorans-gedaechtniskraft, menetekel-flammenschrift, metamagie-neutralisieren, metamorpho-gletscherform, motoricus-geisteshand, movimento-dauerlauf, murks-und-patz. `_zauber.md` L + M-Sektion befüllt. Nächste Session: LC-08 (N–R-Zauber).
 - **2026-04-25:** Session LC-06 abgeschlossen — 27 I–K-Zauber-Artikel angelegt (S. 121–149): ignifaxius-flammenstrahl, ignisphaero-feuerball, ignorantia-ungesehn, illusion-aufloesen, immortalis-lebenszeit, imperavi-handlungszwang, impersona-maskenbild, infinitum-immerdar, invercano-spiegeltrick, invocatio-maior, invocatio-minor, iribaars-hand, juckreiz-daemlicher, karnifilo-raserei, katzenaugen, klarum-purum, klickeradomms, koboldgeschenk, koboldovision, komm-kobold-komm, koerperlose-reise, krabbelnder-schrecken, kraft-des-erzes, kraehenruf, kroetensprung, kulminatio-kugelblitz, kusch. `_zauber.md` I + J + K-Sektion befüllt. Nächste Session: LC-07 (L–M-Zauber, S. 150+).
 - **2026-04-25:** Session LC-05 abgeschlossen — 26 G (Forts.) + H-Zauber-Artikel angelegt (S. 94–120): gefaess-der-jahre, gefunden, geisterbann, geisterruf, granit-und-marmor, grosse-gier, grosse-verwirrung, halluzination, harmlose-gestalt, hartes-schmelze, haselbusch-und-ginsterkraut, heilkraft-bannen, hellsicht-trueben, herbeirufung-vereiteln, herr-ueber-das-tierreich, herzschlag-ruhe, hexenblick, hexengalle, hexenholz, hexenknoten, hexenkrallen, hexenspeichel, hilfreiche-tatze-rettende-schwinge, hoellenpein-zerreisse-dich, holterdipolter, horriphobus-schreckgestalt. `_zauber.md` G-Fortsetzung + H-Sektion befüllt. Nächste Session: LC-06 (I–K-Zauber, S. 121–149).
 - **2026-04-25:** Session LC-04 abgeschlossen — 10 F + G-Zauber-Artikel angelegt (S. 83–93): falkenauge, favilludo, firnlauf, flim-flam, fluch-der-pestilenz, foramen, fortifex, fulminictus, gardianum, gedankenbilder. `_zauber.md` F + G-Sektion befüllt. Nächste Session: LC-05 (H–K-Zauber, S. 94+).
