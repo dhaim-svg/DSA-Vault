@@ -99,6 +99,26 @@
 | [[erinnerung-verlasse-dich\|ERINNERUNG VERLASSE DICH!]] | — | D | Herrschaft | 81 |
 | [[exposami\|EXPOSAMI]] | Lebenskraft | B | Hellsicht | 82 |
 
-### F–Z
+### F
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[falkenauge\|FALKENAUGE]] | Meisterschuss | B | Eigenschaften | 83 |
+| [[favilludo\|FAVILLUDO]] | Funkentanz | A | Illusion | 84 |
+| [[firnlauf\|FIRNLAUF]] | — | D | Elementar (Eis), Eigenschaften | 85 |
+| [[flim-flam\|FLIM FLAM]] | Funkel | A | Umwelt | 86 |
+| [[fluch-der-pestilenz\|FLUCH DER PESTILENZ]] | — | D | Dämonisch (Mishkhara) | 87 |
+| [[foramen\|FORAMEN]] | Foraminor | C | Hellsicht, Telekinese | 88 |
+| [[fortifex\|FORTIFEX]] | Arkane Wand | D | Umwelt, Elementar (Erz) | 89 |
+| [[fulminictus\|FULMINICTUS]] | Donnerkeil | C | Schaden, Kraft | 90 |
+
+### G
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[gardianum\|GARDIANUM]] | Zauberschild | D | Antimagie, Kraft, Metamagie | 91 |
+| [[gedankenbilder\|GEDANKENBILDER]] | Elfenruf | B | Verständigung | 93 |
+
+### H–Z
 
 *(wird in folgenden Sessions befüllt)*

@@ -38,7 +38,7 @@ Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
 | LC-01 | Buchprofil + A-Zauber (S. 11–36) | `buecher/liber-cantiones.md` + 23 Zauber-Artikel | ✅ fertig |
 | LC-02 | B + C-Zauber (S. 37–62) | 25 Zauber-Artikel | ✅ fertig |
 | LC-03 | D + E-Zauber (S. 63–82) | 20 Zauber-Artikel | ✅ fertig |
-| LC-04 | E–G-Zauber | — | ⚪ offen |
+| LC-04 | F + G-Zauber (S. 83–93) | 10 Zauber-Artikel | ✅ fertig |
 | LC-05 | H–K-Zauber | — | ⚪ offen |
 | LC-06 | L–M-Zauber | — | ⚪ offen |
 | LC-07 | N–R-Zauber | — | ⚪ offen |
@@ -141,6 +141,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-25:** Session LC-04 abgeschlossen — 10 F + G-Zauber-Artikel angelegt (S. 83–93): falkenauge, favilludo, firnlauf, flim-flam, fluch-der-pestilenz, foramen, fortifex, fulminictus, gardianum, gedankenbilder. `_zauber.md` F + G-Sektion befüllt. Nächste Session: LC-05 (H–K-Zauber, S. 94+).
 - **2026-04-25:** Session LC-03 abgeschlossen — 20 D + E-Zauber-Artikel angelegt (S. 63–82): daemonenbann, delicioso, desintegratus, destructibo, dichter-und-denker, dschinnenruf, dunkelheit, duplicatus, ecliptifactus, eigenschaft-wiederherstellen, eigne-aengste-quaelen-dich, einfluss-bannen, eins-mit-der-natur, eisenrost-und-patina, eiseskaelte-kaempferherz, elementarbann, elementarer-diener, elfenstimme, erinnerung-verlasse-dich, exposami. `_zauber.md` D + E-Sektion befüllt. Nächste Session: LC-04 (F-Zauber, S. 83+): Falkenauge, Favilludo, Firnlauf, Flim Flam, Fluch der Pestilenz, Foramen, Fortifex, Fulminictus, Gardianum, Gedankenbilder.
 - **2026-04-25:** Session LC-02 abgeschlossen — 25 B + C-Zauber-Artikel angelegt (S. 37–62). `_zauber.md` B + C-Sektion befüllt.
 - **2026-04-25:** Session LC-01 abgeschlossen — Liber Cantiones gestartet. Buchprofil `buecher/liber-cantiones.md` erstellt. 23 A-Zauber-Artikel angelegt (S. 11–36): abvenenum, accuratum, adamantium, adlerauge, adlerschwinge, aeolitus, aerofugo, aerogelo, alpgestalt, analys, aengste-lindern, animatio, applicatus, arachnea, arcanovi, armatrutz, atemnot, attributo, aufgeblasen, auge-des-limbus, aureolus, auris-nasus-oculus, axxeleratus. `_zauber.md` A-Sektion befüllt. Nächste Session: LC-02 (B + C-Zauber).
