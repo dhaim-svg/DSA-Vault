@@ -1,0 +1,5 @@
+# PDF-Extrakte (urheberrechtlich geschütztes Material, nur privat)
+raw/pdf-extracted/**
+!raw/pdf-extracted/_tools/
+!raw/pdf-extracted/_tools/**
+!raw/pdf-extracted/EXTRACTION-PLAN.md

@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import pdfplumber; print\\('ok'\\)\")",
+      "Bash(python -c \"import PyPDF2; print\\('ok'\\)\")",
+      "Bash(python -c \"import fitz; print\\('ok'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c ' *)",
+      "Bash(pdftotext -layout -enc UTF-8 'C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/DSA 4.1 - Wege der Helden.pdf' d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-helden/full.txt)",
+      "Bash(mv \"wiki/dsa-4.1/_index.md\" \"wiki/dsa-4.1/_dsa-4.1.md\")",
+      "Bash(mv \"wiki/dsa-4.1/buecher/_index.md\" \"wiki/dsa-4.1/buecher/_buecher.md\")",
+      "Bash(mv \"wiki/dsa-4.1/grundregeln/_index.md\" \"wiki/dsa-4.1/grundregeln/_grundregeln.md\")",
+      "Bash(mv \"wiki/dsa-4.1/rassen/_index.md\" \"wiki/dsa-4.1/rassen/_rassen.md\")",
+      "Bash(mv \"wiki/dsa-4.1/kulturen/_index.md\" \"wiki/dsa-4.1/kulturen/_kulturen.md\")",
+      "Bash(grep -n \"^Nachteile$\\\\|^NACHTEILE\\\\|^Sonderfertigkeiten$\\\\|^SONDERFERTIGKEITEN\\\\|^Schlechte Eigenschaften\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-helden/kapitel-07-vor-nachteile.txt\")",
+      "Bash(\"D:/Projects/Tools/poppler-25.12.0/Library/bin/pdftotext.exe\" -layout -enc UTF-8 \"C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/DSA 4.1 - Wege der Zauberei.pdf\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(python \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/_tools/split-chapters.py\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(grep -n \"^[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ ,'\\\\-]*$\\\\|^Kapitel\\\\|^Anhang\\\\|^Vorwort\\\\|^Einleitung\\\\|^Index\\\\|^Inhalt\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(grep -n \"^[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ ,'\\\\-]*$\\\\|^Anhang\\\\|^Index\\\\s*$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(awk -F: '$1 > 2000')",
+      "Bash(grep -n \"^[A-ZÄÖÜ][a-zA-ZäöüÄÖÜ ,'\\\\-]*$\\\\|^Anhang\\\\|^Index\\\\s*$\\\\|^Die Traditionen\\\\|^Rituale\\\\|^Vertrautentiere\\\\|^Beschwörungen\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(awk -F: '$1 > 3500')",
+      "Bash(awk -F: '$1 > 5400')",
+      "Bash(grep -n \"^Anhang\\\\|^Index\\\\s*$\\\\|^Die Traditionen\\\\|^Traditionen\\\\|^Schamanis\\\\|^Hexen\\\\|^Stabzauber\\\\|^Rituale\\\\|^Zweite Sphäre\\\\|^Erste Sphäre\\\\|^Vertrautentiere\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(grep -n \"^Die Quelle der Magie\\\\|^Die Astralenergie\\\\s*$\\\\|^Zauberfertigkeiten und\\\\s*$\\\\|^Bann des Eisens\\\\s*$\\\\|^Zauberwerkstatt\\\\s*$\\\\|^Magische Artefakte\\\\s*$\\\\|^Die Kunst der Alchimie\\\\s*$\\\\|^Tödliche Träume\\\\s*$\\\\|^Erfahrung und Steigerung\\\\s*$\\\\|^Ritualzauberei\\\\s*$\\\\|^Die Kunst der Invokation\\\\s*$\\\\|^Die magischen Traditionen\\\\s*$\\\\|^Welt, Sphären\\\\|^Anhänge\\\\s*$\\\\|^Index\\\\s*$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(grep -n \"^Zauberwerkstatt\\\\s*$\\\\|^Magische Artefakte\\\\s*$\\\\|^Tödliche Träume\\\\s*$\\\\|^Die magischen Traditionen Aventuriens\\\\s*$\\\\|^Besessenheit\\\\s*$\\\\|^Anhänge\\\\s*$\\\\|^Magiedilettanten\\\\s*$\\\\|^Verbotene Pforten\\\\s*$\\\\|^Die Magie des Blutes\\\\s*$\\\\|^Satinav\\\\|^Die Macht der Elemente\\\\s*$\\\\|^Magische Kreaturen\\\\s*$\\\\|^Legenden der Magie\\\\s*$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(grep -n \"^Zauberwerkstatt\\\\s*$\\\\|^Magische Artefakte\\\\s*$\\\\|^Tödliche Träume\\\\s*$\\\\|^Die magischen Traditionen\\\\s*$\\\\|^Anhänge\\\\s*$\\\\|^Welt, Sphären und Kosmos\\\\s*$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/full.txt\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python _tools/split-chapters.py wege-der-zauberei)",
+      "Bash(grep -n \"^[A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ ]*$\\\\|^[A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ -]*$\\\\|Kapitel\\\\|^\\\\s*[A-Z][a-z]*[a-z ]*$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/kapitel-10-invokation.txt\")",
+      "Bash(grep -n \"^[A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ ]*\\\\\\(des\\\\|der\\\\|von\\\\\\)\\\\?[a-zäöüßA-ZÄÖÜ ]*$\\\\|^Die [A-ZÄÖÜ]\\\\|^Das [A-ZÄÖÜ]\\\\|^Der [A-ZÄÖÜ]\\\\|^Im Bund\\\\|^Eigenschaften\\\\|^Golem\\\\|^Chimär\\\\|^Untot\\\\|^Daimonid\\\\|^Nephazz\\\\|^Bannung\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/kapitel-10-invokation.txt\")",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git add *)"
+    ]
+  }
+}
