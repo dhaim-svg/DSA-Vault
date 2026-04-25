@@ -16,4 +16,5 @@
 | [[zauberer-steigerung\|Zauberer-Steigerungsregeln]] | ZfW-Lernschwierigkeit, Leiteigenschaften, Ritualkenntnis steigern, AE steigern, Große Meditation, pAsP-Rückkauf, Zweitstudium, Imitationslernen, Schamanenrituale lernen, 5 SF | WdZ | 73–75 |
 | [[magische-bibliothek\|Magische Bibliothek]] | Bücher als Lehrmeister (Thesen, Rekonstruktionen, Referenzen), Buchformat-Lesehilfe, Katalog 25+ Werke (Al Lamasshim bis Encyclopaedia Magica) | WdZ | 76–104 |
 | [[chronica-magica\|Chronica Magica]] | Geschichte der aventurischen Magie: Epochen-Zeitstrahl Vorzeit bis 1029 BF; berühmte Zauberer; Chal'ashtarra-Zyklus; untergegangene Magierschulen | WdZ | 252–258 |
+| [[welt-sphaeren\|Welt, Sphären & Kosmos]] | Weltbilder der Völker; Sieben-Sphären-Modell (Rohals Zwiebelschalen); Limbus-Regeln (Schaden, AsP, Kampf, Magie); Globulen/Parallelwelten; Kraftlinien, Nodices, SF Kraftlinienmagie, Kritische Essenz-Tabelle | WdZ | 354–368 |
 | [[magische-gilden\|Magische Gilden & Orden]] | Weiße/Graue/Schwarze Gilde (Philosophie, Akademien, Mitgliedschaft); Magiersiegel; Gildenwechsel/Gildenlose; Borbaradianer; 5 magische Orden; Akademieleben | WdZ | 259–297 |
