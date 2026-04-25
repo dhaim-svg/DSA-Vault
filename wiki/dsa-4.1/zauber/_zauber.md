@@ -325,4 +325,76 @@
 | [[stillstand\|STILLSTAND]] | — | E | Elementar (Eis), Umwelt | 252 |
 | [[sumus-elixiere\|SUMUS ELIXIERE]] | — | C | Elementar (Humus) | 253 |
 
-### T–Z *(wird in folgenden Sessions befüllt)*
+### T
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[tauschrausch\|TAUSCHRAUSCH]] | — | D | Limbus | 253 |
+| [[tempus-stasis\|TEMPUS STASIS]] | — | E | Temporal | 254 |
+| [[tiere-besprechen\|TIERE BESPRECHEN]] | — | C | Heilung, Form | 255 |
+| [[tiergedanken\|TIERGEDANKEN]] | — | C | Hellsicht, Verständigung | 256 |
+| [[tlalucs-odem-pestgestank\|TLALUCS ODEM PESTGESTANK]] | — | C | Beschwörung, Dämonisch (allgemein), Schaden | 257 |
+| [[totes-handle\|TOTES HANDLE!]] | — | D | Beschwörung, Dämonisch (Thargunitoth) | 258 |
+| [[transformatio-formgestalt\|TRANSFORMATIO FORMGESTALT]] | — | E | Objekt | 259 |
+| [[transmutare-koerperform\|TRANSMUTARE KÖRPERFORM]] | — | D | Form | 260 |
+| [[transversalis-teleport\|TRANSVERSALIS TELEPORT]] | — | E | Limbus | 261 |
+| [[traumgestalt\|TRAUMGESTALT]] | — | D | Verständigung | 262 |
+
+### U
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[unberuehrt-von-satinav\|UNBERÜHRT VON SATINAV]] | — | C | Objekt, Temporal | 263 |
+| [[unitatio-geistesbund\|UNITATIO GEISTESBUND]] | — | B | Verständigung, Kraft | 264 |
+| [[unsichtbarer-jaeger\|UNSICHTBARER JÄGER]] | — | E | Illusion | 265 |
+
+### V
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[veraenderung-aufheben\|VERÄNDERUNG AUFHEBEN]] | — | D | Antimagie, Umwelt | 266 |
+| [[verschwindibus\|VERSCHWINDIBUS]] | — | C | Limbus | 267 |
+| [[verstaendigung-stoeren\|VERSTÄNDIGUNG STÖREN]] | — | C | Antimagie, Verständigung | 268 |
+| [[verwandlung-beenden\|VERWANDLUNG BEENDEN]] | — | D | Antimagie, Form | 269 |
+| [[vipernblick\|VIPERNBLICK]] | — | B | Einfluss | 270 |
+| [[visibili-vanitar\|VISIBILI VANITAR]] | — | C | Form | 271 |
+| [[vocolimbo-hohler-klang\|VOCOLIMBO HOHLER KLANG]] | — | B | Illusion | 272 |
+| [[vogelzwitschern-glockenspiel\|VOGELZWITSCHERN GLOCKENSPIEL]] | — | B | Illusion | 273 |
+
+### W
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[wand-aus-dornen\|WAND AUS DORNEN]] | — | D | Elementar (Humus) | 274 |
+| [[warmes-blut\|WARMES BLUT]] | — | B | Eigenschaften, Hellsicht, Elementar (Feuer) | 275 |
+| [[wasseratem\|WASSERATEM]] | — | C | Form | 276 |
+| [[weiches-erstarre\|WEICHES ERSTARRE!]] | — | C | Elementar (Erz), Umwelt | 277 |
+| [[weihrauchwolke-wohlgeruch\|WEIHRAUCHWOLKE WOHLGERUCH]] | — | B | Illusion | 278 |
+| [[weisheit-der-baeume\|WEISHEIT DER BÄUME]] | — | D | Form, Elementar (Humus) | 279 |
+| [[weisse-maehn-und-goldner-huf\|WEISSE MÄHN' UND GOLD'NER HUF]] | — | D | Beschwörung | 280 |
+| [[wellenlauf\|WELLENLAUF]] | — | D | Elementar (Wasser), Eigenschaften | 281 |
+| [[wettermeisterschaft\|WETTERMEISTERSCHAFT]] | — | E | Elementar (Luft), Umwelt | 282 |
+| [[widerwille-ungemach\|WIDERWILLE UNGEMACH]] | — | D | Einfluss, Illusion | 284 |
+| [[windhose\|WINDHOSE]] | — | D | Elementar (Luft), Umwelt | 285 |
+| [[windstille\|WINDSTILLE]] | — | C | Elementar (Luft), Umwelt | 286 |
+| [[wipfellauf\|WIPFELLAUF]] | — | D | Elementar (Humus), Eigenschaften | 287 |
+
+### X
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[xenographus-schriftenkunde\|XENOGRAPHUS SCHRIFTENKUNDE]] | — | E | Hellsicht | 288 |
+
+### Z
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[zagibu-ubigaz\|ZAGIBU UBIGAZ]] | — | C | Objekt, Elementar (Erz) | 289 |
+| [[zappenduster\|ZAPPENDUSTER]] | — | C | Umwelt, Antimagie | 290 |
+| [[zauberklinge-geisterspeer\|ZAUBERKLINGE GEISTERSPEER]] | — | D | Objekt, Kraft | 291 |
+| [[zaubernahrung-hungerbann\|ZAUBERNAHRUNG HUNGERBANN]] | — | C | Eigenschaften, Einfluss | 292 |
+| [[zauberwesen-der-natur\|ZAUBERWESEN DER NATUR]] | — | B | Herbeirufung, Verständigung | 293 |
+| [[zauberzwang\|ZAUBERZWANG]] | — | E | Herrschaft, Schaden | 294 |
+| [[zorn-der-elemente\|ZORN DER ELEMENTE]] | — | C | Elementar (gesamt), Schaden | 295 |
+| [[zunge-laehmen\|ZUNGE LÄHMEN]] | — | B | Eigenschaften | 296 |
+| [[zwingtanz\|ZWINGTANZ]] | — | D | Herrschaft | 297 |

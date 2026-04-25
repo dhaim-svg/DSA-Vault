@@ -16,7 +16,7 @@ Reihenfolge: Pilot → Kampf → Magie → Götter → Alchimie → Aventurien.
 | 1 | Wege der Helden | WdH | `DSA 4.1 - Wege der Helden.pdf` | ✅ fertig |
 | 2 | Wege des Schwertes | WdS | `DSA 4.1 - Wege des Schwertes.pdf` | ✅ fertig |
 | 3 | Wege der Zauberei | WdZ | `DSA 4.1 - Wege der Zauberei.pdf` | 🟢 in Arbeit |
-| 3a | Liber Cantiones | LC | `C01 - Liber Cantiones.pdf` | 🟢 in Arbeit |
+| 3a | Liber Cantiones | LC | `C01 - Liber Cantiones.pdf` | ✅ fertig (Zauber vollständig) |
 | 4 | Wege der Götter | WdG | `DSA 4.1 - Wege der Goetter.pdf` | ⚪ offen |
 | 4a | Liber Liturgium | LL | `C02 - Liber Liturgium.pdf` | ⚪ offen (parallel zu WdG) |
 | 5 | Wege der Alchimie | WdA | `DSA 4.1 - Wege der Alchimie.pdf` | ⚪ offen |
@@ -44,7 +44,7 @@ Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
 | LC-07 | L–M-Zauber (S. 150–184) | 29 Zauber-Artikel | ✅ fertig |
 | LC-08 | N–R-Zauber (S. 185–220) | 32 Zauber-Artikel | ✅ fertig |
 | LC-09 | S-Zauber (S. 221–253) | 32 Zauber-Artikel | ✅ fertig |
-| LC-10 | T–Z-Zauber | — | 🟢 nächste Session |
+| LC-10 | T–Z-Zauber (S. 253–297) | 44 Zauber-Artikel | ✅ fertig |
 
 ---
 
@@ -142,6 +142,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-26:** Session LC-10 abgeschlossen — 44 T–Z-Zauber-Artikel angelegt (S. 253–297): tauschrausch, tempus-stasis, tiere-besprechen, tiergedanken, tlalucs-odem-pestgestank, totes-handle, transformatio-formgestalt, transmutare-koerperform, transversalis-teleport, traumgestalt, unberuehrt-von-satinav, unitatio-geistesbund, unsichtbarer-jaeger, veraenderung-aufheben, verschwindibus, verstaendigung-stoeren, verwandlung-beenden, vipernblick, visibili-vanitar, vocolimbo-hohler-klang, vogelzwitschern-glockenspiel, wand-aus-dornen, warmes-blut, wasseratem, weiches-erstarre, weihrauchwolke-wohlgeruch, weisheit-der-baeume, weisse-maehn-und-goldner-huf, wellenlauf, wettermeisterschaft, widerwille-ungemach, windhose, windstille, wipfellauf, xenographus-schriftenkunde, zagibu-ubigaz, zappenduster, zauberklinge-geisterspeer, zaubernahrung-hungerbann, zauberwesen-der-natur, zauberzwang, zorn-der-elemente, zunge-laehmen, zwingtanz. `_zauber.md` T–Z-Sektionen befüllt. **Liber Cantiones Zauber-Extraktion vollständig.** Nächste Aufgabe: LC-Anhänge (Merkmallisten, Traditionsübersichten) oder nächstes Buch.
 - **2026-04-25:** Session LC-09 abgeschlossen — 32 S-Zauber-Artikel angelegt (S. 221–253): salander-mutander, sanftmut, sapefacta-zauberschwamm, satuarias-herrlichkeit, schabernack, schadenszauber-bannen, schelmenkleister, schelmenlaune, schelmenmaske, schelmenrausch, schleier-der-unwissenheit, schwarz-und-rot, schwarzer-schrecken, seelentier-erkennen, seelenwanderung, seidenweich-schuppengleich, seidenzunge-elfenwort, sensattacco-meisterstreich, sensibar-empathicus, serpentialis-schlangenleib, silentium-schweigekreis, sinesigil-unerkannt, skelettarius-totenherr, solidirid-weg-aus-licht, somnigravis-tiefer-schlaf, spinnenlauf, spurlos-trittlos, standfest-katzengleich, staub-wandle, stein-wandle, stillstand, sumus-elixiere. `_zauber.md` S-Sektion befüllt. Nächste Session: LC-10 (T–Z-Zauber).
 - **2026-04-25:** Session LC-08 abgeschlossen — 32 N–R-Zauber-Artikel angelegt (S. 185–220): nackedei, nebelleib, nebelwand-und-morgendunst, nekropathia-seelenreise, nihilogravo-schwerelos, nuntiovolo-botenvogel, objecto-obscuro, objectofixo, objectovoco, objekt-entzaubern, oculus-astralis, odem-arcanum, pandaemonium, panik-ueberkomme-euch, papperlapapp, paralysis-starr-wie-stein, pectetondo-zauberhaar, penetrizzel-tiefenblick, pentagramma-sphaerenban, pestilenz-erspueren, pfeil-des-elements, planastrale-anderwelt, plumbumbarum-schwerer-arm, projektimago-ebenbild, protectionis-kontrabann, psychostabilis, radau, reflectimago-spiegelschein, reptilea-natternnest, respondami-wahrheitszwang, reversalis-revidum, ruhe-koerper-ruhe-geist. `_zauber.md` N + O + P + R-Sektion befüllt. Nächste Session: LC-09 (S-Zauber).
 - **2026-04-25:** Session LC-07 abgeschlossen — 29 L–M-Zauber-Artikel angelegt (S. 150–184): lach-dich-gesund, lachkrampf, langer-lulatsch, last-des-alters, leib-der-erde, leib-der-wogen, leib-des-eises, leib-des-erzes, leib-des-feuers, leib-des-windes, leidensbund, levthans-feuer, limbus-versiegeln, lockruf-und-feenfuesse, lunge-des-leviatan, madas-spiegel, magischer-raub, mahlstrom, manifesto-element, meister-der-elemente, meister-minderer-geister, memorabia-falsifir, memorans-gedaechtniskraft, menetekel-flammenschrift, metamagie-neutralisieren, metamorpho-gletscherform, motoricus-geisteshand, movimento-dauerlauf, murks-und-patz. `_zauber.md` L + M-Sektion befüllt. Nächste Session: LC-08 (N–R-Zauber).
