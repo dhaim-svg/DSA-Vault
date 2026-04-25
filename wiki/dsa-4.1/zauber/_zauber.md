@@ -119,6 +119,42 @@
 | [[gardianum\|GARDIANUM]] | Zauberschild | D | Antimagie, Kraft, Metamagie | 91 |
 | [[gedankenbilder\|GEDANKENBILDER]] | Elfenruf | B | Verständigung | 93 |
 
-### H–Z
+### G (Fortsetzung)
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[gefaess-der-jahre\|GEFÄSS DER JAHRE]] | — | E | Form, Temporal | 95 |
+| [[gefunden\|GEFUNDEN!]] | — | C | Hellsicht | 96 |
+| [[geisterbann\|GEISTERBANN]] | — | C | Antimagie, Geisterwesen | 97 |
+| [[geisterruf\|GEISTERRUF]] | — | D | Geisterwesen, Herbeirufung | 98 |
+| [[granit-und-marmor\|GRANIT UND MARMOR]] | — | D | Form, Elementar (Erz) | 99 |
+| [[grosse-gier\|GROSSE GIER]] | — | C | Einfluss, Herrschaft | 100 |
+| [[grosse-verwirrung\|GROSSE VERWIRRUNG]] | — | C | Eigenschaften | 101 |
+
+### H
+
+| Artikel | Alternativname | Komplexität | Merkmale | Seite |
+|---------|---------------|-------------|----------|-------|
+| [[halluzination\|HALLUZINATION]] | — | C | Herrschaft | 102 |
+| [[harmlose-gestalt\|HARMLOSE GESTALT]] | — | C | Einfluss, Illusion | 103 |
+| [[hartes-schmelze\|HARTES SCHMELZE!]] | — | C | Objekt, Elementar (Wasser) | 104 |
+| [[haselbusch-und-ginsterkraut\|HASELBUSCH UND GINSTERKRAUT]] | — | D | Eigenschaften, Elementar (Humus), Form | 105 |
+| [[heilkraft-bannen\|HEILKRAFT BANNEN]] | — | C | Antimagie, Heilung | 106 |
+| [[hellsicht-trueben\|HELLSICHT TRÜBEN]] | — | C | Antimagie, Hellsicht | 107 |
+| [[herbeirufung-vereiteln\|HERBEIRUFUNG VEREITELN]] | — | C | Antimagie, Herbeirufung | 108 |
+| [[herr-ueber-das-tierreich\|HERR ÜBER DAS TIERREICH]] | — | D | Herrschaft | 109 |
+| [[herzschlag-ruhe\|HERZSCHLAG RUHE!]] | — | D | Dämonisch (Blakharaz), Eigenschaften, Einfluss | 110 |
+| [[hexenblick\|HEXENBLICK]] | — | B | Verständigung | 111 |
+| [[hexengalle\|HEXENGALLE]] | — | C | Schaden | 112 |
+| [[hexenholz\|HEXENHOLZ]] | — | B | Telekinese | 113 |
+| [[hexenknoten\|HEXENKNOTEN]] | — | C | Einfluss, Illusion | 114 |
+| [[hexenkrallen\|HEXENKRALLEN]] | Katzenkrallen | C | Eigenschaften, Form | 115 |
+| [[hexenspeichel\|HEXENSPEICHEL]] | — | C | Heilung | 116 |
+| [[hilfreiche-tatze-rettende-schwinge\|HILFREICHE TATZE, RETTENDE SCHWINGE]] | — | D | Einfluss, Verständigung | 117 |
+| [[hoellenpein-zerreisse-dich\|HÖLLENPEIN ZERREISSE DICH!]] | — | C | Einfluss | 118 |
+| [[holterdipolter\|HOLTERDIPOLTER]] | — | C | Umwelt | 119 |
+| [[horriphobus-schreckgestalt\|HORRIPHOBUS SCHRECKGESTALT]] | — | C | Einfluss | 120 |
+
+### I–Z
 
 *(wird in folgenden Sessions befüllt)*

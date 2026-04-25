@@ -39,11 +39,12 @@ Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
 | LC-02 | B + C-Zauber (S. 37–62) | 25 Zauber-Artikel | ✅ fertig |
 | LC-03 | D + E-Zauber (S. 63–82) | 20 Zauber-Artikel | ✅ fertig |
 | LC-04 | F + G-Zauber (S. 83–93) | 10 Zauber-Artikel | ✅ fertig |
-| LC-05 | H–K-Zauber | — | ⚪ offen |
-| LC-06 | L–M-Zauber | — | ⚪ offen |
-| LC-07 | N–R-Zauber | — | ⚪ offen |
-| LC-08 | S-Zauber | — | ⚪ offen |
-| LC-09 | T–Z-Zauber | — | ⚪ offen |
+| LC-05 | G (Forts.) + H-Zauber (S. 94–120) | 26 Zauber-Artikel | ✅ fertig |
+| LC-06 | I–K-Zauber (S. 121–149) | — | 🟢 nächste Session |
+| LC-07 | L–M-Zauber | — | ⚪ offen |
+| LC-08 | N–R-Zauber | — | ⚪ offen |
+| LC-09 | S-Zauber | — | ⚪ offen |
+| LC-10 | T–Z-Zauber | — | ⚪ offen |
 
 ---
 
@@ -141,6 +142,7 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-25:** Session LC-05 abgeschlossen — 26 G (Forts.) + H-Zauber-Artikel angelegt (S. 94–120): gefaess-der-jahre, gefunden, geisterbann, geisterruf, granit-und-marmor, grosse-gier, grosse-verwirrung, halluzination, harmlose-gestalt, hartes-schmelze, haselbusch-und-ginsterkraut, heilkraft-bannen, hellsicht-trueben, herbeirufung-vereiteln, herr-ueber-das-tierreich, herzschlag-ruhe, hexenblick, hexengalle, hexenholz, hexenknoten, hexenkrallen, hexenspeichel, hilfreiche-tatze-rettende-schwinge, hoellenpein-zerreisse-dich, holterdipolter, horriphobus-schreckgestalt. `_zauber.md` G-Fortsetzung + H-Sektion befüllt. Nächste Session: LC-06 (I–K-Zauber, S. 121–149).
 - **2026-04-25:** Session LC-04 abgeschlossen — 10 F + G-Zauber-Artikel angelegt (S. 83–93): falkenauge, favilludo, firnlauf, flim-flam, fluch-der-pestilenz, foramen, fortifex, fulminictus, gardianum, gedankenbilder. `_zauber.md` F + G-Sektion befüllt. Nächste Session: LC-05 (H–K-Zauber, S. 94+).
 - **2026-04-25:** Session LC-03 abgeschlossen — 20 D + E-Zauber-Artikel angelegt (S. 63–82): daemonenbann, delicioso, desintegratus, destructibo, dichter-und-denker, dschinnenruf, dunkelheit, duplicatus, ecliptifactus, eigenschaft-wiederherstellen, eigne-aengste-quaelen-dich, einfluss-bannen, eins-mit-der-natur, eisenrost-und-patina, eiseskaelte-kaempferherz, elementarbann, elementarer-diener, elfenstimme, erinnerung-verlasse-dich, exposami. `_zauber.md` D + E-Sektion befüllt. Nächste Session: LC-04 (F-Zauber, S. 83+): Falkenauge, Favilludo, Firnlauf, Flim Flam, Fluch der Pestilenz, Foramen, Fortifex, Fulminictus, Gardianum, Gedankenbilder.
 - **2026-04-25:** Session LC-02 abgeschlossen — 25 B + C-Zauber-Artikel angelegt (S. 37–62). `_zauber.md` B + C-Sektion befüllt.
