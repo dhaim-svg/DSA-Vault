@@ -17,7 +17,7 @@ Die Wiki-Artikel werden systematisch aus den offiziellen DSA-4.1-Hardcover-Regel
 | Wege der Götter | WdG | ~52 | ✅ fertig |
 | Liber Liturgium | LL | ~236 Liturgien | ✅ fertig |
 | Wege der Alchimie | WdA | ~22 | ✅ fertig |
-| Wege des Entdeckers | WdE | — | ⚪ offen |
+| Wege des Entdeckers | WdE | ~12 | ✅ fertig |
 
 ---
 
@@ -41,7 +41,7 @@ wiki/
     ├── goetter/          Zwölf Götter, Volksreligionen, Liturgieregeln, Kulte
     ├── liturgien/        ~236 Liturgien alphabetisch (Liber Liturgium)
     ├── alchimie/         Brauregeln, Elixiere, Artefakte, Zauberzeichen, Materialien
-    ├── geographie/       (folgt mit Wege des Entdeckers)
+    ├── geographie/       Terraintypen, Reisen, Expedition, Wildnisüberleben, Wetter
     └── buecher/          Buchprofile der extrahierten Regelwerke
 ```
 

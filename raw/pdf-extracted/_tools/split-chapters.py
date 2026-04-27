@@ -114,11 +114,29 @@ PROFILE_WDA = {
     ]
 }
 
+PROFILE_WDE = {
+    "name": "wege-des-entdeckers",
+    "input": "wege-des-entdeckers/full.txt",
+    "chapters": [
+        # (slug, regex, min_line_0based)
+        ("vorwort",          r"^Gedanken zu diesem Buch",                         100),
+        ("sehnsucht",        r"^Die Sehnsucht nach der\s*$",                      174),
+        ("fremde-welt",      r"^Die fremde Welt\s*$",                             733),
+        ("vor-expedition",   r"^Die Zeit vor der Expedition\s*$",                2616),
+        ("unterwegs",        r"^Unterwegs in einer fremden\s*$",                 4499),
+        ("kampf-ueberleben", r"^Der t.gliche Kampf ums\s*$",                    5811),
+        ("wetter",           r"^Praios.* unbarmherziges Auge\s*$",              8209),
+        ("regeln",           r"^Regeln im .berblick\s*$",                        8972),
+        ("index",            r"^Index\s*$",                                      9217),
+    ]
+}
+
 PROFILES = {
     "wege-der-helden": PROFILE_WDH,
     "wege-des-schwertes": PROFILE_WDS,
     "wege-der-zauberei": PROFILE_WDZ,
     "wege-der-alchimie": PROFILE_WDA,
+    "wege-des-entdeckers": PROFILE_WDE,
     # "liber-liturgium": PROFILE_LL,     # Nur nötig falls LL Kapitel (nicht A-Z) hat
     # "wege-der-goetter": PROFILE_WDG,   # Ergänzen nach pdftotext + Kapitelstruktur-Prüfung
 }
