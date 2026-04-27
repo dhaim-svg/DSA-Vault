@@ -77,3 +77,40 @@ Wenn ich "compile DSA" oder "nächstes Kapitel" sage:
 - Auf OK warten
 - Artikel schreiben, _<ordnername>.md aktualisieren, _master-index.md aktualisieren
 - Abschlussreport mit neuen Dateien und offenen Fragen
+
+## Long-Session-Modus für ganze Bücher
+
+Wenn der User "ganzes Buch in einer Session", `/dsa-buch <kürzel>`, oder explizit
+"ohne Stops durchziehen" sagt: **Long-Session-Modus** aktivieren.
+
+**Kernidee:** Bulk-Texte (30k+ Zeilen) passen nicht in einen einzelnen Kontext.
+Lösung: Pro Kapitel (oder Buchstaben-Batch) einen `general-purpose` Sub-Agent
+dispatchen. Der Sub-Agent liest seinen Abschnitt und schreibt die Artikel selbst.
+Die Hauptsession orchestriert nur — der Bulk-Text liegt nie im Hauptkontext.
+
+### Setup (einmalig pro Buch)
+1. `full.txt` prüfen — falls fehlt: `pdftotext` ausführen (PDF-Pfad aus DSA-STATUS.md)
+2. Kapitel-Splits prüfen — falls fehlen UND Buch ist kapitelbasiert:
+   `python raw/pdf-extracted/_tools/split-chapters.py <buch-slug>`
+3. Alphabetische Bücher (LC-Stil, z.B. Liber Liturgium): kein Split nötig.
+   Stattdessen: Buchstaben-Batches à ~25–35 Einträge direkt aus `full.txt`.
+
+### Sub-Agent-Briefing (Pflichtinhalt)
+Jedes Briefing muss enthalten:
+- Exakter Pfad zur Kapitel-/Batch-Datei
+- Ziel-Ordner und Frontmatter-Schema (Pflichtfelder: typ, quelle, seite, …)
+- Konventionen aus DSA-STATUS.md → "Zentrale Design-Entscheidungen"
+- Liste bereits vorhandener Artikel (keine Duplikate)
+- Auftrag: Artikel schreiben + `_<ordner>.md` updaten + DSA-STATUS.md updaten + Kurzreport
+
+### Interaktivitäts-Modus (Hybrid)
+- **Kapitel 1:** Sub-Agent dispatchen → Stichprobe → **User-OK einholen**
+- **Kapitel 2+:** Autonom durchziehen ohne Rückfragen
+- **Unterbrechen NUR bei:** fehlenden Pflicht-Frontmatter-Feldern in >3 Artikeln,
+  unklarer Quellenseite, Errata-Konflikten, fehlgeschlagenem Kapitel-Split
+
+### Verifikation nach jedem Sub-Agent
+- `git status --short` — neue Dateien vorhanden?
+- `_<ordner>.md` — neue Zeilen eingetragen?
+- DSA-STATUS.md — Kapitel auf ✅ gesetzt?
+- 1 Stichproben-Artikel: Frontmatter korrekt, Wiki-Links syntaktisch ok?

@@ -2,6 +2,8 @@
 
 > **Handoff-Dokument.** Single source of truth für den Fortschritt der DSA-4.1-Regelwerk-Extraktion. Am Anfang jeder Session lesen, am Ende jedes Kapitels aktualisieren.
 
+**Letzte Aktivität:** 2026-04-26 — WdA-06 abgeschlossen: 1 neuer Artikel in `alchimie/` — `magische-materialien.md` (Sympathetik/Affinitäts-System vollständig, Metalle klassisch/magisch/transsphärisch mit Modifikatoren, Gesteine inkl. Koschbasalt-Regelkasten, Petromantie mit vollständiger Zhavino-Edelstein-Tabelle 21 Steine, Hölzer, Höhlenpflanzen/Exotica/Theriak/Alicorn/Drachenzutaten, alchimistische Grundstoffe + Preislisten). `_alchimie.md` auf 22 Einträge erweitert. **Wege der Alchimie vollständig abgeschlossen** (6 Batches, 22 Artikel gesamt). — WdA-05 abgeschlossen: 6 neue Artikel in `alchimie/` — `zauberzeichen-grundregeln.md` (Oberbegriff, SF-Voraussetzungen, Erstellungs-/Aktivierungs-Probe, AsP=3×Komplexität, Reaktivierung, Materialien-Expertenregel, neue Zeichen gestalten), `arkanoglyphen.md` (Kern-/Nebenglyphen-System, Wirkungsarten, vollst. Tabelle 32 Arkanoglyphen + 8 Zusatzzeichen mit AP-Kosten und Komplexität), `bannkreise.md` (Bannkreis vs. Schutzkreis, Zirkelstärke-Mechanik, Untergruppen-Einschränkung +3/+6, 9 Zirkel vollständig), `runen.md` (Geschichte Hjaldinger/Olport/Wiederentdeckung 1020 BF, Farbbedeutungen, 22 Runen vollständig mit hjaldingschen Namen, Ottagaldr-Mechanik), `geheimschriften.md` (6 Schriften: Amulashtra/Arkanil/Drakhard-Zinken/Gimaril/Nanduria/Zhayad mit Typus/Ursprung/Komplexität; Arkanil als gefährliches Zauberzeichen; Kryptographie-Methoden), `magische-analyse.md` (Intensitätsbestimmung 8 Methoden + Detailgrad-Tabelle, Strukturanalyse ANALYS/OCULUS/Labor/Infundibulum + ZfP*-Ergebnistabellen, Analyse-Schwierigkeiten für Alchimika/Artefakte/Zauberzeichen). `_alchimie.md` auf 21 Zeilen aktualisiert. **Wege der Alchimie Batch 05 vollständig.** — WdA-04 abgeschlossen: 2 neue Artikel in `alchimie/` — `register-artefakte.md` (alle 48 Artefakte in 9 Kategorien als Tabellen + Einzelbeschreibungen: Waffen 5, Rüstungen 3, Kleidung 3, Beutel 3, Werkzeug 9, Schmuck 11, Möbel 4, Schwarze Augen 18, Sonstiges 5) und `schwarze-augen-artefakte.md` (eigene Mechanik: Meteoreisen-Entstehung, Codex Albyricus, vollständige Exemplar-Liste, Weiße/Rote Augen, SL-Hinweise). `_alchimie.md` auf 14 Zeilen aktualisiert. **Wege der Alchimie Batch 04 vollständig.** — WdA-03 abgeschlossen: 2 neue Artikel in `alchimie/` — `artefakt-herstellung.md` (5 Kategorien, ZfP*-Formel + Tabellen, 7-Schritte-Ablauf, Auslöser, Kosten, Entzauberung, Kraftspeicher-Tabellen, Infinitum, Zauberwaffen, AK-Regel) und `artefakt-experten.md` (Versagensindex + Patzertabelle, Okkupation mit LO/MR/Charaktertypen, Agribaal, Nebeneffekt-2W20-Tabelle, Thaumaturgie aller Kulturen, SL-Tipps, vollständige SF-Liste). `_alchimie.md` auf 12 Zeilen aktualisiert. **Wege der Alchimie Batch 03 vollständig.** — `alchimie-handgelenk.md` (9 Rezepte), `elixiere-der-tugenden.md` (12 Virtutica-Elixiere), `gegenstands-elixiere.md` (7 Inanimatica), `gifte-alchimie.md` (12 Gifte + Zwei-Komponenten-System), `heilmittel-alchimie.md` (8 Spagyrik-Elixiere), `rauschmittel.md` (9 Narkotika), `wandlungselixiere.md` (11 Mutandica), `zaubermittel.md` (8 Magika inkl. Zaubertrank-AsP-Tabelle). `_alchimie.md` mit allen 10 Zeilen aktualisiert. **Wege der Alchimie Batch 02 vollständig.**
+
 - **Original-Plan (permanent):** [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-PLAN.md)
 - **Konventionen:** [CLAUDE.md](CLAUDE.md)
 
@@ -15,18 +17,81 @@ Reihenfolge: Pilot → Kampf → Magie → Götter → Alchimie → Aventurien.
 |---|------|--------|-----|--------|
 | 1 | Wege der Helden | WdH | `DSA 4.1 - Wege der Helden.pdf` | ✅ fertig |
 | 2 | Wege des Schwertes | WdS | `DSA 4.1 - Wege des Schwertes.pdf` | ✅ fertig |
-| 3 | Wege der Zauberei | WdZ | `DSA 4.1 - Wege der Zauberei.pdf` | 🟢 in Arbeit |
+| 3 | Wege der Zauberei | WdZ | `DSA 4.1 - Wege der Zauberei.pdf` | ✅ fertig |
 | 3a | Liber Cantiones | LC | `C01 - Liber Cantiones.pdf` | ✅ fertig (Zauber vollständig) |
-| 4 | Wege der Götter | WdG | `DSA 4.1 - Wege der Goetter.pdf` | ⚪ offen |
-| 4a | Liber Liturgium | LL | `C02 - Liber Liturgium.pdf` | ⚪ offen (parallel zu WdG) |
-| 5 | Wege der Alchimie | WdA | `DSA 4.1 - Wege der Alchimie.pdf` | ⚪ offen |
+| 4 | Wege der Götter | WdG | `DSA 4.1 - Wege der Goetter.pdf` | ✅ fertig |
+| 4a | Liber Liturgium | LL | `C02 - Liber Liturgium.pdf` | ✅ fertig |
+| 5 | Wege der Alchimie | WdA | `DSA 4.1 - Wege der Alchimie.pdf` | ✅ fertig |
 | 6 | Wege des Entdeckers | WdE | `DSA 4.1 - Wege des Entdeckers.pdf` | ⚪ offen |
 
 Legende: 🟢 in Arbeit · 🟡 pausiert · ✅ fertig · ⚪ offen · ⏭️ übersprungen
 
 ---
 
-## Aktives Buch: Liber Cantiones
+## Aktives Buch: Wege der Alchimie
+
+PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\DSA 4.1 - Wege der Alchimie.pdf`  
+Bulk-Text: `raw/pdf-extracted/wege-der-alchimie/full.txt` (12.840 Zeilen)  
+Kapitel-Splits: `raw/pdf-extracted/wege-der-alchimie/kapitel-*.txt`  
+Ziel-Ordner: `wiki/dsa-4.1/alchimie/`
+
+### Batch-Fortschritt (WdA)
+
+| Batch | Inhalt | Kapitel-Dateien | ~Artikel | Status |
+|-------|--------|-----------------|---------|--------|
+| WdA-01 | Buchprofil + Vorwort + Alchimie Grundregeln | kapitel-01-vorwort.txt + kapitel-02-alchimie-grundlagen.txt | 3 | ✅ fertig |
+| WdA-02 | Rezepte Aventuriens (alle Elixierkategorien) | kapitel-03-rezepte.txt | 7–8 | ✅ fertig |
+| WdA-03 | Magische Artefakte Regeln | kapitel-04-magische-artefakte.txt | 4–5 | ✅ fertig |
+| WdA-04 | Register aventurischer Artefakte | kapitel-05-register-artefakte.txt | 2–3 | ✅ fertig |
+| WdA-05 | Magie der Zeichen + Analyse | kapitel-06-magie-zeichen.txt | 5–6 | ✅ fertig |
+| WdA-06 | Materialien + Tabellen + Glossar | kapitel-07 bis -09 | 4–5 | ✅ fertig |
+
+---
+
+## Aktives Buch (vorher): Wege der Götter
+
+PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\DSA 4.1 - Wege der Goetter.pdf`  
+Bulk-Text: `raw/pdf-extracted/wege-der-goetter/full.txt`  
+Ziel-Ordner: `wiki/dsa-4.1/goetter/`
+
+### Batch-Fortschritt (WdG)
+
+| Batch | Inhalt | Seiten | ~Artikel | Status |
+|-------|--------|--------|---------|--------|
+| WdG-01 | Buchprofil + Mythologie (Los/Sumu, Sikaryan/Nayrakis) + Religion im Alltag | 6–31 | 3 | ✅ fertig |
+| WdG-02 | Zwölfgötter I: Praios, Ucuri, Rondra, Kor, Efferd, Swafnir + Überblick | 32–65 | 8 | ✅ fertig |
+| WdG-03 | Zwölfgötter II: Travia, Boron+Sub-Kirchen, Marbo, Hesinde, Nandus, Firun, Ifirn, Tsa | 66–107 | 8 | ✅ fertig |
+| WdG-04 | Zwölfgötter III: Phex, Aves, Peraine, Ingerimm, Angrosch, Rahja, Levthan, Bund, Ketzer, Namenloser | 108–159 | 10 | ✅ fertig |
+| WdG-05 | Volksreligionen: Waldmenschen, Nivesen, Gjalsker, Ferkinas, Trollzacker, Fjarninger, Orks, Goblins, Achaz, Norbarden, Rastullah, Rur/Gror, Sumu, Elfen, Myranor, Verborgene Völker | 160–236 | 16 | ✅ fertig |
+| WdG-06 | Liturgieregeln, Kultzuordnung, Vampirismus, Lykanthropie, Spieltipps, Religiöse Feste | 237–325 | 6 | ✅ fertig |
+
+---
+
+## Aktives Buch: Liber Liturgium
+
+PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\C02 - Liber Liturgium.pdf`  
+Bulk-Text: `raw/pdf-extracted/liber-liturgium/full.txt`  
+Ziel-Ordner: `wiki/dsa-4.1/liturgien/`
+
+### Batch-Fortschritt (LL)
+
+| Batch | Inhalt | Seiten | ~Artikel | Status |
+|-------|--------|--------|---------|--------|
+| LL-01 | Buch-Profil + Liturgieregeln + 12 Segnungen + Schnellreferenz-Kulte | 1–86 | ~16 | ✅ fertig |
+| LL-02 | A–B Liturgien | 87–121 | 33 | ✅ fertig |
+| LL-03 | C–E Liturgien | 122–146 | 25 | ✅ fertig |
+| LL-04 | F–G Liturgien | 147–177 | 31 | ✅ fertig |
+| LL-05 | H–K Liturgien | 178–204 | 27 | ✅ fertig |
+| LL-06 | L–O Liturgien | 205–225 | 21 | ✅ fertig |
+| LL-07 | P–Q Liturgien | 226–241 | 16 | ✅ fertig |
+| LL-08 | R Liturgien | 242–262 | 21 | ✅ fertig |
+| LL-09 | S1 Liturgien (Schattenlarve–Siegel Borons) | 263–290 | 28 | ✅ fertig |
+| LL-10 | S2–T Liturgien (Sippenfluch–Tsas wundersame Fruchtbarkeit) | 291–316 | 25 | ✅ fertig |
+| LL-11 | U–Z Liturgien | 317–344 | 28 | ✅ fertig |
+
+---
+
+## Aktives Buch (vorher): Liber Cantiones
 
 PDF: `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\C01 - Liber Cantiones.pdf`  
 Bulk-Text: `raw/pdf-extracted/liber-cantiones/full.txt`
@@ -142,6 +207,23 @@ Details → [raw/pdf-extracted/EXTRACTION-PLAN.md](raw/pdf-extracted/EXTRACTION-
 
 ## Letzte Aktivität
 
+- **2026-04-26:** WdA-06 abgeschlossen — 1 neuer Artikel in `alchimie/`: `magische-materialien.md` (vollständige Materialreferenz: Sympathetik-System mit 6 Elementen + Astrologie, Metalle klassisch/magisch/transsphärisch + sonstige mit allen Modifikatoren, Gesteine + Koschbasalt/Blaubasalt-Regelkasten, Petromantie-Kapitel mit 21 Edelsteinen nach Zhavino-Allegorien + Spielregeln ohne separate Datei integriert, Hölzer 13 Arten mit Modifikatoren, Höhlenpflanzen 9 Einträge mit Preisen, Exotica 21 Einträge inkl. Theriak/Alicorn/Drachen, alchimistische Grundstoffe + Laborausstattungs-Preisliste). `_alchimie.md` auf 22 Einträge erweitert. `wege-der-alchimie.md` mit genauen Seitenzahlen für alle Kapitel vervollständigt. **Wege der Alchimie vollständig: 6 Batches, 22 Artikel.**
+- **2026-04-26:** WdA-05 abgeschlossen — 6 neue Artikel in `alchimie/`: `zauberzeichen-grundregeln.md`, `arkanoglyphen.md` (32 Arkanoglyphen + 8 Zusatzzeichen), `bannkreise.md` (9 Zirkel), `runen.md` (22 Runen), `geheimschriften.md` (6 Schriften), `magische-analyse.md` (vollst. Analyse-Regelwerk). `_alchimie.md` auf 21 Einträge erweitert.
+- **2026-04-26:** WdA-04 abgeschlossen — 2 neue Artikel in `alchimie/`: `register-artefakte.md` (Katalog aller 48 Artefakte in 9 Kategorien: Waffen/Rüstungen/Kleidung/Beutel/Werkzeug/Schmuck/Möbel/Schwarze Augen/Sonstiges — vollständige Tabellen mit Wirkung, Wert, AsP/pAsP, Thesis; Einzelbeschreibungen für legendäre Stücke: Blutdorn, Frevlergewand, Reif der Dünengeister, Ring des Lebensspendenden Feuers, Siebengehörnte Dämonenkrone, Ankhatep-Tor, Ätherische Platten, Sulman al-Nassori, Oronische Traumsteine), `schwarze-augen-artefakte.md` (eigene Mechanik: Meteoreisen-Entstehung, OBJECTOFIXO-Pflicht, Codex Albyricus, 19 benannte Exemplare mit Transportierbarkeit/Status, Weiße/Rote Augen, SL-Hinweise). `_alchimie.md` auf 14 Zeilen aktualisiert.
+- **2026-04-26:** WdA-03 abgeschlossen — 2 neue Artikel in `alchimie/`: artefakt-herstellung (5 Kategorien, ZfP*-Tabellen, 7-Schritte-Ablauf, Auslöser-Tabellen, pAsP-Formeln, Kraftspeicher-Materialien mit Karat/AsP-Ratios, Entzauberungstabelle, Zauberwaffen alle Kategorien, AK-Regelung), artefakt-experten (Affinität/Material/Größe-Experte, Zeit/Ort-Experte inkl. Sternkonstellationen, Temporärer Speicher, Gemeinschaftliche Erschaffung, 10 optionale Eigenschaften mit Tabelle, Kombinations-Teilartefakte, Versagensindex + W20-Patzertabelle, Okkupation: Charaktertypen/LO/MR/Fähigkeiten/Agribaal, Nebeneffekte 2W20-Tabelle, Thaumaturgie aller Kulturen, SL-Tipps, SF-Tabelle mit Auxiliator). `_alchimie.md` auf 12 Zeilen aktualisiert.
+- **2026-04-26:** WdA-02 abgeschlossen — 8 neue Artikel in `alchimie/`: alchimie-handgelenk (9 archaische Rezepte: Eulentränen, Geheimtinte, Kaltes Licht, Pyrophor, Schattenkreide, Schwadenbeutel, Stinktöpfchen, Tränenkraut, Wundpulver), elixiere-der-tugenden (12 Virtutica: CH/FF/GE/IN/KL/KO/KK/MU/Respondarum/Scharfsinn/Willenstrunk/Zielwasser), gegenstands-elixiere (7 Inanimatica: Ewiges Öl, Hexensalbe, Hylailer Feuer, Magisches Brandöl, Sonnenlicht-Elixier, Stabilisatum, Waffenbalsam), gifte-alchimie (12 Venenik + Zwei-Komponenten-Gifte), heilmittel-alchimie (8 Spagyrik mit Antidot-Stufentabelle und Heiltrank-LeP-Tabelle), rauschmittel (9 Narkotika mit Abhängigkeitstabelle), wandlungselixiere (11 Mutandica), zaubermittel (8 Magika inkl. AsP-Zaubertranktabelle). `_alchimie.md` auf 10 Artikelzeilen erweitert.
+- **2026-04-26:** WdA-01 abgeschlossen — 3 neue Artikel: `buecher/wege-der-alchimie.md` (Buchprofil, Kapitelübersicht, Abkürzungen, Verwendungshinweise), `alchimie/alchimie-geschichte.md` (Ursprünge tulamidisch/echsisch/bosparanisch, Priesterkaiser-Ära, wichtige Alchimisten, 7 Alchimika-Gruppen, Traditionen/Schulen, Symbolschrift, Bund des Roten Salamanders, Bibliothek), `alchimie/alchimie-grundregeln.md` (Labor-Stufen, Brauvorgang, Qualitätstabelle, Zurückhalten, Astrales Aufladen, Substitutionen, Verdünnen, Haltbarkeit, Identifikation, Schale der Alchimie, Flüssig-Artefakte, Große Werke, Zufallstabellen). `_alchimie.md` und `_buecher.md` aktualisiert.
+- **2026-04-26:** WdG komplett (6 Batches, Long-Session-Modus) — 52 neue Artikel in `wiki/dsa-4.1/goetter/` + `buecher/wege-der-goetter.md`: mythologie-aventuriens, religion-alltag, zwölfgötter-überblick, praios, ucuri, rondra, kor, efferd, swafnir, travia, boron, marbo, hesinde, nandus, firun, ifirn, tsa, phex, aves, peraine, ingerimm, angrosch, rahja, levthan, bund-wahren-glaubens, ketzer-sekten, namenloser, waldmenschen-glaube, nivesen-glaube, gjalsker-glaube, ferkina-glaube, trollzacker-glaube, fjarninger-glaube, ork-glaube, goblin-glaube, achaz-glaube, norbarden-glaube, rastullah-glaube, rur-gror-glaube, sumu-glaube, elfen-glaube, myranor-goetter, verborgene-voelker-glaube, liturgien-grundregeln, liturgien-kultzuordnung, vampirismus, lykanthropie, spieltipps-geweihte, religiöse-feste. `_goetter.md` vollständig befüllt. **Wege der Götter Extraktion vollständig.**
+- **2026-04-26:** Session LL-11 abgeschlossen — 28 U–Z-Liturgien-Artikel angelegt (S. 317–344): ucuris-geleit, ueber-die-wolken, unterpfand-des-heiligen-rhys, unverstellter-blick, urischars-ordnender-blick, vaes-traenen, verborgen-wie-der-neumond, vertrauter-der-flamme, vertrauter-des-felsens, vertreibung-des-dunkelsinns, visionssuche, wachsamkeit-der-gaense, waffenfluch, waliburias-wehr, wandeln-in-hesindes-hain, weg-des-fuchses, wegzehrung-der-heiligen-salma, weihe-der-ewigen-flamme, weihe-der-letzten-ruhestatt, weisung-des-himmels, wille-zur-wahrheit, winterschlaf, wunderbarer-geschlechterwandel, wundersame-bluetenpracht, wundersames-teilen-des-martyriums, wundsegen, zerschmetternder-bannstrahl, zuflucht-finden. `_liturgien.md` U/V/W/Z-Sektionen befüllt. **Liber Liturgium Extraktion vollständig.**
+- **2026-04-26:** Session LL-10 abgeschlossen — 25 S2+T-Liturgien-Artikel angelegt (S. 291–316): sippenfluch, speisung-der-beduerftigten, speisung-der-hungernden-seelen, sprechende-symbole, sterne-funkeln-immerfort, sternenglanz, sternenspur, sternenstaub, sulvas-gnade, swafnirs-fluke, swafnirs-ruhelied, teilung-der-wasser, thalionmels-schlachtgesang, therbuens-erkenntnis, tierempathie, tiergestalt, travias-gebet-der-sicheren-zuflucht, travinians-segen-der-schwelle, trophaee-erhalten, tsas-ewige-jugend, tsas-heiliges-lebensgeschenk, tsas-lebensschutz, tsas-segensreicher-neuanfang, tsas-wunderbare-erneuerung, tsas-wundersame-fruchtbarkeit. `_liturgien.md` S2-Fortsetzung + T-Sektion befüllt. Nächste Session: LL-11 (U–Z-Liturgien, S. 317–344).
+- **2026-04-26:** Session LL-09 abgeschlossen — 28 S1-Liturgien-Artikel angelegt (S. 263–290): schattenlarve, schlaf-des-gesegneten, schlangenstab, schleichende-faeulnis, schneesturm, schnell-wie-eine-eidechse, schrifttum-ferner-lande, schutz-des-geleges, schwindende-zauberkraft, sechs-leben-des-mungos, seelenbannung, seelengefaehrte, seelenpruefung, seelenschatten, segen-der-heiligen-ardare, segen-der-heiligen-noiona, segen-der-heiligen-theria, segen-der-heiligen-velvenya, segen-des-heiligen-hluethar, segen-des-plaettlings, segensreiches-wasser, segnung-der-schlacht, segnung-der-staehlernen-stirn, segnung-des-heims, sichere-wanderung-im-schnee, sicherer-weg-durch-fels, sicht-auf-madas-welt, siegel-borons. `_liturgien.md` S-Sektion befüllt. Nächste Session: LL-10 (S2–T-Liturgien, S. 291–316).
+- **2026-04-26:** Session LL-07 abgeschlossen — 16 P–Q-Liturgien-Artikel angelegt (S. 226–241): parinors-vermaechtnis, pech-und-schwefel, peraines-pflanzengespuer, phexens-augenzwinkern, phexens-elsterflug, phexens-meisterschluessel, phexens-nebelleib, phexens-schatten, phexens-sternenwurf, phexens-verteidigung, phexens-wunderbare-verstaendigung, praios-magiebann, praios-mahnung, prophezeiung, purgation, quellsegen. `_liturgien.md` P+Q-Sektion befüllt. Nächste Session: LL-08 (R-Liturgien, S. 242–262).
+- **2026-04-26:** Session LL-06 abgeschlossen — 21 L–O-Liturgien-Artikel angelegt (S. 205–225): largorax-hammer-rufen, levthans-fesseln, licht-des-herrn, licht-des-verborgenen-pfades, lidaris-herz, lohn-der-unverzagten, mannschaftssegen, marbos-geleit, mikailspfeil, mondsilberzunge, namenlose-kaelte, namenlose-raserei, namenloser-zweifel-namenlose-erleuchtung, namenloses-vergessen, nemekaths-geisterblick, nemekaths-zwiesprache, neun-streiche-in-einem, nimmermuede-wanderschaft, objektsegen, objektweihe, ordination. `_liturgien.md` L/M/N/O-Sektionen befüllt. Nächste Session: LL-07 (P–Q-Liturgien, S. 226–241).
+- **2026-04-26:** Session LL-05 abgeschlossen — 27 H–K-Liturgien-Artikel angelegt (S. 178–204): handwerkssegen, hashnabiths-flehen, hauch-borons, hausfrieden, heilige-schmiedeglut, heiliger-befehl, heiliges-liebesspiel, herbeirufung-der-diener-des-herren, herbeirufung-der-heerscharen-des-rattenkindes, herr-ueber-feuer-und-glut, hilfe-in-der-not, hoftag-der-sprachen, indoktrination, ingalfs-alchimie, ingerimms-zorn-verschone-uns, initiation, innere-ruhe, jagdglueck, kaelbchensegen, khablas-jugend, khablas-makelloser-leib, kirschblueteregen, kleine-liturgie-des-heiligen-nemekath, kleine-segnung-des-heimsteins, kleiner-giftbann, konsekration, kraeftigung-der-schwachen-und-versehrten. `_liturgien.md` H, I/J, K-Sektionen befüllt. Nächste Session: LL-06 (L–O-Liturgien, S. 205–225).
+- **2026-04-26:** Session LL-04 abgeschlossen — 31 F–G-Liturgien-Artikel angelegt (S. 147–177): firuns-einsicht, firuns-zorn, flagge-des-regenbogens, fluch-wider-die-unglaeubigen, freundliche-aufnahme, frieden-der-melodie, fuenfte-lobpreisung-des-fruehlings, fuerbitten-des-heiligen-therbuens, garafans-gleissende-schwingen, gebet-des-kristallklaren-blicks, gebieter-der-lava, gelaeutert-sei-erz-und-goldgestein, gemeinschaft-der-treuen-gefaehrten, gesang-der-delphine, gesegneter-fang, geteiltes-leid, gift-der-erkenntnis, gleichklang-des-geistes, goettliche-strafe, goettliche-verstaendigung, goettliches-zeichen, goldene-ruestung, goldener-blick, golgaris-zwielicht, gott-der-goetter, graues-siegel, grosse-weihe-des-heimsteins, grosser-eidsegen, grosser-speisesegen, grosser-weihesegen-der-waffe, gruss-des-versunkenen. _liturgien.md F+G-Sektionen befüllt. Nächste Session: LL-05 (H–K-Liturgien, S. 178–204).
+- **2026-04-26:** Session LL-03 abgeschlossen — 25 C–E-Liturgien-Artikel angelegt (S. 122–146): canyzeths-weisheit, conagas-ruf, daradors-bann-der-schatten, das-schwarze-fell-durch-das-rote-blut, der-ueber-das-schlachtfeld-schreitet, des-einen-bezaubernder-sphaerenkland, die-goldene-hand, dorlens-verbruederung, dreifacher-saatsegen, efferdsegen, eherne-kraft-lodernder-zorn, ehrenhafter-zweikampf, eidechsenhaut, ein-bild-fuer-die-ewigkeit, ein-freund-in-zeiten-der-not, elementwandlung, entzug-von-nandus-gaben, erneuerung-des-geborstenen, erzieherische-massnahme-der-heiligen-yalsicena, etilias-gnade, ewige-jugend, ewiger-waechter, ewiges-wissen, exkommunikation, exorzismus. _liturgien.md C+D+E-Sektionen befüllt. Nächste Session: LL-04 (F–G-Liturgien, S. 147–177).
+- **2026-04-26:** Session LL-02 abgeschlossen — 33 A–B-Liturgien-Artikel angelegt (S. 87–121): aller-welt-freund, allmacht-der-lohe, alte-schuppen, anathema, angroschs-opfergabe, anrufung-der-erdkraft, anrufung-der-winde, anrufung-nuiannas, arcanum-interdictum, argelions-bannende-hand, argelions-mantel, argelions-spiegel, ascandears-hingabe, auge-des-haendlers, auge-des-mondes, auge-xeledons, aura-der-form, aura-des-regenbogens, azilas-quellgesang, bannfluch-des-heiligen-khalid, begehen-der-heiligen-wasser, belemans-hochzeit, bindung-der-schlange, birkenzweig, bishdariels-auge, bishdariels-warnung, blendstrahl-aus-alveran, blick-der-weberin, blick-fuer-das-handwerk, blick-in-die-flammen, bootssegen, borons-suesse-gnade, buchpruefung. _liturgien.md A+B-Sektion befüllt. Nächste Session: LL-03 (C–E-Liturgien).
+- **2026-04-26:** Session LL-01 abgeschlossen — Buchprofil `buecher/liber-liturgium.md`, Regelartikel `liturgien/liturgien-regeln.md`, 12 Segnungs-Artikel (eidsegen, feuersegen, geburtssegen, glueckssegen, grabsegen, harmoniesegen, heilungssegen, maertyrersegen, schutzsegen, speisesegen, tranksegen, weisheitssegen), Schnellreferenz `liturgien/schnellreferenz-kulte.md` (25 Kulte). `_liturgien.md` und `_buecher.md` aktualisiert. Nächste Aufgabe: LL-02 (A–B Liturgien).
 - **2026-04-26:** Session LC-10 abgeschlossen — 44 T–Z-Zauber-Artikel angelegt (S. 253–297): tauschrausch, tempus-stasis, tiere-besprechen, tiergedanken, tlalucs-odem-pestgestank, totes-handle, transformatio-formgestalt, transmutare-koerperform, transversalis-teleport, traumgestalt, unberuehrt-von-satinav, unitatio-geistesbund, unsichtbarer-jaeger, veraenderung-aufheben, verschwindibus, verstaendigung-stoeren, verwandlung-beenden, vipernblick, visibili-vanitar, vocolimbo-hohler-klang, vogelzwitschern-glockenspiel, wand-aus-dornen, warmes-blut, wasseratem, weiches-erstarre, weihrauchwolke-wohlgeruch, weisheit-der-baeume, weisse-maehn-und-goldner-huf, wellenlauf, wettermeisterschaft, widerwille-ungemach, windhose, windstille, wipfellauf, xenographus-schriftenkunde, zagibu-ubigaz, zappenduster, zauberklinge-geisterspeer, zaubernahrung-hungerbann, zauberwesen-der-natur, zauberzwang, zorn-der-elemente, zunge-laehmen, zwingtanz. `_zauber.md` T–Z-Sektionen befüllt. **Liber Cantiones Zauber-Extraktion vollständig.** Nächste Aufgabe: LC-Anhänge (Merkmallisten, Traditionsübersichten) oder nächstes Buch.
 - **2026-04-25:** Session LC-09 abgeschlossen — 32 S-Zauber-Artikel angelegt (S. 221–253): salander-mutander, sanftmut, sapefacta-zauberschwamm, satuarias-herrlichkeit, schabernack, schadenszauber-bannen, schelmenkleister, schelmenlaune, schelmenmaske, schelmenrausch, schleier-der-unwissenheit, schwarz-und-rot, schwarzer-schrecken, seelentier-erkennen, seelenwanderung, seidenweich-schuppengleich, seidenzunge-elfenwort, sensattacco-meisterstreich, sensibar-empathicus, serpentialis-schlangenleib, silentium-schweigekreis, sinesigil-unerkannt, skelettarius-totenherr, solidirid-weg-aus-licht, somnigravis-tiefer-schlaf, spinnenlauf, spurlos-trittlos, standfest-katzengleich, staub-wandle, stein-wandle, stillstand, sumus-elixiere. `_zauber.md` S-Sektion befüllt. Nächste Session: LC-10 (T–Z-Zauber).
 - **2026-04-25:** Session LC-08 abgeschlossen — 32 N–R-Zauber-Artikel angelegt (S. 185–220): nackedei, nebelleib, nebelwand-und-morgendunst, nekropathia-seelenreise, nihilogravo-schwerelos, nuntiovolo-botenvogel, objecto-obscuro, objectofixo, objectovoco, objekt-entzaubern, oculus-astralis, odem-arcanum, pandaemonium, panik-ueberkomme-euch, papperlapapp, paralysis-starr-wie-stein, pectetondo-zauberhaar, penetrizzel-tiefenblick, pentagramma-sphaerenban, pestilenz-erspueren, pfeil-des-elements, planastrale-anderwelt, plumbumbarum-schwerer-arm, projektimago-ebenbild, protectionis-kontrabann, psychostabilis, radau, reflectimago-spiegelschein, reptilea-natternnest, respondami-wahrheitszwang, reversalis-revidum, ruhe-koerper-ruhe-geist. `_zauber.md` N + O + P + R-Sektion befüllt. Nächste Session: LC-09 (S-Zauber).

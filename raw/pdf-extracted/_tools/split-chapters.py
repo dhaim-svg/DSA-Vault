@@ -89,10 +89,38 @@ PROFILE_WDZ = {
     ]
 }
 
+# ---------------------------------------------------------------------------
+# Liber Liturgium (LL): alphabetisch sortierte Liturgien — kein Kapitel-Split.
+# Stattdessen Buchstaben-Batches à ~25–35 Einträge direkt aus full.txt
+# verarbeiten (analog LC-01 bis LC-10). Falls LL doch Kapitel hat, hier
+# ein PROFILE_LL nach dem Muster der anderen Profile ergänzen.
+# ---------------------------------------------------------------------------
+
+PROFILE_WDA = {
+    "name": "wege-der-alchimie",
+    "input": "wege-der-alchimie/full.txt",
+    "chapters": [
+        # (slug, regex, min_line_0based)
+        ("vorwort",             r"^Vorwort\s*$",                                  126),
+        ("alchimie-grundlagen", r"^Alchimie .* die Magie des\s*$",               184),
+        ("rezepte",             r"^Rezepte Aventuriens\s*$",                     1600),
+        ("magische-artefakte",  r"^Magische Artefakte\s*$",                      4100),
+        ("register-artefakte",  r"^Register aventurischer\s*$",                  6100),
+        ("magie-zeichen",       r"^Die Magie der Zeichen\s*$",                   7700),
+        ("materialien",         r"^Magische Materialien und\s*$",               10300),
+        ("tabellen",            r"^Tabellen\s*$",                               11400),
+        ("glossar",             r"^Glossar\s*$",                               11900),
+        ("index",               r"^Index\s*$",                                 12100),
+    ]
+}
+
 PROFILES = {
     "wege-der-helden": PROFILE_WDH,
     "wege-des-schwertes": PROFILE_WDS,
     "wege-der-zauberei": PROFILE_WDZ,
+    "wege-der-alchimie": PROFILE_WDA,
+    # "liber-liturgium": PROFILE_LL,     # Nur nötig falls LL Kapitel (nicht A-Z) hat
+    # "wege-der-goetter": PROFILE_WDG,   # Ergänzen nach pdftotext + Kapitelstruktur-Prüfung
 }
 
 

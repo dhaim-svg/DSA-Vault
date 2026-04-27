@@ -25,7 +25,7 @@ Jeder Artikel gibt seine Quelle mit Seitenangabe an.
 | [[invokation/_invokation\|Invokation & Besessenheit]] | Elementarwesen, Geister, Dämonen, Untote, Chimären, Golems; Besessenheitsregeln |
 | [[liturgien/_liturgien\|Liturgien]] | Alle Liturgien der Gottgeweihten (Liber Liturgium) |
 | [[goetter/_goetter\|Götter]] | Die Zwölf Götter, Kulte, klerikale Regeln |
-| [[alchimie/_alchimie\|Alchimie]] | Rezepte, Zutaten, Brauregeln |
+| [[alchimie/_alchimie\|Alchimie]] | Brauregeln, Elixiere (8 Kategorien), Artefakte, Zauberzeichen, Runen, Materialien (WdA) |
 | [[geographie/_geographie\|Geographie]] | Aventurien, Regionen, Städte (Wege des Entdeckers) |
 
 ## Zentrale Regelmechaniken
@@ -43,8 +43,8 @@ Jeder Artikel gibt seine Quelle mit Seitenangabe an.
 | Wege der Helden | WdH | 340 | Charaktererschaffung |
 | Wege des Schwertes | WdS | 210 | Kampf & Talente |
 | Wege der Zauberei | WdZ | 434 | Magie-Regelwerk |
-| Wege der Götter | WdG | — | Geweihte & Götter |
-| Wege der Alchimie | WdA | — | Alchimie |
+| Wege der Götter | WdG | 328 | Geweihte & Götter |
+| Wege der Alchimie | WdA | 213 | Alchimie, Artefaktherstellung, Zauberzeichen |
 | Wege des Entdeckers | WdE | — | Geographie & Aventurien |
 | Liber Cantiones | LC | — | Zauberkompendium |
 | Liber Liturgium | LL | — | Liturgienkompendium |

@@ -92,6 +92,16 @@ Pro Kapitel – Dual-Lesung:
 6. **Status aktualisieren:** Kapitel auf ✅ setzen, nächstes auf 🟢 markieren, "Letzte Aktivität" ergänzen
 7. **Abschlussreport:** neue Dateien, getroffene Entscheidungen, offene Fragen
 
+## Long-Session-Modus (ganzes Buch in einer Session)
+
+→ Vollständige Beschreibung in **[CLAUDE.md](../../CLAUDE.md)** → Sektion "Long-Session-Modus für ganze Bücher".
+
+Kurzübersicht: Per Sub-Agent-Dispatch (1 Sub-Agent pro Kapitel/Batch) bleibt der
+Hauptkontext klein genug für 5–10 Kapitel hintereinander. Hybrid-Modus: User-OK
+nach Kapitel 1, dann autonom. Aufruf via `/dsa-buch <kürzel>` oder `/dsa-naechstes-kapitel`.
+
+Pilot: **Liber Liturgium (LL)** als erster Long-Session-Test (alphabetisch, LC-Stil, ~Buchstaben-Batches).
+
 ## Bücher-Reihenfolge
 
 1. **Wege der Helden (WdH)** – Pilotbuch: Charaktererschaffung, Rassen, Kulturen, Professionen, Vor-/Nachteile

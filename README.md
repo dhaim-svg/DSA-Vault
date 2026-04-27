@@ -8,15 +8,16 @@ Die Wiki-Artikel werden systematisch aus den offiziellen DSA-4.1-Hardcover-Regel
 
 ## Enthaltene Regelwerke
 
-| Buch | Status |
-|------|--------|
-| Wege der Helden (WdH) | ✅ fertig |
-| Wege des Schwertes (WdS) | ✅ fertig |
-| Wege der Zauberei (WdZ) | 🟢 in Arbeit |
-| Wege der Götter (WdG) | ⚪ offen |
-| Liber Liturgium (LL) | ⚪ offen |
-| Wege der Alchimie (WdA) | ⚪ offen |
-| Wege des Entdeckers (WdE) | ⚪ offen |
+| Buch | Kürzel | Artikel | Status |
+|------|--------|---------|--------|
+| Wege der Helden | WdH | ~160 | ✅ fertig |
+| Wege des Schwertes | WdS | ~15 | ✅ fertig |
+| Wege der Zauberei | WdZ | ~35 | ✅ fertig |
+| Liber Cantiones | LC | ~200 Zauber | ✅ fertig |
+| Wege der Götter | WdG | ~52 | ✅ fertig |
+| Liber Liturgium | LL | ~236 Liturgien | ✅ fertig |
+| Wege der Alchimie | WdA | ~22 | ✅ fertig |
+| Wege des Entdeckers | WdE | — | ⚪ offen |
 
 ---
 
@@ -30,13 +31,17 @@ wiki/
     ├── kulturen/         ~50 Kulturen, geographisch gruppiert
     ├── professionen/     ~130 Professionen (kämpferisch, magisch, geweihte …)
     ├── vor-nachteile/    Vorteile, Nachteile, Schlechte Eigenschaften, SF-Listen
+    ├── sonderfertigkeiten/ SF-Übersichten (allgemein, Kampf, magisch, klerikale)
     ├── talente/          Talentregeln, Talentliste, Meta-Talente, Sprachen & Schriften
     ├── kampf/            Kampfmechanik, Manöver, SF, Referenztabellen, Waffenherstellung
-    ├── magie/            Zauberregeln, Repräsentationen, Metamagie, Artefakte, Alchimie …
+    ├── magie/            Zauberregeln, Repräsentationen, Metamagie, Artefakte, Invokation …
+    ├── zauber/           Alle ~200 Zauber alphabetisch (WdZ + Liber Cantiones)
     ├── rituale/          Alle Ritualtradtionen (Hexe, Druide, Geode, Schamane …)
     ├── invokation/       Dämonen, Elementare, Geister, Untote, Chimären, Golems
-    ├── liturgien/        (folgt mit WdG)
-    ├── zauber/           (folgt mit Liber Cantiones)
+    ├── goetter/          Zwölf Götter, Volksreligionen, Liturgieregeln, Kulte
+    ├── liturgien/        ~236 Liturgien alphabetisch (Liber Liturgium)
+    ├── alchimie/         Brauregeln, Elixiere, Artefakte, Zauberzeichen, Materialien
+    ├── geographie/       (folgt mit Wege des Entdeckers)
     └── buecher/          Buchprofile der extrahierten Regelwerke
 ```
 
