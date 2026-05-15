@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/dsa-4.1/vor-nachteile/vorteile.md",
-                "mode": "preview",
+                "file": "wiki/dsa-4.1/professionen/magier.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vorteile"
+              "title": "magier"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "wiki/dsa-4.1/vor-nachteile/vorteile.md",
+                "file": "DSA-STATUS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for vorteile"
+              "title": "Backlinks for DSA-STATUS"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "wiki/dsa-4.1/vor-nachteile/vorteile.md",
+                "file": "DSA-STATUS.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from vorteile"
+              "title": "Outgoing links from DSA-STATUS"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "wiki/dsa-4.1/vor-nachteile/vorteile.md",
+                "file": "DSA-STATUS.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of vorteile"
+              "title": "Outline of DSA-STATUS"
             }
           }
         ]
@@ -183,43 +183,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "f9b36d1e1cc3570f",
+  "active": "c4e0309b0a7eb190",
   "lastOpenFiles": [
-    "wiki/dsa-4.1/kulturen/mittellaender-kulturen.md",
-    "DSA-STATUS.md.tmp.100148.1777118065626",
-    "wiki/dsa-4.1/magie/magische-gilden.md",
-    "wiki/dsa-4.1/magie/magische-gilden.md.tmp.100148.1777118032453",
+    "wiki-luecken.md.tmp.31676.4efb676d9c56",
+    "helden/illaen-baernhold/vorgeschichte.md",
+    "helden/illaen-baernhold/ausruestung.md.tmp.29736.5af962e74c9f",
+    "helden/illaen-baernhold/vor-nachteile.md.tmp.29736.7e723b01122c",
+    "wiki-luecken.md.tmp.29736.cd5d109958d1",
+    "wiki-luecken.md.tmp.29736.49504ba0524f",
+    "wiki-luecken.md.tmp.29736.4147deff2d6a",
+    "wiki/dsa-4.1/professionen/akademien/stoerrebrandt-kolleg-riva.md",
+    "wiki/dsa-4.1/professionen/akademien",
+    "wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md",
+    "wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md.tmp.29736.f7c74e6b6589",
+    "helden/illaen-baernhold/helden/illaen-baernhold/_illaen.md",
+    "helden/illaen-baernhold/helden/illaen-baernhold",
+    "helden/illaen-baernhold/helden",
+    "wiki-luecken.md.tmp.29736.5fd86215f818",
+    "wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md",
+    "wiki-luecken.md",
+    "helden/illaen-baernhold/talente.md",
+    "helden/illaen-baernhold/rituale.md",
+    "helden/illaen-baernhold/zauber.md",
+    "helden/illaen-baernhold/sonderfertigkeiten.md",
+    "helden/illaen-baernhold/ausruestung.md",
+    "helden/illaen-baernhold/steigerungs-log.md",
+    "helden/illaen-baernhold/vor-nachteile.md",
+    "helden/illaen-baernhold/_illaen.md",
+    "abenteuer/drachenchronik/_drachenchronik.md",
+    "abenteuer/_abenteuer.md",
+    "helden/_helden.md",
+    "output/errata-durchgang-2026-05.md",
+    "wiki/dsa-4.1/sonderfertigkeiten/_sonderfertigkeiten.md",
+    "wiki/dsa-4.1/kulturen/nordaventurien-kulturen.md",
     "wiki/dsa-4.1/kulturen/_kulturen.md",
-    "wiki/dsa-4.1/rassen/nivesen.md",
-    "wiki/dsa-4.1/magie/chronica-magica.md",
-    "raw/pdf-extracted/EXTRACTION-PLAN.md",
-    "DSA-STATUS.md.tmp.100148.1777107994122",
-    "wiki/dsa-4.1/invokation/_invokation.md",
-    "wiki/dsa-4.1/invokation/daemonen.md",
-    "wiki/dsa-4.1/invokation/chimaeren-golems.md",
-    "wiki/dsa-4.1/invokation/untote-nekromantie.md",
-    "wiki/dsa-4.1/invokation/besessenheit.md",
-    "wiki/dsa-4.1/invokation/geister.md",
-    "wiki/dsa-4.1/invokation/elementarwesen.md",
-    "wiki/dsa-4.1/invokation/invokation-grundregeln.md",
-    "wiki/dsa-4.1/invokation",
-    "raw/pdf-extracted/wege-der-zauberei/kapitel-13-welt-sphaeren.txt",
-    "wiki/dsa-4.1/professionen/amazone.md",
-    "DSA-STATUS.md.tmp.100148.1777103159979",
-    "wiki/dsa-4.1/rituale/derwisch-trommelrituale.md",
-    "wiki/dsa-4.1/rituale/ferkina-rituale.md",
-    "wiki/dsa-4.1/rituale/durro-dun-rituale.md",
-    "wiki/dsa-4.1/rituale/schamanenrituale.md",
-    "wiki/dsa-4.1/rituale/zibilja-rituale.md",
-    "wiki/dsa-4.1/rituale/druiden-rituale.md",
-    "wiki/dsa-4.1/rituale/geoden-rituale.md",
-    "DSA-STATUS.md.tmp.100148.1777095989753",
-    "wiki/dsa-4.1/magie/magische-bibliothek.md",
-    "wiki/dsa-4.1/rituale/kristallomanten-rituale.md",
-    "wiki/dsa-4.1/rituale/elfenlieder.md",
-    "wiki/dsa-4.1/rituale/hexenrituale.md",
-    "DSA-STATUS.md.tmp.100148.1777066517524",
-    "DSA-STATUS.md.tmp.100148.1777066008747",
-    "DSA-STATUS.md.tmp.100148.1777065999944"
+    "DSA-STATUS.md",
+    "wiki/dsa-4.1/alchimie/zauberzeichen-grundregeln.md",
+    "wiki/dsa-4.1/geographie/wetter-regeln.md",
+    "wiki/dsa-4.1/geographie/orientierung.md"
   ]
 }

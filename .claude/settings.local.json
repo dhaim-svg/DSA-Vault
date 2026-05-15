@@ -31,7 +31,19 @@
       "Bash(grep -n \"^[A-ZÄÖÜ][a-zäöüßA-ZÄÖÜ ]*\\\\\\(des\\\\|der\\\\|von\\\\\\)\\\\?[a-zäöüßA-ZÄÖÜ ]*$\\\\|^Die [A-ZÄÖÜ]\\\\|^Das [A-ZÄÖÜ]\\\\|^Der [A-ZÄÖÜ]\\\\|^Im Bund\\\\|^Eigenschaften\\\\|^Golem\\\\|^Chimär\\\\|^Untot\\\\|^Daimonid\\\\|^Nephazz\\\\|^Bannung\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/kapitel-10-invokation.txt\")",
       "Bash(git init *)",
       "Bash(git remote *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(pdftotext -layout -enc UTF-8 \"C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/C01 - Liber Cantiones.pdf\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/liber-cantiones/full.txt\")",
+      "Bash(\"D:/Projects/Tools/poppler-25.12.0/Library/bin/pdftotext.exe\" -layout -enc UTF-8 \"C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/C02 - Liber Liturgium.pdf\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/liber-liturgium/full.txt\")",
+      "Bash(grep -n \"Liturgien von A-Z\\\\|^Liturgien$\\\\|Übersicht der Liturgien\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/liber-liturgium/full.txt\")",
+      "Bash(\"D:/Projects/Tools/poppler-25.12.0/Library/bin/pdftotext.exe\" -layout -enc UTF-8 \"C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/DSA 4.1 - Wege der Goetter.pdf\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-goetter/full.txt\")",
+      "Bash(\"D:/Projects/Tools/poppler-25.12.0/Library/bin/pdftotext.exe\" -layout -enc UTF-8 \"C:/Users/David/Google Drive/DSA/DSA_Buecher/001. Regelwerke/005. DSA4.1/DSA 4.1 - Wege der Alchimie.pdf\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-alchimie/full.txt\")",
+      "Bash(grep -n \"^Vorwort$\\\\|^Stofflichen$\\\\|^Rezepte\\\\b\\\\|^Magische Artefakte$\\\\|^Die Magie\\\\b\\\\|^Magische Materialien$\\\\|^Tabellen$\\\\|^Glossar$\\\\|^Index$\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-alchimie/full.txt\")",
+      "Bash(grep -n \"^Rezepte Aventuriens$\\\\|^Magische Artefakte$\\\\|^Die Magie der Zeichen$\\\\|^Magische Materialien\\\\|^Tabellen$\\\\|^Glossar$\\\\|^Index$\\\\|^Vorwort$\\\\|^Alchimie – die Magie\\\\|^Alchimistischen Zutaten\" \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-alchimie/full.txt\")",
+      "Bash(awk 'NR>=1800 && NR<=2100 && /^[A-ZÄÖÜ][a-zäöüA-ZÄÖÜ ]/ && length\\($0\\) < 50' \"d:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-alchimie/full.txt\")",
+      "Bash(grep -E \"^\\\\d+\\\\s+\\\\d+$\")",
+      "Bash(grep -n \"^\\\\s*[0-9][0-9]\\\\s*$\\\\|^\\\\s*[0-9][0-9][0-9]\\\\s*$\" \"D:/Projects/KnowledgeBase/DSA-Vault/raw/pdf-extracted/wege-der-zauberei/kapitel-02-grundlagen.txt\")"
     ]
   }
 }
