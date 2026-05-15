@@ -72,6 +72,10 @@ Kor ist der Halbgott des Kampfes, Sohn der Kriegsgöttin [[rondra]] und des Hohe
 - **Heilige Artefakte:** Urschrift des Khunchomer Kodex; Schwarzer Speer (Razhashthar, ca. 4 Schritt lang, gehütet vom Richter der Neun Streiche)
 - **Gebet:** laut und prahlerisch, alle Beinamen Kors, roter oder schwarzer Rauch, Waffengeklirr, Geruch frischen Blutes
 
+## Errata
+*(Quelle: Wege der Götter Errata 2009)*
+- S. 238: Weihe von Zauberern — Die Kor-Kirche brennt ihren Geweihten die Astralkraft nicht aus, da die Purgation in der Kirche nicht vorhanden ist und sie auch keine anderen Kirchen beauftragt, die Purgation vorzunehmen. Zauberer sind in der Kor-Kirche trotzdem nicht erwünscht.
+
 ## Key Takeaways
 
 - Kor ist ein Halbgott, kein vollständiger zwölfgöttlicher Gott – sein Status im Pantheon ist umstritten (Rondra-Kirche hegt Sagen über dämonischen Ursprung)

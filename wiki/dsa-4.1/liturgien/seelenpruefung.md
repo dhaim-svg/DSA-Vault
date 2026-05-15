@@ -30,7 +30,7 @@ Der Geweihte betet um Einsicht, schlägt das Zeichen seiner Gottheit und berühr
 Der Geweihte erfährt, wie es um die geprüfte Seele steht. Er kann erkennen:
 
 - Ob sie initiiert oder einem Gott geweiht wurde
-- Ob sie mit dem Mal des Frevlers behaftet ist
+- ~~Ob sie mit dem Mal des Frevlers behaftet ist~~ *(Errata 2009: Das Mal des Frevlers kann mit der Seelenprüfung **nicht** erkannt werden.)*
 - Ob sie einen Pakt mit einem Dämon geschlossen hat
 - Ob sie unter Anathema steht
 

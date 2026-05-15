@@ -2,6 +2,8 @@
 
 > **Handoff-Dokument.** Single source of truth für den Fortschritt der DSA-4.1-Regelwerk-Extraktion. Am Anfang jeder Session lesen, am Ende jedes Kapitels aktualisieren.
 
+**Letzte Aktivität:** 2026-05-15 — Errata WdG eingearbeitet: 30 Errata-Einträge bearbeitet; APPLY: 18 in 15 Dateien, ADD: 4, SKIP: 2, SKIPPED-NOT-IN-WIKI: 6. Geänderte Artikel: seelenpruefung.md, liturgien-kultzuordnung.md, kor.md, liturgien-grundregeln.md, swafnir.md, eidsegen.md, glueckssegen.md, schutzsegen.md, sternenstaub.md, sichere-wanderung-im-schnee.md, rahjas-schoss.md, rahjas-sinnlichkeit.md, wunderbarer-geschlechterwandel.md, goettliche-verstaendigung.md, goldene-ruestung.md, innere-ruhe.md, grosser-weihesegen-der-waffe.md, argelions-bannende-hand.md, canyzeths-weisheit.md, lykanthropie.md, praios.md, religion-alltag.md.
+
 **Letzte Aktivität:** 2026-05-15 — Errata WdZ eingearbeitet: 35 Edits in 15 Artikeln (APPLY: 22, ADD: 13, SKIP: 16, NOT-IN-WIKI: 16). Geänderte Artikel: zauberregeln.md, metamagie.md, artefakte.md, zauberer-steigerung.md, invokation-grundregeln.md, elementarwesen.md, geister.md, daemonen.md, untote-nekromantie.md, chimaeren-golems.md, magische-gilden.md, magier.md (professionen), geoden-rituale.md, druiden-rituale.md, traummagie.md (SF Traumgänger bereits enthalten).
 
 **Letzte Aktivität:** 2026-05-15 — Errata WdS eingearbeitet: 44 Edits in 7 Artikeln (SKIP: 4, NOT-IN-WIKI: 14). Geänderte Artikel: kampfregeln.md, kampf-referenztabellen.md, waffenmeister.md, talentregeln.md, sprachen-schriften.md, steigerung.md, umfassende-regeln.md.
@@ -27,6 +29,7 @@
 | WdH | Wege-der-Helden_Errata-2007-08 | 29 | 10 | 12 | 22 | ✅ |
 | WdS | Wege des Schwerts Errata (2008) | 30 | 14 | 4 | 14 | ✅ |
 | WdZ | Wege-der-Zauberei_Errata-2011 | 22 | 13 | 16 | 16 | ✅ |
+| WdG | Wege-der-Goetter_Errata-2009 | 18 | 4 | 2 | 6 | ✅ |
 
 ---
 

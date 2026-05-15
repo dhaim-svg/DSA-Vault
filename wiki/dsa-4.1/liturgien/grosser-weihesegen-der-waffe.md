@@ -30,6 +30,8 @@ Durch diese Liturgie werden alle Waffen des Heeres (eine pro Kämpfer) einfach g
 
 Durch mangelndes rondragefälliges Verhalten des Trägers verschwindet die Weihe vor Ablauf der Wirkungsdauer.
 
+Die Wirkungsdauer von LkP* Tagen ist gewollt, da die Segnung nur für eine Schlacht gilt und sonst durch Aufstufung eine Wirkungsdauer von LkP* Monaten erreicht werden könnte *(Errata 2009, S. 261)*. Diese Liturgie ist auch in der Kirche des Kor bekannt *(Errata 2009; WdH 322 / WdG 283)*.
+
 ## Key Takeaways
 
 - Massenweihung: alle Heereswaffen (1 pro Kämpfer) werden einfach geweiht

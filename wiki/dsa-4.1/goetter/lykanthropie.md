@@ -11,6 +11,10 @@
 
 ---
 
+## Gestalt der Werwesen
+
+Es gibt keine verbindliche oder einheitliche Regelung über die Gestalt von Werwesen — dies liegt ganz im Ermessen des Spielleiters *(Errata 2009, S. 170/298)*. Typisch ist eine Verwandlung in eine Wergestalt — meist die eines aufrecht gehenden Wolfs oder eines stark „vertierten" Menschen.
+
 ## Typen von Werwesen
 
 Der Begriff "Werwolf" wird stellvertretend für alle Lykanthropen verwendet. Belegte Typen:
@@ -26,7 +30,7 @@ Der Begriff "Werwolf" wird stellvertretend für alle Lykanthropen verwendet. Bel
 
 - Lykanthropie ist eine **Krankheit der Stufe 20**
 - Übertragung durch **Biss** eines infizierten Lykanthropen
-- Übertragungsrate: 95% (Ausnahme: erfolgreiche KO-Probe+20)
+- Übertragungsrate: 5% pro erlittenem SP (z.B. 10–20 auf W20 bei 11 SP); Probe auf Ansteckung einmalig nach Ende des Kampfs, wenn dem Gebissenen nicht eine KO-Probe +20 gelingt (Resistenzen und Immunitäten helfen) *(Errata 2009, S. 298)*
 - **Immun**: Elfen und Zwerge (wissen es meist selbst nicht)
 - Die Bisswunde bricht immer wieder auf (auch nach Heilung), erste Tage: 1W+2 → 1W+1 → 1W → 1W–1 SP täglich bis zum Verheilen
 

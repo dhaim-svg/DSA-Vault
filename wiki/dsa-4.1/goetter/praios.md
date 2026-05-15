@@ -75,7 +75,7 @@ Praios ist der Götterfürst des Zwölfgöttlichen Pantheons, Gott der Sonne, de
 ### Orden
 
 - **Heilige Inquisition** (seit 865 BF): Bekämpfung von Häresien, Dämonenbündlerei, Schwarzmagie; Großinquisitor Amando Laconda da Vanya
-- **Sonnenlegion**: Leibgarde des Heliodan, Eskorte der Inquisition; Marschall Praiowin von Orkenfeld
+- **Sonnenlegion**: Leibgarde des Heliodan, Eskorte der Inquisition; Marschall Praiowin von Orkenfeld; gegründet um BF von der späteren Lichtbotin Praiosmin II. *(Errata 2009: WdG S. 17 nannte irrtümlich „um 200 v.BF")*
 - **Orden vom Bannstrahl Praios'** (Bannstrahler/Geißler): fanatischer Laienorden, Magiebann, Schutzheiliger Gilborn von Punin
 - **Ucuriaten** (Orden des Goldenen Falken): Herolde und Botschafter aller Zwölfgötterkirchen
 - **Orden des Heiligen Hüters** (seit 849 BF): Verwahrung praiosgefälligen und -ungefälligen Wissens

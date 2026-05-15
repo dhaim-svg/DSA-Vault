@@ -22,7 +22,7 @@
 | 335–465 BF | Epoche der **Priesterkaiser**: Boten des Lichts regieren als Kaiser; massive Konflikte (Erntefestmassaker, Verbot von Rur/Gror, Glaubenskriege) |
 | 468 BF | Rohal hebt Verbot von Rur und Gror auf |
 | 760 BF | «Rastullahs Erscheinen» in Keft; Novadis verdrängen andere Kulte aus der Khôm |
-| 1.015–1.021 BF | Borbarads Rückkehr; Entstehung von Dämonenkulten; Dritte Dämonenschlacht |
+| 1.015–1.021 BF | Borbarads Rückkehr; Entstehung von Dämonenkulten; Dritte Dämonenschlacht (23./24. ING 1021 BF) *(Errata 2009: WdG S. 20 nannte irrtümlich 1022 BF)* |
 | 1.021 BF | Lichtvogel verkündet Ende des Elften und Beginn des Zwölften Zeitalters |
 
 ### Das Silem-Horas-Edikt und seine Folgen

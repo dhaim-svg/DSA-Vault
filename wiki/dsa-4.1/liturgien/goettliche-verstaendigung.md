@@ -36,6 +36,8 @@ Mit dieser Liturgie kann die Geweihte eine Botschaft mit einer Länge von bis zu
 
 Die meisten Geweihten nutzen diese Liturgie nur in größter Not oder wenn es auf üblichem Wege nicht möglich ist, eine Nachricht abzusetzen. Das Ziel-Kategorie kann bei dieser Liturgie nicht aufgestuft werden; nur der Geweihte selbst kann die Nachricht übermitteln.
 
+Göttliche Verständigung ist ein Spezialfall bei der Aufstufung: Man kann nicht einfach aufstufen, sondern muss die Varianten (Grad III, IV) separat erlernen *(Errata 2009, S. 255)*.
+
 ## Key Takeaways
 
 - Sofortkommunikation über weite Distanz (Heimattempel)

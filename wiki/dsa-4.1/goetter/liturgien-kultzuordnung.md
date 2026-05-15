@@ -149,7 +149,7 @@ Allgemeine Liturgien (Zwölf Segnungen, universelle Liturgien) sind nicht immer 
 ## Boron (Al'Anfaner Ritus)
 
 - Wie Puniner Ritus bei Grad I (mit Ruf zur Ruhe, Schlaf des Gesegneten statt Göttl. Zeichen)
-- [[../liturgien/bishdariels-auge]], Handwerkssegen, Heiliger Befehl, [[../liturgien/initiation]], Kleine Liturgie des Heiligen Nemekath, Kräutersegen des Heiligen Nemekath, Nemekaths Geisterblick, [[../liturgien/objektweihe]], Ruf in Borons Arme, [[../liturgien/weihe-der-letzten-ruhestatt]] (Grad II)
+- [[../liturgien/bishdariels-auge]], [[../liturgien/goettliche-verstaendigung]] *(Errata 2009)*, Handwerkssegen, Heiliger Befehl, [[../liturgien/initiation]], Kleine Liturgie des Heiligen Nemekath, Kräutersegen des Heiligen Nemekath, Nemekaths Geisterblick, [[../liturgien/objektweihe]], Ruf in Borons Arme, [[../liturgien/weihe-der-letzten-ruhestatt]] (Grad II)
 - [[../liturgien/bannfluch-des-heiligen-khalid]], [[../liturgien/exkommunikation]], [[../liturgien/grosser-eidsegen]], Hauch Borons, Nemekaths Bannfluch, Salbung der Heiligen Noiona, [[../liturgien/seelenPruefung]], Segen der Heiligen Noiona, Segen der Heiligen Velvenya, [[../liturgien/tiergestalt]], [[../liturgien/visionssuche]] (Grad III)
 - [[../liturgien/borons-suesse-gnade]], [[../liturgien/indoktrination]], Nemekaths Zwiesprache, [[../liturgien/ordination]] (Grad IV)
 - [[../liturgien/anathema]], [[../liturgien/konsekration]] (Grad V)

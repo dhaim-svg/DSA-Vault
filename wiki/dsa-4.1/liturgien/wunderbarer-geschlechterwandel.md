@@ -2,7 +2,7 @@
 typ: liturgie
 name: Wunderbarer Geschlechterwandel
 grad: III
-ziel: "P oder G"
+ziel: P  # Errata 2009: G gestrichen, da in P enthalten
 reichweite: "Berührung / Selbst"
 art: Speziell
 herkunft:

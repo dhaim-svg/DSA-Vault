@@ -34,6 +34,7 @@
 - Abkürzungen: **LkW** = Liturgiekenntnis-Wert · **LkP** = übrig behaltene Liturgiepunkte · **LkP*** = im Sinne der ZfP*
 - Mit LkW als Ausgleichswert bei der **Mirakelprobe** (analog Talentprobe)
 - Zweite Liturgiekenntnis möglich, erfordert aber neue Spätweihe (erste LkW kann nicht mehr gesteigert werden)
+- Beim Erwerb einer zweiten Liturgiekenntnis sinkt die erste außerdem um 7 Punkte *(Errata 2009: Ergänzung aus WdS S. 173)*
 
 ## Mirakelprobe
 
@@ -53,13 +54,13 @@
 | Unter magischer Beherrschung | +12 |
 | Frisch konvertierter Geweihter (bis 3 Jahre) | +3 |
 | Geweihter als Eidbrecher / Frevler | +3 / +7 |
-| Auf geweihtem Boden (anderer Zwölf) | –1 |
-| In Kapelle / Schrein der Gottheit | –2 |
-| Im Tempel der Gottheit | –3 |
-| An Heiligem Ort | –4 |
-| Im Territorium von Ungläubigen/Zweiflern | +3 |
-| In anderer Welt/Globule/Limbus | min. +7 |
-| Auf dämonisch verzerrtem Territorium | min. +7 |
+| Auf geweihtem Boden (anderer Zwölf) | –1 ¹ |
+| In Kapelle / Schrein der Gottheit | –2 ¹ |
+| Im Tempel der Gottheit | –3 ¹ |
+| An Heiligem Ort | –4 ¹ |
+| Im Territorium von Ungläubigen/Zweiflern | +3 ¹ |
+| In anderer Welt/Globule/Limbus | min. +7 ¹ |
+| Auf dämonisch verzerrtem Territorium | min. +7 ¹ |
 | Im Monat des Zwölfgottes | –1 |
 | Am Feiertag der Gottheit | –3 |
 | Während der Namenlosen Tage | +7 |
@@ -74,7 +75,7 @@
 | Liturgie Grad V | +8 |
 | Liturgie Grad VI | +10 |
 
-Modifikatoren nach Zeit, Ort und Seelenlage gelten **halbiert** bei Mirakelbonus-Proben.
+¹ Modifikatoren nach Ort (und Zeit, Seelenlage) gelten **halbiert** bei Mirakelbonus-Proben *(Errata 2009: Fußnote 1 zur Ort-Tabelle S. 244)*.
 
 ## Mirakel (KaP-Direkteinsatz)
 
@@ -112,13 +113,19 @@ Modifikatoren nach Zeit, Ort und Seelenlage gelten **halbiert** bei Mirakelbonus
 | VIII | 40 | +14 | 7 pKaP |
 
 - Grad VII/VIII nur durch Aufstufung erreichbar
-- **Primäre Segnung (Grad 0)**: jede Kirche hat genau eine; für Geweihte dieser Kirche –2 erleichtert und nur 2 KaP
+- **Primäre Segnung (Grad 0)**: jeder Geweihte verfügt über genau eine primäre Segnung; dies erstreckt sich nicht auf Varianten der entsprechenden Liturgie *(Errata 2009)*; für Geweihte dieser Kirche –2 erleichtert und nur 2 KaP
+- Probe-Beispiel Primäre Segnung (Errata 2009, S. 243): Basismodifikator +/–0 für Grad I; +2 wegen Aufstufung → Probe um 2 erschwert
+
+### Erlernen von Liturgievarianten
+
+Alle Varianten von Liturgien, bei denen nicht explizit steht, dass sie nicht extra gelernt werden müssen, müssen mit AP gekauft werden *(Errata 2009, S. 247)*.
 
 ### Aufstufung von Liturgien
 
 - Pro Veränderung (Ziel, Reichweite, Ritualdauer, Wirkungsdauer) +1 Grad + Probe um weitere +2 erschwert
 - Max. eine Aufstufung pro Kategorie
 - Wirkungsstärke steigt proportional (außer bei Ritualdauer-Senkung)
+- Beim Aufstufung der Reichweite einer Liturgie von Sicht ist die nächste Stufe immer Fern, jedoch maximal LkW/2 Meilen *(Errata 2009, S. 249)*
 
 ### Wirkungsstärken nach Grad
 

@@ -2,7 +2,7 @@
 typ: liturgie
 name: Sternenstaub
 grad: II
-ziel: G
+ziel: P  # Errata 2009: G gestrichen, da in P enthalten
 reichweite: Sicht
 art: Speziell
 herkunft:

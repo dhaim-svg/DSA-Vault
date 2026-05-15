@@ -24,7 +24,7 @@ Der Geweihte nimmt die Hände des Gesegneten, blickt ihn an und ruft im Namen de
 
 ## Auswirkung
 
-Der Gesegnete darf eine Probe wiederholen und das günstigere Ergebnis wählen — wie der Vorteil Glück (WdH S. 251). Dies ist jedoch nur bei Talenten möglich, die dem Wesen der Gottheit des segnenden Geweihten nicht zuwider laufen.
+Der Gesegnete darf eine Probe wiederholen und das günstigere Ergebnis wählen — wie der Vorteil Glück (WdH S. 251). Dies ist jedoch nur bei Talenten möglich, die dem Wesen der Gottheit des segnenden Geweihten nicht zuwider laufen. Die frühere Einschränkung „maximal bis zur nächsten Talentprobe" wird gestrichen *(Errata 2009, S. 252)*.
 
 ## Varianten
 

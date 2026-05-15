@@ -34,6 +34,8 @@ Diese Liturgie ermöglicht es dem Geweihten, Einflüsse auf sein Urteilsvermöge
 
 Auch angesichts größter Schrecken kann der Praiosgeweihte sich dank dieser Liturgie auf sein inneres Licht besinnen.
 
+Die Reichweite ist Selbst — der Nutznießer der Liturgie bleibt immer der Geweihte selbst *(Errata 2009, S. 317)*.
+
 ## Key Takeaways
 
 - Grad I — leicht zugänglich für alle Praios-Geweihten

@@ -33,6 +33,8 @@ Die Liturgie ruft die Tafel der Erzheiligen Canyzeth herbei, die allen Anwesende
 
 Die Tafel der Canyzeth ist ein Talisman der Hesindekirche. Mehr zum Talisman findet sich in Wege der Götter auf Seite 86.
 
+Canyzeths Weisheit gilt als eigene Liturgie und muss somit vollständig (voll) mit AP bezahlt werden — es handelt sich nicht um eine Variante von [[ingalfs-alchimie]] *(Errata 2009, S. 269 f.)*.
+
 ## Key Takeaways
 
 - Ruft den Talisman „Tafel der Erzheiligen Canyzeth" herbei

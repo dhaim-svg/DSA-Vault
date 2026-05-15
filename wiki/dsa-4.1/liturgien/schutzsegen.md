@@ -32,12 +32,15 @@ Die Zone bewegt sich nicht mit der Geweihten mit.
 - **Grad II:** Die Liturgie kann auf eine größere Art unheiliger Wesen ausgedehnt werden (z.B. alle Untoten) oder der markierte Bereich gilt als zweifach geweiht.
 - **Grad III:** Ausdehnung auf größere Art unheiliger Wesen und zweifache Weihe kombinierbar.
 
+Die einzelnen Varianten des Schutzsegens müssen nicht separat erlernt werden *(Errata 2009, S. 253)*. Die frühere Einschränkung, dass Swafnir-Geweihte nur eine Variante gegen unheilige Meeresbewohner kennen, wird gestrichen *(Errata 2009, S. 253)*.
+
 ## Key Takeaways
 
 - Primäre Segnung von Rondra
 - Universell — für alle Kulte verfügbar
 - Wirkung: Zonenschutz (Z) gegen selbst gewählte Art unheiliger Wesen
 - Zone statisch — bewegt sich nicht mit
+- Varianten müssen nicht separat erlernt werden *(Errata 2009)*
 - Für dauerhafte Schutzweihe und Schutz gegen alle Arten → Konsekration empfohlen
 
 ## Verwandte Artikel

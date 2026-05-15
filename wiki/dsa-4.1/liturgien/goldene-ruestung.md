@@ -36,6 +36,8 @@ Der Geweihte wird in eine Aureole gleißenden Lichts gehüllt, die ihn schützt:
 
 Auf lichtscheue und lichtempfindliche Wesen wirkt die Aureole wie normales Sonnenlicht.
 
+Die Reichweite ist Selbst — der Nutznießer der Liturgie bleibt immer der Geweihte selbst *(Errata 2009, S. 259)*.
+
 ## Key Takeaways
 
 - Schützende Lichtaura: MU-Probe LkP*/2 erschwert zum Angreifen

@@ -2,7 +2,7 @@
 typ: liturgie
 name: Rahjas Schoß
 grad: IV
-ziel: G oder P
+ziel: P  # Errata 2009: G gestrichen, da in P enthalten
 reichweite: Berührung
 art: Speziell
 herkunft:

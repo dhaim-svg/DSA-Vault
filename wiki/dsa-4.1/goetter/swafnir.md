@@ -74,9 +74,14 @@ Swafnir ist der Gottwal der Thorwaler – ihr „großer Bruder", der sie seit j
 - Der eschatologische Aspekt (Endschlacht gegen Hranngar) gibt dem Kult eine starke mythologische Tiefe
 - In Thorwal politisch mächtiger als die zwölfgöttlichen Kirchen; Geweihte sitzen beim Hjaldinge als Ratgeber und Richter
 
+## Errata
+*(Quelle: Wege der Götter Errata 2009)*
+- S. 243: Die primäre Segnung der Swafnir-Geweihten ist der **Tranksegen** *(Errata 2009)*.
+
 ## Verwandte Artikel
 
 - [[efferd]] – Vater Swafnirs; in zwölfgöttlicher Sicht übergeordnet
 - [[rondra]] – Mutter Swafnirs
+- [[../liturgien/tranksegen]] – Primäre Segnung der Swafnir-Kirche
 - [[../liturgien/_liturgien]] – Liturgien der Kirche (teilt viele mit der Efferd-Kirche)
 - [[zwölfgötter-überblick]] – Übersicht des Pantheons

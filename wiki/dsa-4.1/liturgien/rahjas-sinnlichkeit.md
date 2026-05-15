@@ -2,7 +2,7 @@
 typ: liturgie
 name: Rahjas Sinnlichkeit
 grad: VI
-ziel: P oder G
+ziel: P  # Errata 2009: G gestrichen, da in P enthalten
 reichweite: Berührung / Selbst
 art: Speziell
 herkunft:

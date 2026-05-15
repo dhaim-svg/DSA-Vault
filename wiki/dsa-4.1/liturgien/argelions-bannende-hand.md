@@ -33,6 +33,7 @@ Die Geweihte schlägt das Zeichen der Göttin und stimmt den sechsten Vers der C
 - Schwächt oder beendet Wirkung von Zaubern/Ritualen der Merkmale: Eigenschaften, Einfluss, Form, Herrschaft, Illusion, Objekt oder Umwelt
 - Die LkP*+15 der Geweihten werden von den ZfP* des Zaubers abgezogen
 - Fallen ZfP* auf 0 oder darunter: Zauber gänzlich aufgehoben
+- Eine permanente Wirkung tritt ein, wenn 15 + LkP* die ZfP* des Zaubers übersteigen *(Errata 2009, S. 269)*
 - Gegen Flächenzauber wirkt die Liturgie als Zone (Z)
 
 ## Key Takeaways

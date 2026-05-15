@@ -2,7 +2,7 @@
 typ: liturgie
 name: Sichere Wanderung im Schnee
 grad: II
-ziel: P (G)
+ziel: P  # Errata 2009: G gestrichen, da in P enthalten
 reichweite: Berührung / Selbst
 art: Speziell
 herkunft:

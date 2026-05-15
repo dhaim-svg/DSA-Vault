@@ -27,6 +27,8 @@ Der Schwörende lässt einige Tropfen Blut in eine Schale fallen; bei mehreren S
 
 Wird der Eid gebrochen, tritt die im Eid vereinbarte Strafe ein (sinngemäße, nicht wörtliche Auslegung). Wird keine Strafe festgelegt, gilt die eidbrechende Partei als Eidbrecher. Ist die Erfüllung des Eides gefährlich, sind MU-Proben um LkP*/2 erleichtert.
 
+Die Dauer wird im Eid selbst festgelegt, höchstens aber LkP* Monate. Gerne wird nominell „ein Jahr und ein Tag" geschworen, auch wenn die karmale Wirkung nicht so lange andauert. Zu lebenslang bindenden Eiden siehe den [[grosser-eidsegen|Großen Eidsegen]] *(Errata 2009, S. 251)*.
+
 Erzwungene Eide werden durch diese Liturgie nicht gesegnet und sind nichtig.
 
 ## Varianten
