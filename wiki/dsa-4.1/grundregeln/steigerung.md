@@ -70,6 +70,10 @@ Kosten in AP, um einen Wert von **n** auf **n+1** zu steigern.
 > Im späteren Spiel gilt dieser Deckel nicht mehr.
 
 ## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 166: Erwerb von Sonderfertigkeiten im Heldenleben — Im Gegensatz zur Generierung gilt im späteren Heldenleben: kein SF-Erwerb ohne passende Voraussetzungen (auch keine Ausnahmen durch Kultur oder Profession).
+- S. 176: Steigern von Übernatürlichen Begabungen — Statt "Spezielle Begabung" muss es heißen: **"Spezielle Erfahrung"**.
+
 *(Quelle: Wege der Helden Errata 2007)*
 - S. 18, Kurz-SKT Spalte F: Die abgedruckte Spalte F ist fehlerhaft. Korrekte Werte ab Aktivierung: 8, 6, 14, 22, 32, 41, 50, 60, 75, 85, 95, 105, 120, 130, 140, 155, 165, 180, 195, 210, 220. Ergänzungsspalten G und H: G = 10, 8, 18, 30, 42, 55, 70, 85, 95, 110, 125, 140, 160, 175, 190, 210, 220, 240, 260, 270, 290; H = 20, 16, 35, 60, 85, 110, 140, 165, 195, 220, 250, 280, 320, 350, 380, 410, 450, 480, 510, 550, 580. Referenz: SKT in Basis 198. Talent Schleuder verwendet Steigerungsspalte E.
 - S. 19, Steigern von Zaubern (Fremde Repräsentationen): Scharlatane lernen Zauber in gildenmagischer Repräsentation nur 1 Spalte erschwerst, in schelmischer Repräsentation 2 Spalten. Schelme lernen Zauber in fremden Repräsentationen 3 Spalten erschwerst; alle anderen Zauberer lernen Schelmensprüche 3 Spalten erschwerst. Ausnahme: Scharlatane lernen Schelmensprüche nur 2 Spalten erschwerst (und umgekehrt).

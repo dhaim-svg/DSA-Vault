@@ -11,6 +11,7 @@
 - Probe gelingt, wenn TaP ≥ 0 nach allen drei Würfen.
 - TaP* = übrig behaltene Talentpunkte (Qualitätsmaßstab).
 - Modifikatoren (–7 sehr leicht bis +25 legendär) werden auf die Eigenschaftswerte **addiert** (Erleichterung = niedrigere Eigenschaft nötig ist falsch; +7 bedeutet die Eigenschaft gilt +7 höher).
+- Talentwerte liegen in einem Rahmen von **0 bis 24** *(Errata 2008)*.
 
 ### Offene Probe
 - Keine Erschwernis angesetzt; TaP* bestimmt die Ergebnisgüte (z.B. Qualität eines Heilkundeeingriffs, Zahl erbeuteter Fische).
@@ -96,7 +97,7 @@ Pro Punkt Erschwernis, der ignoriert werden soll: Probe +5 erschwert. Wirkung be
 
 | Talent | Attr. | Typ | eBE | Wichtigste Besonderheiten |
 |--------|-------|-----|-----|--------------------------|
-| Betören | IN/CH/CH | Spezial | BE–2 | Nur eigene Spezies standard; andere Rassen → starker Zuschlag; Voraussetzung: Menschenkenntnis 4 |
+| Betören | IN/CH/CH | Spezial | BE–2 | Nur eigene Spezies standard; andere Rassen → starker Zuschlag; Voraussetzung: Menschenkenntnis 4; Spezialisierungen: nach Kultur sowie nach Rahjakünste und Festgestaltung *(Errata 2008)* |
 | Etikette | KL/IN/CH | Spezial | BE–2 | Verdeckte Probe; stark kulturabhängig (SF Kulturkunde) |
 | Gassenwissen | KL/IN/CH | Spezial | BE–4 | Städtische Orientierung, Kontakte, Strukturwissen; verdeckte Probe |
 | Lehren | KL/IN/CH | Spezial | – | TaW > 10 req. Menschenkenntnis 4; Einsatz beim gegenseitigen Lernen S. 167 |
@@ -224,13 +225,13 @@ Zum Entziffern einzelner Buchstaben: TaW = 2; kurze Sätze: TaW = Kompl./3; Gebr
 
 #### Heilkunde Wunden (KL/CH/FF) Basis
 **Erste Hilfe** (Patient ≤ 0 LeP):
-- Probe, um –X×2 erschwert (X = LeP unter 0); Dauer = |LeP unter 0| – TaP* KR, mind. 2 KR.
-- Gelingt: Patient hat 1 LeP, Todesgefahr gebannt. Misslingt: +1W6 SP, wiederholbar.
+- Probe, um –X×2 erschwert (X = LeP unter 0); Dauer mindestens 2 KR *(Errata 2008)*.
+- Gelingt: Patient hat 1 LeP, Todesgefahr gebannt. Misslingt: +1W6 SP *(Errata 2008)*, wiederholbar.
 
 **Heilung fördern** (nicht lebensbedrohlich):
 - **Erste Probe** (4 SR): allgemeine Versorgung, Blutungen stoppen; Misslingt → kein Heilen, erhöhte Wundfieber-Gefahr (KO-Wurf +3).
-- **Zweite Probe** (direkt danach): Regenerationsförderung; Patient gewinnt TaP*/2 LeP (zusätzlich zur normalen Regeneration). Je 7 TaP* schließt eine Wunde sofort.
-- **Nachbehandlung** (täglich, ab Tag 2): Je 3 TaP* → +1 auf folgende KO-Probe zur Regeneration.
+- **Zweite Probe** (direkt danach): Regenerationsförderung; Patient gewinnt TaP*/2 LeP (zusätzlich zur normalen Regeneration). Je 7 TaP* schließt eine Wunde sofort — gilt nur bei der Erstversorgung (direkt nach Wundreinigung) *(Errata 2008)*. Zusätzliche TaP* können im Verhältnis 2:1 auf die folgende nächtliche Regeneration angerechnet werden.
+- **Nachbehandlung** (täglich, ab Tag 2): Je 3 TaP* → +1 auf folgende KO-Probe zur Regeneration *(Errata 2008)*.
 
 **Zuschläge bei Wunden** (Trefferzonensystem):
 | Zuschlag | Wunde |
@@ -308,7 +309,7 @@ Drei Proben: **Erkennungsprobe** (5 KR) → Gift identifiziert; **Behandlungspro
 
 ### Berufsgeheimnis
 Geheimes Handwerkswissen, das spezielle Verfahren oder Materialien erlaubt.  
-**Voraussetzung:** Haupttalent TaW ≥ 15, ein bis zwei Hilfstalente TaW ≥ 7  
+**Voraussetzung:** Haupttalent TaW ≥ 15, ein bis zwei Hilfstalente TaW ≥ 7. Um Arkanil als Berufsgeheimnis wählen zu können, muss man Arkanil nicht bereits kennen *(Errata 2008)*.  
 **Kosten:** 100 AP (selten mehr)  
 **Auswahl (Auszug):**
 
@@ -386,6 +387,14 @@ Grundwert und spezialisierter TaW steigen getrennt.
 - **Berufsgeheimnisse** sind Exklusiv-Wissen für TaW ≥ 15-Meister; Talentspezialisierungen dagegen +2-Boni auf Teilbereiche ab TaW 7.
 
 ---
+
+## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 7: Talentwerte liegen in einem Rahmen von 0 bis **24** (nicht höher).
+- S. 23: Betören — Spezialisierungen nach Kultur sowie nach Rahjakünste und Festgestaltung erlaubt.
+- S. 37: Heilkunde Wunden / Erste Hilfe — Probe dauert mindestens 2 KR; bei Misslingen erleidet Patient 1W6 weitere SP.
+- S. 37/161: Heilkunde Wunden / Wundreinigung — Je 7 TaP* schließen Wunde sofort und ohne KO-Probe nur bei der Erstversorgung direkt nach Wundreinigung. Zusätzliche TaP* ansonsten 2:1 auf nächtliche Regeneration anrechenbar. Nachbehandlungen ab Tag 2: je 3 TaP* → +1 auf KO-Probe zur Regeneration.
+- S. 41: Berufsgeheimnis Arkanil — Voraussetzung ist nicht, Arkanil bereits zu kennen.
 
 ## Verwandte Artikel
 

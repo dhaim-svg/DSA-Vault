@@ -16,9 +16,9 @@ Ein Held mit **Waffenmeister** gehört zu den unangefochten besten Kämpfern sei
 
 | Bedingung | Wert |
 |-----------|------|
-| Investierte AP in Kampf-SF (inkl. Professions-SF) | ≥ 2.500 AP |
+| Investierte AP in Kampf-SF (inkl. Professions-SF) | ≥ 2.500 AP (bei Fernwaffe: ≥ 1.500 AP) *(Errata 2008)* |
 | TaW in der betreffenden Waffengattung | ≥ 18 |
-| Spezialisierung auf die entsprechende Waffe | erforderlich |
+| Spezialisierung auf die entsprechende Waffe | erforderlich — **nur wenn für das entsprechende Talent Spezialisierung überhaupt erlaubt ist** *(Errata 2008)* |
 | Eigenschafts-Anforderungen (2 aus MU, IN, FF, GE, KK) | Summe ≥ 32, davon GE ≥ 13 |
 
 ## Vorteile: Baukasten-System (15 Punkte)
@@ -31,7 +31,7 @@ Jeder Waffenmeister erhält **15 Punkte** Boni nach folgendem Schlüssel:
 | INI-Bonus +1 (max. 2 INI) | 3 Punkte |
 | TP/KK –1/–1 (nur bei Dolchen/Fechtwaffen; einmalig) | 2 Punkte |
 | Genereller AT- oder PA-WM +1 (max. 2) | 5 Punkte |
-| Aufhebung der Erschwernis beim ersten Angriff eines Ausfalls | 2 Punkte |
+| Aufhebung der Erschwernis beim ersten Angriff eines Ausfalls | 2 Punkte *(zählt als Erschwernis-Verminderung)* *(Errata 2008)* |
 | Zusätzlich erlaubtes Manöver (max. 1) | 5 Punkte |
 | Reichweitengewinn 10 % bei Fernwaffe (max. 2) | 1 Punkt |
 | Reduzierung Gezielte-Schüsse-Zuschlag –1 (einmalig) | 2 Punkte |
@@ -83,9 +83,16 @@ Verbreitung: 2
 - Gilt als Dolch [2 Punkte]
 = 15 Punkte
 
+## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 17: Waffenmeister/Waffenspezialisierung (Allgemein) — Bei Kampftalenten, für die keine Spezialisierung möglich ist, ist Spezialisierung keine geforderte Voraussetzung für den Erwerb der Waffenmeisterschaft.
+- S. 77: SF Waffenmeister — Voraussetzung Spezialisierung nur dann, wenn sie für das entsprechende Talent erlaubt ist.
+- S. 190: Waffenmeister-Berechnung — Verbesserung des Bonus auf Einzelattacken/-paraden bei Klingensturm/Klingenwand (+2) um 1 zählt als Erschwernis-Verminderung = 1 Punkt. Aufhebung der Erschwernis beim ersten Ausfall-Angriff = 2 Punkte (Erschwernis-Verminderung). Veränderung TP/KK-Wert nur einmalig. Genereller AT/PA-WM +1 kostet 5 Punkte (max. 2).
+- S. 191: Waffenmeister für Fernwaffe — Nur 1.500 AP in passenden Sonderfertigkeiten erforderlich.
+
 ## Key Takeaways
 
-- Waffenmeister = Endgame-SF (2.500 AP SF-Investment, TaW 18, Spezialisierung).
+- Waffenmeister = Endgame-SF (2.500 AP SF-Investment, TaW 18, Spezialisierung — bei Fernwaffe 1.500 AP).
 - Individuell gestaltbar: 15 Punkte aus einem Baukasten, nicht fixe Werte.
 - Schildmeister braucht keinen TaW 18, aber SF-Kombination.
 - Verbreitung 1 oder 2 — spiegelt Seltenheit wider.

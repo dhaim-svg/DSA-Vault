@@ -19,7 +19,7 @@ Kompakte Nachschlagetabellen für häufige Kampfsituationen. Ergänzt die ausfü
 | SF Ausweichen I | –3 |
 | SF Ausweichen II | –6 |
 | SF Ausweichen III | –9 |
-| TaW Akrobatik pro 3 TaP\* über 9 | –1 |
+| TaW Akrobatik pro 3 TaP\* über 9 | –1 | *(Errata 2008: Akrobatik, nicht Athletik)* |
 
 ## Distanzklassen (Fehler beim Einsatz)
 
@@ -63,7 +63,7 @@ Kompakte Nachschlagetabellen für häufige Kampfsituationen. Ergänzt die ausfü
 | Hüfttiefes Wasser | +4 | +6 |
 | Schultertiefes Wasser | +6 | +6 |
 | Unter Wasser | +6 | +2 |
-| Beengt, lange Schwungwaffe | unmöglich | +2 |
+| Beengt, lange Schwungwaffe (inkl. als Anderthalbhänder geführte Schwerter) | unmöglich | +2 | *(Errata 2008)* |
 | Beengt, kurze Schwungwaffe | +2 | — |
 | Beengt, Stangenwaffe | +2 | +2 |
 | Liegend angreifen | +3 | +5 |
@@ -73,7 +73,7 @@ Kompakte Nachschlagetabellen für häufige Kampfsituationen. Ergänzt die ausfü
 | Gegen fliegende Wesen | +2 | +4 |
 | Mit falscher Hand | +9 | +9 |
 | Mit falscher Hand + SF Linkhand | +6 | +6 |
-| Mit falscher Hand + Beidhändiger Kampf I | +3 | +3 |
+| Mit falscher Hand + Beidhändiger Kampf I | +3 *(Errata 2008)* | +3 *(Errata 2008)* |
 | Verteidiger überrumpelt | –5 | — |
 | Verteidiger schlafend/bewusstlos/gefesselt | –8 | — |
 | Ziel vollkommen unbeweglich | –10 | — |
@@ -223,6 +223,12 @@ Kompakte Nachschlagetabellen für häufige Kampfsituationen. Ergänzt die ausfü
 | 3–10 | Waffe beschädigt (Sehne gerissen / Mechanik verklemmt); 30 Aktionen bis schussfähig; Wurfwaffe: wie Ergebnis 2; INI –3 |
 | 11–12 | Fehlschuss; Projektil verloren; 2 Aktionen bis schussfähig; Wurfwaffe verloren; INI –2 |
 | — | Kameradenfeuer: trifft nächsten Freund; Ansage-Boni entfallen; INI –3 |
+
+## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 66/197: Ausweichen-Tabelle — In der letzten Zeile muss Athletik durch **Akrobatik** ersetzt werden.
+- S. 58: Beengte Umgebung — Als 'lange Schwungwaffen' zählen auch alle als Anderthalbhänder geführten Schwerter. Infanteriewaffen: AT +2 / PA +2; Speere: PA +2.
+- S. 198: Falscher Hand + Beidhändiger Kampf I: AT +3 / PA +3 (nicht +6/+6).
 
 ## Verwandte Artikel
 

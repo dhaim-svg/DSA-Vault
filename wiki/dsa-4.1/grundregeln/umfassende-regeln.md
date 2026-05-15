@@ -339,6 +339,10 @@ Max. 1 Wunde pro Tag durch weltliche Methoden; Magie kann mehrere Wunden täglic
 - Wunden heilen ohne Behandlung sehr langsam (KO-Probe ×3 Wunden); Heilkunde oder BALSAM SALABUNDE sind effiziente Wege.
 - Suchtkrankheiten brauchen wochenlange intensiv-betreute Entzugsbehandlung — keine Spontanheilung.
 
+## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 161: Schwelle des Todes — Lebensbedrohliche Zustände, die sofortiger Behandlung bedürfen, treten bei **null oder weniger LeP** ein (nicht bei LE ≤ 5, wie auf S. 161 falsch angegeben).
+
 ## Verwandte Artikel
 
 - [[bewegung-reisen]] — Erschöpfung/Überanstrengung, Tragkraft, strategische Bewegung

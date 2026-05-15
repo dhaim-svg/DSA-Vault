@@ -2,6 +2,8 @@
 
 > **Handoff-Dokument.** Single source of truth für den Fortschritt der DSA-4.1-Regelwerk-Extraktion. Am Anfang jeder Session lesen, am Ende jedes Kapitels aktualisieren.
 
+**Letzte Aktivität:** 2026-05-15 — Errata WdS eingearbeitet: 44 Edits in 7 Artikeln (SKIP: 4, NOT-IN-WIKI: 14). Geänderte Artikel: kampfregeln.md, kampf-referenztabellen.md, waffenmeister.md, talentregeln.md, sprachen-schriften.md, steigerung.md, umfassende-regeln.md.
+
 **Letzte Aktivität:** 2026-05-15 — Errata WdH eingearbeitet: 39 Edits in 33 Artikeln (SKIP: 12, SKIPPED-NOT-IN-WIKI: 22). Geänderte Artikel: vorteile.md, nachteile.md, sonderfertigkeiten-allgemein.md, steigerung.md, eigenbau.md, mittellaender.md, tulamiden.md, waldmenschen.md, elfen.md, halbelfen.md, zwerge.md, nordaventurien-kulturen.md, tulamidisch-kulturen.md, elfenkulturen.md, zwergenkulturen.md, achaz-kulturen.md, faehnrich.md, krieger.md, ritter.md, schwertgeselle.md, soldat.md, stammeskrieger.md, ausrufer.md, barde.md, haendler.md, streuner.md, taugenichts.md, bergmann.md, gelehrte.md, magier.md, scharlatan.md, schelm.md, boron-geweihte.md, phex-geweihter.md, halbgoetter-geweihte.md, ork-goblin-schamanen.md.
 
 **Letzte Aktivität:** 2026-04-27 — WdE-06 abgeschlossen (letzter Batch): 1 neuer Artikel in `geographie/` — `wetter-regeln.md` (Hitzeklassen 1–11 mit Erschöpfungs- + Berührungsschaden-Tabellen; Modifikatoren Wind/Schatten/Schwüle/Resistenz; Durst-Wert-System 0–20+ für Extremsituationen; Praiosbrand/Hitzschlag/Schwüle/Schneeblindheit-Regeln; Kälteklassen 1–9 mit kTP-Schaden-Tabellen; Kälteschutz-Tabelle nach Material + Feuchtigkeitsbedingungen; Erfrierungsregeln + Gliedmaßenverlust; Regen/Sturm-Auswirkungen auf AT/PA/Bewegung/Fernkampf; Windstärke-Fernkampf-Tabelle; Wettervorhersage-Probe + Schutz-suchen-Probe; Blitzschlag/Hagelschlag/Sandsturm/Schneesturm-Regelkästen; vollständiges 6-Schritte-Zufallswetter-System mit Bewölkung/Windstärke/Temperatur-nach-13-Regionen/Niederschlagswahrscheinlichkeit/Niederschlagsart/Folgetags-Tabelle; vollständige Fortbewegungstabellen 6 Transportarten Fuß/Ritt/Karren/Pferdefuhrwerk/Kutsche/Kaleschka/Schlitten × alle Geländetypen; Erschöpfungstabelle Bewegung + Umgebung; Geländemühsal Gebirge/Sumpf/Dschungel mit Proben + Folgen; magische Wetterbeeinflusssung 11 Zauber/Wesen). `_geographie.md` auf 11 Einträge erweitert. **WdE-06 ✅. Wege des Entdeckers vollständig abgeschlossen** (6 Batches, 11 Artikel in `geographie/` + 1 Buchprofil in `buecher/`, gesamt 12 Artikel).
@@ -21,6 +23,7 @@
 | Buch | Errata-Quelle | APPLY | ADD | SKIP | NOT-IN-WIKI | Status |
 |------|---------------|-------|-----|------|-------------|--------|
 | WdH | Wege-der-Helden_Errata-2007-08 | 29 | 10 | 12 | 22 | ✅ |
+| WdS | Wege des Schwerts Errata (2008) | 30 | 14 | 4 | 14 | ✅ |
 
 ---
 

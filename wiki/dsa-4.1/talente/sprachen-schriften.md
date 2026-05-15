@@ -111,7 +111,7 @@ Vollständige Referenzliste aller aventurischen Sprachen und Schriften mit Steig
 | Geheiligte Glyphen von Unau | 19 Laut- und Deutzeichen | 13 | A |
 | Gimaril | 29 Laut- und Deutzeichen | 10 | C |
 | Gjalskisch | Misch-Schrift aus Hjaldingschen Runen und Ur-Tulamidya | 14 | A |
-| Hjaldingsche Runen | ca. 30 Lautzeichen + Piktogramme; einfach/komplex | 10 / 16 | A |
+| Hjaldingsche Runen | ca. 30 Lautzeichen + Piktogramme; einfach/komplex | 10 / 16 *(Errata 2008)* | A |
 | Imperiale Zeichen (Altgüldenländisch) | 57 Lautzeichen | 12 | A |
 | Isdira / Asdharia | 27 Lautzeichen + subtile Deutzeichen; einfach/komplex | 15 / 18 | A |
 | Kusliker Zeichen | 31 Lautzeichen | 10 | A |
@@ -122,6 +122,12 @@ Vollständige Referenzliste aller aventurischen Sprachen und Schriften mit Steig
 | Tulamidya | 56 Silbenzeichen | 14 | A |
 | Ur-Tulamidya | ca. 300 Wort-, Deut- und Silbenzeichen | 16 | A |
 | Zhayad | Magier-Geheimschrift; mehrere Hundert Laut- und Silbenzeichen | 18 | A |
+
+## Errata
+*(Quelle: Wege des Schwertes Errata 2008)*
+- S. 31f: Trollisch wird nach Spalte A gesteigert (in der Liste auf S. 196 korrekt). Hjaldingsche Runen haben Komplexität 10/16 (einfach/komplex).
+- S. 30 (◆◆): Sprachfamilien-Regeln gelten sinngemäß auch für Schriften.
+- S. 31 (◆◆): Der Dialekt eines Helden bestimmt sich je nach seiner Herkunft.
 
 ## Key Takeaways
 
