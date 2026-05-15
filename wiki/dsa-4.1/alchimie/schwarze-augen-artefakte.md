@@ -73,7 +73,7 @@ Schwarze Augen sind die mächtigsten und geheimnisvollsten Artefakte Aventuriens
 | Auge Schule Mirham | aus Shamaham gestohlen | ja | existiert |
 | Wolkenblick (Rohezals Turm, Amboss) | — | — | existiert |
 | Urzeitliches Auge, Kun-Kau-Peh | Regenwald; urzeitlich und unbekannt | — | existiert |
-| Al'Ahabad-Palast | Sultan Hasrabal; Diebe in Mäuseriche verwandelt | nein | existiert |
+| Al'Ahabad-Palast | Sultan Hasrabal verwandelte drei Zauberlehrlinge, die das Auge stehlen wollten, in Mäuse *(Errata WdA 2.1)* | nein | existiert |
 | Obsidiansphäre, Drachenei-Akademie Khunchom | ladungsbasiert; erschlug Spektabilität beim Einschlag | — | existiert |
 | Satinavs Augen (2 Stück) | Vergangenheitsblick; eines neu platziert | — | existieren |
 | Auge des Morgens (Rommilys) | Orden vom Auge gegründet; Weg: Bosparan → Punin → Gareth → Darpatien | ja | existiert |

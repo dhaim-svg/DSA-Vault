@@ -49,7 +49,7 @@ Probe wird stets um die **Analyse-Schwierigkeit** erschwert (bei Umgebungs-ODEM/
 
 ### Sonstige Modifikatoren (wie ODEM LCD 198)
 - Pro permanent gebundenem AsP (Artefakte, Golems, Untote): –1
-- Pro angefangene 10 AsP über 30 (wirkender Zauber / Zauberer): –1
+- Pro angefangene 10 AsP über 30 (wirkender Zauber / Zauberer): –1 *(Errata WdA 2.1: Beispiel S. 178 — ODEM-Probe für Artefakt mit 75 AsP ist um 9 Punkte erleichtert: 5 statt 4 Punkte für die enthaltenen 75 AsP, da die angefangenen 10 AsP über 30 zählen)*
 - Pro angefangene 5 AsP unter 30: +1
 - Zeit seit Wirkung: SR +4 / Stunde +6 / Tag +8 / Woche +10 / Monat +12 / Jahr +14 / Jahrzehnt +16 / Jahrhundert +18
 
@@ -58,7 +58,7 @@ Probe wird stets um die **Analyse-Schwierigkeit** erschwert (bei Umgebungs-ODEM/
 | ZfP* | Ergebnis |
 |------|---------|
 | 0–2 | Ob aktive Magie vorhanden / ob Elixier alchimistisch ist |
-| 3–6 | Intensität auf Fünfer-Skala (minimal bis immens); bei Elixieren: schwach oder stark |
+| 3–6 | Intensität auf Fünfer-Skala (minimal bis immens); bei Elixieren: schwach (M, A, B, C) oder stark (M, D, E, F) *(Errata WdA 2.1)* |
 | 7–11 | Grobes Bild des Magiegeflechts; Magiekunde-Probe für Rückschlüsse auf Wirkung / Blutmagie / Dämonisch |
 | 12+ | Fein strukturiertes Bild + Fließrichtung; Magiekunde-Probe erleichtert; Einschätzung unbekannter Zauber |
 
@@ -100,7 +100,7 @@ Alle Elixiere dieses Bandes gelten als magisch (auch ohne AsP hergestellt). Pfla
 | TaP* | Ergebnis |
 |------|---------|
 | 0–3 | Art des Elixiers (wenn Rezeptur bekannt) oder Gattung; vorrangiger Wirkstoff |
-| 4–7 | Qualitätsschätzung (schwach/stark); Details zu Wirkstoffen |
+| 4–7 | Qualitätsschätzung (schwach/stark; siehe Tabelle „Detailgrad der Intensitätsbestimmung" auf S. 173) *(Errata WdA 2.1)*; Details zu Wirkstoffen |
 | 8–12 | Haltbarkeit; Liste der wirkenden Substanzen |
 | 13–18 | Exakte Qualität; Liste aller Substanzen (ohne Mengenangabe) |
 | 19+ | Präzise Rezeptur (für Nachbau: doppelte Brau-Schwierigkeit + doppelte Zutaten; bei Erfolg: fortan normal herstellbar) |
@@ -162,6 +162,10 @@ Besonderheit: Zauberzeichen gelten auch nach Ablauf ihrer Wirkung als magisch un
 | 8–12 | Alle Komponententypen erkannt; alle Merkmale; genaue Wirkungsdauer |
 | 13–18 | Exakte Komponenten (wenn bekannt); Wirkung unbekannter Zeichen; Auslöser |
 | 19+ | Vollständige Entschlüsselung aller Komponenten und Bedingungen; Reaktivierung möglich; unbekannte Sigillen-Nebenbedingungen |
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 180: Im Beispiel zur Analyse von Zauberzeichen sollten es nach Verrechnung nur 3 TaP sein (nicht 4), von denen nach der Probe einer übrig bleibt.
 
 ## Key Takeaways
 

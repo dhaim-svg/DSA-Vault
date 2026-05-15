@@ -14,7 +14,7 @@ Inanimatica wirken auf Objekte statt auf Personen — sie verändern, verbessern
 | Hexensalbe | — | — | — | — | — | — |
 | Hylailer Feuer | Inanimatica | +6 / +5 | Alchimistenlabor | 15 D / 8 | einige Jahre | n. frei verk., SW ~30 D |
 | Magisches Brandöl | Inanimatica | +12 (+8 mit AEROFUGO) / +18 | Alchimistenlabor | 50 D / 7 | gut verschl. Jahre | n. frei verk. |
-| Sonnenlicht-Elixier | Inanimatica | +12 / +4 | Alchimistenlabor | 50 D / 5 | unbegrenzt | nur von Gew., ~100 D SW |
+| Sonnenlicht-Elixier | Inanimatica | +12 / +4 *(Errata WdA 2.1)* | Alchimistenlabor | 50 D / 5 | unbegrenzt | nur von Gew., ~100 D SW |
 | Stabilisatum | Gegenstandselixiere | +9 / +4 | Hexenküche | 60 D / 5 | 3W6+6 Wochen | ~120 D |
 | Waffenbalsam | Inanimatica | +6 / +3 | Hexenküche | 18 D / 8 | nahezu unb. | ~35 D |
 
@@ -54,9 +54,9 @@ Nicht physisch — "Sonnenlicht in einer verschlossenen Bernsteinphiole". Enthä
 - **Qual. A:** Schwacher Lichtstrahl (Radius 1 Schritt, 5 KR), gilt als zweifach geweihte Waffe.
 - **Qual. C:** Radius 5 Schritt, 20 KR.
 - **Qual. E:** Heller Lichtstrahl (Radius 20 Schritt, 2W20+30 KR), gilt als heilige Substanz.
-- **Qual. F:** Gleißender Lichtblitz (Radius 50 Schritt, 1 SR heiliger Boden), Blindheit 12 SR für alle Zeugen, magiebannende Wirkung.
+- **Qual. F:** Gleißender Lichtblitz (Radius 50 Schritt), der in seinem Wirkungskreis für 1 SR als heiliger Boden zählt. Alle Zeugen dieses göttlichen Effekts erleiden eine 12 SR anhaltende Blindheit, weitere Nebeneffekte wie eine magiebannende Wirkung (alle Zauber um +3 bis +7 erschwert, W6 bis W20 AsP-Verlust, Auslösung von Artefakten verzögert, etc.) nach Meisterentscheid *(Errata WdA 2.1)*.
 
-**Besonderheiten:** Verbreitung 1 (Geheimnis der Praios-Kirche). Erfordert optische Gerätschaften + Mechanik +7. Karmales Gas laut Vermutung der Alchimisten.
+**Besonderheiten:** Verbreitung 1 (Geheimnis der Praios-Kirche). Streng geheim (Berufsgeheimnis). Erfordert optische Gerätschaften + Mechanik +7 sowie eine spezielle Praios-Liturgie auf Grad V *(Errata WdA 2.1)*. Karmales Gas laut Vermutung der Alchimisten.
 
 ### Stabilisatum (Wiederherstellungspaste)
 Klebrige, grün leuchtende Masse; Herstellungstemperatur kritisch (muss fast gefrieren, darf nicht offen dampfen).
@@ -65,7 +65,7 @@ Klebrige, grün leuchtende Masse; Herstellungstemperatur kritisch (muss fast gef
 - **Qual. C:** StP +50%, Härte +2, Struktur +2.
 - **Qual. D:** StP +100%, Härte +3, Struktur +3.
 - **Qual. E:** Wie D + Struktur +7 (bei Struktur ≥21 oder BF ≤–7: unzerbrechlich; frisch zerstörte Gegenstände wieder zusammenfügbar).
-- **Qual. F:** Gegenstand unzerbrechlich + magisch, verliert temporäre Verzauberungen, widersetzt sich jeder Verzauberung (Probe +21).
+- **Qual. F:** Gegenstand wird unzerbrechlich und magisch, verliert dabei jegliche temporäre Verzauberung und widersetzt sich fortan jeder Verzauberung (alle Proben +21) *(Errata WdA 2.1)*.
 
 **Besonderheiten:** Bei defektem Verschluss nur 1W6 Tage haltbar. Für größere Gegenstände (Türen) mehrere Portionen nötig.
 

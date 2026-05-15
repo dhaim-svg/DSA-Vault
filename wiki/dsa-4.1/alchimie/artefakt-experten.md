@@ -21,6 +21,7 @@ Das Sympathie-Prinzip der aventurischen Zauberei hat konkrete Auswirkungen auf d
 - Flüssige Artefakte: **+3**; gasförmige: **+7**.
 - Edelsteine wirken als Kristallisationspunkt (nicht Grundmasse); ein 5-Karat-Amethyst im Knauf kann mehr bringen als ein 40-Karat-Rubin unter vielen anderen Edelsteinen.
 - Modifikatoren gelten bei Metallen/anderen Werkstoffen voll, wenn das Artefakt ca. zur Hälfte daraus besteht.
+- Ein einmaliger ladungsbasierter Spruchspeicher in flüssiger Form kann nach ähnlichen Sympathieprinzipien wie in der Niederen Alchimie hergestellt werden (siehe grauer Kasten WdA S. 29) *(Errata WdA 2.1)*.
 
 **Größe:**
 - Faustregel: Artefakt muss mindestens so viele Skrupel (Gramm) wiegen, wie Gesamt-AsP aufgewendet werden. Bei Edelsteinen/Magischen Metallen: ca. 1 Karat (= 1/5 Gramm) pro AsP.
@@ -80,9 +81,9 @@ Variante des ARCANOVI mit begrenzt stabiler Matrix — erspart permanente AsP, i
 ## Experte: Gemeinschaftliche Artefakterschaffung
 
 - Mehrere Personen können gemeinsam ein Artefakt herstellen.
-- Pro zusätzlicher Person: Bindender Spruch **+5** erschwert; deren Wirkende Sprüche ebenfalls **+5** erschwert.
+- Pro zusätzlicher Person ist der Bindende Spruch um weitere 5 Punkte erschwert; diejenigen Wirkenden Sprüche, die nicht vom eigentlichen Thaumaturgen stammen, sind jeweils zusätzlich um 5 Punkte erschwert *(Errata WdA 2.1)*.
 - Jeder trägt die Kosten seiner eigenen Sprüche; permanente AsP-Kosten trägt der Anwender des Bindenden Spruchs.
-- UNITATIO kann die Erschwernis um 1 pro 2 UNITATIO-ZfP* reduzieren.
+- UNITATIO-Unterstützung: Es können keine Bonus-ZfP* für den Bindenden Spruch generiert werden; für einen Wirkenden Spruch nur dann, wenn obige Erschwernis von 5 Punkten vollständig getilgt wurde. Die Unterstützung Wirkender Zauber im Bund läuft wie beim UNITATIO (LCD 265), mit der Obergrenze von 2×ZfW des Bundführers. Diese Obergrenze bleibt auch in Kombination mit per SF Stapeleffekt potenzierten Sprüchen bestehen *(Errata WdA 2.1)*.
 - Permanente AsP-Kosten können frei verteilt werden (niemand mehr als der ARCANOVI-Anwender).
 
 ---
@@ -97,13 +98,13 @@ Zusatzeigenschaften, die beim Erschaffen hinzugefügt werden können. Jede gilt 
 | **Gespür des Schöpfers** (spürt Richtung/Entfernung des Artefakts) | ZfW SENSIBAR oder GEFUNDEN! 10 | +3 | +3W6 |
 | **Magischer Apport** (Artefakt zu sich rufen, Reichweite ZfW ARCANOVI/2 Meilen) | ZfW MOTORICUS 10 oder Kenntn. Apport-Objektritual | +4 | +4W6 |
 | **Resistenz gegen profanen Schaden** (profane TP halbiert, stets „wie neu") | ZfW ADAMANTIUM/UNBERÜHRT VON SATINAV/INVOCATIO MAIOR je 7 | +2 | +4W6 |
-| **Selbstreparatur** (regeneriert 1W6 StP/KR) | Merkmalskenntnis Kraft + Elementar (Erz oder ges.) | +4 | +5W6 |
+| **Selbstreparatur** (regeneriert 1W6 StP/KR) | Merkmalskenntnis Kraft + Elementar (Erz oder ges.; auch Merkmalskenntnis Elementar gesamt erfüllt die Voraussetzung) *(Errata WdA 2.1)* | +4 | +5W6 |
 | **Siegel und Zertifikat** (magisches Erkennungszeichen, ≤ 111 Zeichen) | ZfW ARCANOVI 10 | +0 | +1W6 |
 | **Umkehrtalisman** (dreht Zauber des Trägers um, wie REVERSALIS) | Merkmalskenntnis Metamagie, ARCANOVI [Matrixgeber] 15, REVERSALIS 10; nur für Zaubertalismane | +4 | +2W6+7 |
-| **Unzerbrechlichkeit** (durch profane Gewalt unzerstörbar; +2×pAsP Härte; +Gesamt-AsP StP gegen Schadensmagie) | ZfW ADAMANTIUM 10 | +3 | +6W6 |
+| **Unzerbrechlichkeit** (durch profane Gewalt unzerstörbar; gegen Schadensmagie und elementarmagische oder dämonische Attacken: zusätzliche Härte = doppelte pAsP, zusätzliche Strukturpunkte = Gesamt-AsP) *(Errata WdA 2.1)* | ZfW ADAMANTIUM 10 | +3 | +6W6 |
 | **Variabler Auslöser** (Auslöser bei Wiederaufladung wechselbar) | Merkmalskenntnis Metamagie, ARCANOVI 12; nur aufladbare Artefakte | +2 + max. Auslöser-Erschwernis des neuen Auslösers | +2W6 |
 | **Verschleierung** (Analyse-Erschwernis = halbe Zusatz-AsP) | ARCANOVI 10, SCHLEIER DER UNWISSENHEIT 10 | +3 | +3W6 |
-| **Verzehrender Zauber** (Artefakt zerfällt zu Staub bei Auslösung) | Merkmalskenntnis Kraft + ZfW DESINTEGRATUS 7 oder Merkmalskenntnis Schaden + ZfW MAGISCHER RAUB 7; nur einmalig/1 Ladung | +1 | –1/5 bis –1/10 der StP des Materials |
+| **Verzehrender Zauber** (Artefakt zerfällt zu Staub bei Auslösung) | Merkmalskenntnis Kraft + ZfW DESINTEGRATUS 7 oder Merkmalskenntnis Schaden + ZfW MAGISCHER RAUB 7; nur bei einmalig wirkenden Artefakten mit nur einer Ladung; Trägermaterial maximal Strukturpunkte in Höhe des zehnfachen ARCANOVI-ZfW *(Errata WdA 2.1)* | +1 | je nach Material –1/5 bis –1/10 der StP des Gegenstandes in AsP (Meisterentscheid) *(Errata WdA 2.1)* |
 
 ---
 
@@ -112,7 +113,8 @@ Zusatzeigenschaften, die beim Erschaffen hinzugefügt werden können. Jede gilt 
 Teilartefakte ermöglichen ein Artefakt mit verschiedenen Auslöser-Ladungs-Kombinationen:
 - Pro zusätzlichem Teilartefakt: beim ersten Teilartefakt **2× Anzahl der Teilartefakte** überschüssige ZfP* aufwenden (Kopplungs-ZfP*).
 - Zwischen den Verzauberungen der Teilartefakte darf max. ein Monat liegen.
-- Optionale Eigenschaften müssen im ersten Teilartefakt verankert sein.
+- Eventuell verwendete Optionale Eigenschaften müssen in das erste Teilartefakt eingebracht werden *(Errata WdA 2.1)*.
+- Eventuelle Proben auf Versagensindex, Okkupation oder Nebenwirkungen werden für das Gesamtartefakt abgelegt *(Errata WdA 2.1)*.
 - Einzelne Teilartefakte vor Fertigstellung des Gesamtartefakts nutzen: Probe auf pAsP des Teilartefakts; Gelingen = physische Zerstörung.
 
 ---
@@ -216,7 +218,7 @@ Ein Dämon Agrimoths/Iribaars, der speziell Artefakte beseelen kann:
 | Basiskosten | 11 |
 | Körperlosigkeit | II |
 
-- **Dienst: Beseelen** — kann auf ARCANOVI und Wirkende Sprüche verzichten und direkt einen Artefakttyp mit seinen Kräften füllen. Kosten: Komplexität des Artefakts × AsP (mind. 20 AsP) + 5 AsP/Jahr. Ergebnis: dämonisches Artefakt mit 1–3 unerfreulichen Nebeneffekten; LO = W20 + Restpunkte der Beherrschungs-Probe.
+- **Dienst: Beseelen** — kann auf ARCANOVI und Wirkende Sprüche verzichten und direkt einen Artefakttyp mit seinen Kräften füllen. Kosten: Komplexität des Artefakts (ARCANOVI-Probenerschwernis + erforderliche ARCANOVI-ZfP*) in AsP, mindestens 20 AsP, dazu 5 AsP pro Jahr; davon 1/20 permanent *(Errata WdA 2.1)*. Ergebnis: dämonisches Artefakt mit 1–3 unerfreulichen Nebeneffekten; LO = W20 + Restpunkte der Beherrschungs-Probe.
 - **Dienst: Hilfszauberei** — für je 17 AsP können 7 Punkte von ARCANOVI-Proben, benötigten ZfP* oder Wirkende-Spruch-Proben abgezogen werden (max. 4 Punkte pro Kategorie). Nachteil: erhöhte Okkupations- und Nebenwirkungs-Wahrscheinlichkeit (+3 erleichtert je).
 
 ---
@@ -264,18 +266,18 @@ Unbeabsichtigte Dauerwirkungen, die sich beim Erschaffen eines Artefakts bilden.
 - Artefaktmagie als „höchste Ausdrucksform der Herrschaft des Geistes über die Materie".
 - ARCANOVI ist Allgemeingut; APPLICATUS vor allem in Khunchom, Mherwed, Punin, Rashdul, Al'Anfa.
 - **Wichtige Schulen:**
-  - **Drachenei-Akademie Khunchom** — führend in Artefaktherstellung, Marktcharakter, Artefaktthesen ab 30 Dukaten.
+  - **Drachenei-Akademie Khunchom** (HmW 72ff.) — führend in Artefaktherstellung, Marktcharakter, Artefaktthesen ab 30 Dukaten *(Errata WdA 2.1)*.
   - **Academia Punin** — Forschung: neue/alte Artefaktthesen, Materialeinflüsse, Matrixgeber/Zaubertalismane rekonstruiert.
-  - **Zauberschule Mherwed** — Elementarismus + Hohe Alchimie, Dschinnenlampen, Zauberwaffen.
-  - **Schule der Variablen Form Mirham** — wechselnde Verzauberungsfacetten.
+  - **Zauberschule des Kalifen Mherwed** (HaM 166ff.) — Elementarismus + Hohe Alchimie, Dschinnenlampen, Zauberwaffen *(Errata WdA 2.1)*.
+  - **Schule der Variablen Form Mirham** (HmW 104ff.) — wechselnde Verzauberungsfacetten *(Errata WdA 2.1)*.
   - **Magische Fakultät Al'Anfa** — stark von den Granden Al'Anfas beeinflusst.
-  - **Institut der Arkanen Analysen Kuslik** — führend in Artefaktanalyse.
+  - **Institut der Arkanen Analysen Kuslik** (HmW 92ff.) — führend in Artefaktanalyse *(Errata WdA 2.1)*.
   - Weitere erfahrene Schulen: Brabak, Gareth (Akademie der Magischen Rüstung), Fasar, Rashdul, Methumis, Lowangen, Festum.
 
 ### Kristallomanten (Achaz)
 - Älteste Meister der Thaumaturgie Aventuriens; besonders Matrixgeber weit verbreitet.
 - Edelsteine spielen stets eine tragende Rolle.
-- Artefaktthesen können in Thesiskristallen gespeichert werden (statt auf Papier).
+- Artefaktthesen können in Thesiskristallen gespeichert werden (statt auf Papier); dabei wird die Malen/Zeichnen-Probe durch die Thesiskristall-Ritualprobe ersetzt. Eventuelle RkP* für Thesisqualität verfallen dabei einfach *(Errata WdA 2.1)*.
 
 ### Geoden
 - Treten sehr selten in Steinkreisen zusammen, um gemeinsame Kraft in einem Gegenstand zu bündeln.
@@ -334,13 +336,13 @@ Alle Kern-SF in WdZ S. 55; folgende ergänzen oder präzisieren:
 | Sonderfertigkeit | Kurzbeschreibung | Kosten |
 |-----------------|-----------------|--------|
 | **Auxiliator (Z)** | Erlaubt Herstellung von Zaubertalismanen. Voraussetzungen: ARCANOVI [Matrixgeber] 12, Magiekunde 16. Verbreitung: 2; nur in Punin + Khunchom erlernbar | 300 AP (halbe Kosten bei Merkmalskenntnis Metamagie oder Objekt) |
-| **Hypervehemenz** | Stapeleffekt: beliebig viele (statt max. 3) Sprüche aufsummierbar (bis 2× ZfW) | — |
+| **Hypervehemenz** | Bei Nutzung dieser SF zwecks Einbindung des Stapeleffekts dürfen beliebig viele (statt nur drei) Anwendungen des Zaubers aufsummiert werden, ebenfalls jedoch maximal bis zum doppelten ZfW des Zauberers im Wirkenden Spruch *(Errata WdA 2.1)* | — |
 | **Kraftspeicher** | Selten weitergegeben (Verbreitung 3 unter menschlichen Zauberern) | — |
 | **Matrixgeber** | Verbreitung unter Achaz-Kristallomanten: 6 | — |
-| **Meisterliche Zauberkontrolle I** | ARCANOVI kann absichtlich abgebrochen werden (ungünstige ZfP* verwerfen); gilt als misslungener Spruch | — |
+| **Meisterliche Zauberkontrolle I** | Mit dieser SF ist es möglich, auch den ARCANOVI gewollt abzubrechen, wenn die Menge der bei einer Probe erzielten ZfP* nicht gefallen. In diesem Fall zählt der abgebrochene ARCANOVI in allen Belangen als misslungener Spruch: Er kostet nur die reduzierte AsP-Zahl, wird nicht in die Gesamt-AsP des Artefakts eingerechnet, gilt dafür jedoch auch im Sinne des Versagensindex oder des komplett verdorbenen Artefakts durch drei hintereinander gescheiterte ARCANOVI-Proben als misslungen *(Errata WdA 2.1)* | — |
 | **Semipermanenz II** | Reduziert Anzahl der Wirkenden Sprüche: Jahr/Monat → 1×, Woche → 2×, Tag → 4× (statt 1/2/3/5) | — |
-| **Stapeleffekt** | ZfP* mehrerer gleichartiger Wirkender Sprüche addieren für stärkeren Effekt. Max. 3 Sprüche (ohne Hypervehemenz), max. 2× ZfW | — |
-| **Vielfache Ladungen** | Vereinfacht Herstellung vieler Ladungen: 1 ZfP* pro Wirkenden Spruch (statt steigend), 1 ZfP* pro Ladung über der ersten (statt 3) | — |
+| **Stapeleffekt** | Der Zaubernde kann bei der Herstellung eines Artefakts mittels ARCANOVI die ZfP* einzelner Wirkender Sprüche aufsummieren, um einen stärkeren Gesamteffekt zu erzeugen; spielt dabei auch der ZfW eine Rolle, dann wird hierfür pro zusätzlichem Spruch der effektive ZfW um eins erhöht (maximal drei Sprüche, maximal so viele ZfP*/ZfW wie sein doppelter ZfW im Wirkenden Spruch beträgt) *(Errata WdA 2.1)* | — |
+| **Vielfache Ladungen** | Mittels dieser Verzauberungstechnik ist es einfacher, Artefakte mit vielen Anwendungen und Wirkenden Sprüchen zu schaffen. Die Anzahl benötigter ZfP* bei der ARCANOVI-Probe ändert sich im Punkt Anzahl der Wirkenden Sprüche: Es wird 1 ZfP* für jeden Wirkenden Spruch benötigt (statt 0/+1/+2/…); außerdem ändert sich die Anzahl der benötigten ARCANOVI-ZfP* im Punkt Anzahl der Ladungen: 1 statt 3 ZfP* pro Ladung über der ersten. Dieses Verfahren ist nur bei ladungsbasierten Spruchspeichern anwendbar *(Errata WdA 2.1)* | — |
 
 ---
 
@@ -354,6 +356,36 @@ Alle Kern-SF in WdZ S. 55; folgende ergänzen oder präzisieren:
 - **Balance-Warnung**: Kurzfristige intervallbasierte Spruchspeicher (Semipermanenz) können sehr mächtig werden und sollten selten eingesetzt werden.
 
 ---
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 207: Die nachfolgende Tabelle fehlte aus Platzgründen im Buch. Sie wird hier nachgereicht.
+
+**Liste der für Alchimie und Artefaktmagie hilfreichen Sonderfertigkeiten (Nachtrag WdA Errata)**
+
+| Sonderfertigkeit | Voraussetzungen | Verbreitung | Kosten (AP) | Quelle |
+|-----------------|-----------------|-------------|-------------|--------|
+| Berufsgeheimnis: Flüssigartefakte | TaW Alchimie 15, ZfW ARCANOVI 7 | 3 | 100 | WdH 275f., WdS 41f., WdA 29 |
+| Meister der Improvisation | IN, FF je 12 | 7 | 200 | WdH 276, WdS 42f. |
+| Schalenzauber „Allegorische Analyse" | SF Weihe der Schale | 5 | 125 | WdH 289, WdZ 115 |
+| Schalenzauber „Chymische Hochzeit" | TaW Alchimie 10, SF Allegorische Analyse | 4 | 100 | WdH 289, WdZ 116 |
+| Schalenzauber „Feuer und Eis" | SF Weihe der Schale | 4 | 150 | WdH 289, WdZ 116 |
+| Schalenzauber „Mandricons Bindung" | TaW Magiekunde 7, SF Weihe der Schale | 4 | 75 | WdH 289, WdZ 116 |
+| Schalenzauber „Transmutation der Elemente" | TaW Alchimie 10, SF Mandricons Bindung | 3 | 125 | WdH 289, WdZ 116 |
+| Schalenzauber „Weihe der Schale" | TaW Alchimie 7, Ritualkenntnis Ach/Alc/Hex/Mag | 6 | 100 | WdH 289, WdZ 116 |
+| Talentspezialisierung: Kochen (Tränke) | TaW Kochen 7/14/21 | 4 | 40 | WdH 277, WdS 43 |
+| Hypervehemenz | ZfW ARCANOVI 14, TaW Magiekunde 16, SF Stapeleffekt | 2 | 300 (½ mit SF Merkmalskenntnis Metamagie) | WdH 286, WdZ 55, WdA 109 |
+| Kraftspeicher | ZfW ARCANOVI 10 | Ach 5, sonst 2 | 150 (½ mit SF Merkmalskenntnis Objekt) | WdH 287, WdZ 55, WdA 109 |
+| Matrixgeber | ZfW ARCANOVI 14, TaW Magiekunde 14 | Mag 4, Ach 7, sonst 3 | 200 (½ mit SF Merkmalskenntnis Metamagie oder Objekt) | WdH 287, WdZ 55, WdA 109 |
+| Matrixregeneration I | IN 14 | 3 | 200 | WdH 287f., WdZ 55 |
+| Matrixregeneration II | IN 16, CH 13, SF Matrixregeneration I, SF Regeneration I | 2 | 500 (½ mit SF Merkmalskenntnis Kraft) | WdH 288, WdZ 55 |
+| Meisterliche Zauberkontrolle I | Spruchzauberer, MU 12, KL 15, SF Zauberkontrolle | 2 | 200 | WdH 288, WdZ 16 |
+| Semipermanenz I | ZfW ARCANOVI 14, 20 ZfP in Zaubern mit Merkmal Temporal | 3 | 200 (½ mit SF Merkmalskenntnis Metamagie oder Temporal) | WdH 290, WdZ 55 |
+| Semipermanenz II | ZfW ARCANOVI (Semipermanenz) 10, TaW Magiekunde 16 | 1 | 300 (½ mit SF Merkmalskenntnis Metamagie oder Temporal) | WdH 290, WdZ 55, WdA 109 |
+| Signaturkenntnis | KL, IN je 15, ZfW ANALYS/ODEM je 15 oder ZfW OCULUS 15 | 3 | 200 | WdH 290, WdZ 55 |
+| Stapeleffekt | ZfW ARCANOVI 7 | 3 | 200 (½ mit SF Merkmalskenntnis Metamagie oder ZfW ARCANOVI 14) | WdH 290, WdZ 55, WdA 109 |
+| Vielfache Ladungen | ZfW ARCANOVI 14 | 3 | 75 | WdH 291, WdZ 55, WdA 109 |
+| Zauberspezialisierung: ZAUBER (Wirkender Zauber) | ZfW ZAUBER 7/14/21 | je nach Zauber | 20×AF | WdH 291f., WdZ 17 |
 
 ## Verwandte Artikel
 

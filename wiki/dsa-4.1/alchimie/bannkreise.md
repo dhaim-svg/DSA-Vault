@@ -38,7 +38,7 @@ Wer einen Bannkreis wirken kann, kennt automatisch auch den entsprechenden Schut
 ### Allgemein
 - Kein Umgehen möglich (weder von oben noch durch den Boden)
 - Gilt nur gegen stoffliche Aspekte, nicht gegen quasi-zauberische Fähigkeiten ohne Substanz
-- Transporter: Wird Kreis mehr als unwesentlich von einem festen Fixpunkt wegbewegt, endet die Wirkung
+- Da Bann- und Schutzkreisen Orts- oder Objektsigillen fehlen, sind sie nur eingeschränkt transportabel. Werden sie in aktivem Zustand mehr als nur unwesentlich von einem vorher gewählten, festen Fixpunkt (vgl. FORTIFEX in LCD 90) wegbewegt, endet die Wirkung *(Errata WdA 2.1)*.
 - Wirkungsdauer: wie alle Arkanoglyphen (RkW/2 Tage, ggf. verlängerbar)
 
 ## Einschränkung auf Untergruppen (Expertenregel)
@@ -46,14 +46,16 @@ Wer einen Bannkreis wirken kann, kennt automatisch auch den entsprechenden Schut
 Statt den Zirkel gegen alle Wesen einer Kategorie wirken zu lassen:
 - Einschränkung auf Untergruppe (z.B. eine Erzdämon-Domäne, bestimmte Elementarart, bestimmte Geisterart): **+3 Zirkelstärke**
 - Doppelte Einschränkung (nur bei Dämonen + Elementaren): **+6 Zirkelstärke**
-- Wahren Namen der Wesenheit in den Zirkel einarbeiten: +1 bis +7 bei Beschworenen, +3 pauschaler Bonus (oder +7 bei Nachteil Wahrer Name) bei anderen
+- Wahren Namen der Wesenheit in den Zirkel einarbeiten: +1 bis +7 bei Beschworenen; bei anderen Wesen gibt der Wahre Name pauschal einen Bonus von 3 Punkten (bzw. 7, falls die entsprechende Person den Nachteil Wahrer Name besitzt) *(Errata WdA 2.1)*
 
-## Kompatible Zusatzzeichen
+## Kompatible Zusatzzeichen und Sonderfertigkeiten
 
 Folgende [[arkanoglyphen|Arkanoglyphen-Zusatzzeichen]] können auch bei Bann- und Schutzkreisen angewendet werden:
 - Kraftquellenspeisung, Magiewiderstand, Satinavs Siegel, Schutzsiegel, Tarnung
 
 Nicht nutzbar: Potenzierung, Verkleinerung, Zielbeschränkung.
+
+Die Sonderfertigkeiten **Spontanzeichen (Arkanoglyphen)** und **Reaktivierungsgespür (Arkanoglyphen)** beinhalten in ihrer Ausprägung für Arkanoglyphen auch die entsprechenden Möglichkeiten bei Bann- und Schutzkreisen. Bannkreise und Schutzkreise können mittels der SF Spontanzeichen (Arkanoglyphen) in einer „Feldversion" hergestellt bzw. durch Reaktivierungsgespür (Arkanoglyphen) wiederverwendet werden *(Errata WdA 2.1)*.
 
 ## Alternative Lernmöglichkeiten
 

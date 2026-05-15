@@ -41,7 +41,7 @@ Jedes Artefakt besitzt mehrere beschreibende Einträge: Beschreibung, Wirkung, H
 | Name | Wirkung (kurz) | Wert (D) | AsP / pAsP | Thesis | Seite |
 |------|---------------|----------|------------|--------|-------|
 | Wellenwanderer-Rüstung | leichte elfische Rüstung; Formel → Träger geht über Wasser; Schutz vor Wasserschaden (10 ZfP*); 1 Ladung | 5–8 / 100 | 35 / 2 | sehr selten | 113 |
-| Lebende Rüstung | ockerfarbene Flechte der Maraskan-Achaz; RS 4/2/1 pro Kampfrunde; entzieht Träger täglich 1W2 LeP; kein Anlegen ohne kundigen Achaz | 0 / — | — | — | 113–114 |
+| Lebende Rüstung | ockerfarbene Flechte der Maraskan-Achaz; RS 4/2/1 pro Kampfrunde; entzieht Träger täglich 1W2 LeP; kein Anlegen ohne kundigen Achaz *(Errata WdA 2.1: letzter Satz zum Kasten gestrichen)* | 0 / — | — | — | 113–114 |
 | Grandenretter | Buckler; Schlüsselwort "Semper Fidelis" → FAVILLUDO-Schutz gegen gezielte Stiche/Schläge/Fernkampf/Todesstöße; AT –3 für Angreifer; 3 Ladungen | 8 / 90 | 19 / 1 | verbreitet | 114 |
 
 ### Besondere Hinweise
@@ -58,7 +58,7 @@ Jedes Artefakt besitzt mehrere beschreibende Einträge: Beschreibung, Wirkung, H
 | Name | Wirkung (kurz) | Wert (D) | AsP / pAsP | Thesis | Seite |
 |------|---------------|----------|------------|--------|-------|
 | Frevlergewand (Teile) | zwölf/dreizehn erzdaimonische Gewandstücke; jedes verleiht dämonische Fähigkeiten der jeweiligen Domäne; Träger muss unter seinen Willen zwingen | — | — | — | 114–115 |
-| Kraftgürtel | breiter Stierleder-Gürtel; Schlüsselsatz → KK +20 für 30 KR; eine Ladung | 35 Silbertaler / 110 | 43 / 2 | verbreitet | 115 |
+| Kraftgürtel | breiter Stierleder-Gürtel; Schlüsselsatz → KK +20 für 30 KR; eine Ladung; Komplexität: 7 ZfP* *(Errata WdA 2.1)* | 35 Silbertaler / 110 | 43 / 2 | verbreitet | 115 |
 | Tiergewänder der Elfen | hochelfische Umhänge (Wolf, Bär, Fuchs, Hirsch, Adler, Taube); Anlegen → Verwandlung für 2W6+3 KR; bei 19–20 auf W20 permanente Tiergestalt | 60 / 400 | ca. 75 / 5 | sehr selten | 115 |
 
 ### Besondere Hinweise
@@ -134,7 +134,7 @@ Jedes Artefakt besitzt mehrere beschreibende Einträge: Beschreibung, Wirkung, H
 | Schutzamulette | Amulette jeder Form; PSYCHOSTABILIS (MR +7 für 4 KR gegen Einfluss/Hellsicht/Herrschaft/Verständigung +2); 3 Ladungen | 1 Silbertaler–30 / 50–500 | 56 / 4 | sehr verbreitet | 125 |
 | Siebengehörnte Dämonenkrone + Sieben Splitter | einstiges Erzartefakt des Namenlosen; in Dritten Dämonenschlacht gesprengt; Splitter bei Heptarchen; jeder Splitter ermöglicht zwanglose Dämonenbeschwörung | — | — | — | 125 |
 | Stern von Selem | taubeneigroßer Rubin (aus Ruinen Selems); soll Scharfsinn + Gedankenlesen verleihen; bringt Verfolgungswahn; trugen die letzten Diamantenen Sultane und Kaiserin Hela-Horas | — | — | — | 126 |
-| Wahrheitsamulett | Praiosaugen-Amulett (Bronze/Gold); Konzentration auf Gegenüber → Amulett heiß bei Lüge; bei dicken Unwahrheiten: Verbrennungen am Träger; 3 Ladungen | 5 Silbertaler / 144 | 32 / 1 | bekannt | 126 |
+| Wahrheitsamulett | Praiosaugen-Amulett (Bronze/Gold); Konzentration auf Gegenüber → Amulett heiß bei Lüge; bei dicken Unwahrheiten: Verbrennungen am Träger; 3 Ladungen; Komplexität: Fernauslöser mit SENSIBAR *(Errata WdA 2.1)*; Wirkende Sprüche: 3× MANIFESTO *(Errata WdA 2.1)* | 5 Silbertaler / 144 | 32 / 1 | bekannt | 126 |
 
 ### Besondere Hinweise
 
@@ -197,7 +197,7 @@ Jedes Artefakt besitzt mehrere beschreibende Einträge: Beschreibung, Wirkung, H
 | Auge der Schule Mirham | aus Shamaham gestohlen; transportabel | — | — | unbekannt | 130 |
 | Wolkenblick (Rohezals Turm im Amboss) | — | — | — | unbekannt | 130 |
 | Urzeitliches Auge (Kun-Kau-Peh) | Regenwald, urzeitlich, unbekannt | — | — | unbekannt | 130 |
-| Al'Ahabad-Palast-Auge | nicht transportabel; Sultan Hasrabal verwandelte Diebe in Mäuseriche | — | — | unbekannt | 131 |
+| Al'Ahabad-Palast-Auge | nicht transportabel; Sultan Hasrabal verwandelte drei Zauberlehrlinge, die das Auge stehlen wollten, in Mäuse *(Errata WdA 2.1)* | — | — | unbekannt | 131 |
 | Obsidiansphäre (Drachenei-Akademie, Khunchom) | ladungsbasierend; erschlug einst eine Spektabilität beim Einschlag | — | — | unbekannt | 131 |
 | Satinavs Augen (2 Exemplare) | blicken in die Vergangenheit statt an fremde Orte; eines war in Ohort, neuer Platz (Das Vergessene Volk) | — | — | unbekannt | 131 |
 | Auge des Morgens (Rommilys / Informations-Institut) | transportabel; tulamidische Weise schenkten es Hofmagus der Horas; Orden vom Auge bildete sich darum | — | — | unbekannt | 131 |
@@ -241,9 +241,9 @@ Zusätzlich existieren **Weiße Augen** (Aufzeichnung und Wiedergabe von Bildern
 - Variante: "Kommoden des Direkten Weges" — Schubladen als magischer Tunnel, Spiegel zeigt Spiegelbild der anderen Kommode
 
 **Oronische Traumsteine**
-- Überlebende Alchimisten der Heptarchie Oron besitzen das Herstellungswissen; keine aktive Magie (kein ABVENENUM/KLARUM PURUM gegen sie wirksam)
-- Schmuggel ins Perlenmeer und Liebliches Feld; Kristalle der Lust aus gestohlenen Erinnerungen anderer zusammengefügt
-- Kristalle der Macht: viele Testträumer hatten unerwartet Träume voller Rechtschaffenheit und Götterfurcht
+- Überlebende Alchimisten der ehemaligen Heptarchie Oron besitzen als einzige das Wissen um die Herstellung dieser gefährlichen Traumdroge. Ursprünglich sollten vor allem Kristalle der Macht erzeugt werden, um wichtige Persönlichkeiten zu verderben — doch hatten die Oronier das Potenzial überschätzt, da überraschend viele Testträumer Träume voller Rechtschaffenheit und Götterfurcht erlebten. Daher konzentrierten sie sich auf die einfachere Herstellung der Kristalle der Lust *(Errata WdA 2.1)*.
+- Die Droge wird seit einiger Zeit ins Perlenmeer geschmuggelt; auch in einigen Städten des Lieblichen Feldes haben gelangweilte Adlige die Kristalle der Lust als Abnehmer gefunden.
+- Keine aktive Magie (kein ABVENENUM/KLARUM PURUM gegen sie wirksam).
 
 **Sulman al-Nassori**
 - Erbaut zur borbaradianischen Invasion in Khunchomer Werft; Projekt von Handelshaus Dhachmani + Khunchomer Akademie; 2022 BF ausgelaufen
@@ -260,6 +260,13 @@ Zusätzlich existieren **Weiße Augen** (Aufzeichnung und Wiedergabe von Bildern
 - Kategorie **Schwarze Augen** ist die einzige mit eigener umfangreicher Hintergrundmechanik (Entstehung, Arten, Spielhinweise — ca. 4 Seiten); alle Exemplare sind Meisterartefakte
 - Mächtigste Einzelartefakte: Sulman al-Nassori (Gesamtkunstwerk, sechsstelliger Dukatenwert), Ankhatep-Tor (Kriegstor für Armeen), Reif der Dünengeister (488 AsP), Ring des Lebensspendenden Feuers (einmalige Auferstehung)
 - Narrative Artefakte ohne spieltechnische Vollmechanik: Frevlergewand-Teile, Schwarze Augen-Liste, Stern von Selem, Goldauge, Harfe Mondlied, Gemälde Golodion Seemond
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 111: Für bereits fertige Artefakte einen festen Preis zu veranschlagen ist schwer. Er richtet sich sehr nach Umständen wie der Dringlichkeit des An- oder Verkaufs sowie natürlich Angebot und Nachfrage, sodass einfache Artefakte in „Hochburgen" der Thaumaturgie recht erschwinglich sein können. Bei Auftragsarbeiten an Zauberer kann ein permanenter AsP grob mit ungefähr 200 Dukaten bewertet werden, anerkannte Experten nehmen auch das Doppelte oder gar bis zum Dreifachen. Hinzu kommen Kosten für Forschungs- und Zeitaufwand, spezielle Umstände, Sonderwünsche und verwendete Materialien.
+- S. 201ff: Folgende Artefakte aus dem SRD wurden nach Neuberechnung durch die aktuellen Regeln angepasst: Heilwasser (AsP/pAsP 20/0, Komplexität +12/1 ZfP*); Leuchtender Hut (AsP/pAsP 62/3, Komplexität +5/15 ZfP*); Schreiender Beutel (AsP/pAsP 26/2, Komplexität +8/6 ZfP*); Sklavenarmreif (AsP/pAsP 110/11, Komplexität +10/21 ZfP*).
+- S. 201ff: Nachzutragende Artefakte aus Katakomben und Kavernen: Leuchtendes klebendes Seil (Wert 2/70, AsP/pAsP 23/1, Thesis verbreitet, Komplexität +2/2 ZfP*, K&K 129); Spinnenfinger (Wert 2/250, AsP/pAsP 67/3, Thesis bekannt, Komplexität +3/8 ZfP*, K&K 128f.); Xenos' Gürtel der Tiefe (Wert 5/500, AsP/pAsP 28/3, Thesis selten, Komplexität +9/4 ZfP*, K&K 128).
+- S. 109ff: Bei folgenden Artefakten fehlt im Kasten das „ZfP*" hinter der zweiten Komplexitätsangabe: Blutdorn (S. 111), Grandenretter (S. 114), Vescudors Phiole der Wahrung (S. 117, 2×), Sturmrufer (S. 120), Finger Uthars (S. 122), Helfende Hand (S. 123), Reif der Dünengeister (S. 124), Schimmerschild (S. 125).
 
 ## Verwandte Artikel
 

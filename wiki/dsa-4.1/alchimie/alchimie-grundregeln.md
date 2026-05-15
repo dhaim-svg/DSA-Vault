@@ -93,7 +93,7 @@ Drei Stufen, die zugleich Mindestvoraussetzung für bestimmte Rezepte sind:
 
 - Vor Ablegen der Probe freiwillig TaP zurückhalten → jeder zurückgehaltene TaP ergibt **2 Bonuspunkte** für den Qualitäts-Wurf.
 - Mindest-Ansage: 2 TaP.
-- Maximale Ansage: anderthalbfache Brau-Schwierigkeit − Labormodifikator.
+- Maximale Ansage: anderthalbfache Brau-Schwierigkeit abzüglich des Modifikators für eine eventuell abweichende Laborstufe — also bis zu 3 Punkte mehr durch ein zwei Stufen besseres Labor bzw. 7 Punkte weniger durch ein eine Stufe schlechteres Labor *(Errata WdA 2.1)*.
 - Misslingt die Probe (auch wegen der eigenen Erschwernis): automatisch Qualität M.
 
 ---

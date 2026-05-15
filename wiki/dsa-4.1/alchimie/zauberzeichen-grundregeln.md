@@ -54,7 +54,10 @@
 - SF Spontanzeichen (Arkanoglyphen) bzw. (Runenkunde): je 200 AP, V4
 - Erstellung in so vielen Spielrunden wie Komplexität des Zeichens
 - Einschränkungen: RkP* halbiert, Wirkung bis zum nächsten Sonnenaufgang, nicht reaktivierbar
-- Bann- und Schutzkreise ebenfalls als Feldversion möglich
+- Bann- und Schutzkreise ebenfalls als Feldversion möglich *(Errata WdA 2.1)*
+
+### SF Reaktivierungsgespür
+- Die SFs Spontanzeichen und Reaktivierungsgespür beinhalten in ihrer Ausprägung für Arkanoglyphen auch die entsprechenden Möglichkeiten bei Bann- und Schutzkreisen *(Errata WdA 2.1)*.
 
 ## Reaktivierung
 
@@ -84,7 +87,7 @@
 - Arkanoglyphen wirken auf schrankgroße Objekte oder Raum mit angegebenem Radius
 - Für größere Bereiche: mehrere Exemplare nötig (3/6/10/15 für doppelten/vierfachen/achtfachen/sechzehnfachen Radius)
 - Runen sind für Schiffsgröße optimiert; für Runen keine Verkleinerung (Ausnahme: Waffenrune)
-- Bann- und Schutzkreise: max. RkW/2 Schritt Radius
+- Bann- und Schutzkreise: max. RkW/2 Schritt Radius; lassen sich **nicht** durch das Zusatzzeichen Verkleinerung modifizieren *(Errata WdA 2.1)*
 
 ## Materialien (Expertenregel)
 

@@ -25,7 +25,7 @@ Metalle finden vor allem in der Artefaktmagie Anwendung. In der Alchimie beschr�
 | Quecksilber | Symbol der Wandelbarkeit; bei Artefakten schwer nutzbar (Merkmal Objekt je –2, bei Umformung von Metallen –4); vor allem in der Alchimie | 75 D |
 | Gold | Lenkt Sphärenkräfte, lässt keine Zauberei aufzwingen (ARCANOVI +2; Okkupation –3, Art der Okkupation +2); im Artefaktbau selten | 50 D |
 | Mondsilber (Platin) | Hochgradig formbar unter arkanen Gesichtspunkten; bevorzugtes Schmuckmetall (ARCANOVI –1; Nebenwirkungen –1) | 75 D |
-| Toschkril (Zwergensilber) | Hart; magiehemmende Eigenschaften gedämpft (ARCANOVI +2, Proben +1; Gesamtkosten +2 AsP; Okkupation +2, Nebenwirkungen +2) | 50 D |
+| Toschkril (Zwergensilber) | Hart; magiehemmende Eigenschaften des Eisens lassen sich durch Toschkril nur dämpfen (ARCANOVI +2, Proben wirkender Sprüche je +1; Gesamtkosten +2 AsP; Okkupation und Nebenwirkungen je +2) und nicht vollständig aufheben *(Errata WdA 2.1)* | 50 D |
 | Zwergengold (Angrak) | Tiefrotgolden, sehr korrosionsbeständig; nur über zwergische Händler; widersteht Königswasser | 80 D |
 
 ### Magische Metalle
@@ -259,6 +259,20 @@ Grundstoffe dienen als Lösungsmittel, Katalysatoren, Brennstoffe und Reinigungs
 | Zugehörige Verbrauchsmaterialien | ~30 D |
 
 ---
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 182: Affinität und Sympathetik (Fels/Erz) — Bei den Allegorien sind zwischen „Sumus Griff" und „graue und schwarze Farben" die magischen Spielarten „Kristallomantie, bisweilen auch Antimagie" einzufügen. Bei den Materialien ist die „Greifenfeder" zu streichen.
+- S. 207: Die nachfolgende Preisliste fehlte im Buch. Sie wird hier nachgereicht.
+
+**Ergänzende Preisliste alchimistischer Materialien (Nachtrag WdA Errata)**
+
+Klassische Metalle (Preise pro Stein, alchimistisch rein):
+Antimon 7 D · Blei 1 D · Bronze 4 D · Eisen 8 S · Gold 50 D · Kupfer 3 D · Messing 4 D · Mondsilber (Platin) 75 D · Quecksilber 75 D · Silber 25 D · Wismut 8 D · Zinn 3 D · Zwergengold 80 D · Zwergensilber (Toschkril) 50 D
+
+Andere Metalle (pro Stein soweit nicht anders): Banchaber Blende/phosphoreszierende Kristalle 7 D / 15 S pro Unze · Elektrum 30 D · güldenländische Metalle ab ~20 bis 60 D und mehr · Katzengold 5 S · Kobalt 15 S · Meteoreisen 5 D · Neckkupfer 1 D · Nickel 8 S · Orichalcum 30 D pro etwa erbsengroßer Perle · Unmetalle min. 100 D
+
+Magische Metalle: Mindorium 200 D/Stein · Arkanium 50 D/Unze · Endurium 12.000 D/Stein · Titanium 5.000 D/Unze · Eternium unbezahlbar
 
 ## Key Takeaways
 

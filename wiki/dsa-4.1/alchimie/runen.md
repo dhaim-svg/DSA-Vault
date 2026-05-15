@@ -77,11 +77,11 @@ Die Schrift besteht aus:
 | Ottarune | 0 AP | 5 | Ermöglicht Teilnahme am Ottagaldr (Bundlied); in SF Ottagaldr enthalten | 3 |
 | Pfeilrune | 100 AP | 7 | Alle Fernkampfangriffe auf Ziel +1 pro 5 RkP* erschwert | 3 |
 | Rauschrune | 50 AP | 4 | Wirksamkeit von Rauschmitteln/Giften erhöht; Qualitätsstufe alch. Gifte/Rauschmittel +1 pro 8 RkP* | 4 |
-| Salzwasserrune | 100 AP | 4 | Bis RkP* Schank Salzwasser pro Tag in Süßwasser verwandeln | 4 |
+| Salzwasserrune | 100 AP | 4 | Pro Tag kann die Rune maximal RkP* Schank Wasser trinkbar machen *(Errata WdA 2.1)* | 4 |
 | Schicksalsrune | 100 AP | 7 | Wie Mackestopp – zieht Patzer an; wird bei Auslösung deaktiviert | 4 |
 | Waberlohenrune | 75 AP | 4 | ¼ Schaden durch gewöhnliches Feuer, ½ Schaden durch magisches Feuer | 4 |
-| Waffenrune | 125 AP | 8 | Waffe verletzt Wesenheit mit Wahrem Namen; doppelte TP + Namensboni; verkleinerbar (Ausnahme) | 1 |
-| Wogensturmrune | 75 AP | 6 | Schwimmen +1 / 5 RkP*; für Schiff: Boote Fahren / Seefahrer +1 / 5 RkP* | 5 |
+| Waffenrune | 125 AP | 8 | Waffe verletzt Wesenheit mit Wahrem Namen; doppelte TP + Namensboni; abweichend von der Grundregel kann die Waffenrune nach den (analog anzuwendenden) Regeln des Zusatzzeichens Verkleinerung (S. 153) minimiert werden, ohne dass der Zaubernde die Kenntnis des Zusatzzeichens oder der SF Zauberzeichen benötigt *(Errata WdA 2.1)* | 1 |
+| Wogensturmrune | 75 AP | 6 | Schwimmen +1 / 5 RkP*; für Schiff: Boote Fahren / Seefahrer +1 / 5 RkP*; Herleitung über Parameter 100/4×4/10 *(Errata WdA 2.1)* | 5 |
 | Zukunftsrune | 175 AP | 6 | Rituell geopfertes Blut aktiviert Prophezeiung (Prophezeien-Probe); danach Deaktivierung | 3 |
 
 **Verbreitung nach V-Stufe:**

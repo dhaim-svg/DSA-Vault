@@ -159,15 +159,15 @@ Jedes Artefakt benötigt einen definierten Auslöser; ohne explizite Festlegung 
 
 ### Wiederaufladen
 - Erst W20 würfeln: Bei 20 → Matrix beschädigt, Artefakt irreparabel. Bei 1–19 → Aufladung möglich.
-- Selbe Regeln wie bei Ersterschaffung für Wirkende Sprüche.
+- Beim Wiederaufladen gelten ansonsten dieselben Regeln bezüglich des Speicherns von Wirkenden Sprüchen wie bei der Erschaffung *(Errata WdA 2.1)*.
 - Kein erneuter ARCANOVI nötig; pAsP bleiben erhalten.
-- Fremdauflader benötigt die Thesis oder vollständigen ANALYS des Artefakts.
-- Alle Sprüche müssen binnen eines Tages (Sonnenaufgang bis Sonnenaufgang) eingewirkt werden.
+- Ein anderer Zauberer außer dem ursprünglichen Erschaffer muss entweder eine Abschrift der Thesis besitzen oder den Gegenstand mittels ANALYS vollständig entschlüsselt haben (siehe Seite 172) *(Errata WdA 2.1)*.
+- Es gilt weiterhin: Alle Sprüche müssen binnen eines Tages (Sonnenaufgang bis Sonnenaufgang) eingewirkt werden *(Errata WdA 2.1)*.
 
 ### Artefaktkontrolle (AK)
 - **Formel:** AK = Magieresistenz + Intuition.
 - Pro mitgeführtem **beseelten** Artefakt halbiert sich die AK.
-- Summe der pAsP aller mitgeführten Artefakte (auch inaktive!) berechnen.
+- Summe der pAsP aller mitgeführten Artefakte (auch inaktive!) berechnen. Elixiere, mitgeführte Objekte mit Zauberzeichen/Runen und Runen auf dem Träger werden als Artefakte mit 1 permanenten AsP gezählt, aktive Zauberzeichen (analog gemäß S. 160 für Runen) als Artefakte mit pAsP in Höhe ihrer halben Komplexität. APPLICATUS-Artefakte zählen nur dann (mit 1 pAsP), wenn ihre Wirkungsdauer mit Satinavs Siegel verlängert wurde. Persönlich gebundene Ritualgegenstände (Zauberstab, Vulkanglasdolch …) zählen in dieser Summierung nicht *(Errata WdA 2.1)*.
 - Bei Überschreitung der AK: eine schlechte Eigenschaft steigt +1/Tag, Klugheit sinkt –1/Woche; Zauberer riskieren, ungewollt falsche Zauber zu wirken.
 
 ---
@@ -276,7 +276,7 @@ Waffen aus drei Kategorien: **magisch, geweiht, dämonisch**. Verletzende Waffen
 | Endurium (je nach Anteil) | +1 bis +4 mTP |
 | Mindorium ≥ 75 % | verletzend gegen Geister |
 
-Körperliche Angriffe von Zauberkundigen gelten ebenfalls als magisch.
+Körperliche Angriffe von Zauberkundigen oder Geweihten gelten ebenfalls als magisch *(Errata WdA 2.1)*. Magiebegabte Wesen sind grundsätzlich als „natürliche magische Waffen" zu betrachten; Angriffe von ihnen richten also mTP an. Eine „künstliche" magische Waffe entsteht außerdem, wenn ein magischer Gegenstand mindestens eines der oben genannten Kriterien erfüllt *(Errata WdA 2.1)*.
 
 ---
 
@@ -291,6 +291,15 @@ Körperliche Angriffe von Zauberkundigen gelten ebenfalls als magisch.
 - Die **AK-Regel** begrenzt, wie viele mächtige Artefakte ein Held gleichzeitig tragen kann, ohne psychische Schäden zu erleiden.
 
 ---
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 77: Die Überschrift „Göttliche und dämonische Artefakte" muss lauten „Göttliche, dämonische und elementare Artefakte". Elementare Artefakte beheimaten Dschinne oder andere Elementarwesen, die tendenziell eher wohlgesinnt auftreten — zumindest solange die Elemente nicht geschändet werden. Die Herstellungsweise dämonischer und elementarer Artefakte findet sich im Kasten „Beschwörung und Artefakte" in WdZ 182.
+- S. 82: Eine einzelne ARCANOVI-Probe dauert halb so viele Zeiteinheiten, wie ARCANOVI-ZfP* erforderlich sind. Ein misslungener ARCANOVI dauert nur halb so lange, mindestens jedoch eine Stunde (mit der SF Zauberkontrolle sogar nur genau eine Stunde).
+- S. 84: Beim Zaubertalisman (Anzahl der Wirkenden Sprüche): Das beste ZfP*-Resultat aller gewürfelten Ergebnisse wird durch eine Zahl geteilt, die abhängig von der Komplexität des Wirkenden Spruchs ist — durch 2 bei Komplexität A, durch 3 bei Komplexität B oder C, durch 4 bei Komplexität D oder E und durch 5 bei Komplexität F+. Beim Aufsummieren für Sprüche mit gewünschtem Merkmal wird der Mittelwert durch die verdreifachte Merkmalskategorie (vgl. SF Merkmalskenntnis in WdZ 26) geteilt (nicht durch 8).
+- S. 85: Ein REVERSALIS kann niemals alleine, also ohne mit einem anderen Zauber kombiniert zu sein, als Wirkender Spruch in ein Artefakt gleich welchen Typs gespeichert werden. Hierzu braucht es die Optionale Eigenschaft Umkehrtalisman (siehe Seite 97), womit der REVERSALIS auch kein Wirkender Spruch ist.
+- S. 85: Der Satz, dass kostensparende Varianten und Randbedingungen (Spontane Modifikation Kosten sparen, Kraftkontrolle, Bedingungen aus Zeit, Ort, Material …) sich auf die Gesamtkosten des Artefakts oder den AsP-Aufwand für den Anwender übertragen, ist gestrichen.
+- S. 89: Matrixgeber können mittels Kraftspeichern betrieben werden, jedoch muss dazu über die Expertenregel „Verschiedene Zauber und Auslöser kombiniert" (siehe Seite 97f.) ein Kombinationsartefakt aus beiden Artefaktgattungen erstellt werden.
 
 ## Verwandte Artikel
 

@@ -56,11 +56,11 @@ Arkanoglyphen wirken **nur auf Unbelebtes**.
 | Fallensiegel | 100 AP | 3 | Ort/Gegenstand: einmalig 2W6+RkP* elementaren Schaden bei Betreten/Berühren |
 | Fanal der Herrschaft | 100 AP | 7 | Autorität/Charisma der Zielperson im Radius um RkP* erhöht; Befehl/Herrschaft/Einfluss erleichtert |
 | Fixierungszeichen | 100 AP | 6 | Türen/Truhen: KK-Probe +RkP*/2 zum Bewegen; Unbefugte werden aufgehalten |
-| Gezücht des Meisters | 150 AP | 8 | Wesen wird zur Wache gezwungen (Winterschlaf bis Eindringling), durch Ritual verstärkt |
+| Gezücht des Meisters | 150 AP | 8 | Wesen wird zur Wache gezwungen (Winterschlaf bis Eindringling), durch Ritual verstärkt; wirkt nur gegen Wesen, deren MR nicht größer als die RkP* der Glyphe ist; das Wesen muss außerdem über die gesamte Aktivierungsdauer in Reichweite der Glyphe sein *(Errata WdA 2.1)* |
 | Glyphe der elementaren Attraktion | 75 AP | 4 | Elementare Eigenschaften im Radius/Objekt verstärkt (Feuer/Eis/Humus/Wasser/Erz/Luft) |
 | Glyphe der elementaren Bannung | 50 AP | 5 | RS in Höhe RkP* gegen das gewählte Element; hält Mindergeister fern |
 | Glyphe des verfluchten Goldes | 125 AP | 8 | Wer Gegenstände aus dem Bereich entfernt, erleidet Schaden wie SCHWARZ UND ROT |
-| Hermetisches Siegel | 50 AP | 3 | Versiegelt Gefäß/Raum – kein Verfall des Inhalts bis Siegel bricht |
+| Hermetisches Siegel | 50 AP | 3 | Versiegelt Gefäß/Raum mit max. RkW/2 Schritt Radius – kein Verfall des **nicht lebendigen** Inhalts bis Siegel bricht oder Wirkungsdauer endet *(Errata WdA 2.1)* |
 | Hypnotisches Zeichen | 150 AP | 8 | Hypnotischer Blickfang; Opfer kann nur durch Schaden oder Selbstbeherrschungs-Probe entkommen |
 | Leuchtendes Zeichen | 25 AP | 1 | Linien der Glyphe leuchten farbig (Stärke wie FLIM FLAM aus RkP*) |
 | Markierung des Todes | 100 AP | 7 | Fernkampfangriffe auf markiertes Objekt um RkP*/2 erleichtert |
@@ -68,7 +68,7 @@ Arkanoglyphen wirken **nur auf Unbelebtes**.
 | Siegel der Stille | 50 AP | 2 | Alle Geräusche in RkW-Radius auf leises Flüstern gedämpft |
 | Siegel der zweiten Haut | 50 AP | 3 | Kraftbarriere um Objekt: RkP*×5 SP, Härte RkP*×1,5; Waffe gilt als unzerbrechlich |
 | Sigille der Schatten | 50 AP | 2 | Leuchtkraft aller Lichtquellen im Radius um RkP* verringert (ab 15 RkP*: völlige Dunkelheit) |
-| Sigille des unsichtbaren Trägers | 125 AP | 4 | Gewicht des Zeichenträgers sinkt um RkP*×2 Stein (auch des Inhalts) |
+| Sigille des unsichtbaren Trägers | 125 AP | 4 | Gewicht des Zeichenträgers sinkt um RkP*×2 Stein, solange es 1 Stein Gewicht nicht unterschreitet (auch des Inhalts) *(Errata WdA 2.1)* |
 | Sigille des unsichtbaren Weges | 100 AP | 4 | Einmalig Luftbrücke bis RkW Schritt, trägt RkP*×25 Stein, hält RkP* SR |
 | Singendes Zeichen | 25 AP | 2 | Einmalig akustisches Signal (RkP* Minuten); Objekt: bei Berührung, Raum: bei Betreten |
 | Ungesehenes Zeichen | 50 AP | 5 | Unbewusste Abscheu vor Ort/Objekt (wie WIDERWILLE UNGEMACH) |
@@ -77,8 +77,8 @@ Arkanoglyphen wirken **nur auf Unbelebtes**.
 | Wimmelndes Zeichen | 100 AP | 5 | Zieht Insekten/Spinnen im Radius RkW×100 Schritt an; RkP*/3 SP pro KR für Durchquerende |
 | Wunschglyphe | 75 AP | 6 | Wertloser Inhalt erscheint als ersehnter Schatz (Illusion); Opfer will ihn in Sicherheit bringen |
 | Zähne des Feuers | 75 AP | 6 | Glyphe brennt sich sofort durch Material (RkP*/2 Spann Durchmesser, RkW/2 Schritt tief) |
-| Zeichen der Zauberschmiede | 75 AP | 6 | Waffe verletzt Wesenheit mit Wahrem Namen; doppelte profane TP + Qualität des Wahren Namens |
-| Zeichen des Handwerks | 125 AP | 5 | Handwerkszeug verbessert: bis zu 7 Bonuspunkte auf Handwerksproben |
+| Zeichen der Zauberschmiede | 75 AP | 6 | Waffe verletzt Wesenheit mit Wahrem Namen; doppelte profane TP + Qualität des Wahren Namens (Verweis: WdZ 56) *(Errata WdA 2.1: Seitenverweis war WdT 56, muss WdZ 56 heißen)* |
+| Zeichen des Handwerks | 125 AP | 5 | Handwerkszeug verbessert: Weitere RkP* stellen genau wie auch weitere Boni einen Bonuspunkt pro 2 RkP* auf die Probe zur Verfügung *(Errata WdA 2.1)*. Bei kleinteiligen Werkzeugsets oder mehrteiligen Gegenständen müssen Objektsigillen sämtlicher Einzelteile in einem Hauptsiegel auf einem größeren, möglichst zentralen Bestandteil beschrieben werden, und jeweils eine Verweissigille auf jedem Einzelteil *(Errata WdA 2.1)* |
 | Zeichen des Stillstands | 125 AP | 6 | Alle Bewegungen im Radius verlangsamt (GS, INI, AT, PA, TP um halbe RkP* reduziert) |
 | Zeichen des versperrten Blicks | 75 AP | 7 | Magische Hellsicht in Radius: ZfP*/RkP* um RkP* des Kreises verringert |
 | Zeichen gegen Magie | 100 AP | 4 | Zeichenträger: jede direkt gewirkte Magie um RkP*/3 erschwert (auch Antimagie) |
@@ -97,7 +97,7 @@ Arkanoglyphen wirken **nur auf Unbelebtes**.
 | Zielbeschränkung | 75 AP | +2 | Zeichen wirkt nur gegen / nicht gegen bestimmte Personengruppen |
 
 **Weitere Arkanoglyphen** (in anderen Quellen beschrieben):
-- Mackestopp und Siegel der Ewigen Ruhe (Zibiljas; WdZ 146f.)
+- Mackestopp und Siegel der Ewigen Ruhe (Zibiljas; WdZ 146f.) *(Errata WdA 2.1: Verweis muss WdZ 146f. lauten, nicht WdZ 146 und 157)*
 - Fliegende-Teppich-Symbole (streng geheim, WdZ/SRD)
 - Golemiden-Zeichen des Sultans Hasrabal
 
@@ -108,6 +108,10 @@ Arkanoglyphen wirken **nur auf Unbelebtes**.
 - 32 bekannte Haupt-Arkanoglyphen + 8 Zusatzzeichen (Stand WdA)
 - Keine Repräsentation nötig, aber Tradition bestimmt die verwendeten Schriften für die Nebenglyphen
 - Arkanoglyphen wirken nie direkt auf Lebewesen
+
+## Errata
+*(Quelle: Wege der Alchimie Errata Version 2.1)*
+- S. 148: Siegel der zweiten Haut — Eine derart verzauberte Waffe gilt, solange das Siegel hält (bei parierten gegnerischen sowie eigenen Treffern werden die TP der jeweils attackierenden Waffe bestimmt und die Auswirkungen auf das Siegel ermittelt), als unzerbrechlich, nicht jedoch als magische Waffe. Eine hiermit behandelte starre Rüstung/Rüstungsteil bietet einen um 20% erhöhten Rüstungsschutz; die TP senken dabei gleichzeitig die vom Siegel zur Verfügung gestellten Strukturpunkte. Als starr gelten alle Plattenteile sowie Hartleder (Lederharnisch, Arm- und Beinschienen, Brustplatte …). Im Trefferzonenmodell wird jedes Teil einzeln betrachtet, beim Gesamtrüstungssystem wird per Würfelwurf bestimmt, ob ein entsprechend gerüsteter Körperteil getroffen wurde.
 
 ## Verwandte Artikel
 

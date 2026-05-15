@@ -108,7 +108,7 @@ Dunkelgrauer Sirup; fördert Regeneration während des Schlafs.
 - **Qual. D:** Verdoppelt Regen. von LeP und AsP + Erschöpfungsabbau.
 - **Qual. E:** Verdreifacht.
 - **Qual. F:** Alle LeP über Nacht zurück + alle Erschöpfung + 4W6 AsP; danach 1W6 Nächte keine Regeneration.
-Variante auf Kairan/Alraune/Lotosfalter-Basis verbessert stattdessen AsP-Regeneration.
+Variante auf Kairan/Alraune/Lotosfalter-Basis verbessert stattdessen AsP-Regeneration: Die laut Grundrezept regenerierenden LeP werden stattdessen den AsP zugerechnet (Qualität F regeneriert somit die AsP um 4W6 über den Grundwert hinaus). Es wird nur solche Erschöpfung regeneriert, die durch Verlust von Ausdauer beim Zaubern (siehe WdZ 23f) erhalten wurde *(Errata WdA 2.1)*.
 
 ---
 

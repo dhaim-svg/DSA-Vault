@@ -28,7 +28,7 @@ Einfache Rezepturen, die auch mit begrenzten Mitteln hergestellt werden können 
 
 **Geheimtinte** — Farblose Tinte, sichtbar nur mit Hilfsmitteln (Wärme, Katalysator, Farbfilter). Viele Varianten, von Zwiebelsaft (Hitze) bis zu komplexen alchimistischen Mixturen. Probe und Schwierigkeit variieren je nach Variante stark. Verbreitung 5.
 
-**Kaltes Licht (Phosphoros)** — Leuchtet im Dunkeln weiß mit ~2–4 ZfP* FLIM FLAM-Leuchtkraft, verbraucht sich pro Stunde/Unze. Hochgiftig bei Einnahme (Stufe 15), brennt bei Hitze >30°C spontan. Verbreitung 3.
+**Kaltes Licht (Phosphoros)** — Leuchtet im Dunkeln weiß mit ~2–4 ZfP* FLIM FLAM-Leuchtkraft, verbraucht sich pro Stunde/Unze. Bei Einnahme äußerst giftig (Stufe 15); entzündet sich ab Temperaturen zwischen heiß und sehr heiß (etwa 30 bis 50°, die in der südaventurischen Mittagssonne erreicht werden) von selbst *(Errata WdA 2.1)*. Verbreitung 3.
 
 **Pyrophor** — Staub entzündet sich bei Luftkontakt von selbst, reicht um Zunder zu entflammen. Wirkt wie "Zauberei" auf Abergläubische. Verbreitung 4.
 
