@@ -80,6 +80,8 @@ Ein ortsgebundener Poltergeist mit Freude an Schrecken und Chaos.
 - **Schreckgestalt II:** Alle Zeugen: MU-Probe oder 2W6 SR Panik
 - **Gegenstände beleben:** Kann Möbel, Werkzeuge, Waffen im Raum bewegen/werfen (AT 10, TP 1W6+2 je Gegenstand)
 
+**Dienste:** Suche (einen Gegenstand – nicht den Sitz seiner Seele), Kampf *(Errata 2011: ersetzt "Suche und Vernichte")*
+
 **Besonderheiten:** Immun gegen physischen Schaden; nur PENTAGRAMMA / GEISTERBANN wirken
 
 ---
@@ -154,6 +156,10 @@ Der Geist eines Tieres, das noch als Geisterwesen weiterwandert.
 - **Irrlicht** mit GS 30 eignet sich als Scout oder zur Ablenkung, nicht zum direkten Kampf
 - **Erscheinungen** kann man nicht bestellen — sie begegnen einem; wenn man sie aber beherrscht (Beh +0), sind sie mächtige Kampfgeister
 - Geister reagieren auf **Silberwaffen**: voller Schaden; normale Waffen sind wirkungslos
+
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 188: Geister und AsP — Geister sind nur bereit, bis zu 12 AsP auszugeben.
 
 ## Verwandte Artikel
 

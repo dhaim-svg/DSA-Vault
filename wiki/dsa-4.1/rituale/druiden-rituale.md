@@ -117,6 +117,10 @@ Alle Dolchzauber beziehen sich auf den **Vulkanglasdolch** (breite Obsidianwaffe
 - **Gespür + Licht + Weg** = günstige Aufklärungswerkzeuge (25–50 AP)
 - Ferkinas und Trollzacker können einige Herrschaftsrituale auch über Geister binden erlernen
 
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 318: Die druidische Repräsentation — Die Lernerleichterung durch die druidische Repräsentation bezieht sich sowohl auf die Aktivierung als auch auf die Steigerung druidischer Zaubersprüche.
+
 ## Verwandte Artikel
 
 - [[rituale-grundregeln]] — Druidenrache (Objektritual)

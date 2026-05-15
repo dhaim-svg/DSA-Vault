@@ -52,7 +52,7 @@ Elementarwesen sind gebundene Geister der sechs aventurischen Elemente. Jedes El
 | Dschinn | 12+1W6 | 14 | 30 | 2 | 19 | 3W6+3 | 10 | 13 |
 | Meister | 16+1W6 | 18 | 60 | 3 | 25 | 6W6+6 | 16 | 18 |
 
-**Besonderheiten:** Hohe PA, geringere AT; Feuerangriffe gegen sie: halber Schaden; Unterwasserkampf ohne Malus
+**Besonderheiten:** Hohe PA, geringere AT; Feuerangriffe gegen sie: halber Schaden; Unterwasserkampf ohne Malus; **Besondere Fähigkeit (Meister): Angriff mit Wasser (21 Schritt)** *(Errata 2011)*
 
 ---
 
@@ -123,6 +123,10 @@ Elementarwesen sind gebundene Geister der sechs aventurischen Elemente. Jedes El
 - **Feuer vs. Wasser:** Entgegengesetzte Elemente verursachen/erleiden doppelten Schaden — beim gleichzeitigen Beschwören zweier Elementare ist Vorsicht geboten
 - **Kein Element ist universal:** Luftelementare taugen wenig als Leibwächter (schwache TP), Erzelementare schlecht für Verfolgungen (GS 3)
 - **Stundenlounge (Meister):** Meister-Elementare kosten bei jedem Dienst Beh +8 — nach 2–3 Diensten ist Kontrollverlust wahrscheinlich
+
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 186 + S. 200: Immunität Elementare — Die Aussage "Immunität gegen alle Merkmale außer Schaden" wird ersetzt durch: "Immunität gegen die Merkmale Eigenschaften, Einfluss, eigenes Element, Form, Heilung, Hellsicht, Herrschaft, Illusion und Verständigung."
 
 ## Verwandte Artikel
 

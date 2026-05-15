@@ -128,7 +128,7 @@ Daimonide entstehen durch **CHIMAEROFORM** (Tier × Dämon) oder durch natürlic
 |------|----------|----|----|-----|--------------|
 | Myrkkyaa-Kaika | Firnluchs × Usuzoreel-Dämon | +29 | +9 | 13 | Hinterhalt 15, 3 Akt./KR |
 | Famulus | Mensch × Dharai | +44 | +7 | — | Ungebändigte Arbeitswut, 4 Klauen-Arme |
-| Weißer Hetzer | Silberwolf × Tuur-Amash | +46 | +9 | 10 | 2 Wolfsköpfe, Stachelschwanz |
+| Weißer Hetzer | Silberwolf × Tuur-Amash | +46 *(Errata 2011)* | +9 | 10 | 2 Wolfsköpfe, Stachelschwanz |
 
 ---
 
@@ -150,12 +150,12 @@ Golems sind magisch belebte Konstrukte aus **totem Material** (kein Fleisch). Si
 - **KL sehr niedrig** (1–5); folgen einfachen Befehlen buchstäblich
 - **Immunität** gegen Gifte, Krankheiten, Schlaf, Erschöpfung
 - **Keine Loyalitäts-Probe** nötig (kein Wille → kein Kontrollverlust); dafür kein Dienst-System
-- **Start-Loyalität** materialabhängig
+- **Start-Loyalität** materialabhängig (siehe S. 198) *(Errata 2011)*
 
 ### Bekannte Golems
 
 **Homunculus** (Lehm-Golem)
-- BS +16, Beh +3; KL 3; LeP 90, RS 3, GS 5, AuP 500
+- BS +16, Beh +3; KL 3; LeP 90, RS 3, GS 5, AuP 500; MU 12 *(Errata 2011)*
 - Immunität Stich + Feuer; mittlere Empfindlichkeit gegen Tsa-geweihte Objekte
 - Start-LO 1W6+8
 

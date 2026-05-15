@@ -2,6 +2,8 @@
 
 > **Handoff-Dokument.** Single source of truth für den Fortschritt der DSA-4.1-Regelwerk-Extraktion. Am Anfang jeder Session lesen, am Ende jedes Kapitels aktualisieren.
 
+**Letzte Aktivität:** 2026-05-15 — Errata WdZ eingearbeitet: 35 Edits in 15 Artikeln (APPLY: 22, ADD: 13, SKIP: 16, NOT-IN-WIKI: 16). Geänderte Artikel: zauberregeln.md, metamagie.md, artefakte.md, zauberer-steigerung.md, invokation-grundregeln.md, elementarwesen.md, geister.md, daemonen.md, untote-nekromantie.md, chimaeren-golems.md, magische-gilden.md, magier.md (professionen), geoden-rituale.md, druiden-rituale.md, traummagie.md (SF Traumgänger bereits enthalten).
+
 **Letzte Aktivität:** 2026-05-15 — Errata WdS eingearbeitet: 44 Edits in 7 Artikeln (SKIP: 4, NOT-IN-WIKI: 14). Geänderte Artikel: kampfregeln.md, kampf-referenztabellen.md, waffenmeister.md, talentregeln.md, sprachen-schriften.md, steigerung.md, umfassende-regeln.md.
 
 **Letzte Aktivität:** 2026-05-15 — Errata WdH eingearbeitet: 39 Edits in 33 Artikeln (SKIP: 12, SKIPPED-NOT-IN-WIKI: 22). Geänderte Artikel: vorteile.md, nachteile.md, sonderfertigkeiten-allgemein.md, steigerung.md, eigenbau.md, mittellaender.md, tulamiden.md, waldmenschen.md, elfen.md, halbelfen.md, zwerge.md, nordaventurien-kulturen.md, tulamidisch-kulturen.md, elfenkulturen.md, zwergenkulturen.md, achaz-kulturen.md, faehnrich.md, krieger.md, ritter.md, schwertgeselle.md, soldat.md, stammeskrieger.md, ausrufer.md, barde.md, haendler.md, streuner.md, taugenichts.md, bergmann.md, gelehrte.md, magier.md, scharlatan.md, schelm.md, boron-geweihte.md, phex-geweihter.md, halbgoetter-geweihte.md, ork-goblin-schamanen.md.
@@ -24,6 +26,7 @@
 |------|---------------|-------|-----|------|-------------|--------|
 | WdH | Wege-der-Helden_Errata-2007-08 | 29 | 10 | 12 | 22 | ✅ |
 | WdS | Wege des Schwerts Errata (2008) | 30 | 14 | 4 | 14 | ✅ |
+| WdZ | Wege-der-Zauberei_Errata-2011 | 22 | 13 | 16 | 16 | ✅ |
 
 ---
 

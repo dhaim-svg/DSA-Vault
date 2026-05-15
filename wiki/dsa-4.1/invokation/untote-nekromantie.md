@@ -124,6 +124,10 @@ Entstehen wenn:
 - **TOTES HANDLE + Gefolgschaft-Dienst** = der einzige Weg, einen Untoten als langfristigen, loyalen Diener zu halten
 - **Freie Untote** sind das schlimmste Szenario: Sie greifen sofort den Beschwörer an; gegen ihren Liebensraub gibt es keine normale Heilung
 
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 192: Übersichtskasten Untote — Sonderdienst Kampf ist zu streichen. Untote haben Kampf als regulären (nicht doppelt berechneten) Dienst.
+
 ## Verwandte Artikel
 
 - [[invokation-grundregeln]] — Kontrollproben, Dienste-Katalog, LO-Mechanik

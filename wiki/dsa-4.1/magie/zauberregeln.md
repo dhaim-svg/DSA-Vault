@@ -120,7 +120,7 @@ Pro 5 AsP Kosten: 1 AuP verbraucht. Mehr als 1/3 Basis-AE auf einen Schlag: 1 Pu
 
 | SF | Typ | Kosten | Effekt |
 |----|-----|--------|--------|
-| Zauberkontrolle | ZH | 100 AP | Zauber aufheben während Wirkungsdauer; Probe-Ergebnis einschätzen; nach 1 Aktion Misserfolg erkennen |
+| Zauberkontrolle | ZH | 100 AP | Zauber aufheben während Wirkungsdauer; Probe-Ergebnis einschätzen; bemerkt unabhängig von seinem ZfW nach 1 Aktion, ob sein Zauber gelingen wird oder nicht *(Errata 2011)* |
 | Zauberspezialisierung | ZH | 20 AP × AF | +2 effektiver ZfW auf einen Aspekt; ab ZfW 7 (1.), 14 (2.), 21 (3.), 28 (4.) |
 | Simultanzaubern | ZH | 150 AP | Erschwernis durch (A)-Zauber: nur +1 statt +3; kein Malus auf weltl. Tätigkeiten |
 | Konzentrationsstärke | ZH(V) | 100 AP | Störungsproben +7 erleichtert; gilt auch für Astrale Meditation (+2) |

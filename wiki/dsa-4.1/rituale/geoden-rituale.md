@@ -91,6 +91,10 @@ Gemeinschaftsritual aller Diener Sumus auf Sonnwendtreffen. Erlaubt spurloses Wa
 - **Gestalt aus Rauch** = einzige Beschwörung; nur Herren der Erde; Kerzen-gebunden
 - Alle Erschaffungskosten: 21 AsP + 1W6 LeP (außer Weihe der Schlange: 18 AsP + 3 LeP)
 
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 314: Die geodische Repräsentation — Ergänzung nach dem ersten Satz: "Dies gilt auch für Zauber mit dem Merkmal Elementar [Gesamt], wenn das zu der speziellen Merkmalskenntnis passende Element herbeigerufen wird."
+
 ## Verwandte Artikel
 
 - [[rituale-grundregeln]] — Allgemeine Ritualregeln; Druidenrache

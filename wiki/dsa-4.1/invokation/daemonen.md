@@ -74,10 +74,10 @@ Die folgende Tabelle listet ausgewählte Dämonen aus dem WdZ-Pandämonium. BS =
 
 | Name | BS | Beh | Wahrer Name | BK | LeP | MR | GW | Besonderheiten | Dienste |
 |------|----|-----|------------|-----|-----|----|----|----------------|---------|
-| **Amrifas der Erderschütterer** (Agrimoth-Diener; 9 Hörner) | +16 | +7 | 2/5 | 30 | — | 18 | 20 | Körperlosigkeit II; Erdbeben/Vulkanausbrüche | Bewegung, Elementarkontrolle (Erz/Erdstöße) |
+| **Amrifas der Erderschütterer** (Agrimoth-Diener; 9 Hörner) | +16 | +7 | 2/5 | 30 | — | 18 | 20 | Körperlosigkeit II; Erdbeben/Vulkanausbrüche; Elementare Kunstfertigkeit 20 *(Errata 2011: war 10)* | Bewegung, Elementarkontrolle (Erz/Erdstöße) |
 | **Aphasmayra** (Katzen-Dämonin; unabhängig) | — | — | — | — | — | — | — | Unabhängig; BANNBALADIN-Effekt; kämpft mit Krallen | Verführung, Herrschaft über Katzen |
 | **Aphestadil** (Vollstreckerin der Trägheit) | +21 | +10 | 1/3 | 50 | — | — | — | Betören 18; Lebensraub durch Umarmung | Verführung und Vernichtung |
-| **Arjunoor** (Sturmdämon; Agrimoth-Diener; 8 Hörner) | +15 | +8 | 3/5 | 30 | 250 | 16 | 21 | GS 50/4; Fliegen; viele Luftzauber (ZfW 12) | Kampf, Wetter-Kontrolle, Vogel-Kontrolle |
+| **Arjunoor** (Sturmdämon; Agrimoth-Diener; 8 Hörner) | +15 | +8 | 3/5 | 30 | 250 | 16 | 21 | GS 50/4; Fliegend *(Errata 2011)*; viele Luftzauber (ZfW 12) | Kampf, Wetter-Kontrolle, Vogel-Kontrolle |
 | **Arkhobal** (Schwarze Eiche; Agrimoth-Diener; 7 Hörner) | +17 | +9 | 2/3 | 30 | 50+/Jahrzehnt | 20 | 15 | Wächst mit Zeit; Äste-Angriff; Dämonisierung von Wald | Beseelung (Baum), Unheiliges Holz, Manifestation |
 | **Azamir** (Verfolger) | — | — | — | — | — | — | — | Unbeschwörbar; tritt auf, wenn man ihn zu bescheifen versucht | — |
 | **Balkha'bul** (Schatzwächter; Tasfarelel-Diener; 3 Hörner) | +18 | +10 | 1/2 | 30 | 100 | 15 | 16 | Körperlos II; Unsichtbar II; ruft 7 Khidma'kha'bulim | Bindung, Wache (+ Gold erforderlich) |
@@ -125,6 +125,12 @@ Die folgende Tabelle listet ausgewählte Dämonen aus dem WdZ-Pandämonium. BS =
 - **Körperlosigkeit I/II** macht viele Dämonen für normale Waffen unverwundbar — Silber oder geweihte Waffen sind Pflicht
 - **Difar** (BK 2, GS 100) ist der beste Spion im Pandämonium: winzig, extrem schnell, nahezu unkampfbar
 - **Braggu** (BK 1) ist der preiswerteste nutzbare Dämon, ideal für Schreck + Alpträume als erste Eskalationsstufe
+
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 184: Manifestation — Streiche den Nebensatz "ohne dass diese als erfüllte Dienste gegen das Dienstemaximum gezählt werden" und im folgenden Satz das Wort "anderen". Ergänzung im ersten Absatz vor dem letzten Satz: "Ein manifestierter Dämon erhält den Dienst Gefolgschaft und wird im Zweifelsfall wie ein gebundener Dämon behandelt." Im Gegensatz zu allen anderen Wesen verschwindet der Dämon nicht, wenn alle Dienste erfüllt sind, sondern erst, wenn der Beschwörer dies wünscht (Dienst Zurückschicken) oder wenn der Dämon erschlagen oder vertrieben wird (es sei denn, er besitzt die Eigenschaft Präsenz).
+- S. 192: Übernahme der Beherrschung — Um die Herrschaft über den Dämon eines anderen Beschwörers zu übernehmen, muss man selbst die Kenntnis des passenden Beschwörungszaubers besitzen oder Paktierer sein, sich in einer Entfernung von maximal 13 Schritt befinden und sich eine Zeit in Höhe des halben Beherrschungswerts in Aktionen auf den Dämon und die Übernahme konzentrieren.
+- S. 205ff.: Pandämonium — Die Eigenschaft Paraphysikalität II wird durch die besondere Kampfregel "Fliegend" ersetzt bei: Arjunoor (S. 208), Asquarath (S. 209), Braggu (S. 210), Gotongi (S. 212), Grakvaloth (S. 212), Kah-Thurak-Arfai (S. 215), Karakil (S. 215), Nishkakat (S. 219), Usuzoreel (S. 223), Uttara'Vha (S. 223).
 
 ## Verwandte Artikel
 

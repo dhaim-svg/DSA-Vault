@@ -156,7 +156,7 @@ Mit W20 auf Kontrollwert — Erschwernis = Beherrschungsschwierigkeit des Wesens
 
 **) Niedere Dämonen zählen als eingehörnt.
 
-ZfP* werden auf alle beschworenen Wesen verteilt. Ausnahme: Wesen mit Eigenschaft Rudel (zählen als ein Dämon, BS + doppelte Rudelgröße).
+ZfP* werden auf alle beschworenen Wesen verteilt. Ausnahme: Wesen mit Eigenschaft Rudel (zählen als ein Dämon; die Basiskosten steigen um die doppelte Rudelgröße an *(Errata 2011)*).
 
 ---
 
@@ -219,7 +219,7 @@ Würfelwurf: 2W6 + halbe Beh. (Patzer: volle Beh.; Gehörnte Dämonen: +5).
 | Geber der Gestalt | Magiekunde 15, I.MINOR/MAIOR 15, RK 11, SF Form der Formlosigkeit | 100 |
 | Höhere Dämonenbindung | Dämonenbindung II, RK 11 | 250 |
 | Invocatio Integra | ZfW I.MAIOR 7 | 200 (100 mit MK Beschwörung) |
-| Exorzist | Magiekunde 11, MU 15 | 200 |
+| Exorzist | MU 15 *(Errata 2011)* | 200 |
 | Nekromant | MU 15, Magiekunde 11, MK Thargunitoth | 250 |
 | Chimärenmeister | MU 15, Magiekunde 11, MK Asfaloth, ZfW CHIMAEROFORM 11 | 250 |
 | Golembauer | MU 15, Magiekunde 11, ZfW STEIN/STAUB WANDLE 11 | 250 |
@@ -234,6 +234,30 @@ Würfelwurf: 2W6 + halbe Beh. (Patzer: volle Beh.; Gehörnte Dämonen: +5).
 - **Geschenke, Ort, Zeit** können Proben um bis zu 7 Punkte verschieben — Vorbereitung lohnt sich
 - **Misslungene Beherrschung** ist gefährlicher als misslungene Beschwörung; Verfall-Regeln optional
 - **Kreaturen** (Chimären/Golems/Untote) gehorchen über Loyalität (LO), nicht über AsP-Bezahlung
+
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 177: Senkung der Kosten — In Verbindung mit der SF Höhere Dämonenbindung senken 3 ZfP* die Basiskosten um 10%. Die maximale Kostenreduktion beträgt auch hier 50%.
+- S. 179: Dauer der Befehlsausführung — Die längste Gesamtdienstzeit aller Dienste beträgt für Geister bis zum nächsten Sonnenaufgang, für Dämonen und Elementare, die nicht gebunden oder manifestiert sind, einen Tag nach der Beschwörung.
+- S. 181: Permanente Dienste — "die Eigenschaft Existenz besitzen" ist durch "manifestiert" zu ersetzen.
+- S. 181: Zeitintervalle für Kreaturen — Der Spielleiter kann weitere Intervalle als die aufgeführten zulassen. Für alle Loyalitätsproben bei Kreaturen gilt, dass sie stets aufgrund der Umstände und der Eigenschaften der Kreatur (z.B. Klugheit) modifiziert werden können und sollten.
+- S. 181f.: Veränderung der Masse (Elementare Manifestation und Elementare Reinheit) — Es gilt folgende Masseskala: 1 Gran / 1 Skrupel / 1 Unze / 1 Stein / 5 Stein / 25 Stein / 125 Stein / 1 Quader / 10 Quader. Kosten für jede Stufe Änderung werden halbiert (Minderung) bzw. verdoppelt (Steigerung). Der Dienst kostet jedoch nach allen Verbilligungen mindestens 1 AsP.
+- S. 182: Bindung — Ergänzung im letzten Satz des zweiten Absatzes: "… jedoch nicht wenn es bereits alle zu erfüllenden Dienste erfüllt hat oder alle AsP ausgegeben sind." Es ist normalerweise nicht möglich, mehr als ein Wesen an eine Person oder einen Gegenstand zu binden. Die Maximalanzahl für einen Ort ist durch den Einflussmodifikator Affinität des Ortes (S. 177) gegeben. Der Spielleiter kann festlegen, dass ein Beschwörer zu viele Wesen gebunden hat; jede Kontrollprobe eines Wesens ist dann um die Anzahl gleichzeitig gebundener Wesen erschwert. Dies gilt explizit nicht für Kreaturen. Das gebundene Wesen kann den Ort der Bindung nicht verlassen und sich maximal 100 Schritt von Person oder Objekt entfernen.
+- S. 182: Artefakte und Beschwörung — Erster Punkt: Der Artefakthersteller kann den Beschwörungszauber oder das Wesen mittels einer ARCANOVI-Variante in das Artefakt speichern. Der Nutzer des Artefakts zählt als Beschwörer und kann den Dienst äußern (und evtl. bezahlen). Er muss jedoch ebenfalls eine Kontrollprobe (mit ZfW 0) ablegen, um das Wesen zu dem Dienst zu bewegen.
+- S. 182 und S. 184: Diebstahl und Spionage — Wenn der Magier das Zielobjekt sieht oder weiß, wo es sich aufhält, müssen keine AsP für die Suche ausgegeben werden.
+- S. 182: Elementare Manifestation — Soll die Manifestation in besonders reiner oder unreiner Form erscheinen, verdoppeln sich die Kosten des Dienstes für jede Stufe über "rein" und halbieren sich für jede Stufe unter "rein". Die Stufen der Reinheit werden auf S. 382f erläutert.
+- S. 182f.: Elementare Reinheit — Die Kosten für eine Veränderung um eine Stufe betragen 4 AsP für eine Veredelung und 2 AsP für eine Minderung der Qualität. Jede zusätzliche Stufe verdoppelt die Kosten.
+- S. 183: Gefolgschaft — Beschreibungstext lautet: "Mit diesem Dienst kann die Dienstanzahl gebundener oder manifestierter Wesen erhöht werden: Die Kontrollprobe ist für jeden zusätzlichen Dienst um 5 Punkte erschwert. Für Kreaturen ist dies der erste Dienst, der überhaupt ausgeführt wird, und erzeugt einen vom Wesen abhängigen Loyalitätswert (Standard: 10). Der Dienst kann auch ausgeführt werden, um die Loyalität der Kreatur zu steigern: die Kontrollprobe ist pro Punkt LO-Steigerung um 4 Punkte erschwert."
+- S. 183: Kampf — Nicht gemeinsam mit dem Dienst Suche möglich; das Opfer muss direkt vom Beschwörer wahrgenommen werden. LO-Probe erschwert je nach Anzahl und relativer Mächtigkeit der Gegner sowie der Klugheit der Kreatur (Richtwerte: +0 für gleichmächtigen Gegner, +7 für deutlich überlegenen Gegner oder eine Gruppe leicht unterlegener Gegner).
+- S. 183: Kontrolle über Element — Die Grundkosten steigen bei höherem Mindest-TaW um die doppelte Differenz. Außerdem können alle Wesen Kunstwerke nur in maximaler Höhe ihres doppelten TaW bauen.
+- S. 183: Kontrolle über Wesen — Es ist explizit auch möglich, mehr oder weniger Wesen zu kontrollieren als der TaW des Wesens beträgt. Die Kosten werden dann anteilig verringert oder erhöht.
+- S. 185: Wache — Als Richtwert kämpft ein wachendes Wesen längstens 20 KR ununterbrochen und aktiv gegen die gleichen Eindringlinge; danach gilt der Dienst als erfüllt.
+- S. 185: Wahnsinn — Dritter Satz lautet: "Als Wirkung sind möglich: Die Verleihung der Nachteile …". Letzter Satz: "Diese Probe wird entweder jeden Tag (zeitlich begrenzte Dauer) oder einmalig zu Beginn (permanent) abgelegt; bei permanenter Dauer kann die Probe bei angemessener Betreuung wiederholt werden."
+- S. 185: SF Exorzist — Voraussetzung ist MU 15 (nicht "Beherrschungs-Wert oder Liturgiekenntnis-Wert 12"). Vgl. WdH 285.
+- S. 186: Elementare Entschwörungen — DESTRUCTIBO ist aus der Liste der Entschwörungen zu streichen.
+- S. 187: Elementarsubstanz — Bei besonders reiner oder unreiner Elementarsubstanz wird die Anrufungsprobe um jede Abweichung von der Stufe "rein" um 2 Punkte erleichtert oder erschwert. Liegt mindestens die zehnfache Menge der geforderten Substanz vor, wird die Anrufungsprobe um weitere 2 Punkte erleichtert.
+- S. 190: Dämonenbindung II — Voraussetzungen: Dämonenbindung I **und** Magiekunde 15.
+- S. 193: SF Nekromant, Kostenersparnis — Letzter Satz lautet: "Die Bereitstellung der Fähigkeit Untotenaktivierung eines Nephazz kostet nur 7 AsP für eine Basiszeit von einer SR sowie keine Grundkosten."
 
 ## Verwandte Artikel
 

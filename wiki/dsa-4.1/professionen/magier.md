@@ -61,7 +61,7 @@ Alle Akademien setzen auf dem Standardmagier auf. Die angegebenen GP und Anforde
 | Stoerrebrandt-Kolleg Riva (Leibwächter) | 25 | Riva | Hellsicht, Schaden | Kampfzauber-Fokus |
 | Schule der vierfachen Verwandlung Sinoda | 27 | Sinoda (Maraskan) | Eigenschaften, Antimagie, Form | Rur-und-Gror-Glaube; Shîkanydad |
 | Schule der variablen Form Tuzak | 24 | Tuzak (Maraskan; nur bis 1020 BF) | Eigenschaften, Form | Adlerschwinge (3 Tierformen); Maraskan-Widerstand |
-| Bannakademie Ysilia | 26 | Ysilia (nur bis 1020 BF) | Antimagie | Invercano; arm; Prinzipientreue 10 |
+| Bannakademie Ysilia | 26 | Ysilia (nur bis 1020 BF) | Antimagie | Invercano; arm; Prinzipientreue 10; ehem. Akademie des Bund des Weißen Pentagrammes (bis 1016 BF), danach Graue Gilde des Geistes (1016–1020 BF), aufgelöst durch Invasion der Verdammten *(Errata 2011)* |
 | Al-Achami-Akademie Fasar (Gemäßigt) | 30 | Fasar | Herrschaft, Einfluss | Schwarzakademie; Arroganz 7 |
 | Al-Achami-Akademie Fasar (Hart) | 31 | Fasar | Herrschaft, Einfluss | härteste Beherrschungsmagie |
 | Bannakademie Fasar | 26 | Fasar | Antimagie | Tarnberuf; Gesucht I; 5 J. Dienstzeit |

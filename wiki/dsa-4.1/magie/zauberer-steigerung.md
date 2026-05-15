@@ -62,7 +62,7 @@ Die Leiteigenschaft beeinflusst: Ritualkenntnis-Maximalwert, Große Meditation, 
 |---------|---------|
 | Eigenschafts-Verbesserung | MU, IN oder CH steigern → AE-Grundwert erhöht sich automatisch |
 | Geistige Übungen | Bis zu CH-Wert hinzukaufbar; Kosten nach SKT Spalte G |
-| **Große Meditation** | Leiteigenschaft ÷ 3 AsP Zugewinn; Ritualkenntnis-Probe (MU/Leiteigenschaft/CH) → +RkP*/10 AsP; 400 AP; max. 1× pro Jahr; 1 Monat Rückzug |
+| **Große Meditation** | Leiteigenschaft ÷ 3 AsP zum Grundvorrat hinzugewinnen; bei Gelingen der Ritualkenntnis-Probe auf (MU/Leiteigenschaft/CH) sogar noch +RkP*/10 Punkte zusätzlich *(Errata 2011)*; 400 AP; max. 1× pro Jahr; 1 Monat Rückzug |
 
 **SF Gefäß der Sterne:**
 - AE-Grundwert wird zu (MU + IN + CH + CH) ÷ 2
@@ -72,6 +72,8 @@ Die Leiteigenschaft beeinflusst: Ritualkenntnis-Maximalwert, Große Meditation, 
 ---
 
 ## pAsP-Rückkauf
+
+Wenn ein Zauberer permanente AsP (pAsP) ausgibt, ändert sich zwar nicht die Größe seines Astralgefäßes (die Basis-AE), sehr wohl aber dessen Kapazität (der nutzbare Anteil der Basis-AE) *(Errata 2011)*.
 
 | Aspekt | Wert |
 |--------|------|
@@ -121,7 +123,7 @@ Voraussetzungen: MU 12, KL 15, IN 15, Grad Adeptus Maior
 | Kraftlinienmagie II | 400 | Erweiterte Kraftlinien-Nutzung |
 | Lockeres Zaubern | 200 | Schelme: Spontane Modifikationen erleichtern |
 | Tanz der Mada | 50 | Zaubertänzer: Ritualkenntnis beim Tanzen |
-| Tierischer Begleiter | 100 / 200 | Tier als magischer Begleiter; 200 AP für Machtvolle Version |
+| Tierischer Begleiter | 100 / 200 | Der Elf geht eine besondere gedankliche Verbindung mit einem sehr nahestehenden Tier (dauerhafter Begleiter wie Reittier oder Seelentier) ein und kann AXXELERATUS, MOVIMENTO, SPURLOS und WELLENLAUF auch auf dieses Tier ausweiten (spontane Modifikation; 3 ZfP; AsP-Kosten +2 pro Zeiteinheit) *(Errata 2011)* |
 
 ---
 

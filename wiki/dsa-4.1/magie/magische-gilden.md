@@ -123,6 +123,11 @@ Verdammt von fast allen anderen magischen Gemeinschaften. Im engeren Sinne: blut
 - **Expurgico** = offizielle Strafe für Gildenvergehen: Verlust des Gildensiegels + aller Rechte
 - Ca. **600 gildenlose Magier** in Aventurien (Stand 1029 BF) — dramatischer Anstieg durch Heptarchien-Beitritt
 
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 289: Bannakademie Ysilia, Ausrichtung — Ehemalige Akademie des Bund des Weißen Pentagrammes (bis 1016 BF), danach der Grauen Gilde des Geistes (1016 bis 1020 BF); im Jahr 1020 BF aufgelöst aufgrund der Eroberung Ysilias durch die Invasion der Verdammten.
+- S. 292: Zauberlehrling — Der Satz "(Diese Grundausbildung kostet 13 GP)" bei den Talenten ist zu streichen. Der letzte Satz des Absatzes mit den Sonderfertigkeiten lautet stattdessen: "Alle Magier erhalten verbilligten Zugang zu den Sonderfertigkeiten Astrale Meditation und Regeneration I. Diese Grundausbildung (Nachteile, Talente, verbilligte SF und Bindung des Stabes) kostet 13 GP." Als Ergänzung: Der Jungmagier muss die Probe für die Bindung noch selbst durchführen und die permanenten AsP selbst bezahlen.
+
 ## Verwandte Artikel
 
 - [[chronica-magica]] — Vollständiger Magie-Zeitstrahl inkl. Gildengründungen

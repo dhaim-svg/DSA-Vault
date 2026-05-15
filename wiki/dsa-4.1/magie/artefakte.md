@@ -160,6 +160,8 @@ Einstimmung nötig (1 Min. bis 1 Tag); danach DESTRUCTIBO-Probe. Kostet ½ der E
 
 TP-Regelung: Verletzende Waffe → Resistenzstufe des Wesens abgesenkt bis verletzend → TP ×2 (maximal).
 
+Auch die **natürlichen Waffen zauberkundiger Wesen** (Fausthiebe, Tritte, Bisse, Schwanzschläge) gelten als magische Angriffe *(Errata 2011)*.
+
 ---
 
 ## Zauberzeichenmagie
@@ -190,7 +192,7 @@ Kombination aus Handwerk und Ritualtechnik. Zwei Systeme:
 | Wogensturmrune | Schwimmen/Boote/Seefahrer +1 pro 5 RkP* | 6 | 75 AP |
 | Pfeilrune | Fernkampf auf Ziel +1 pro 5 RkP* | 7 | 100 AP |
 
-**Bann- und Schutzkreise** (Glyphenmagie): richten sich gegen bestimmte Wesenheitsgruppen (MR < RkP* = betroffen). Schutzkreis hält Wesen fern; Bannkreis zieht erstes betroffenes Wesen hinein.
+**Bann- und Schutzkreise** (Glyphenmagie): Ein Kreis richtet sich jeweils gegen eine bestimmte Gruppe von Wesen, wovon alle betroffen sind, deren MR kleiner ist als die RkP* bei der Zirkelerstellung *(Errata 2011)*. Schutzkreis hält Wesen fern; Bannkreis zieht erstes betroffenes Wesen hinein.
 
 ---
 

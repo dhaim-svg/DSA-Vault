@@ -155,6 +155,10 @@ Spontaner magischer Effekt durch reinen Willen, ohne Formeln/Rituale. 1W6 bis 10
 - Kostenveränderungen bei Misserfolgen addieren sich dauerhaft auf den neuen Zauber
 - Freizauberei ist reines Meister-Werkzeug für NSC-Übermächtige
 
+## Errata
+*(Quelle: Wege der Zauberei Errata 2011)*
+- S. 45: Kombination von Repräsentationen — der vorletzte Satz des ersten Abschnittes lautet: "Der Zauber liegt nach Abschluss der Arbeiten weiterhin in der ursprünglichen Repräsentation vor, hat jedoch die im Kasten auf Seite 44 genannten Vor- und Nachteile."
+
 ## Verwandte Artikel
 
 - [[zauberregeln]] — Spontane Modifikationen (Grundlage der Kleinen Modifikationen)
