@@ -214,7 +214,7 @@ Kapitel-Splits: `raw/pdf-extracted/wege-des-schwertes/kapitel-*.txt`
 
 ## Offene Punkte / Folge-TODOs
 
-- **Errata-Durchgang:** Sobald WdH komplett ist, `001. Errata/`-PDFs extrahieren und in betroffene Artikel einarbeiten.
+- ~~**Errata-Durchgang:**~~ ✅ Abgeschlossen 2026-05-15 — 207 Edits in 5 Büchern (WdH/WdS/WdZ/WdG/WdA). Tabelle siehe "## Errata-Durchgang" oben.
 - **Dataview-Schema:** Falls User Dataview nutzen will — `gp_m`/`gp_f` statt String für Novadi/Goblin; `leittalente:` Liste im elfischen Kultur-Frontmatter.
 - **Zwanzig Fragen (Kap. 08):** Mit User klären, ob als Artikel gewünscht (Roleplay-Tool, keine Regel).
 - **Anhänge (Kap. 09–14):** Vor Bearbeitung kurz prüfen, welche Listen drinstehen — sollen evtl. in WdS oder direkt in `talente/`/`sonderfertigkeiten/` einfließen.
