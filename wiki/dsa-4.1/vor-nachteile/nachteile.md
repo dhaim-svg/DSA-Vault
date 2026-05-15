@@ -12,7 +12,7 @@ Nachteile bringen dem Helden spieltechnische Einschränkungen (erschwerte/verbot
 | Name | GP | Einschr. | Haupteffekt |
 |------|-----|----------|-------------|
 | **Albino** | –7 | — | Sonnenbrand ~1 SP/h; SO >7: jeder Punkt +2 GP; Einschüchtern +1, Beruhigen –1 (nur wenn sichtbar) |
-| **Behäbig** | –5 | Nicht Flink | Basis-GS –1; Ausweichen –1; Sprunggrundwert –1 |
+| **Behäbig** | –5 | Nicht Flink *(Errata 2007: schließen sich gegenseitig aus)* | Basis-GS –1; Ausweichen –1; Sprunggrundwert –1 |
 | **Blutrausch** | –15 | Nicht Kampfrausch | Bei Jähzorn/Wunde+SB-Fehlschlag/Rauschmittel: MU/AT/TP +5, keine PA, kein Schmerz, kein Manöver/Zaubern; endet bei 0 AuP |
 | **Einarmig** | –15 | — | Zweihand-EIG +5, TAL +10; Bogen/Zweihand unmöglich; –7 GP Variante: verkrüppelter Arm (EIG +2, TAL +5) |
 | **Einäugig** | –5 | — | Wurfwaffen/Schuss <10 Schritt –4; Kontrollbereich ½; Zauberer: Zielen –4 |
@@ -96,7 +96,7 @@ Nachteile bringen dem Helden spieltechnische Einschränkungen (erschwerte/verbot
 | **Lästige Mindergeister** | ZHV; –3 | — | Geister entstehen bei Patzer/Fehlschlag >10 AsP; Konzentration –1; verscheucht durch ELEMENTARBANN oder 1W6+3 Tage |
 | **Madas Fluch** | ZH; –1/–2/–3 | Nur Nivesen-Schamanen | 7 Tage um Vollmond: alle Zauber/Ritual –1/–2/–3 (Tag und Nacht) |
 | **Medium** | –7 | — | MR gegen Geister –5; an Geisterorten nervös (TAL/Zauber –1 bis –7) |
-| **Niedrige Astralkraft** | ZHV; –1/Punkt | Max –6 GP | –1 AsP-Startwert pro GP; max –6 AsP |
+| **Niedrige Astralkraft** | ZHV; –1/Punkt | Max –6 GP; **nur für magisch Begabte** *(Errata 2007)* | –1 AsP-Startwert pro GP; max –6 AsP |
 | **Rückschlag** | ZH; –10 | Nicht Feste Matrix; Spruchzauberer | Misslungene Sprüche fallen mit halber Grundauswirkung auf Zauberer zurück (volle AsP-Kosten) |
 | **Schwache Ausstrahlung** | ZH; –1/Punkt (max 5) | Spruchzauberer | Pro Punkt: CH-Probe in Zauber/Ritual +1 Erschw.; CH×2: doppelt; SCHLEIER um Punktzahl erleichtert |
 | **Schwacher Astralkörper** | ZH; –7 | Spruchzauberer | Pro 12 angefangene AsP: 1W3 zusätzlich verloren; auch bei fremdem Zauber (12 AsP Schwelle) |

@@ -56,10 +56,10 @@ Hüter des handwerklichen Wissens der Orksippe. Metallurgische Verfahren als rel
 
 | | |
 |--|--|
-| Voraussetzungen | MU 11, CH 11, FF 11, KK 13; Kultur Orkland, Svellttal-Besatzer, Mittelländische Städte (Siedlerstädte) |
+| Voraussetzungen | MU 11, CH 11, FF 11, KK 13; Kultur Orkland, Svellttal-Besatzer, **Mittelländische Städte (Siedlerstädte des Nordens: Uhdenberg)** *(Errata 2007: ergänzt)* |
 | Modifikationen | SO 4–5, MR +1 (keine KaP, keine AsP) |
 
-**Automatischer Vorteil:** Gutes Gedächtnis
+**Automatischer Vorteil:** Gutes Gedächtnis *(Errata 2007: Gutes Gedächtnis ist bei den empfohlenen Vorteilen zu streichen — es ist automatisch; nicht mehr als empfohlen angeben)*
 
 Kampf: Hiebwaffen oder Säbel +3, das andere +1, Ringen +1  
 Körper: Selbstbeherrschung +1, Singen +1, Sinnenschärfe +2, Zechen +2  
@@ -114,6 +114,8 @@ Geistige Elite der Goblins; übernehmen Sippenführung. Heilerinnen, Entscheider
 | Modifikationen | SO nach Variante, MR +1, +6 AsP, KL +1 (Halbzauberer eingerechnet) |
 
 **Automatische V/N:** Halbzauberer / Eingeschränkte Elementarnähe (Humus, Luft, Erz), Verpflichtungen; Unstet aufgehoben
+
+*(Errata 2007: Empfohlener Vorteil Früher Vertrauter ist zu streichen.)*
 
 Kampf: Dolche +1, Hiebwaffen +1, Raufen +3  
 Körper: Körperbeherrschung +1, Reiten +1, Schleichen +1, Selbstbeherrschung +3, Sich Verstecken +2, Sinnenschärfe +3, Tanzen +2  

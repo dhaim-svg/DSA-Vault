@@ -22,16 +22,18 @@ Erz- und Kohlebrecher unter Tage — körperlich härtester Handwerksberuf. Auto
 
 | | |
 |--|--|
-| GP | 1 |
+| GP | **1** *(Errata 2007: Kosten auf 1 GP gesenkt)* |
 | Modifikationen | +1 LeP, +3 AuP; SO 3–8 (Angroschim SO 3–13) |
 | Voraussetzungen | MU 12, GE 11, KO 11, KK 13 |
 
 **Automatischer Vorteil:** Hitzeresistenz  
-**Empfohlene:** Gefahreninstinkt, Zwergennase / Aberglaube  
+**Empfohlene:** Gefahreninstinkt, Zwergennase / Aberglaube
+
+*(Errata 2007: SF Akklimatisierung (Hitze) gestrichen — bereits durch Vorteil Hitzeresistenz abgedeckt. Talent Athletik auf +3 gesetzt.)*  
 **Ungeeignete:** Adlig / Dunkelangst, Fettleibig, Höhenangst, Krankhafte Reinlichkeit, Nachtblind, Raumangst
 
 Kampf: Hiebwaffen +3, Raufen +3, Ringen +3, Zweihand-Hiebwaffen +3  
-Körper: Athletik +3, Klettern +4, Körperbeherrschung +3, Selbstbeherrschung +3, Sinnenschärfe +4, Zechen +3  
+Körper: Athletik **+3** *(Errata 2007)*, Klettern +4, Körperbeherrschung +3, Selbstbeherrschung +3, Sinnenschärfe +4, Zechen +3  
 Gesellschaft: —  
 Natur: Orientierung +3, Wildnisleben +1  
 Wissen: Gesteinskunde +4, Götter/Kulte +1, Sagen/Legenden +1, Schätzen +2, Baukunst oder Hüttenkunde oder Mechanik +1  

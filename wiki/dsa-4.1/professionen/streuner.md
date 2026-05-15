@@ -30,7 +30,9 @@ varianten:
 | Voraussetzungen | MU 11, IN 12, CH 12, FF 12 |
 
 **Automatische Vorteile:** Soziale Anpassungsfähigkeit, Verbindungen SO 25 (vor allem zu Hehlern und Informanten)  
-**Empfohlene:** Gefahreninstinkt, Glück, Glück im Spiel, Gut Aussehend, weitere Verbindungen, Wohlklang / Aberglaube, Eitelkeit, Gesucht, Goldgier, Neugier, Sucht  
+**Empfohlene:** Gefahreninstinkt, Glück, Glück im Spiel, Gut Aussehend, weitere Verbindungen, Wohlklang / Aberglaube, Eitelkeit, Gesucht, Goldgier, Neugier, Sucht
+
+*(Errata 2007: Soziale Anpassungsfähigkeit ist nicht mehr als empfohlener Vorteil zu listen — sie ist bereits automatisch (S. 143).)*  
 **Ungeeignete:** Adlig, diverse Moralkodizes und Prinzipien
 
 Kampf: Dolche +3, Fechtwaffen oder Hiebwaffen oder Säbel oder Schwerter +2, Raufen +2, Ringen +1, Wurfmesser +2  

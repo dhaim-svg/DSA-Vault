@@ -25,7 +25,7 @@ Volksredner, Marktschreier und Einpeitscher — verbreiten Nachrichten, preisen 
 | SO | 3–8 |
 | Voraussetzungen | MU 11, IN 13, CH 13 |
 
-**Empfohlene:** Begabung (Sprachen), Breitgefächerte Bildung, Gut Aussehend, Gutes Gedächtnis, Soziale Anpassungsfähigkeit, Verbindungen, Wohlklang / Schulden, Verpflichtungen  
+**Empfohlene:** **Begabung (Sprachen)** *(Errata 2007: ersetzt Sprachgefühl)*, Breitgefächerte Bildung, Gut Aussehend, Gutes Gedächtnis, Soziale Anpassungsfähigkeit, Verbindungen, Wohlklang / Schulden, Verpflichtungen  
 **Ungeeignete:** Adlig / Angst vor Menschenmengen, Platzangst, Prinzipientreue, Randgruppe, Unansehnlich, Widerwärtiges Aussehen
 
 Kampf: Dolche +2, Hiebwaffen +3, Raufen +4, Ringen +4  

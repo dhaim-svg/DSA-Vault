@@ -27,7 +27,9 @@ Wohlhabende Abenteuerlüstige — aus adliger oder bürgerlicher Familie, sucht 
 | SO | 6–12 |
 | Voraussetzungen | MU 13, IN 11, CH 12, GE 11 |
 
-**Empfohlene:** Adlig (auch Adliges Erbe), Ausrüstungsvorteil, Besonderer Besitz, Gefahreninstinkt, Glück im Spiel, Soziale Anpassungsfähigkeit, Verbindungen, Vom Schicksal begünstigt / Arroganz, Eitelkeit, Gesucht, Jähzorn, Neugier, Schulden, Sucht, Unstet, Vorurteile  
+**Empfohlene:** Adlig (auch Adliges Erbe), Ausrüstungsvorteil, Besonderer Besitz, Glück im Spiel, Soziale Anpassungsfähigkeit, Verbindungen, Vom Schicksal begünstigt / Arroganz, Eitelkeit, Gesucht, Jähzorn, Neugier, Schulden, Sucht, Unstet, Vorurteile
+
+*(Errata 2007: Gefahreninstinkt ist als empfohlener Vorteil zu streichen — er ist bereits automatisch.)*  
 **Ungeeigneter Nachteil:** Randgruppe
 
 Kampf: Dolche +2, Fechtwaffen oder Hiebwaffen oder Säbel oder Schwerter +3, Raufen +1, Ringen +2, Wurfmesser +2  

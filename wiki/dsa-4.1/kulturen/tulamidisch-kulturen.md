@@ -113,6 +113,8 @@ Kampf: Säbel +2, Speere oder Langschwert +1, Bogen +1, Raufen +1; Körper: Reit
 **Sprachen:** Ologhaijan (Novadi-Dialekt) (KL–2); Garethi oder Tulamidya +4  
 **SF:** Wüstenkundig, Berittener Schütze
 
+*(Errata 2007: Mögliche Profession Arbeiter wird durch Tagelöhner ersetzt — gilt für Novadi Männer und Frauen.)*
+
 ---
 
 ## Novadi – Frauen (0 GP)

@@ -21,7 +21,7 @@ varianten:
 # Fähnrich
 
 > **Quelle:** Wege der Helden, S. 96–98  
-> **Kategorie:** Kämpferische Professionen · GP je nach Akademie · zeitaufwendig
+> **Kategorie:** Kämpferische Professionen · GP je nach Akademie · zeitaufwendig *(Errata 2007: alle Fähnrich-Varianten sind zeitaufwendig)*
 
 Fähnriche sind der niedrigste Offiziersdienstgrad in den Heeren Aventuriens. Die Ausbildung befähigt zu eigenständiger Truppenführung: Taktik, Strategie, Logistik — und natürlich der Umgang mit der Waffe. Alle Varianten sind zeitaufwendig und hinterlassen den Absolventen mit erheblichen Schulden.
 
@@ -35,8 +35,10 @@ Drei Haupttypen: **Fußkämpfer**, **Kavallerie**, **Stabsoffizier** und **Seekr
 **Voraussetzungen:** MU 12, KL 11, CH 11, GE 11, KO 11  
 **Modifikationen:** AuP +3, LeP +1; SO 7–11  
 **Automatische Nachteile:** Prinzipientreue (10; Gehorsam, Loyalität, Ehrenhaftigkeit), Schulden (1.500 Dukaten)  
-**Empfohlene:** Adlige Abstammung / Arroganz (Krankhaftes Ehrgefühl)  
+**Empfohlene:** Adlige Abstammung / **Arroganz (Krankhaftes Ehrgefühl)** *(Errata 2007: kein getrennter „Arroganz" und „Krankhaftes Ehrgefühl", sondern eine kombinierte Schlechte Eigenschaft)*  
 **Ungeeignete:** Gesucht, Lichtscheu, Randgruppe
+
+*(Errata 2007: Der Fußkämpfer-Fähnrich aus Oberfels verwendet die Werte der Variante Gareth.)*
 
 **Basistalente:**  
 Kampf: Armbrust +3, Dolche +1, Fechtwaffen oder Schwerter +5, Hiebwaffen oder Säbel +5, Infanteriewaffen oder Speere +3, Raufen +2, Ringen +2  

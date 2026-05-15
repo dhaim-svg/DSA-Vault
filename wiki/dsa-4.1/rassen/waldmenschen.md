@@ -48,7 +48,7 @@ Keine.
 
 **Üblich:** Dschungelstämme, Verlorene Stämme, Miniwatu, Darna, Südaventurien, Bukanier
 
-**Möglich:** Tocamuyac, Horasreich, Aranien, Tulamidische Stadtstaaten
+**Möglich:** Tocamuyac, **Horasreich** *(Errata 2007: ersetzt Yaquirien)*, Aranien, Tulamidische Stadtstaaten
 
 **Empfohlen:** Ausdauernd, Balance, Flink, Gefahreninstinkt, Gut Aussehend, Hitzeresistenz, Resistenz gegen Gift, Schlangenmensch / Kälteempfindlich
 
@@ -69,7 +69,7 @@ Keine.
 | Automatischer N. | **Kleinwüchsig** |
 | Talente | Körperbeherrschung +3, **Schwimmen +3**, Sinnenschärfe +3, Orientierung +1 |
 | Übliche Kulturen | Tocamuyac |
-| Mögliche Kulturen | Dschungelstämme, Miniwatu, Waldinsel-Utulus, Südaventurien, Bukanier, Horasreich, Aranien, Tulamidische Stadtstaaten, Mittelländische Städte (Vallusa) |
+| Mögliche Kulturen | Dschungelstämme, Miniwatu, Waldinsel-Utulus, Südaventurien, Bukanier, **Horasreich** *(Errata 2007: ersetzt Yaquirien)*, Aranien, Tulamidische Stadtstaaten, Mittelländische Städte (Vallusa) |
 
 ## Key Takeaways
 

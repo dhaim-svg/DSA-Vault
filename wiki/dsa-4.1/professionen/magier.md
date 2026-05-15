@@ -27,7 +27,8 @@ Gildenmagischer Vollzauberer. Basis aller Akademie-Varianten ist der **Standardm
 
 **SF (alle Akademien):** Repräsentation Gildenmagie, Ritualkenntnis (Gildenmagie), Astrale Meditation, Große Meditation, Bindung des Stabes
 
-**Ausrüstung (Standard):** Magiergewand, Zauberstab (mit erstem Stabzauber), Schreibzeug, Umhängetasche, 10 Blatt Pergament
+**Ausrüstung (Standard):** Magiergewand, Zauberstab (mit erstem Stabzauber), Schreibzeug, Umhängetasche, 10 Blatt Pergament  
+**Besonderer Besitz:** Zauberstab als persönliche Waffe oder ein einfaches magisches Buch (im Wert von 100 bis 150 Dukaten) *(Errata 2007)*
 
 ---
 

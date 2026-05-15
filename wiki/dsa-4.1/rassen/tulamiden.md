@@ -38,7 +38,7 @@ Keine Modifikatoren.
 
 **Üblich:** Aranien, Mhanadistan, Tulamidische Stadtstaaten, Novadi, Ferkina, Zahori, Maraskan, Südaventurien, Bukanier
 
-**Möglich:** Mittelländische Städte, Almada, Amazonenburg
+**Möglich:** Mittelländische Städte, **Almada** *(Errata 2007: ersetzt Yaquirien)*, Amazonenburg
 
 **Ungeeignete Vor- und Nachteile:** Herausragende Balance / Nahrungsrestriktion
 

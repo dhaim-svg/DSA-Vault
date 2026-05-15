@@ -58,7 +58,7 @@ Typische Basiswerte (Mensch): +10 LE, +10 AuP, MR –4.
 
 Jeder Vor-/Nachteil zählt mit **0,3 × seinem GP-Wert**. Körperliche Vor-/Nachteile (Nachtsicht, Kältestarre etc.) müssen bei der Rasse auftauchen. Lieber wenige feste, mehr empfohlene Vor-/Nachteile — zu lange Listen schränken den Spieler ein.
 
-*Nicht erlaubt als feste Vor-/Nachteile:* Astralmacht, Ausdauernd, Hohe MR, Hohe Lebenskraft, Kurzatmig, Niedrige Astralkraft/Lebenskraft/MR.
+*Nicht erlaubt als feste Vor-/Nachteile:* Astralmacht, Ausdauernd, Hohe MR, Hohe Lebenskraft, Kurzatmig, Niedrige Astralkraft/Lebenskraft/MR. *(Errata 2007: Dies gilt explizit — die Werte AE, AU, LE und MR werden über die festen Modifikatoren aus Schritt 4 geregelt, nicht über diese Vorteile/Nachteile.)*
 
 ### 6. Sonderfertigkeiten
 
@@ -72,6 +72,7 @@ SF sollten nie mit Rassen verbunden sein; bei Kulturen nur sparsam (Kulturkunde,
 - **Talentbonus:** Bonus × Steigerungsfaktor / 10
 - **Negativer TaW:** –0,5 GP pro Punkt (max. –2, nur Basistalente, nur bei körperlicher/kultureller Begründung)
 - **Muttersprache** aktivieren: kostenlos; **Zweitsprache** aktivieren: 0,7 GP; Lehrsprache: 0,7 GP
+- **Fremdsprachen** werden immer nach Spalte A berechnet *(Errata 2007, S. 306)*
 
 Empfohlene Boni: +1 bis +2. Bei Professionen bis +5 möglich, bei intensiver Spezialisierung bis +7. Rassenpakete nur Körper/Natur-Talente; Professionen alle Kategorien.
 

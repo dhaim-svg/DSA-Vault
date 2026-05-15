@@ -25,6 +25,8 @@ varianten:
 
 Die Schwertgesellen-Bewegung ist nur ca. 50 Jahre alt, gilt aber bereits als "dritte Säule des Kriegertums" — nach Rittern und Kriegern. Abgänger erhalten einen Siegelring mit dem Wappen ihres Meisters und profitieren von ähnlichen Privilegien wie ein Kriegerbrief. Das Konzept betont Einzelkampfkunst, Stil, Etikette und Ehrenkodex.
 
+*(Errata 2007: Die bisherigen regeltechnischen Besonderheiten der Schwertgesellen fehlen nicht — sie wurden ersatzlos gestrichen.)*
+
 ---
 
 ## Schwertgeselle / Schwertgesellin — Grundwerte (alle Stile)
@@ -242,7 +244,7 @@ Körper: Selbstbeherrschung +1
 Handwerk: Holzbearbeitung +2  
 **SFs:** Ausfall, Finte, Kampfreflexe, Rüstungsgewöhnung I (Maraskanischer Hartholzharnisch), Sturmangriff, Wuchtschlag  
 **Verbilligte SFs:** Aufmerksamkeit, Befreiungsschlag, Binden, Gegenhalten, Kampfgespür, Klingensturm, Klingenwand, Meisterparade, Niederwerfen, Schnellziehen, Waffenspezialisierung Anderthalbhänder (Nachtwind oder Tuzakmesser), Windmühle  
-**Zusätzliche Ausrüstung:** Tuzakmesser oder Nachtwind oder Schnitter, Diskus, Maraskanischer Hartholzharnisch
+**Zusätzliche Ausrüstung:** Tuzakmesser oder Nachtwind oder Schnitter, Diskus, Maraskanischer Hartholzharnisch *(Errata 2007: ergänzt)*
 
 ---
 

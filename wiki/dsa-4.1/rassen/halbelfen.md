@@ -50,9 +50,9 @@ Basiswerte beziehen sich auf auelfisch-/waldelfen-stämmige Halbelfen (häufigst
 
 ## Kulturen
 
-**Üblich:** Elfische Siedlung\*\*; Mittelländische Städte, Mittelländische Landbevölkerung, Andergast und Nostria, Almada, Svellttal, Nivesenstamm, Norbardensippe
+**Üblich:** Elfische Siedlung\*\*; Mittelländische Städte, Mittelländische Landbevölkerung, Andergast und Nostria, **Almada** *(Errata 2007: ersetzt Yaquirien)*, Svellttal, Nivesenstamm, Norbardensippe
 
-**Möglich:** Auelfische Sippe\*\*, Waldelfische Sippe\*\*, Firnelfische Sippe\*\*, Aranien, Thorwal, Bornland, Horasreich, Fjarninger, Gjalskerländer
+**Möglich:** Auelfische Sippe\*\*, Waldelfische Sippe\*\*, Firnelfische Sippe\*\*, Aranien, Thorwal, Bornland, Horasreich *(Errata 2007: ergänzt)*, Fjarninger, Gjalskerländer
 
 *\*\*) Bei Aufwachsen bei Elfen: +7 GP → erhält Vollzauberer (statt Viertelzauberer), +12 AsP (statt −6), MR –2 (statt –4) und Zweistimmiger Gesang.*
 

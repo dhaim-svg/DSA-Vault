@@ -64,6 +64,8 @@ Handwerk: Heilkunde Wunden +3, Lederarbeiten +2
 
 ---
 
+*(Errata 2007: Kriegerakademien sind auch in Nostria und Andergast möglich.)*
+
 ## Akademien-Übersicht
 
 | Akademie | GP | Ort | Besonderheit |

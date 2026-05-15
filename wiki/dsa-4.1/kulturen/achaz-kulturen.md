@@ -78,7 +78,7 @@ Die archaische, stammesorientierte Variante der Achaz. Jäger und Sammler im Dsc
 | Modifikationen | +1 LeP, +3 AuP |
 | SO-Maximum | 4 |
 
-**Empfohlene:** Ausdauernd, Gefahreninstinkt, Hohe Lebenskraft, Richtungssinn, Zäher Hund / Aberglaube, Neugier, Vorurteile  
+**Empfohlene:** Ausdauernd, Gefahreninstinkt, Hohe Lebenskraft, **Innerer Kompass** *(Errata 2007: ersetzt Richtungssinn)*, Zäher Hund / Aberglaube, Neugier, Vorurteile  
 **Ungeeignet:** Adlig, Soziale Anpassungsfähigkeit / Nachtblind, Raumangst
 
 ### Professionen

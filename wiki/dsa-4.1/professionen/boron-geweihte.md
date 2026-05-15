@@ -72,6 +72,8 @@ Militärischer Arm der Puniner Kirche. Ziel: Rückeroberung entweihter Stätten 
 
 Weitere Orden (Noioniten, Marbiden, Etilianer, Boronsraben/Rabengarde, Tempelgarde des Schweigens, Orden des Heiligen Laguan) — fast alle nur späterer Beitritt.
 
+*(Errata 2007: Bei den Rabengardisten bezieht sich die SF Rüstungsgewöhnung I auf Leichte Platte oder Kusliker Lamellar.)*
+
 ---
 
 ## Key Takeaways

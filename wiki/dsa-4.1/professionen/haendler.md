@@ -70,7 +70,7 @@ Sprachen: SK [zwei weitere Fremdsprachen] je +4, zwei weitere Schriften +2
 
 ## Großhändler (0 GP)
 
-**Modifikationen:** SO 7–13  
+**Modifikationen:** SO 7–13 *(Errata 2007: SO war im Original doppelt angegeben; korrekt ist SO 7–13)*  
 Gesellschaft: Etikette +2  
 Wissen: Rechtskunde +2, Rechnen +2  
 Sprachen: L/S [obige Schrift] +2  

@@ -69,6 +69,12 @@ Kosten in AP, um einen Wert von **n** auf **n+1** zu steigern.
 > Der Talentwert darf bei der Erschaffung den höchsten der drei Prüfeigenschaften **nicht um mehr als 3 übersteigen**.  
 > Im späteren Spiel gilt dieser Deckel nicht mehr.
 
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 18, Kurz-SKT Spalte F: Die abgedruckte Spalte F ist fehlerhaft. Korrekte Werte ab Aktivierung: 8, 6, 14, 22, 32, 41, 50, 60, 75, 85, 95, 105, 120, 130, 140, 155, 165, 180, 195, 210, 220. Ergänzungsspalten G und H: G = 10, 8, 18, 30, 42, 55, 70, 85, 95, 110, 125, 140, 160, 175, 190, 210, 220, 240, 260, 270, 290; H = 20, 16, 35, 60, 85, 110, 140, 165, 195, 220, 250, 280, 320, 350, 380, 410, 450, 480, 510, 550, 580. Referenz: SKT in Basis 198. Talent Schleuder verwendet Steigerungsspalte E.
+- S. 19, Steigern von Zaubern (Fremde Repräsentationen): Scharlatane lernen Zauber in gildenmagischer Repräsentation nur 1 Spalte erschwerst, in schelmischer Repräsentation 2 Spalten. Schelme lernen Zauber in fremden Repräsentationen 3 Spalten erschwerst; alle anderen Zauberer lernen Schelmensprüche 3 Spalten erschwerst. Ausnahme: Scharlatane lernen Schelmensprüche nur 2 Spalten erschwerst (und umgekehrt).
+- S. 23, Start-AP für Zauber: Die Klammerbemerkung, dass nur die Hälfte der Start-AP für Zauber aufgewendet werden darf, **entfällt** — es gilt keine solche Einschränkung.
+
 ## Key Takeaways
 
 - Start-AP = (KL + IN) × 20 — KL und IN lohnen sich doppelt (hohe Start-AP + Prüfeigenschaften).

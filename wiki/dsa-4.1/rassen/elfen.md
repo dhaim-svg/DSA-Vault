@@ -62,7 +62,7 @@ An Seen und Flussläufen in Nord- und Mittelaventurien.
 
 **Üblich:** Auelfische Sippe, Steppenelfische Sippe, Elfische Siedlung
 
-**Möglich:** Waldelfische Sippe; Menschenkulturen: Andergast und Nostria, Bornland, Mittelländische Städte, Mittelländische Landbevölkerung, Norbardensippe, Svellttal, Almada
+**Möglich:** Waldelfische Sippe; Menschenkulturen: Andergast und Nostria, Bornland, Mittelländische Städte, Mittelländische Landbevölkerung, Norbardensippe, Svellttal, **Almada** *(Errata 2007: ersetzt Yaquirien)*
 
 ---
 

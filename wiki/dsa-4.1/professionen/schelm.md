@@ -120,6 +120,10 @@ Klettern +1, Schwimmen +4, Sich Verstecken +3, Singen +1, Fesseln/Entfesseln +3,
 - Koboldisch als Mutterzunge ist spielerisch nutzbar (Verständigung mit Kobolden auto).
 - Vagabundin ist einzige nicht zeitaufwendige Variante.
 
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 203, Schelmin: Hier fehlt eine Anmerkung zum Steigern von Zaubern in fremden Repräsentationen (wie S. 19 dargelegt): Schelme lernen Zauber in fremden Repräsentationen um drei Spalten erschwert; alle anderen Zauberer lernen Schelmensprüche um drei Spalten erschwert. Ausnahme: Scharlatanische Repräsentation — Schelme lernen deren Zauber nur zwei Spalten schwerer (und Scharlatane Schelmensprüche ebenfalls nur zwei Spalten schwerer).
+
 ## Verwandte Artikel
 
 - [[_professionen|Professionen-Übersicht]]

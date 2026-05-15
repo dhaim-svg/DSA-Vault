@@ -31,6 +31,8 @@ Heimlicher Gott, heimliche Priester. Kaum als Geweihte erkennbar — keine Robe,
 
 **Automatische V/N:** Geweiht (Zwölfgöttl. Kirche) / Moralkodex 6 (Phex), Verpflichtungen (Kirche)
 
+*(Errata 2007: Der Satz „In diesem Fall können jedoch keine Varianten des Geweihten-Typus zusätzlich gewählt werden." ist zu streichen — Varianten können also doch kombiniert werden.)*
+
 Kampf: Dolche +3, Raufen +3  
 Körper: Klettern +1, Körperbeherrschung +1, Schleichen +3, Selbstbeherrschung +3, Sich Verstecken +4, Sinnenschärfe +3, Taschendiebstahl +2  
 Gesellschaft: Etikette +2, Gassenwissen +4, Lehren +3, Menschenkenntnis +6, Sich Verkleiden +3, Überreden +6, Überzeugen +3  

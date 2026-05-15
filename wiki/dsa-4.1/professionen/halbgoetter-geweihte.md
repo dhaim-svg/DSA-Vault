@@ -81,8 +81,10 @@ Sprachen: Muttersprache +2, Bosparano oder Ur-Tulamidya +7, die andere +5, Fremd
 Handwerk: Handel +2, Malen/Zeichnen +4, ein weiteres +3, zwei weitere +2
 
 **SF:** Liturgiekenntnis (Nandus) +4, Karmalqueste, Nandusgefälliges Wissen  
-**Liturgien:** (I) 6 Segnungen (Eidsegen, Glückssegen, Harmoniesegen, Heilungssegen, Schutzsegen, Weisheitssegen), Sterne funkeln Immerfort; (II) Ein Bild für die Ewigkeit, Göttliche Verständigung oder Sicht auf Madas Welt; (III) Nandus' Schriftkenntnis  
-**Verbilligte Liturgien:** (I) Prophezeiung; (II) Auge des Händlers, Entzug von Nandus' Gaben  
+**Liturgien:** (I) 6 Segnungen (Eidsegen, Glückssegen, Harmoniesegen, Heilungssegen, Schutzsegen, Weisheitssegen), Sterne funkeln Immerfort; (II) Ein Bild für die Ewigkeit, Göttliche Verständigung oder Sicht auf Madas Welt; **(III) Nandus' Schriftkenntnis (Grad III, nicht Grad II)** *(Errata 2007)*  
+**Verbilligte Liturgien:** (I) Prophezeiung; (II) Auge des Händlers, Entzug von Nandus' Gaben
+
+*(Errata 2007: Nandus' Schriftkenntnis ist Grad III, nicht Grad II. Daher muss der Mindest-SO auf 5 gesenkt werden. Der empfohlene Vorteil Sprachgefühl ist zu Begabung (Sprachen) zu ändern.)*  
 **Ausrüstung:** Graue Kutte mit grünem Skapulier, Schlangenarmreif, Reisemantel, Handwaffe, Schreibzeug, Pergamente, Lederranzen
 
 ---

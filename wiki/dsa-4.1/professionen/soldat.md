@@ -249,7 +249,7 @@ Gesellschaft: keine Etikette
 Natur: Fischen/Angeln +1  
 Handwerk: Boote Fahren oder Fahrzeug Lenken +3, zwei der folgenden Talente je +2: Abrichten, Ackerbau, Brauer, Hauswirtschaft, Viehzucht, Webkunst  
 **Verbilligte SFs:** Linkhand, Wuchtschlag *(statt Aufmerksamkeit)*, Schildkampf I *(statt Rüstungsgewöhnung II)*  
-**Ausrüstung:** Wappenrock oder Lederharnisch, passende Haupt- und Seitenwaffe
+**Ausrüstung:** Wappenrock (einfach), Kleidung (einfach), Rüstung (Wattierter Waffenrock oder Lederrüstung), Stiefel, passende Hauptwaffe, passende Seitenwaffe, Wasserschlauch, Brotbeutel *(Errata 2007: vollständige Ausrüstung ergänzt)*
 
 ---
 

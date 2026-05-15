@@ -95,7 +95,7 @@ Im Amboss. Eigenschaftsmods und Kulturen **ersetzen** die Basiswerte; LE/AU-Mods
 
 ---
 
-## Variante Wilde Zwerge (16 GP)
+## Variante Wilde Zwerge (16 GP) *(Errata 2007: FF+1 gestrichen, Kosten von 18 auf 16 GP gesenkt)*
 
 Im Ehernen Schwert und den Bjaldorner Höhen. Eigenschaftsmods und Kulturen **ersetzen** die Basiswerte; LE/AU-Mods sind *zusätzlich*.
 

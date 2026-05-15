@@ -166,7 +166,7 @@ Nomadische Reiterelfen der nördlichen Steppen. Kriegerischer als Auelfen, stolz
 
 **Handwerk:** Abrichten +2 (L), Bogenbau +2, Heilkunde Gift +1, Heilkunde Wunden +3, Holzbearbeitung +2, Lederarbeiten +3, Musizieren +2, Schneidern +2  
 **SF:** Große Meditation, Kulturkunde (Steppenelfen), Repräsentation (Elfen), Salasandra, Steppenkundig, Tierischer Begleiter; Freundschaftslied; verbilligt: Aufmerksamkeit, Ausweichen I, Berittener Schütze, Regeneration I  
-**Besitz:** Erprobtes Elfenpony + geschultes Elfenpony
+**Besitz:** Erprobtes Elfenpony + geschultes Elfenpony *(Errata 2007: „erprobtes" Pony als Ausrüstung ergänzt; das „geschulte" Pony ist die nächsthöhere Ausbildungsstufe, kein separates Tier)*
 
 **Besonderheit:** Raumangst 10 — die stärkste aller automatischen Phobien. Reiten +5 ist der höchste Reit-Bonus aller Kulturen.
 
@@ -263,6 +263,12 @@ Eisnorden-Elfen, Nachfahren jener die vor Pardona flohen. Erbarmungslose Jäger,
 **Variante Küste und Inseln (±0 GP):** Klettern –1, Fährtensuchen –2; Fesseln/Entfesseln +1, Fischen/Angeln +1; Meer statt Eis als Geländekunde.
 
 ---
+
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 76, Leittalente-Kasten: „Alle [...] Sonderfertigkeiten, die nicht mit (L) gekennzeichnet sind, werden zu 150 % der üblichen Kosten erworben." Doppelt vergebene Leittalente werden nur einmal gewertet. Bei den „durch Kultur oder Profession aktivierten" Leitzaubern handelt es sich um die Hauszauber und die jeweils 3 bei Kultur und Profession nach eigenem Wunsch benannten Zauber.
+- S. 77, Elfen mit menschlicher Profession: Elfen ohne elfische Profession und ohne magische menschliche Profession haben 60 Punkte zur Verfügung, die sie auf die Auswahlliste der Zauber der Elfischen Siedlung verteilen dürfen. Von diesen Zaubern können vier zu Hauszaubern erklärt werden.
+- S. 76ff., Verweltlichte Sippen: Eine Anmerkung analog zu Aus Licht und Traum S. 137 fehlt im Originaltext; eine angepasste Version wird vom Verlag nachgeliefert.
 
 ## Key Takeaways
 

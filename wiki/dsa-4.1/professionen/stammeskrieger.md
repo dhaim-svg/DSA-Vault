@@ -89,6 +89,8 @@ Handwerk: Feuersteinbearbeitung +3, Heilkunde Wunden +3, Holzbearbeitung +1, Led
 **Verbilligte SFs:** die übrigen drei Geländekunden; Aufmerksamkeit, Kampfreflexe, Sturmangriff  
 **Ausrüstung:** lederner Kilt, Gamaschen, Schnürschuhe, Schaffellmantel, Orknase oder Barbarenschwert, Eberfänger, drei kurze Wurfspeere oder Speerschleuder mit 2 langen Wurfspeeren, Brotbeutel, Trinkschlauch, Hautfarben, Bronzeschmuck
 
+*(Errata 2007: empfohlener Vorteil Kälteresistenz ist zu streichen.)*
+
 ---
 
 ## Ferkina-Krieger (7 GP)
@@ -149,6 +151,8 @@ Handwerk: Abrichten +2, Heilkunde Wunden +3
 **Ausrüstung:** einfache Kleidung, Schuhe, passende Nahkampfwaffe, Dolch  
 **Besonderer Besitz:** ausgebildetes Reitwildschwein
 
+*(Errata 2007: empfohlener Vorteil Gefahreninstinkt ist zu streichen.)*
+
 ---
 
 ## Orkischer Stammeskrieger (2 GP)
@@ -168,6 +172,8 @@ Handwerk: Heilkunde Wunden +3, Lederarbeiten +2
 **SFs:** Aufmerksamkeit, Sturmangriff, Wuchtschlag, Waffenlose Kampftechnik: Hammerfaust  
 **Verbilligte SFs:** Kampfreflexe, Niederwerfen  
 **Ausrüstung:** stammestypisch (derbe Umhänge, kaftanähnliche Gewänder, Kilt), je eine Nah- und Fernkampfwaffe, Lederhelm
+
+*(Errata 2007: empfohlener Vorteil Zäher Hund ist zu streichen.)*
 
 ---
 

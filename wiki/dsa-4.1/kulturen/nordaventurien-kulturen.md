@@ -85,7 +85,7 @@ Grenzland zwischen Menschen und Orks. Harte Bevölkerung, erfahren im Krieg gege
 
 Kampf: Schwerter oder Langschwert +1, Raufen +1, Ringen +1; Körper: Athletik +1, Selbstbeherrschung +1, Sinnenschärfe +1; Natur: Fährtensuchen +1, Orientierung +1, Wildnisleben +1; Wissen: Götter/Kulte +1  
 **Sprachen:** Garethi (KL–2); Ologhaijan +3  
-**SF:** Steppenkundig oder Waldkundig
+**SF:** Steppenkundig oder Waldkundig; **Kulturkunde (Svellttal oder Nordlande)** — nicht beides zusammen *(Errata 2007)*
 
 ---
 
@@ -110,6 +110,8 @@ Kampf: Schwerter oder Säbel +1; Gesellschaft: Etikette +1, Menschenkenntnis +1,
 **Sprachen:** Garethi (KL–2); Tulamidya oder Bosparano +4  
 **SF:** Kulturkunde (Almada)
 
+*(Errata 2007: Profession Seefahrer ist für Almada gestrichen; Profession Straßenräuber wird ergänzt.)*
+
 ---
 
 ## Horasreich (3 GP)
@@ -131,7 +133,7 @@ Das kultivierte, magieaffine Kaiserreich des Westens. Horasier gelten als eloque
 
 Kampf: Fechtwaffen oder Schwerter +1; Gesellschaft: Etikette +2, Menschenkenntnis +1, Überreden +1; Wissen: Götter/Kulte +1, Geographie +1, Philosophie +1, Rechnen +1, Schätzen +1  
 **Sprachen:** Garethi (KL–2); Bosparano +4  
-**SF:** Kulturkunde (Horasreich)
+**SF:** Kulturkunde (Horasreich) *(Errata 2007: ergänzt)*; Profession Seefahrer wird ergänzt *(Errata 2007)*
 
 ---
 

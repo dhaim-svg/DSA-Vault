@@ -29,7 +29,7 @@ Im Gegensatz zu Kampf-SF sind allgemeine SF eher „global" und meist nur an Eig
 | **Nandusgefälliges Wissen** | Beim Ableiten auf Wissenstalente nur halbe Erschwernisse; halbe Recherche-Zeit in Bibliotheken | 200 AP / 4 GP; automatisch bei Vorteil Akademische Ausbildung (Gelehrter) | KL 12, IN 12 |
 | **Ortskenntnis** | Ignoriert bis zu 7 Punkte Zuschläge auf Orientierungs-/Wildnis-/Gassenproben am bekannten Ort; Gebiet max. 100 Quadratrechtmeilen; in Großstädten nur ein Stadtteil; mehrfach wählbar | 150 AP (1.) / 100 AP (weitere) / 3 GP / 2 GP | Längerer Aufenthalt (mind. ½ Jahr) oder häufige Reisen; kein Lernzeit-Aufwand |
 | **Rosstäuscher** | +5 auf alle Tätigkeiten rund ums Pferd-Aufhübschen (Verkleiden, Tierkunde, Abrichten, Alchimie, Überreden u.a.); auch +5 beim Erkennen solcher Methoden auf dem Pferdemarkt | 100 AP / 2 GP | Reiten 7, Sich Verkleiden 7, Abrichten 7, Überreden 7 |
-| **Standfest** | +2 auf Körperbeherrschung/Athletik/Akrobatik, +1 auf GE-Proben beim Balancehalten/Stehenbleiben auf schwankendem Untergrund; hilft bei Kampfmanövern gegen Sturz | 200 AP / 4 GP; in Vorteilen Balance/Herausragende Balance enthalten | GE 12 |
+| **Standfest** | +2 auf Körperbeherrschung/Athletik/Akrobatik, +1 auf GE-Proben beim Balancehalten/Stehenbleiben auf schwankendem Untergrund; **hilft auch im Kampf** *(Errata 2007)* | 200 AP / 4 GP; in Vorteilen Balance/Herausragende Balance enthalten | GE 12 |
 | **Talentspezialisierung** | +2 effektiver TaW im gewählten Spezialbereich eines Talents | 1.: 20×AktF AP; 2.: doppelt; 3.: dreifach; 4.: vierfach | TaW 7 (1.), 14 (2.), 21 (3.), 28 (4.); Spezialbereich mit Meister absprechen |
 
 ---
@@ -98,12 +98,12 @@ Kampf-SF ermöglichen oder erleichtern Kampfmanöver. „TaW" bezeichnet den Tal
 
 | SF | Effekt | Kosten | Voraussetzungen |
 |----|--------|--------|-----------------|
-| **Linkhand** | Grundvoraussetzung für Schild/Parierwaffe/Zweitwaffe; PA+1; Abzüge linke Hand AT−6/PA−6 | 300 AP / 6 GP; 150 AP mit Beidhändig; 225 AP mit Linkshändig | KK 10, GE 10 |
+| **Linkhand** | Grundvoraussetzung für Schild/Parierwaffe/Zweitwaffe; PA+1; Abzüge linke Hand AT−6/PA−6 | 300 AP / 6 GP; **verbilligt 150 AP mit Vorteil Beidhändig** *(Errata 2007)*; 225 AP mit Linkshändig | KK 10, GE 10 |
 | **Beidhändiger Kampf I** | Abzüge linke Hand auf −3/−3; KK-Bonus auch für linke Hand; zusätzliche Manöver | 100 AP; 50 AP mit Beidhändig; 75 AP mit Linkshändig | GE 12; SF Linkhand |
 | **Beidhändiger Kampf II** | Kein Abzug für linke Hand; zusätzliche Angriffs- oder Abwehraktion mit Zweitwaffe | 400 AP; 200 AP mit Beidhändig; 300 AP mit Linkshändig (SF Tod von Links anrechenbar) | GE 15; SF Beidhändiger Kampf I |
 | **Tod von Links** | Zusätzlicher Angriff pro Runde mit Parierwaffe; nicht kumulativ mit Parierwaffen II oder BK II | 100 AP; 75 AP mit Beidhändig | SF Beidhändiger Kampf I, Parierwaffen II |
 | **Parierwaffen I** | Parierwaffe effektiver: zusätzliche Parade-Boni; bestimmte Manöver mit linker Hand | 200 AP; 150 AP mit Beidhändig / 4 GP / 3 GP | GE 12; SF Linkhand |
-| **Parierwaffen II** | Weitere Parade-Boni; zusätzliche Manöver; +1 Abwehraktion mit Parierwaffe | 200 AP; 150 AP mit Beidhändig | GE 15; SF Parierwaffen I |
+| **Parierwaffen II** | **Erlaubt eine zusätzliche Abwehraktion mit der Parierwaffe** *(Errata 2007)*; weitere Parade-Boni und zusätzliche Manöver | 200 AP; 150 AP mit Beidhändig | GE 15; SF Parierwaffen I |
 | **Schildkampf I** | PA-Basis +3 mit Schild; Schild mit Raufen für Angriffsaktionen nutzbar | 200 AP / 4 GP; 150 AP mit Beidhändig | KK 12; SF Linkhand |
 | **Schildkampf II** | PA-Basis +5 mit Schild; zusätzliche Abwehraktion mit Schild | 200 AP / 4 GP; 150 AP mit Beidhändig | KK 15; SF Schildkampf I |
 
@@ -185,13 +185,13 @@ Bei Kenntnis eines Stils sind alle Manöver des Stils automatisch enthalten.
 ## Magische Sonderfertigkeiten
 
 Kürzel: Z = Vollzauberer, H = Halbzauberer, V = Viertelzauberer, B = Borbaradianer, OR = Objektritual, * = traditions-/kulturspezifisch  
-Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar: alle OR, Bann-/Schutzkreise, Exorzist, Invocatio Integra, Kraftlinienmagie I/II, Matrixkontrolle, Ritualkenntnis (auch Schamanen), Runenkunde, Schamanenrituale, Signaturkenntnis, Zauberspezialisierung, Zauberzeichen, Zibilja-Rituale.
+Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar *(Errata 2007)*: alle Objektrituale, Exorzist, Invocatio Integra, Kraftlinienmagie I/II, Matrixkontrolle, Ritualkenntnis (auch Schamanen), Runenkunde, Signaturkenntnis, Zauberspezialisierung, Zauberzeichen, Zibilja-Rituale. (Bann-/Schutzkreise und Schamanenrituale fallen nicht mehr in diese Liste.)
 
 ### Zaubersteuerung & -kontrolle
 
 | SF | Effekt | Kosten | Voraussetzungen |
 |----|--------|--------|-----------------|
-| **Zauberkontrolle (ZH)** | Wirkenden Spruch nach Belieben aufheben; Zauberergebnis vorab einschätzen (gelungen/gescheitert/MR) | 100 AP | Spruchzauberer; KL 12 |
+| **Zauberkontrolle (ZH)** | Wirkenden Spruch nach Belieben aufheben; Zauberergebnis vorab einschätzen (gelungen/gescheitert/MR) | 100 AP (für Elfen: 50 AP) *(Errata 2007)* | Spruchzauberer; KL 12 |
 | **Zauberroutine (ZH)** | Misslungene Sprüche ohne Zuschlag wiederholen (statt +3 je Wdh.); Wiederholungsdauer nicht verlängert | 100 AP | Spruchzauberer; SF Zauberkontrolle |
 | **Zauber bereithalten (ZH)** | Spruch wirken, bis zu MU Aktionen auf Abschicken warten; Selbstbeherrschungs-Proben nötig bei Aktionen | 300 AP; halbe Kosten mit Merkmalskenntnis Metamagie | Spruchzauberer; MU 12, KL 12; SF Zauberkontrolle |
 | **Meisterliche Zauberkontrolle I (ZH)** | Spruch in letzter Aktion abbrechen; ZfP* zurückhalten | 200 AP | Spruchzauberer; MU 12, KL 15; SF Zauberkontrolle |
@@ -210,7 +210,7 @@ Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar: alle OR, Bann-/Schu
 | **Regeneration I (ZHV)** | 1W6+1 AsP pro Ruhephase (statt 1W6) nach kurzem Meditationsritual | 100 AP / 2 GP | IN 12 |
 | **Regeneration II (ZH)** | 1W6+2 AsP pro Ruhephase | 100 AP / 2 GP | IN 15; SF Regeneration I |
 | **Meisterliche Regeneration (ZH)** | Fester AsP-Gewinn KL/3+3 oder IN/3+3 ohne Würfeln; IN-Probe → +1 zusätzlich | 200 AP; doppelt für Halbzauberer | SF Regeneration II |
-| **Gefäß der Sterne (ZH)** | AE-Basis: CH doppelt ((MU+IN+CH+CH)/2); CH als Leiteigenschaft wählbar; Große Meditation überall möglich | 250 AP | CH 15, IN 13 |
+| **Gefäß der Sterne (ZH)** | AE-Basis: **(MU+IN+CH+CH)/2** *(Errata 2007)*; CH als Leiteigenschaft wählbar; Große Meditation überall möglich | 250 AP *(Errata 2007; S. 16-Tabelle hatte falschen Wert)* | CH 15, IN 13 |
 | **Große Meditation (Ritual) (Z)** | Monatliche Meditation → KL/3 oder IN/3 AsP dauerhaft + RkP*/10; je nach Tradition | 100 AP (Erlernen) + 400 AP (je Durchführung) + 1 Monat | SF Regeneration II |
 | **Matrixregeneration I (ZH)** | Rückkauf permanenter AsP kostet nur 40 AP; nur 20 ZE für geistige Übungen | 200 AP | IN 14+ |
 | **Matrixregeneration II (Z)** | Rückkauf nur 30 AP; nur 15 ZE | 500 AP; halbe Kosten mit Merkmalskenntnis Kraft | CH 13, IN 16; SF Matrixregeneration I, Regeneration I |
@@ -233,7 +233,7 @@ Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar: alle OR, Bann-/Schu
 |----|--------|--------|-----------------|
 | **Merkmalskenntnis [Merkmal] (ZH)** | Alle Zauber des Merkmals eine Lernspalte leichter; erste Merkmalskenntnis meist in Profession enthalten | Kat. I: 100 AP; Kat. II: 200 AP; Kat. III: 300 AP | Spruchzauberer; Leiteigenschaft 13/15/16/17/18 je nach Anzahl der Merkmale |
 | **Repräsentation (ZH)** | 2. oder 3. Zaubertradition erlernen; Zauber in Fremdrepräsentation 2 Spalten schwieriger | 2.: 2.000 AP (Vollz.) / 3.000 AP (Halb.); 3.: 4.000 AP (Vollz.); Rabatte zwischen verwandten Traditionen | KL 15, IN 15; 50 ZfP in Fremdrepräsentation (2.); KL 18 + 50 ZfP (3.) |
-| **Ritualkenntnis [Tradition] (ZHV)** | Rituale einer Tradition erkennen/erlernen/durchführen; wird wie Talent gehandhabt; Startwert 3 | SKT-Spalte E (eigene Tradition), D (Alchimie/Scharlatan); 250 AP für Fremdtradition | — |
+| **Ritualkenntnis [Tradition] (ZHV)** | Rituale einer Tradition erkennen/erlernen/durchführen; wird wie Talent gehandhabt; Startwert 3 | SKT-Spalte E (eigene Tradition), **D (Alchimie und Scharlatan)** *(Errata 2007)*; Ritualkenntnisse fremder Repräsentation: **+2 Spalten teurer** *(Errata 2007)*; 250 AP für Fremdtradition | — |
 | **Matrixverständnis (ZH)** | Spontane Modifikationen ohne Zeitaufwand; 1 Zusatz-SM gegenüber Leiteigenschaft; auch in Fremdrepräsentationen | 250 AP; halbe Kosten mit Merkmalskenntnis Metamagie oder ≥3 Merkmalen | Spruchzauberer; IN 15 |
 | **Matrixkontrolle (ZH)** | Gesamtzuschlag bei Zauberwerk­statt-Proben halbieren | 300 AP | SF Matrixverständnis; Leiteigenschaft 16, Magiekunde 14 |
 | **Signaturkenntnis (Z)** | Zauberer anhand Signatur ihrer Wirkungen identifizieren; Probe +2 erleichtert; ohne SF kein entsprechender Zaubervariantenansatz möglich | 200 AP | KL 15, IN 15; ANALYS und ODEM ARCANUM 15 oder OCULUS ASTRALIS 15 |
@@ -263,7 +263,7 @@ Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar: alle OR, Bann-/Schu
 | **Form der Formlosigkeit (ZH)** | Dämon bei/nach Beschwörung zusätzliche Eigenschaften geben | 150 AP | Magiekunde 11; INVOCATIO MINOR oder MAIOR 11 |
 | **Geber der Gestalt (Z)** | Dämon nachträglich erleichtert weitere Eigenschaften geben | 100 AP | Magiekunde 15; INVOCATIO MINOR oder MAIOR 15; RK 11; SF Form der Formlosigkeit |
 | **Chimärenmeister (Z)** | Erleichterungen bei Chimären-Konstruktion; Chimären loyaler | 250 AP | MU 15; Magiekunde 11; Merkmalskenntnis Dämonisch (Asfaloth); ZfW CHIMAEROFORM 11 |
-| **Golembauer (Z)** | Erleichterungen bei Golem-Erschaffung; Golems loyaler | 250 AP | MU 15; Magiekunde 11; ZfW STEIN WANDLE 11+ oder STAUB WANDLE 11+ |
+| **Golembauer (Z)** | Erleichterungen bei Golem-Erschaffung; Golems loyaler | 250 AP | MU 15; Magiekunde 11; ZfW STEIN WANDLE 11+ oder STAUB WANDLE 11+ — Voraussetzung **Merkmalskenntnis Dämonisch (Asfaloth) entfällt** *(Errata 2007)* |
 | **Nekromant (ZH)** | Weniger AsP für Untotenerhebung / Nephazz-Dienste; Untote loyaler | 250 AP | MU 15; Magiekunde 11; Merkmalskenntnis Dämonisch (Thargunitoth) |
 | **Blutmagie (ZHVB)** | Eigene oder fremde LE für Zauber nutzen; verpönt, vielerorts Todesstrafe | 200 AP | MU 12 |
 | **Druidenrache** | Alle eigenen Reserven (LE, Eigenschaften, Fertigkeitspunkte) in finalen Spruch legen | 100 AP; halbe Kosten bei Verbotene Pforten | Spruchzauberer; MU 15 |
@@ -316,7 +316,7 @@ Wissen, das sich schlecht in Talent- oder Zauberfertigkeitswerten ausdrücken l�
 | **Akoluth** | Laienpriester/Altarhelfer; Liturgiekenntnis der Kirche auf Startwert 3; SO+1; Entrückung möglich; Unterstützung bei Mirakelproben | 50 AP; werden bei Spätweihe angerechnet | Götter/Kulte 5; Initiat der Kirche; Eigenschafts-Voras. je 1 Punkt niedriger als Geweihten-Profession |
 | **Aura der Heiligkeit (G)** | Göttliche Kraft verströmen wie leibhaftige Gottheit (Erscheinungen/Aura); aktiviert/deaktiviert via Liturgiekenntnis-Probe; kostet 1 KaP/SR | 250 AP | IN 15, CH 15; Liturgiekenntnis der eigenen Religion 12 |
 | **Karmalqueste (G)** | 2-wöchige Versenkung → Mirakelprobe → IN/4 + LkP*/10 KaP dauerhaft (+Entrückung in 10-facher Höhe); nur 1×/Jahr | 50 AP (Anrufungen lernen, in Geweiht-Vorteilen enthalten) + 300 AP (je Durchführung); 250 AP für nicht-alveranische Götter | Götter/Kulte 7; LkW 7 oder SF Kontakt zum Großen Geist |
-| **Kontakt zum Großen Geist*** | Zweite Initiation zum Hochschamanen (Nivesen/Waldmenschen/Utulus/Orks-Tairach); 12 KaP; Mirakelwirkung; 8 Liturgiegrade erwerbbar | 700 AP | Schamane der genannten Kulturen; CH 15; alle 4 Ritualfertigkeiten 10+ |
+| **Kontakt zum Großen Geist*** | Zweite Initiation zum Hochschamanen (Nivesen/Waldmenschen/Utulus/Orks-Tairach); 12 KaP; Mirakelwirkung; 8 Liturgiegrade erwerbbar; **erhält 4 GP zum Erwerb passender Liturgien** *(Errata 2007)* | 700 AP | Schamane der genannten Kulturen; CH 15; alle 4 Ritualfertigkeiten 10+ |
 | **Liturgiekenntnis [Kirche] (G)** | Liturgien und Anrufungen erlernen/wirken; wird wie Gabe behandelt (Probe MU/IN/CH); Startwert 3; Steigerung Spalte F | SKT-Spalte F | Vorteil Geweiht, SF Spätweihe oder Akoluth |
 | **Liturgien (G)** | Karmaenergie in formalisiertes Ritual kanalisieren; 6 Grade; LkW ≥ 3×Grad zum Erlernen; Probe = Mirakelprobe + KaP | 50 AP × Grad | Vorteil Geweiht oder SF Spätweihe + passende Liturgiekenntnis |
 | **Ritualkenntnis [Schamanentradition] (H)*** | 4 Ritualfertigkeiten: Geister rufen (MU/IN/CH), Geister bannen (MU/CH/KK), Geister binden (KL/IN/CH), Geister aufnehmen (MU/IN/KO); Startwert je 3; Steigerung Spalte E (eigene), G (fremd) | Aktivierung = Teil des Vorteil Halbzauberer; 250 AP für Fremdtradition | Profession Schamane |
@@ -336,6 +336,15 @@ Wissen, das sich schlecht in Talent- oder Zauberfertigkeitswerten ausdrücken l�
 - Magische SF mit * = nur für bestimmte Kulturen/Professionen; OR = Objektritual (Traditionsartefakt)
 - Klerikale SF setzen Vorteil Geweiht, SF Akoluth oder SF Spätweihe voraus
 - Detaillierte Manöver-/Zahlenwerte: Kampf-SF → [[../../../wiki/dsa-4.1/kampf/_kampf|WdS]]; Magische SF → [[../../../wiki/dsa-4.1/zauber/_zauber|WdZ]]; Klerikale SF → [[../../../wiki/dsa-4.1/liturgien/_liturgien|WdG]]
+
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 15+275, SF-Kosten bei Erschaffung: Sonderfertigkeiten können bei Erschaffung mit Start-AP und GP erworben werden, jedoch nur wenn Verbreitung ≥ 4 oder die SF als verbilligte SF bei Rasse/Kultur/Profession des Helden aufgeführt ist. Wo bislang keine GP-Kosten angegeben sind, gilt 1/50 der AP als GP-Kosten (Kostenreduktionen durch Verbilligte SF oder Akademische Ausbildung vor dem Teilen durch 50 anrechnen; echt runden; Mindestkosten 1 GP).
+- S. 284, Bann- und Schutzkreise: Kreise gegen niedere/gehörnte Dämonen benötigen keine SF Zauberzeichen als Voraussetzung, wenn die Sprüche Invocatio Minor/Maior auf ZfW 7+ beherrscht werden.
+- S. 288, Matrixregeneration II: Verbreitung ergänzt um „Thaumaturgen, ansonsten nur bei Achaz-Kristallomanten".
+- S. 288, Matrixverständnis: Mit den „üblichen Zuschlägen" sind die zusätzlichen Aktionen Zauberdauer gemeint (wird umformuliert).
+- S. 293, Spätweihe: Der Geweihte erhält 8 GP (alveranisch) bzw. 4 GP (nicht-alveranisch) zum Erwerb passender Liturgien.
+- S. 306 G), Karmalqueste: Die SF Karmalqueste und ein MR-Bonus von einem Punkt sind Teil des Weihe-Vorteils.
 
 ## Verwandte Artikel
 

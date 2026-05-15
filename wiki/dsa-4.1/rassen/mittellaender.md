@@ -36,7 +36,7 @@ Keine Modifikatoren.
 
 ## Kulturen
 
-**Üblich:** Mittelländische Städte, Mittelländische Landbevölkerung, Andergast und Nostria, Bornland, Svellttal, Almada, Horasreich, Zyklopeninseln, Maraskan, Südaventurien, Bukanier
+**Üblich:** Mittelländische Städte, Mittelländische Landbevölkerung, Andergast und Nostria, Bornland, Svellttal, **Almada, Horasreich** *(Errata 2007: ersetzt Yaquirien)*, Zyklopeninseln, Maraskan, Südaventurien, Bukanier
 
 **Möglich:** Aranien, Tulamidische Stadtstaaten, Thorwal, Mhanadistan, Amazonenburg
 

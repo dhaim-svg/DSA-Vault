@@ -40,7 +40,7 @@ Das Klischeebild des Zwergs: rauf- und sauflustig, mit Kettenhemd, doppelblättr
 **Kriegerisch:** Gardist, Krieger (nur Xorlosch), Soldat, Söldner  
 **Reisend:** Fuhrmann, Großwildjäger, Hirte, Prospektor, Schmuggler  
 **Gesellschaftlich:** Barde (Erzähler), Einbrecher (Grabräuber), Händler  
-**Handwerklich:** Bauer (Freibauer), Bergmann, Edelhandwerker (außer Drucker/Schiffbauer), Gelehrter (Historiker), Handwerker, Tagelöhner, Wirt, Wundarzt  
+**Handwerklich:** Bauer (Freibauer), Bergmann, Edelhandwerker (außer Drucker/Schiffbauer), Gelehrter (Historiker), Handwerker, Tagelöhner *(Errata 2007: ersetzt Arbeiter)*, Wirt, Wundarzt  
 **Magisch:** Geode, Magier (selten, beschränkt), Alchimist (zwergisch)  
 **Priesterlich:** Geweihter (Angrosch, Kor, Rondra)
 

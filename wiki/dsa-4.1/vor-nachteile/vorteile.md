@@ -17,13 +17,13 @@ Vorteile kosten Generierungspunkte (GP) und verleihen spieltechnische Erleichter
 | **Adlig** (Adlige Abstammung) | 7 | — | Titel der Eltern; Adelsgerichtsbarkeit; Besonderer Besitz verbilligt auf 3 GP |
 | **Adlig** (Adliges Erbe) | 13 | Voraus.: Adlige Abst. | Erbt Titel und Lehen; SO +1; Besonderer Besitz automatisch |
 | **Affinität zu Wesen** | 2 / 5 | Nichtzauberer/Zauberer | Probe Geist/Elementar/Dämon zu Dienst +3 erleichtert; nur eine Gruppe wählbar |
-| **Akademische Ausbildung** (Gelehrter) | 7 | Zeitaufwendig | Wissenstalente + alle Sprachen/Schriften 1 Spalte billiger (bis TaW 10); inkl. SF Nandusgefälliges Wissen |
+| **Akademische Ausbildung** (Gelehrter) | 7 | Zeitaufwendig | Wissenstalente + alle Sprachen/Schriften 1 Spalte billiger (bis TaW 10) — sowohl fremde als auch eigene Sprachfamilie *(Errata 2007)*; inkl. SF Nandusgefälliges Wissen |
 | **Akademische Ausbildung** (Krieger) | 20 | * | Kampftalente 2 Spalten billiger (bis TaW 10); kampf-SF zu ¾ AP; Kriegerbrief |
 | **Altersresistenz** | 3 | Meist Rassen | Keine Altersgebrechen; Inquisitions-Risiko bei Menschen |
 | **Ausdauernd** | je 1 GP/2 AuP | — | Max. 6 AuP; ab 2 GP: Erschöpfungsschwelle +1, ab 3 GP: +2 |
 | **Ausrüstungsvorteil** | 1 GP/SO×2 Dukaten | Max. GP = SO | Zusatzgeld für Ausrüstung (kein Handgeld); kombinierbar mit Besonderem Besitz |
 | **Balance** | 10 | — | Körperbeh./Tanzen/Athletik/Akrobatik +3, GE +2 in Balancesituationen; Sturzschaden -⅕; inkl. SF Standfest |
-| **Beidhändig** | 12 | — | Kein Malus mit falscher Hand; Linkhand/BK I+II zu ¾ AP; nicht kombinierbar mit Linkshändig |
+| **Beidhändig** | 12 | — | Kein Malus mit falscher Hand; **Linkhand** (nicht Linkhand I) *(Errata 2007)*/BK I+II zu ¾ AP; nicht kombinierbar mit Linkshändig |
 | **Besonderer Besitz** | 7 (bis 5×) | — | Wertgegenstand 50–200 Dukaten; Stufe 2–5: ×600/3000/15000/75000 Dukaten; mit Adlig: 3 GP |
 | **Breitgefächerte Bildung** | 7 + Professionskosten | Nicht mit Veteran | Zweite Profession; +6 Jahre Alter; (GP+7)×50 AP; nur eine Profession darf zeitaufwendig sein |
 | **Dämmerungssicht** | 10 | Meist Rassen | Halbe Abzüge auf AT/PA/FK/Sinne bei schlechter Beleuchtung |
@@ -55,7 +55,7 @@ Vorteile kosten Generierungspunkte (GP) und verleihen spieltechnische Erleichter
 | **Natürliche Waffen** | 1 GP/Art + 1 GP/Extra-TP | * Rassen | Biss (1W+1 TP Orks / 1W TP Goblins), Krallen, Schwanz (1W Achaz, kostenlos) |
 | **Natürlicher Rüstungsschutz** | RS × 10 GP | * Rassen | Zähe Haut/Schuppen als natürlicher RS; max. RS 3 |
 | **Niedrige Schlechte Eigenschaft** | variabel | Voraus.: SE vorhanden | SE-Wert vor Spielbeginn reduzieren (bis auf 0); kostet GP = was SE gebracht hätte |
-| **Resistenz gegen Gift** | 3 / 7 / 25 | — | Einzelnes Gift / Giftart / alle Gifte: KO +7 bei Resistenzproben |
+| **Resistenz gegen Gift** | 3 / 7 / **25** *(Errata 2007)* | — | Einzelnes Gift / Giftart / alle Gifte: KO +7 bei Resistenzproben; Resistenz gegen alle Gifte kostet 25 GP (S. 13-Tabelle war fehlerhaft) |
 | **Resistenz gegen Krankheiten** | 7 | — | Alle Krankheiten: KO +7 |
 | **Richtungssinn** | 3 | — | Orientierung +5; auf eigenen Geländetyp begrenzt; auf Inneren Kompass (4 GP) aufwertbar |
 | **Schlangenmensch** | 25 | GE min. 14 | Ringen/Akro/Gaukeleien/Körperbeh./Schleichen/Sich Verst./Tanzen/Fesseln je +1 + 1 Spalte leichter; KK-Max -2 |
@@ -79,14 +79,14 @@ Nur für Zauberkundige wählbar (Ausnahmen sind angegeben).
 
 | Name | GP | Beschr. | Haupteffekt |
 |------|----|---------|-------------|
-| **Akademische Ausbildung (Magier)** | 25 | Mag; Z; *; Zeitaufw. | Wissens-/Sprach-Talente 1 Spalte billiger (bis TaW 10); 7 Zauber (+5 GP verteilt), +6 AsP; SF zu ¾ AP |
+| **Akademische Ausbildung (Magier)** | 25 | Mag; Z; *; Zeitaufw. | Wissens-/Sprach-Talente 1 Spalte billiger (bis TaW 10) — sowohl fremde als auch eigene Sprachfamilie *(Errata 2007)*; 7 Zauber (+5 GP verteilt), +6 AsP; SF zu ¾ AP |
 | **Astrale Regeneration I/II/III** | 4 / 8 / 12 | Mag; ZHV | +1/+2/+3 AsP pro Ruhephase; AS-Rückgewinnung-Proben +1/+2/+3 |
 | **Astralmacht** | je 1 GP/AsP | Mag; ZHV; max. 6 | AsP-Basis +1 pro GP; kein Zukauf möglich |
 | **Ausdauernder Zauberer** | 3 | Mag; ZHV | Halber AuP-Verlust beim Zaubern (nur mit Ausdauer-Expertenregel) |
 | **Begabung für [Merkmal]** | 8 / 12 / 16 | Mag; ZH | Merkmalszauber 1 Spalte billiger; Stufe I 8 GP, II 12 GP, III 16 GP; max. 1× pro Merkmal |
 | **Begabung für [Ritual]** | GP = AP/50 | Mag; ZHV | Ritualprobe +3; Lernkosten ½ AP; max. 3 Rituale |
-| **Begabung für [Talent/Gruppe]** | 4–30 | — | 1 Spalte billiger; einzelnes Talent 4–6 GP, Gruppe 20–30 GP; TaW-Max = höchste Eigenschaft +5 |
-| **Begabung für [Zauber]** | je 2 | Mag; ZH; max. 3 | 1 Spalte billiger; ZfW-Max = höchste Eigenschaft +5; nicht mit vorhandener Merkmalsbegabung |
+| **Begabung für [Talent/Gruppe]** | 4–30 | — | 1 Spalte billiger; einzelnes Talent 4–6 GP, Gruppe 20–30 GP; TaW-Max = höchste Eigenschaft +5; **Begabung [Sprachen] gilt auch für Schriften** *(Errata 2007)* |
+| **Begabung für [Zauber]** | je 2 | Mag; ZH; max. 3 | 1 Spalte billiger; ZfW-Bonus gilt nur für Zauber aus Kultur oder Profession (nicht für selbst gewählte, neu aktivierte Sprüche) *(Errata 2007)*; ZfW-Max = höchste Eigenschaft +5; nicht mit vorhandener Merkmalsbegabung |
 | **Beseelte Knochenkeule** | 1/2/3 GP/LO | Mag; *; nur Schamane | Knochenkeule von Totengeist (×1)/Elementar (×2)/Dschinn-Dämon (×3) bewohnt |
 | **Eigeboren** | 20 | Mag; Z; *; nur Hexe | Automatisch Altersresistenz + Gut Aussehend; Flüche ½ AP; Mächtiger Vertrauter gratis |
 | **Eisenaffine Aura** | 7 | Mag; ZHV | Reduzierte Zauberbehinderung durch Metalle; nicht für Druiden/Geoden |
@@ -130,7 +130,7 @@ Gaben sind Vorteile mit Talentwert (Startwert 3, steigerbar, Probe ablegbar). Si
 | Variante | GP | KaP | Liturgiegrade |
 |----------|----|-----|---------------|
 | Zwölfgötter-Kirche (Praios, Rondra, Efferd, Travia, Boron, Hesinde, Firun, Tsa, Phex, Peraine, Ingerimm, Rahja) | 18 | 24 | 14 |
-| Angrosch, Gravesh*, H'Szinth, Zsahh | 16 | 24 | — |
+| Angrosch, Gravesh\*, H'Szinth, Zsahh | 16 *(Errata 2007: H'Ranga-Priester von H'Szinth und Zsahh sowie Angrosch/Gravesh = 16 GP; enthält 7 bzw. 5 GP für Liturgien — nicht mehr „Verrechnungspunkte")* | 24 | — |
 | Aves, Ifirn, Nandus, Swafnir (nicht-alveranisch) | 10 | 12 | 10 |
 | Kor (nur über Spätweihe) | 18 | 24 | — |
 
@@ -149,6 +149,15 @@ Gaben sind Vorteile mit Talentwert (Startwert 3, steigerbar, Probe ablegbar). Si
 - **Immunität vs. Resistenz:** Immunität (KO+15) ist stärker als Resistenz (KO+7); bei Rasse/Kultur vergebene Resistenz für 3 GP auf Immunität aufwertbar.
 - **Kampfrausch** kann willentlich eingeleitet werden — im Gegensatz zum Nachteil Blutrausch, der unkontrolliert auftritt.
 - **Niedrige Schlechte Eigenschaft** erlaubt es, pflichtweise mitgebrachte SE vor Spielbeginn zu reduzieren (kostet GP = was die SE wert wäre).
+
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 247, Altersresistenz: Nicht kombinierbar mit dem Nachteil Schneller Alternd (S. 269).
+- S. 249, Breitgefächerte Bildung: Der Mindest-SO beim Durchlaufen zweier Professionen ist der höhere der beiden. Verbilligte SF der zweiten Profession bleiben verbilligt (halbe AP). Talente mit Unfähigkeit dürfen trotzdem (eine Spalte verteuert) vor Spielbeginn um max. die bei Profession 2 genannte Punktzahl gesteigert werden. Reihenfolge: erst Start-AP für Profession 1, dann BgB-AP für Profession 2.
+- S. 250/252, Eidetisches Gedächtnis und Gutes Gedächtnis: Beide nicht kombinierbar mit dem Nachteil Vergesslichkeit. Gutes Gedächtnis kann für 23 (Stufe I) bzw. 28 GP (Stufe II) zu Eidetischem Gedächtnis aufgewertet werden.
+- S. 251, Flink: Schließt sich gegenseitig mit dem Nachteil Behäbig aus.
+- S. 254, Kräfteschub / Talentschub: Die genannte „Spielrunde" bedeutet, dass die Wertesteigerung bis zum Ablegen der Probe anhält. Bei einer Serie direkt aufeinanderfolgender Proben (z.B. Armdrücken) sind alle Proben erleichtert. Der Schub erleichtert die Probe, erhöht nicht den Eigenschafts- oder Talentwert — es können daher keine zusätzlichen TaP* angesammelt werden.
+- S. 257, Veteran: Ein Held mit sowohl Veteran als auch Adlig zahlt für Besonderen Besitz 2 GP pro Stufe. Bei Wahl einer anderen Professionsvariante erhält ein Veteran die bislang noch nicht vergebenen Sonderfertigkeiten verbilligt.
 
 ## Verwandte Artikel
 

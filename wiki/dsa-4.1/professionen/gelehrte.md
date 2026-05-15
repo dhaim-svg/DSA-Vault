@@ -35,8 +35,10 @@ Akademisch ausgebildete Wissenschaftler — Akademische Ausbildung Gelehrter aut
 | Modifikationen | SO 7–12 |
 | Voraussetzungen | KL 13 |
 
-**Automatischer Vorteil:** Akademische Ausbildung Gelehrter (inkl. SF Nandusgefälliges Wissen)  
-**Empfohlene:** Gutes Gedächtnis / Arroganz, Vorurteile  
+**Automatischer Vorteil:** Akademische Ausbildung Gelehrter (inkl. SF Nandusgefälliges Wissen automatisch — **nicht** verbilligt) *(Errata 2007)*  
+**Empfohlene:** Gutes Gedächtnis / Arroganz, Vorurteile
+
+*(Errata 2007: Akademische Ausbildung (Gelehrter) ist aus den Empfohlenen Vorteilen zu streichen — sie ist bereits automatisch. Die SF Nandusgefälliges Wissen ist daher ebenfalls automatisch, nicht verbilligt.)*  
 **Ungeeigneter Nachteil:** Unstet
 
 Kampf: Armbrust +1, Fechtwaffen oder Hiebwaffen oder Stäbe +1, Raufen oder Ringen +1  

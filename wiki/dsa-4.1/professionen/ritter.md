@@ -66,7 +66,7 @@ Handwerk: Musizieren +2
 
 ---
 
-## Knappe (–10 GP; nicht zeitaufwendig)
+## Knappe (–10 GP; **nicht zeitaufwendig** *(Errata 2007)*)
 
 Auf Basis des Ritters. Noch in Ausbildung, noch kein vollwertiger Ritter.
 
@@ -80,7 +80,7 @@ Wissen: Kriegskunst –2
 
 ---
 
-## Knappe des traditionellen Ritters (–9 GP; nicht zeitaufwendig)
+## Knappe des traditionellen Ritters (–9 GP; **nicht zeitaufwendig** *(Errata 2007)*)
 
 Auf Basis des Ritters alten Schlags.
 

@@ -116,6 +116,10 @@ Dolche +1, Raufen +1; Gaukeleien +5, Schleichen +1, Sich Verstecken +2, Taschend
 - Magische Quacksalberin und Trickbetrügerin haben stärkstes kriminelles Potential.
 - Theaterzauberin und Hofscharlatanin sind die gesellschaftlichsten Varianten — SO 6–10.
 
+## Errata
+*(Quelle: Wege der Helden Errata 2007)*
+- S. 201, Scharlatanin: Hier fehlt eine Anmerkung zum Steigern von Zaubern in fremden Repräsentationen (wie S. 19 dargelegt): Scharlatane lernen Zauber in gildenmagischer Repräsentation um eine Spalte erschwert, in schelmischer Repräsentation um zwei Spalten erschwert.
+
 ## Verwandte Artikel
 
 - [[_professionen|Professionen-Übersicht]]

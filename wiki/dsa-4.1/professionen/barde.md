@@ -29,7 +29,7 @@ Fahrende Sänger, Geschichtenerzähler und Bewahrer des Sagenguts. Fast überall
 | Voraussetzungen | KL 11, IN 12, CH 13 |
 
 **Automatisch:** Neugier 5  
-**Empfohlene:** Begabung (Sprachen), Feenfreund, Glück, Gut Aussehend, Gutes Gedächtnis, Soziale Anpassungsfähigkeit, Verbindungen, Wohlklang / Eitelkeit, Neugier, Unstet  
+**Empfohlene:** **Begabung (Sprachen)** *(Errata 2007: ersetzt Sprachgefühl)*, Feenfreund, Glück, Gut Aussehend, Gutes Gedächtnis, Soziale Anpassungsfähigkeit, Verbindungen, Wohlklang / Eitelkeit, Neugier, Unstet  
 **Ungeeignete:** Übler Geruch, Unansehnlich, Widerwärtiges Aussehen
 
 Kampf: Dolche +2, Fechtwaffen oder Hiebwaffen oder Stäbe oder Schwerter +2, Raufen +3  
