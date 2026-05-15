@@ -30,6 +30,31 @@
 - When I ask you to "audit" or "lint", review the wiki for inconsistencies,
   broken links, gaps, and suggest improvements.
 
+# Helden und Abenteuer
+
+`helden/` und `abenteuer/` sind **User-Domäne** (persönliche Spieldaten) — kein automatisches LLM-Schreiben ohne explizite Anfrage.
+
+## Grundregel
+
+- `wiki/` = LLM-Bibliothek (Regelwerk, Referenz) — du pflegst das.
+- `helden/` = Charakterbögen des Spielers — du liest, du änderst NUR auf explizite Anfrage.
+- `abenteuer/` = Spieltagebuch — du liest, du hilfst bei Strukturierung, du schreibst NUR auf Anfrage.
+
+## Helden-Workflow
+
+- Konventionen (Datei-Aufteilung, YAML-Frontmatter) → `helden/_helden.md`
+- Beim Hinzufügen neuer Zauber/SF/Talente: Wiki-Artikel-Existenz prüfen (Glob/Grep), fehlende als `## Offene Wiki-Verweise` am Ende notieren.
+- **Steigerung**: auf Anfrage `steigerungs-log.md` + betroffene Datei + `_helden.md`-Index aktualisieren.
+
+## Session-Workflow
+
+- Konventionen (Format, Frontmatter, Sections) → `abenteuer/_abenteuer.md`
+- Session-Dateien: `YYYY-MM-DD-session-NN.md` direkt im Kampagnen-Ordner.
+
+## Wiki-Lücken
+
+Wiki-Mängel, die beim Spielereinsatz auffallen, werden in `wiki-luecken.md` (Vault-Root) gesammelt — jeder Eintrag mit Datum, betroffener Wiki-Datei, Befund, Vorschlag.
+
 # DSA-Regelwerk PDF-Extraktion
 
 DSA-Regelwerke liegen als PDFs unter:
