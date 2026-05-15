@@ -57,8 +57,8 @@ Alle Akademien setzen auf dem Standardmagier auf. Die angegebenen GP und Anforde
 | Akademie der Hohen Magie Punin II | 30 | Punin | Metamagie, Hellsicht, Artefakte | Kraftlinienmagie I; Signaturkenntnis |
 | Pentagramm-Akademie Rashdul (Elementar) | 29 | Rashdul | Elementar, Herbeirufung | Affinität zu Elementaren; Dschinnen |
 | Pentagramm-Akademie Rashdul (Dämonisch) | 29 | Rashdul | Beschwörung, Dämonisch | Bann- und Schutzkreis; Invocatio Integra |
-| Stoerrebrandt-Kolleg Riva (Berater) | 23 | Riva | Hellsicht, Schaden | Handelshausdienst; Stoerrebrandt-Verpflichtung |
-| Stoerrebrandt-Kolleg Riva (Leibwächter) | 25 | Riva | Hellsicht, Schaden | Kampfzauber-Fokus |
+| [[professionen/akademien/stoerrebrandt-kolleg-riva\|Stoerrebrandt-Kolleg Riva (Berater)]] | 23 | Riva | Hellsicht, Schaden | Handelshausdienst; Stoerrebrandt-Verpflichtung |
+| [[professionen/akademien/stoerrebrandt-kolleg-riva\|Stoerrebrandt-Kolleg Riva (Leibwächter)]] | 25 | Riva | Hellsicht, Schaden | Kampfzauber-Fokus |
 | Schule der vierfachen Verwandlung Sinoda | 27 | Sinoda (Maraskan) | Eigenschaften, Antimagie, Form | Rur-und-Gror-Glaube; Shîkanydad |
 | Schule der variablen Form Tuzak | 24 | Tuzak (Maraskan; nur bis 1020 BF) | Eigenschaften, Form | Adlerschwinge (3 Tierformen); Maraskan-Widerstand |
 | Bannakademie Ysilia | 26 | Ysilia (nur bis 1020 BF) | Antimagie | Invercano; arm; Prinzipientreue 10; ehem. Akademie des Bund des Weißen Pentagrammes (bis 1016 BF), danach Graue Gilde des Geistes (1016–1020 BF), aufgelöst durch Invasion der Verdammten *(Errata 2011)* |

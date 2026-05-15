@@ -84,6 +84,16 @@ Das Leben auf dem Land: Bauern, Hirten, Handwerker im ländlichen Mittelreich. W
 
 ---
 
+## Typische Ausrüstung (Mittelländische Städte)
+
+> **Quelle:** WdH S. 40 — Tracht und Bewaffnung
+
+**Kleidung:** Einfache Hosen oder Kleider mit Tunika oder Hemd, darüber eine Weste, eventuell ein Umhang. Gugel oder Kapuze für kalte Zeiten. Einem Handwerker sind möglich: ein Satz Arbeitskleidung (z.B. Lederschürzen und Handschuhe) und ein Satz Praiostags-/Feierkleidung.
+
+**Bewaffnung:** Die meisten Städter sind keine versierten Einzelkämpfer; viele kennen die Grundlagen des Hellebardenhandwerks oder des Armbrustschießens aus zünftischen Pflichten. Ein Dolch wird häufig am Gürtel getragen.
+
+**Kulturspezifische Startausrüstung:** Das WdH definiert keine gesonderte Kulturausrüstungsliste — die Profession gibt Startausrüstung vor, die Kultur liefert den Kleidungskontext.
+
 ## Key Takeaways
 
 - Beide Kulturen kosten **0 GP** — maximale GP-Effizienz für die meisten Charakterkonzepte.

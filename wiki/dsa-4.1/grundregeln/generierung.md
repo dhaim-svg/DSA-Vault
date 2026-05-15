@@ -78,6 +78,24 @@ Welcher Heldentyp? Kämpfer, Magier, Geweihter, Händler, Waldläufer, …? Die 
 - Start-AP-Boni: Gebildet, Breitgefächerte Bildung, Veteran → addieren; Ungebildet → subtrahiert.
 - Steigerungsregeln und SKT-Tabelle: [[steigerung]]
 
+## Startgeld
+
+Nach Abschluss aller Generierungsschritte erhält ein Held Startkapital basierend auf seinem **Sozialstatus (SO)**:
+
+> **Startkapital:** `(SO × SO) Silbertaler`
+
+**Beispiele:** SO 7 → 49 Silber · SO 10 → 100 Silber · SO 13 → 169 Silber
+
+**Modifikatoren:**
+- **Profession:** Manche Professionen geben abweichende Startkapital-Angaben (dann im Professions-Eintrag vermerkt)
+- **Vorteil Adlig** (+10 SO-Äquivalent zum Berechnen): verdoppelt das Startkapital
+- **Vorteil Ausrüstungsvorteil:** erlaubt zusätzliche Ausgaben über das Startkapital hinaus (1 GP = SO×2 Dukaten)
+- **Vorteil Besonderer Besitz:** ein größeres Objekt (Packtier, Erbstück, …) — nicht in Geld umwandelbar
+
+**Empfehlung aus dem Regelwerk:** Mindestens die Hälfte des Startkapitals in Ausrüstung umwandeln; bei Wildnisbewohnern nahezu alles. Schaue in die Einkaufslisten (Beilage zum Spielleiterschirm). *(WdH S. 22)*
+
+**Für Stufe-3-Charaktere:** Das WdH nennt keine separate Startregel für erfahrenere Charaktere — Startkapital richtet sich weiter nach SO. Eventuelle Zusatzgüter sind Abenteuerverdienst (SL-Entscheidung).
+
 ## Key Takeaways
 
 - 110 GP auf Konto, am Ende exakt 0 → keine Restpunkte erlaubt.
