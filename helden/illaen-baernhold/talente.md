@@ -20,7 +20,7 @@ Regelwerk: [[wiki/dsa-4.1/talente/talentregeln|Talentregeln]] · [[wiki/dsa-4.1/
 | Raufen | C | BE | 9 | 9 | 3 |
 | Ringen | D | BE | 7 | 8 | 0 |
 | Säbel | D | BE−2 | 7 | 8 | 0 |
-| **Stäbe** | D | BE−2 | **14** | **10** | **9** |
+| Stäbe | D | BE−2 | 14 | 10 | 9 |
 | Wurfmesser | C | BE−3 | 10 | — | 2 |
 
 *Stäbe ist Illaens Hauptkampftechnik (TaW 9, hohe AT/PA durch Leiteigenschaft).*

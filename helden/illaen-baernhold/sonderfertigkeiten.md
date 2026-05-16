@@ -17,7 +17,9 @@ Quelle: WdZ (Wege der Zauberei)
 |------------------|-----------------------|
 | Astrale Meditation | AsP-Regeneration beschleunigen; Voraussetzung für Große Meditation |
 | Große Meditation | Erweiterte Form der Astralen Meditation; stärkere AsP-Regeneration |
-| Meisterliche Regeneration | Zusatz-Regeneration; kombiniert mit Astraler Regeneration 3 |
+| Astrale Regeneration I              | +1 Asp pro Regenerationsphase                        |
+| Astrale Regeneration II             | +1 Asp pro Regenerationsphase (kumulativ mit Reg. I)  |
+| Meisterliche Regeneration | Regeneration Leiteigenschaft + 3 ASP anstatt Würfel (KL+3 Asp) |
 | Konzentrationsstärke | Erleichterte Selbstbeherrschungs-Proben beim Zaubern unter Druck |
 | Kraftkontrolle | AsP-Kosten senken bei niedrigem Zauberwert |
 | Merkmalskenntnis: Eigenschaften | Merkmalsgebundene SF; Eigenschaften-Zauber günstiger modifizierbar |
@@ -32,10 +34,8 @@ Quelle: WdZ (Wege der Zauberei)
 
 Quelle: WdH (Wege der Helden)
 
-| Sonderfertigkeit | Beschreibung / Nutzen |
-|------------------|-----------------------|
-| Aufmerksamkeit | Erleichterte Sinnenschärfe-Proben / Wahrnehmung |
-| Kulturkunde (Mittelreich) | Soziale Interaktion im Mittelreich erleichtert |
+| Sonderfertigkeit                    | Beschreibung / Nutzen                                |
+| ----------------------------------- | ---------------------------------------------------- |
+| Aufmerksamkeit                      | Erleichterte Sinnenschärfe-Proben / Wahrnehmung      |
+| Kulturkunde (Mittelreich)           | Soziale Interaktion im Mittelreich erleichtert       |
 | Ortskenntnis (Stadtteil/Kleinstadt) | Navigation + soziale Proben in bekanntem Stadtgebiet |
-| Regeneration I | +1 LE pro Regenerationsphase |
-| Regeneration II | +1 LE pro Regenerationsphase (kumulativ mit Reg. I) |
