@@ -650,6 +650,32 @@ body::before{
   .hex .shape{ clip-path:none !important; background:transparent !important; border:1.5px solid var(--paper-ink); }
   .hex .shape::after{ display:none !important; }
   .hex .abbr{ color:var(--paper-ink) !important; }
+  /* --- Eigenschaften: flache 8-Boxen-Zeile --- */
+  .attr-card{ max-width:100%; margin:4pt 0 !important; padding:4pt 8pt !important; }
+  .hex-grid{ gap:4pt; }
+  .hex{ aspect-ratio:auto; padding:4pt 2pt; }
+  .hex .shape{ background:transparent !important; }
+  .hex .inner{ padding:2pt 0; }
+  .hex .abbr{ font-size:8pt !important; margin-bottom:1pt; }
+  .hex .v{ font-size:14pt !important; line-height:1; margin-top:0; }
+  .hex .full{ display:none; }
+  .hex .mod{ position:static; display:inline; font-size:7pt; margin-left:2pt; vertical-align:super; }
+  /* --- Talente: 2-spaltig via Multi-Column --- */
+  .talent-grid{ display:block !important; column-count:2; column-gap:14pt; }
+  .talent-grp{ break-inside:avoid; display:block !important; margin:0 0 8pt; }
+  .talent-grp h4{ break-after:avoid; margin-bottom:4pt !important; padding-bottom:3pt !important; font-size:9pt !important; }
+  .talent-row{ break-inside:avoid; padding:1pt 0 !important; font-size:10pt !important; }
+  .talent-row .t-name,.talent-row .t-zfw{ font-size:10pt !important; }
+  .talent-row .t-probe{ font-size:8pt !important; }
+  /* --- Sonderfertigkeiten: 2-spaltig --- */
+  .sf-list{ column-count:2; column-gap:14pt; }
+  .sf-list li{ break-inside:avoid; padding:2pt 0 !important; }
+  .sf-list li .sf-desc{ font-size:9pt !important; line-height:1.3; }
+  /* --- Page-Break-Hygiene --- */
+  .card,.weapon-card,.vn-grp,.speicher-box,.feed li,.istat{ break-inside:avoid; }
+  .card-title,.sec-head,.vn-grp h4{ break-after:avoid; }
+  .spell{ break-inside:avoid; }
+  .story p{ orphans:3; widows:3; }
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
   .talent-row .t-name,.talent-row .t-zfw,
@@ -685,7 +711,7 @@ body::before{
 <!-- ============================================================
      IDENTITY BANNER (Seite 1 im Print)
      ============================================================ -->
-<header class="banner page">
+<header class="banner">
   <div class="sparkles screen-only">
     <span class="sparkle"></span><span class="sparkle big"></span><span class="sparkle"></span>
     <span class="sparkle"></span><span class="sparkle"></span><span class="sparkle big"></span>
@@ -954,7 +980,7 @@ body::before{
 <!-- ============================================================
      SEITE 2 — TALENTE
      ============================================================ -->
-<div class="sec-head page"><h2>Talente</h2><span class="rule"></span></div>
+<div class="sec-head"><h2>Talente</h2><span class="rule"></span></div>
 <section class="card">
   <div class="talent-grid">
 
@@ -1309,7 +1335,7 @@ body::before{
 <!-- ============================================================
      SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
      ============================================================ -->
-<div class="sec-head page"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
+<div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
 <section class="card">
 
   <div class="spell" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
