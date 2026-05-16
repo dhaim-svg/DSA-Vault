@@ -93,6 +93,19 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 
 ---
 
+---
+
+## 2026-05-15 — Audit-Lauf 3 (Held-Daten Konsistenz)
+
+### L14: Astrale Regeneration I/II im SF-Bogen falsch kategorisiert
+
+- **Wiki-Datei:** `helden/illaen-baernhold/sonderfertigkeiten.md`
+- **Befund:** Illaens SF-Tabelle unter "Magische Sonderfertigkeiten" enthält `Astrale Regeneration I` und `Astrale Regeneration II`. Laut `allgemeine-sonderfertigkeiten.md` sind das **Vorteile**, nicht SF. In `wiki/dsa-4.1/vor-nachteile/` fehlt ein entsprechender Eintrag für Astrale Regeneration als Vorteil.
+- **Vorschlag:** Astrale Regeneration I/II aus dem SF-Bogen in `vor-nachteile.md` verschieben. Wiki-Artikel für Astrale Regeneration als Vorteil anlegen (Quelle: WdH).
+- **Priorität:** mittel (korrekte Kategorisierung für Steigerungskosten-Berechnung relevant).
+
+---
+
 ### L4: Rassen-Artikel ohne Volkstracht — *geschlossen (kein WdH-Quellmaterial)*
 
 - **Befund:** Das WdH-Rassen-Kapitel enthält **keine „Tracht und Bewaffnung"-Abschnitte** für die Rassen (nur Startwerte). Diese Information liegt im Kulturen-Kapitel (→ L3), nicht im Rassen-Kapitel.
