@@ -33,3 +33,12 @@ Da es einfach leichter ist, anhand eines Helden die tatsächliche Nutzung des Wi
 - die unser eigentliches Dashboard betreffen
 Sortiere diese auseinander. Wir haben zwar eine Wikilücken-Datei, aber wir haben eigentlich noch kein Backlog für anfallende Tätigkeiten. Überleg dir auch, ob es gut wäre, eine Art Backlog aufzubauen, wo wir solche Tätigkeiten nieder schreiben, um so besser planen zu können.
 Dazu vielleicht auch der Hinweis: Ich habe schon andere Projekte, eher programmiertechnischer Natur, wo ich ein Backlog mit Sprint-System verwende. Ich kann dir den Link dazu geben ("D:\Projects\HowlOnTheRedMoon\docs\backlog.md"), weiß aber nicht, ob das Overkill ist. 
+
+## Backlog spontane mod
+Da man das zum Spielen immer wieder braucht, möchte ich bei den Zaubern bzw. bei meinen Helden bei den Zaubern noch die Übersicht für die spontane Modifikation hinzufügen. Das soll einerseits im Held integriert sein, andererseits auf der Übersichtsseite auf der Webpage. Bereite dazu ein Backlog-Item vor und stell mir Fragen, wenn etwas unklar ist. 
+
+## Korrekturen
+Nachdem mir ein Fehler aufgefallen ist, bin ich meinen Helden nochmal Schritt für Schritt durchgegangen um zu kontrollieren ob noch etwas nachkorrigiert oder angepasst werden muss.
+
+
+

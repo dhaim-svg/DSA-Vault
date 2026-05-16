@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "helden/illaen-baernhold/sonderfertigkeiten.md",
+                "file": "wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "sonderfertigkeiten"
+              "title": "ignifaxius-flammenstrahl"
             }
           }
         ]
@@ -185,19 +185,26 @@
   },
   "active": "c4e0309b0a7eb190",
   "lastOpenFiles": [
+    "helden/_tools/templates/dashboard.html.j2.tmp.10232.c3b0a69e5751",
+    "helden/_tools/templates/dashboard.html.j2.tmp.10232.b8f6d7949a8b",
+    "helden/_tools/templates/dashboard.html.j2.tmp.10232.1711f7d96594",
+    "wiki/dsa-4.1/zauber/blitz-dich-find.md",
+    "wiki/dsa-4.1/zauber/balsam-salabunde.md",
+    "wiki/dsa-4.1/zauber/accuratum.md",
+    "helden/illaen-baernhold/zauber.md",
+    "helden/_tools/templates/dashboard.html.j2.tmp.10232.f8ccc18de3f6",
+    "helden/_tools/templates/dashboard.html.j2.tmp.10232.130eb29d991e",
+    "helden/_tools/parsers/held.py.tmp.10232.3736e01d77a8",
+    "Screenshots/1.png",
+    "Screenshots",
+    "helden/illaen-baernhold/sonderfertigkeiten.md",
+    "wiki-luecken.md.tmp.31676.e7cbeeefab30",
+    "backlog.md.tmp.31676.d365a34a36a9",
+    "wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md.tmp.31676.e65d65a05271",
     "helden/_tools/README.md",
     "wiki/dsa-4.1/professionen/magier.md",
     "backlog.md",
     "helden/_tools/parsers/__pycache__/kampagne.cpython-310.pyc",
-    "helden/_tools/parsers/__pycache__/held.cpython-310.pyc",
-    "helden/_tools/parsers/__pycache__/__init__.cpython-310.pyc",
-    "helden/_tools/parsers/__pycache__",
-    "requirements.txt",
-    "output/illaen-baernhold-dashboard.html",
-    "helden/_tools/watcher.py",
-    "helden/_tools/templates/dashboard.html.j2",
-    "helden/_tools/parsers/__init__.py",
-    "helden/_tools/parsers/kampagne.py",
     "helden/illaen-baernhold/vorgeschichte.md",
     "wiki/dsa-4.1/professionen/akademien/stoerrebrandt-kolleg-riva.md",
     "wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md",
@@ -206,8 +213,6 @@
     "wiki-luecken.md",
     "helden/illaen-baernhold/talente.md",
     "helden/illaen-baernhold/rituale.md",
-    "helden/illaen-baernhold/zauber.md",
-    "helden/illaen-baernhold/sonderfertigkeiten.md",
     "helden/illaen-baernhold/ausruestung.md",
     "helden/illaen-baernhold/steigerungs-log.md",
     "helden/illaen-baernhold/vor-nachteile.md",
@@ -216,10 +221,6 @@
     "abenteuer/_abenteuer.md",
     "helden/_helden.md",
     "output/errata-durchgang-2026-05.md",
-    "wiki/dsa-4.1/sonderfertigkeiten/_sonderfertigkeiten.md",
-    "wiki/dsa-4.1/kulturen/nordaventurien-kulturen.md",
-    "wiki/dsa-4.1/kulturen/_kulturen.md",
-    "DSA-STATUS.md",
-    "wiki/dsa-4.1/alchimie/zauberzeichen-grundregeln.md"
+    "wiki/dsa-4.1/sonderfertigkeiten/_sonderfertigkeiten.md"
   ]
 }

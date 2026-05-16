@@ -4,3 +4,6 @@ raw/pdf-extracted/**
 !raw/pdf-extracted/_tools/**
 !raw/pdf-extracted/EXTRACTION-PLAN.md
 __pycache__/
+
+# Debug
+Screenshots/**
