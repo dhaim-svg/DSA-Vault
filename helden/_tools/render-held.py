@@ -4,6 +4,7 @@ import argparse
 import sys
 import webbrowser
 from pathlib import Path
+from urllib.parse import quote
 
 import jinja2
 
@@ -15,6 +16,15 @@ OUTPUT_DIR = VAULT_ROOT / 'output'
 sys.path.insert(0, str(TOOLS_DIR))
 from parsers.held import load_held
 from parsers.kampagne import load_kampagne
+
+
+def obsidian_uri(wiki_path: str, vault_name: str = 'DSA-Vault') -> str:
+    if not wiki_path:
+        return ''
+    path, _, anker = wiki_path.partition('#')
+    file_part = quote(path + '.md', safe='/')
+    anker_part = f'#{quote(anker)}' if anker else ''
+    return f'obsidian://open?vault={quote(vault_name)}&file={file_part}{anker_part}'
 
 
 def roman(n: int) -> str:
@@ -45,6 +55,7 @@ def render(slug: str) -> Path:
                              trim_blocks=True, lstrip_blocks=True)
     env.filters['roman'] = roman
     env.filters['format_ap'] = format_ap
+    env.filters['obsidian'] = obsidian_uri
 
     template = env.get_template('dashboard.html.j2')
     html = template.render(held=held, kampagne=kampagne)

@@ -890,7 +890,7 @@ body::before{
   </div>
 
   {% for z in held.zauber %}
-  {% set url = '../' + z.wiki_path + '.md' if z.wiki_path else '' %}
+  {% set url = z.wiki_path | obsidian if z.wiki_path else '' %}
   <div class="spell">
     <span class="name">
       {% if url %}<a class="nlink" href="{{ url }}">{{ z.name }}</a>{% else %}{{ z.name }}{% endif %}
