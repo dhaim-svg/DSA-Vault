@@ -51,7 +51,7 @@ Wer diese Sonderfertigkeit beherrscht, kann durch reine Willensanstrengung LeP i
 - Kein abschließender LeP-Verlust
 - Ohne SF: maximal 2W6+2 LeP umwandelbar pro Portion (7 Blätter)
 
-**Synergien:** [[konzentrationsstärke|Konzentrationsstärke]] erleichtert die Probe um zusätzlich 2 Punkte.
+**Synergien:** [[magische-sonderfertigkeiten#Konzentrationsstärke|Konzentrationsstärke]] erleichtert die Probe um zusätzlich 2 Punkte.
 
 ---
 
@@ -106,7 +106,7 @@ Schutz der Zauberwirkung gegen äußere Störungen.
 **Effekt:**
 - Wird der Zauberer beim Wirken gestört, ist üblicherweise eine erschwerte Selbstbeherrschungs-Probe nötig — für Kenner dieser SF ist sie um **7 Punkte erleichtert**
 - Gilt auch für die Konzentration bei **Ritualen**
-- Erleichtert die Probe für [[astrale-meditation|Astrale Meditation]] und die AsP-Steigernprobe bei der [[große-meditation|Großen Meditation]] um je **2 Punkte**
+- Erleichtert die Probe für [[magische-sonderfertigkeiten#Astrale Meditation|Astrale Meditation]] und die AsP-Steigernprobe bei der [[magische-sonderfertigkeiten#Große Meditation|Großen Meditation]] um je **2 Punkte**
 - Einige ausgebildete Viertelzauberer können diese SF erlernen
 
 ---
@@ -153,8 +153,8 @@ Der Zauberer hat besondere Einblicke in ein spezifisches Zaubermerkmal erhalten 
 | III | Dämonisch (gesamt), Elementar (gesamt), Limbus, **Metamagie**, Temporal |
 
 **Spielrelevante Wechselwirkungen:**
-- Merkmalskenntnis **Kraft**: halbe AP-Kosten für [[kraftkontrolle|Kraftkontrolle]] (150 statt 300 AP) und SF Matrixregeneration II
-- Merkmalskenntnis **Metamagie**: halbe AP-Kosten für [[zauber-bereithalten|Zauber bereithalten]], Zauber unterbrechen und Zauber vereinigen
+- Merkmalskenntnis **Kraft**: halbe AP-Kosten für [[magische-sonderfertigkeiten#Kraftkontrolle|Kraftkontrolle]] (150 statt 300 AP) und SF Matrixregeneration II
+- Merkmalskenntnis **Metamagie**: halbe AP-Kosten für [[magische-sonderfertigkeiten#Zauber bereithalten|Zauber bereithalten]], Zauber unterbrechen und Zauber vereinigen
 
 ---
 
@@ -255,7 +255,7 @@ Die Kenntnis der rituellen Technik, die eigene Lebensenergie zur Bezahlung von Z
 - Kann das Ergebnis der Zauberprobe einschätzen und damit bestimmen, ob ein Zauber gelungen ist, an den eigenen Fähigkeiten gescheitert oder durch MR/Störfaktoren vereitelt wurde
 - Bemerkt bereits **nach einer Aktion**, ob der Zauber gelingen wird (unabhängig vom ZfW)
 
-**Basis für Folge-SF:** Zauberkontrolle ist Voraussetzung für [[zauber-bereithalten|Zauber bereithalten]], Meisterliche Zauberkontrolle I, Meisterliche Zauberkontrolle II, Zauberroutine und Zauber unterbrechen.
+**Basis für Folge-SF:** Zauberkontrolle ist Voraussetzung für [[magische-sonderfertigkeiten#Zauber bereithalten|Zauber bereithalten]], Meisterliche Zauberkontrolle I, Meisterliche Zauberkontrolle II, Zauberroutine und Zauber unterbrechen.
 
 **Sonderregel für Elfen:** Elfen beherrschen von Natur aus eine eingeschränkte Version dieser SF (nur für elfische Repräsentation). Diese zählt als Zauberkontrolle für den Erwerb höherer SF, solange die verwendeten Zauber in elfischer Repräsentation gesprochen werden. Erwerb der vollständigen SF kostet Elfen nur 50 AP.
 
