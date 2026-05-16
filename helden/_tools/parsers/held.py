@@ -198,6 +198,33 @@ def load_held(vault_root: Path, slug: str) -> dict:
     _, rest = parse_frontmatter(text)
     zau_secs = split_sections(rest, 2)
 
+    # Parse Spontane Modifikationen section
+    spontane_mods: list[dict] = []
+    illaen_mods_max: int = 0
+    spmod_sec = zau_secs.get('Spontane Modifikationen', '')
+    if spmod_sec:
+        for row in parse_md_table(spmod_sec):
+            mod_name = row.get('Modifikation', '').strip()
+            if mod_name:
+                spontane_mods.append({
+                    'name': mod_name,
+                    'zfp': row.get('ZfP-Kosten', ''),
+                    'probe': row.get('Probe-Mod', ''),
+                    'zd': row.get('ZD+', ''),
+                })
+        # Parse Illaen sub-section for mods_max
+        h3_zau = split_sections(spmod_sec, 3)
+        illaen_sub = h3_zau.get('Illaen — effektive Werte', '')
+        if illaen_sub:
+            for row in parse_md_table(illaen_sub):
+                if 'Max. Modifikationen' in (row.get('', '') or ''):
+                    # table has two columns with empty header; look for the row
+                    pass
+            # Try to find the max from raw text
+            m_max = re.search(r'Max\. Modifikationen.*?=\s*\*\*(\d+)\*\*', illaen_sub)
+            if m_max:
+                illaen_mods_max = int(m_max.group(1))
+
     zauber: list[dict] = []
     for row in parse_md_table(zau_secs.get('Zauberliste', '')):
         name_raw = row.get('Zauber', '')
@@ -215,6 +242,10 @@ def load_held(vault_root: Path, slug: str) -> dict:
             'haus': (row.get('Haus', '') or '').strip() == '×',
             'komp': row.get('Komp', ''),
             'desc': notizen,
+            'zd': row.get('ZD', ''),
+            'kosten': row.get('Kosten', ''),
+            'wirkung': strip_wikilink(row.get('Wirkung', '') or ''),
+            'mods': row.get('Modifikationen', ''),
         })
 
     # ------------------------------------------------------------------ #
@@ -232,8 +263,24 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 if name:
                     stabzauber.append({
                         'name': name,
+                        'vol': row.get('Vol', ''),
                         'effekt': strip_wikilink(row.get('Effekt (Kurzform)', '') or row.get('Effekt', '')),
                     })
+            break
+
+    # Parse Zauberspeicher-Inhalt (### sub-section inside Stabzauber)
+    zauberspeicher_slots: list[dict] = []
+    for sec_name, sec_content in rit_secs.items():
+        if 'Stabzauber' in sec_name:
+            h3_rit = split_sections(sec_content, 3)
+            for row in parse_md_table(h3_rit.get('Zauberspeicher-Inhalt', '')):
+                zauberspeicher_slots.append({
+                    'slot': row.get('Slot', ''),
+                    'asp': row.get('AsP', ''),
+                    'zauber': row.get('Gespeicherter Zauber', ''),
+                    'mods': row.get('Erschwernis-Mods', ''),
+                    'erneuerung': row.get('Letzte Erneuerung', ''),
+                })
             break
 
     andere_rituale: list[dict] = []
@@ -254,15 +301,19 @@ def load_held(vault_root: Path, slug: str) -> dict:
 
     sf_magisch: list[dict] = []
     for row in parse_md_table(sf_secs.get('Magische Sonderfertigkeiten', '')):
-        name = strip_wikilink(row.get('Sonderfertigkeit', ''))
+        name_raw = row.get('Sonderfertigkeit', '')
+        wiki_path = extract_wiki_path(name_raw)
+        name = strip_wikilink(name_raw)
         if name:
-            sf_magisch.append({'name': name, 'desc': strip_wikilink(row.get('Beschreibung / Nutzen', ''))})
+            sf_magisch.append({'name': name, 'wiki_path': wiki_path, 'desc': strip_wikilink(row.get('Beschreibung / Nutzen', ''))})
 
     sf_allg: list[dict] = []
     for row in parse_md_table(sf_secs.get('Allgemeine Sonderfertigkeiten', '')):
-        name = strip_wikilink(row.get('Sonderfertigkeit', ''))
+        name_raw = row.get('Sonderfertigkeit', '')
+        wiki_path = extract_wiki_path(name_raw)
+        name = strip_wikilink(name_raw)
         if name:
-            sf_allg.append({'name': name, 'desc': strip_wikilink(row.get('Beschreibung / Nutzen', ''))})
+            sf_allg.append({'name': name, 'wiki_path': wiki_path, 'desc': strip_wikilink(row.get('Beschreibung / Nutzen', ''))})
 
     # ------------------------------------------------------------------ #
     # vor-nachteile.md
@@ -441,7 +492,9 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'basiswerte': basiswerte,
         'talente': talente,
         'zauber': zauber,
-        'rituale': {'stabzauber': stabzauber, 'andere': andere_rituale},
+        'rituale': {'stabzauber': stabzauber, 'andere': andere_rituale, 'zauberspeicher_slots': zauberspeicher_slots},
+        'spontane_mods': spontane_mods,
+        'mods_max': illaen_mods_max,
         'sf': {'magisch': sf_magisch, 'allgemein': sf_allg},
         'vor_nachteile': {'vorteile': vorteile, 'nachteile': nachteile, 'schlecht': schlecht},
         'ausruestung': {'waffen': waffen, 'inventar': inventar, 'reise': reise, 'geld': geld},

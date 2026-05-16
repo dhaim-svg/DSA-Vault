@@ -372,6 +372,34 @@ body::before{
 }
 .legend-row span b{ color:var(--accent-gold); }
 
+/* ---- Spell extra fields ---- */
+.spell .wirkung { font-size:11px; color:var(--ink-mute); margin-top:3px; display:block; font-style:italic; line-height:1.4; }
+.spell .zd { font-family:var(--mono); font-size:10px; color:var(--ink-dim); }
+.spell .kosten { font-family:var(--mono); font-size:10px; color:var(--ink-mute); }
+.spell .mods-txt { font-size:10px; color:var(--ink-dim); font-style:italic; }
+
+/* ---- Zauberspeicher ---- */
+.speicher-box { margin-top:12px; padding:8px 10px; background:rgba(95,195,228,.06); border-radius:6px; border:1px solid rgba(95,195,228,.15); }
+.speicher-title { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:6px; font-family:var(--mono); }
+.speicher-slot { display:grid; grid-template-columns:16px 40px 1fr; gap:6px; font-size:12px; padding:2px 0; font-family:var(--subhead); }
+.speicher-slot.leer { color:var(--ink-dim); font-style:italic; }
+.slot-num { font-family:var(--mono); color:var(--accent-cold); }
+.slot-asp { font-family:var(--mono); color:var(--ink-dim); }
+.slot-zauber { color:var(--ink); }
+
+/* ---- Vol badge (Stabzauber) ---- */
+.vol-badge { font-family:var(--mono); font-size:10px; color:var(--ink-dim); background:rgba(95,195,228,.08); border:1px solid rgba(95,195,228,.15); border-radius:2px; padding:1px 5px; margin-left:6px; }
+
+/* ---- Spontane Modifikationen ---- */
+.mod-table { display:grid; gap:0; }
+.mod-row { display:grid; grid-template-columns:1.8fr auto auto auto; gap:8px; padding:3px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,.04); }
+.mod-row:last-child { border-bottom:0; }
+.mod-row.header { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-mute); padding-bottom:6px; margin-bottom:2px; border-bottom:1px solid var(--rule); }
+.mod-name { color:var(--ink); font-family:var(--subhead); }
+.mod-zfp { font-family:var(--mono); color:var(--accent-gold); min-width:40px; text-align:right; font-size:11px; }
+.mod-probe { font-family:var(--mono); color:var(--ink-mute); min-width:36px; text-align:center; font-size:11px; }
+.mod-zd { font-family:var(--mono); color:var(--ink-dim); min-width:40px; text-align:right; font-size:11px; }
+
 /* ---- Talent List ---- */
 .talent-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px 28px; }
 @media(max-width:700px){ .talent-grid{ grid-template-columns:1fr; } }
@@ -896,6 +924,13 @@ body::before{
       {% if url %}<a class="nlink" href="{{ url }}">{{ z.name }}</a>{% else %}{{ z.name }}{% endif %}
       {% if z.haus %}<span class="haus">×</span>{% endif %}
       {% if z.desc %}<span class="desc">{{ z.desc }}</span>{% endif %}
+      {% if z.wirkung %}<span class="wirkung">{{ z.wirkung }}</span>{% endif %}
+      {% if z.zd or z.kosten %}
+      <span style="display:block;margin-top:2px;display:flex;gap:10px;flex-wrap:wrap">
+        {% if z.zd %}<span class="zd">ZD: {{ z.zd }}</span>{% endif %}
+        {% if z.kosten %}<span class="kosten">{{ z.kosten }}</span>{% endif %}
+      </span>
+      {% endif %}
     </span>
     <span class="merk">{{ z.merkmale }}</span>
     <span class="probe">{{ z.probe }}</span>
@@ -922,18 +957,49 @@ body::before{
   </div>
 </section>
 
+{% if held.spontane_mods %}
+<section class="card" style="margin-top:var(--gap)">
+  <h3 class="card-title">Spontane Modifikationen <span class="meta">max. {{ held.mods_max }} gleichzeitig</span></h3>
+  <div class="mod-table">
+    <div class="mod-row header">
+      <span>Modifikation</span><span>ZfP*</span><span>Probe</span><span>ZD+</span>
+    </div>
+    {% for m in held.spontane_mods %}
+    <div class="mod-row">
+      <span class="mod-name">{{ m.name }}</span>
+      <span class="mod-zfp">{{ m.zfp }}</span>
+      <span class="mod-probe">{{ m.probe }}</span>
+      <span class="mod-zd">{{ m.zd }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
 <div class="grid cols-2" style="margin-top:var(--gap)">
   <!-- Rituale -->
   <section class="card">
     <h3 class="card-title">Stabzauber &amp; Rituale <span class="meta">Ritualkenntnis {{ held.talente.get('Andere Talente', [{}])[0].get('taw', '') }}</span></h3>
     <ul class="sf-list">
       {% for r in held.rituale.stabzauber %}
-      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
       {% endfor %}
       {% for r in held.rituale.andere %}
       <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
       {% endfor %}
     </ul>
+    {% if held.rituale.zauberspeicher_slots %}
+    <div class="speicher-box">
+      <div class="speicher-title">Zauberspeicher-Inhalt</div>
+      {% for slot in held.rituale.zauberspeicher_slots %}
+      <div class="speicher-slot {% if '—' in slot.zauber or slot.zauber == '' %}leer{% endif %}">
+        <span class="slot-num">{{ slot.slot }}</span>
+        <span class="slot-asp">{{ slot.asp }}</span>
+        <span class="slot-zauber">{{ slot.zauber }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
   </section>
 
   <!-- Sonderfertigkeiten -->
@@ -943,7 +1009,16 @@ body::before{
     <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-magic);margin:0 0 8px;text-transform:uppercase">Magische SF</h4>
     <ul class="sf-list">
       {% for sf in held.sf.magisch %}
-      <li><span class="ico">✦</span><span><span class="sf-name">{{ sf.name }}</span><span class="sf-desc">{{ sf.desc }}</span></span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">
+          {%- if sf.wiki_path -%}
+            <a href="{{ sf.wiki_path | obsidian }}">{{ sf.name }}</a>
+          {%- else -%}
+            {{ sf.name }}
+          {%- endif -%}
+        </span>
+        <span class="sf-desc">{{ sf.desc }}</span>
+      </span></li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -951,7 +1026,16 @@ body::before{
     <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-gold);margin:18px 0 8px;text-transform:uppercase">Allgemeine SF</h4>
     <ul class="sf-list general">
       {% for sf in held.sf.allgemein %}
-      <li><span class="ico">◈</span><span><span class="sf-name">{{ sf.name }}</span><span class="sf-desc">{{ sf.desc }}</span></span></li>
+      <li><span class="ico">◈</span><span>
+        <span class="sf-name">
+          {%- if sf.wiki_path -%}
+            <a href="{{ sf.wiki_path | obsidian }}">{{ sf.name }}</a>
+          {%- else -%}
+            {{ sf.name }}
+          {%- endif -%}
+        </span>
+        <span class="sf-desc">{{ sf.desc }}</span>
+      </span></li>
       {% endfor %}
     </ul>
     {% endif %}
