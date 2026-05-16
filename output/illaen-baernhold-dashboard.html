@@ -341,8 +341,8 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns:1.6fr 1fr auto auto;
-  gap:12px;
+  grid-template-columns: minmax(200px,1.7fr) 90px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  gap:10px;
   align-items:start;
   padding:9px 10px;
   border-bottom:1px solid rgba(95,195,228,.06);
@@ -353,24 +353,57 @@ body::before{
 .spell .name .nlink{ color:var(--ink); text-decoration:none; border-bottom:1px dotted rgba(95,195,228,.25); }
 .spell .name .nlink:hover{ color:var(--accent-cold); border-bottom-color:var(--accent-cold); }
 .spell .name .nlink::after{ content:" ↗"; color:var(--accent-cold); font-size:10px; opacity:.6; }
-.spell .name .desc{
-  display:block; font-family:var(--subhead); font-style:italic;
-  font-size:12px; color:var(--ink-mute); line-height:1.4; margin-top:3px;
-}
 .spell .name .haus{ color:var(--accent-gold); font-family:var(--mono); font-size:12px; margin-left:6px; }
-.spell .merk,.spell .probe{ padding-top:2px; }
-.spell .merk{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.04em; }
-.spell .probe{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); letter-spacing:.04em; }
+.spell .submeta{
+  display:block; font-family:var(--mono); font-size:10px;
+  color:var(--ink-mute); letter-spacing:.04em; margin-top:4px; line-height:1.4;
+}
+.spell .probe{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); letter-spacing:.04em; padding-top:2px; }
 .zfw-num{
   display:inline-block; font-family:var(--mono); font-weight:700;
   font-size:13px; color:var(--ink); min-width:22px; text-align:right;
 }
+.spell .zd { font-family:var(--mono); font-size:11px; color:var(--ink-dim); padding-top:2px; }
+.spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
+.spell .wirkung-cell { padding-top:2px; }
+.spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
+.mods-details { margin-top:5px; }
+.mods-details summary.mods-toggle {
+  list-style:none; font-family:var(--mono); font-size:9px;
+  color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
+}
+.mods-details summary.mods-toggle::-webkit-details-marker { display:none; }
+.mods-details summary.mods-toggle::marker { display:none; }
+.mods-details[open] summary.mods-toggle { color:var(--accent-cold); }
+.mods-details .mods-list { display:block; font-size:10px; color:var(--ink-dim); font-style:italic; margin-top:3px; line-height:1.5; }
 .legend-row{
   margin-top:10px; padding-top:10px; border-top:1px dashed var(--rule);
   font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.04em;
   display:flex; flex-wrap:wrap; gap:14px;
 }
 .legend-row span b{ color:var(--accent-gold); }
+
+/* ---- Zauberspeicher ---- */
+.speicher-box { margin-top:12px; padding:8px 10px; background:rgba(95,195,228,.06); border-radius:6px; border:1px solid rgba(95,195,228,.15); }
+.speicher-title { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:6px; font-family:var(--mono); }
+.speicher-slot { display:grid; grid-template-columns:16px 40px 1fr; gap:6px; font-size:12px; padding:2px 0; font-family:var(--subhead); }
+.speicher-slot.leer { color:var(--ink-dim); font-style:italic; }
+.slot-num { font-family:var(--mono); color:var(--accent-cold); }
+.slot-asp { font-family:var(--mono); color:var(--ink-dim); }
+.slot-zauber { color:var(--ink); }
+
+/* ---- Vol badge (Stabzauber) ---- */
+.vol-badge { font-family:var(--mono); font-size:10px; color:var(--ink-dim); background:rgba(95,195,228,.08); border:1px solid rgba(95,195,228,.15); border-radius:2px; padding:1px 5px; margin-left:6px; }
+
+/* ---- Spontane Modifikationen ---- */
+.mod-table { display:grid; gap:0; }
+.mod-row { display:grid; grid-template-columns:1.8fr auto auto auto; gap:8px; padding:3px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,.04); }
+.mod-row:last-child { border-bottom:0; }
+.mod-row.header { font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-mute); padding-bottom:6px; margin-bottom:2px; border-bottom:1px solid var(--rule); }
+.mod-name { color:var(--ink); font-family:var(--subhead); }
+.mod-zfp { font-family:var(--mono); color:var(--accent-gold); min-width:40px; text-align:right; font-size:11px; }
+.mod-probe { font-family:var(--mono); color:var(--ink-mute); min-width:36px; text-align:center; font-size:11px; }
+.mod-zd { font-family:var(--mono); color:var(--ink-dim); min-width:40px; text-align:right; font-size:11px; }
 
 /* ---- Talent List ---- */
 .talent-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px 28px; }
@@ -391,7 +424,7 @@ body::before{
   font-size:13px;
 }
 .talent-row .t-name{ color:var(--ink); font-family:var(--subhead); }
-.talent-row .t-probe{ font-family:var(--mono); font-size:10px; color:var(--ink-dim); letter-spacing:.03em; }
+.talent-row .t-probe{ font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:.03em; font-weight:600; }
 .talent-row .t-zfw{ font-family:var(--mono); font-weight:700; color:var(--ink); min-width:28px; text-align:right; }
 .talent-row.high .t-zfw{ color:var(--accent-gold); }
 .talent-row.high .t-name{ color:#f3e8c8; font-weight:700; }
@@ -1275,183 +1308,375 @@ body::before{
 <section class="card">
 
   <div class="spell" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
-    <span>Zauber</span><span>Merkmale</span><span>Probe</span><span>ZfW</span>
+    <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/abvenenum.md">Abvenenum reine Speise</a>    </span>
-    <span class="merk">Objk</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/abvenenum.md">Abvenenum reine Speise</a>      <span class="submeta">Objk · C/C</span>
+    </span>
     <span class="probe">KL/KL/FF</span>
     <span class="zfw-num">7</span>
+    <span class="zd">15 A</span>
+    <span class="kosten">4 AsP/Mahlzeit</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Reinigt Nahrung von Giften und Krankheitskeimen</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Schutz vor Übelkeit, Schutz vor Vergiftung</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/accuratum.md">Accuratum Zaubernadel</a>    </span>
-    <span class="merk">Objk</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/accuratum.md">Accuratum Zaubernadel</a>      <span class="submeta">Objk · C/C</span>
+    </span>
     <span class="probe">KL/CH/FF</span>
     <span class="zfw-num">7</span>
+    <span class="zd">40 A</span>
+    <span class="kosten">4 AsP/Stein (mind. 7)</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Verändert Farbe und Schnitt eines Kleidungsstücks</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 4 Modifikationen</summary>
+        <span class="mods-list">Nadel des Wanderers, Haltbarkeit, Webstuhl, Sackleinen und Spinnenseide</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/analys.md">Analys Arkanstruktur</a><span class="desc">Magische Analyse von Objekten/Personen</span>    </span>
-    <span class="merk">Hell, Meta</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/analys.md">Analys Arkanstruktur</a>      <span class="submeta">Hell, Meta · D/D</span>
+    </span>
     <span class="probe">KL/KL/IN</span>
     <span class="zfw-num">4</span>
+    <span class="zd">mind. 1 SR</span>
+    <span class="kosten">6 AsP + 3/½h</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Zeigt Zaubermatrix von Artefakt oder Wesen</span>    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/armatrutz.md">Armatrutz</a><span class="desc">RS-Buff; max ZfW/2 Zusatz-RS</span>    </span>
-    <span class="merk">Eign, Elem(Erz)</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/armatrutz.md">Armatrutz</a>      <span class="submeta">Eign, Elem(Erz) · B/A</span>
+    </span>
     <span class="probe">IN/GE/KO</span>
     <span class="zfw-num">10</span>
+    <span class="zd">3 A</span>
+    <span class="kosten">mind. 4 AsP (RS²−ZfP*/2)</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Verleiht zusätzlichen Rüstungsschutz (max. ZfW/2 RS)</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Körperschild, Kraft des Fakirs</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/attributo.md">Attributo</a><span class="haus">×</span><span class="desc">Hauszauber; Eigenschafts-Buff</span>    </span>
-    <span class="merk">Eign</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/attributo.md">Attributo</a><span class="haus">×</span>      <span class="submeta">Eign · B/A+</span>
+    </span>
     <span class="probe">KL/CH/**</span>
     <span class="zfw-num">10</span>
+    <span class="zd">30 A</span>
+    <span class="kosten">7 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Hebt eine Eigenschaft um ZfP*/3 für 1 Stunde</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 1 Modifikation</summary>
+        <span class="mods-list">Schnellsteigerung</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/balsam-salabunde.md">Balsam Salabunde</a><span class="haus">×</span><span class="desc">Hauszauber; Wundheilung</span>    </span>
-    <span class="merk">Form, Heil</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/balsam-salabunde.md">Balsam Salabunde</a><span class="haus">×</span>      <span class="submeta">Form, Heil · C/B</span>
+    </span>
     <span class="probe">KL/IN/CH</span>
     <span class="zfw-num">9</span>
+    <span class="zd">5–30 A</span>
+    <span class="kosten">1 AsP/LeP (mind. 5)</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Heilt Wunden; 1 LeP pro AsP zurück</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Lebenskraft stärken, Sofortige Regeneration</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/blick-aufs-wesen.md">Blick aufs Wesen</a><span class="desc">Hellsicht auf Wesen-Typ</span>    </span>
-    <span class="merk">Hell</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blick-aufs-wesen.md">Blick aufs Wesen</a>      <span class="submeta">Hell · C/C</span>
+    </span>
     <span class="probe">KL/IN/CH</span>
     <span class="zfw-num">4</span>
+    <span class="zd">30 A</span>
+    <span class="kosten">6 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Grobe Einschätzung von Fähigkeiten des Gegenübers</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 1 Modifikation</summary>
+        <span class="mods-list">Leuchtende Persönlichkeit</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/blitz-dich-find.md">Blitz dich find</a><span class="haus">×</span><span class="desc">Hauszauber; hoher ZfW!</span>    </span>
-    <span class="merk">Einfl</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blitz-dich-find.md">Blitz dich find</a><span class="haus">×</span>      <span class="submeta">Einfl · B/A</span>
+    </span>
     <span class="probe">KL/IN/GE</span>
     <span class="zfw-num">13</span>
+    <span class="zd">1 A</span>
+    <span class="kosten">4 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Blendet und desorientiert Opfer für ZfW/2 Aktionen</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 1 Modifikation</summary>
+        <span class="mods-list">Mehrere Wesen</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/custodosigil.md">Custodosigil Diebesbann</a>    </span>
-    <span class="merk">Elem(Feu), Meta, Objk</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/custodosigil.md">Custodosigil Diebesbann</a>      <span class="submeta">Elem(Feu), Meta, Objk · C/C</span>
+    </span>
     <span class="probe">KL/FF/FF</span>
     <span class="zfw-num">2</span>
+    <span class="zd">~1 h</span>
+    <span class="kosten">1 AsP/Stein (mind. 5)</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Sichert Behältnis; Inhalt verbrennt bei Entladung</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Personalisierung, Permanenz</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/duplicatus.md">Duplicatus Doppelbild</a><span class="desc">Illusionsdoppelgänger</span>    </span>
-    <span class="merk">Illu</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/duplicatus.md">Duplicatus Doppelbild</a>      <span class="submeta">Illu · C/C</span>
+    </span>
     <span class="probe">KL/CH/GE</span>
     <span class="zfw-num">5</span>
+    <span class="zd">5 A</span>
+    <span class="kosten">6 AsP + 3/weiterer</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erschafft optische Doppelgänger</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Objektverdopplung, Spiegelkabinett</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/flim-flam.md">Flim Flam Funkel</a>    </span>
-    <span class="merk">Umwt</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/flim-flam.md">Flim Flam Funkel</a>      <span class="submeta">Umwt · A/A</span>
+    </span>
     <span class="probe">KL/KL/FF</span>
     <span class="zfw-num">10</span>
+    <span class="zd">2 A</span>
+    <span class="kosten">1 AsP/SR</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erzeugt stationäre bläulich-weiße Lichtkugel</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 9 Modifikationen</summary>
+        <span class="mods-list">Andere Farbe, Pulsierendes Licht, Lichtkegel, Variable Helligkeit, Bewegliche Lichtkugel, Irrwisch, Lichtblitz, Leuchtturm, Immerlicht</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/fortifex.md">Fortifex arkane Wand</a><span class="desc">Magische Wand/Barriere</span>    </span>
-    <span class="merk">Elem(Erz), Umwt</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fortifex.md">Fortifex arkane Wand</a>      <span class="submeta">Elem(Erz), Umwt · D/D</span>
+    </span>
     <span class="probe">IN/KO/KK</span>
     <span class="zfw-num">8</span>
+    <span class="zd">10 A</span>
+    <span class="kosten">11 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erzeugt undurchdringliche transparente Wand (2×2 Schritt)</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 3 Modifikationen</summary>
+        <span class="mods-list">Bewegliche Wand, Schimmernder Schild, Schwebende Wand</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/fulminictus.md">Fulminictus Donnerkeil</a><span class="haus">×</span><span class="desc">Hauszauber; Blitzangriff</span>    </span>
-    <span class="merk">Krft, Scha</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fulminictus.md">Fulminictus Donnerkeil</a><span class="haus">×</span>      <span class="submeta">Krft, Scha · C/A</span>
+    </span>
     <span class="probe">IN/GE/KO</span>
     <span class="zfw-num">10</span>
+    <span class="zd">2 A</span>
+    <span class="kosten">1 AsP/SP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Unsichtbare Welle durchdringt jede Rüstung (2W6+ZfP* SP)</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Welle des Schmerzes, Welle der Reinigung</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/gardianum.md">Gardianum Zauberschild</a><span class="haus">×</span><span class="desc">Hauszauber; Abwehr von Zaubern</span>    </span>
-    <span class="merk">Anti, Krft, Meta</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/gardianum.md">Gardianum Zauberschild</a><span class="haus">×</span>      <span class="submeta">Anti, Krft, Meta · D/C</span>
+    </span>
     <span class="probe">KL/IN/KO</span>
     <span class="zfw-num">8</span>
+    <span class="zd">2 A</span>
+    <span class="kosten">mind. 3 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Schutzkuppel absorbiert magische Schäden</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 3 Modifikationen</summary>
+        <span class="mods-list">Schild gegen Dämonen, Schild gegen Zauber, Persönlicher Schild</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/horriphobus-schreckgestalt.md">Horriphobus Schreckgestalt</a><span class="haus">×</span><span class="desc">Hauszauber; Furchteffekt</span>    </span>
-    <span class="merk">Einfl</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/horriphobus-schreckgestalt.md">Horriphobus Schreckgestalt</a><span class="haus">×</span>      <span class="submeta">Einfl · C/B</span>
+    </span>
     <span class="probe">MU/IN/CH</span>
     <span class="zfw-num">7</span>
+    <span class="zd">3 A</span>
+    <span class="kosten">7 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erscheint dem Opfer als bedrohliche Schreckgestalt</span>    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md">Ignifaxius Flammenstrahl</a><span class="haus">×</span><span class="desc">Hauszauber; Feuerschaden</span>    </span>
-    <span class="merk">Elem(Feu), Scha</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md">Ignifaxius Flammenstrahl</a><span class="haus">×</span>      <span class="submeta">Elem(Feu), Scha · C/A</span>
+    </span>
     <span class="probe">KL/FF/KO</span>
     <span class="zfw-num">10</span>
+    <span class="zd">4 A</span>
+    <span class="kosten">ZfW Würfel × 1W6 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Feuerlanze aus den Fingern schießt auf Ziel</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 4 Modifikationen</summary>
+        <span class="mods-list">Kegel, Enger Strahl, Mehrere Ziele, Doppelschuss</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/ignisphaero-feuerball.md">Ignisphaero Feuerball</a><span class="desc">Flächenschaden (Feuer)</span>    </span>
-    <span class="merk">Elem(Feu), Scha, Tele</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignisphaero-feuerball.md">Ignisphaero Feuerball</a>      <span class="submeta">Elem(Feu), Scha, Tele · D/C</span>
+    </span>
     <span class="probe">MU/IN/KO</span>
     <span class="zfw-num">7</span>
+    <span class="zd">7 A</span>
+    <span class="kosten">21 AsP + 1W6 LeP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Feuerkugel explodiert im Zielbereich für 5W6+ZfP*/2 TP</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 1 Modifikation</summary>
+        <span class="mods-list">Komplexe Bewegung</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/impersona-maskenbild.md">Impersona Maskenbild</a><span class="desc">Aussehensveränderung</span>    </span>
-    <span class="merk">Illu</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/impersona-maskenbild.md">Impersona Maskenbild</a>      <span class="submeta">Illu · D/D</span>
+    </span>
     <span class="probe">KL/IN/FF</span>
     <span class="zfw-num">5</span>
+    <span class="zd">1 SR</span>
+    <span class="kosten">9 AsP + 3/h</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Legt Illusion über das Gesicht einer Person</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Karikatur, Mal tarnen</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/manifesto-element.md">Manifesto Element</a>    </span>
-    <span class="merk">Elem</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/manifesto-element.md">Manifesto Element</a>      <span class="submeta">Elem · A/A</span>
+    </span>
     <span class="probe">KL/IN/CH</span>
     <span class="zfw-num">7</span>
+    <span class="zd">10 A</span>
+    <span class="kosten">3 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erzeugt kleine elementare Manifestationen</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Demanifesto, Wirkungsdauer</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/odem-arcanum.md">Odem Arcanum</a><span class="desc">Magie-Wahrnehmung</span>    </span>
-    <span class="merk">Hell, Krft</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/odem-arcanum.md">Odem Arcanum</a>      <span class="submeta">Hell, Krft · A/A</span>
+    </span>
     <span class="probe">KL/IN/IN</span>
     <span class="zfw-num">6</span>
+    <span class="zd">4 A</span>
+    <span class="kosten">4 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erkennt Zauberei als rötlichen Schimmer um Ziel</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Sichtbereich, Umgebung</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/pectetondo-zauberhaar.md">Pectetondo Zauberhaar</a><span class="desc">Haare formen/stylen magisch</span>    </span>
-    <span class="merk">Form</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/pectetondo-zauberhaar.md">Pectetondo Zauberhaar</a>      <span class="submeta">Form · B/B</span>
+    </span>
     <span class="probe">KL/CH/FF</span>
     <span class="zfw-num">7</span>
+    <span class="zd">6 A</span>
+    <span class="kosten">4 AsP + 2/Spann</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Verändert Haupthaar und Bart nach Belieben</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 3 Modifikationen</summary>
+        <span class="mods-list">Farbtopf, Ohne Kamm, Winterpelz und Katzenfell</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/psychostabilis.md">Psychostabilis</a><span class="desc">Schutz vor Einfluss-Zaubern</span>    </span>
-    <span class="merk">Anti, Eign</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/psychostabilis.md">Psychostabilis</a>      <span class="submeta">Anti, Eign · C/B</span>
+    </span>
     <span class="probe">MU/KL/KO</span>
     <span class="zfw-num">4</span>
+    <span class="zd">5 A</span>
+    <span class="kosten">8 AsP + 1/SR</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erhöht die Magieresistenz um ZfP* Punkte</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 4 Modifikationen</summary>
+        <span class="mods-list">Zielobjekt Einzelwesen, Selbstanwendung, Kleine Stabilisierung, Gegenzauber</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/sapefacta-zauberschwamm.md">Sapefacta Zauberschwamm</a><span class="desc">Reinigungszauber</span>    </span>
-    <span class="merk">Elem(Luf), Elem(Was), Tele</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sapefacta-zauberschwamm.md">Sapefacta Zauberschwamm</a>      <span class="submeta">Elem(Luf), Elem(Was), Tele · C/C</span>
+    </span>
     <span class="probe">KL/CH/FF</span>
     <span class="zfw-num">8</span>
+    <span class="zd">50 A</span>
+    <span class="kosten">5 AsP</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Reinigt Zauberer und Kleidung von Verschmutzung</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 2 Modifikationen</summary>
+        <span class="mods-list">Stiefelputzer, Läusekamm</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/sensibar-empathicus.md">Sensibar Empathicus</a><span class="desc">Empathie / Gefühlswahrnehmung</span>    </span>
-    <span class="merk">Hell</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sensibar-empathicus.md">Sensibar Empathicus</a>      <span class="submeta">Hell · C/C</span>
+    </span>
     <span class="probe">KL/IN/CH</span>
     <span class="zfw-num">5</span>
+    <span class="zd">10 A</span>
+    <span class="kosten">3 AsP/10 A</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Erkennt Gefühle und Stimmungen des Gegenübers</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 3 Modifikationen</summary>
+        <span class="mods-list">Massensinn, Tierempathie, Artefaktempathie</span>
+      </details>
+    </span>
   </div>
   <div class="spell">
     <span class="name">
-<a class="nlink" href="../wiki/dsa-4.1/zauber/unitatio-geistesbund.md">Unitatio Geistesbund</a><span class="desc">Gedankenverbindung</span>    </span>
-    <span class="merk">Krft, Vers</span>
+<a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/unitatio-geistesbund.md">Unitatio Geistesbund</a>      <span class="submeta">Krft, Vers · B/B</span>
+    </span>
     <span class="probe">IN/CH/KO</span>
     <span class="zfw-num">3</span>
+    <span class="zd">30 A</span>
+    <span class="kosten">1 AsP/Person</span>
+    <span class="wirkung-cell">
+<span class="wirkung">Vereinigt Zauberkraft aller Beteiligten unter Bundführer</span>      <details class="mods-details">
+        <summary class="mods-toggle">▸ 1 Modifikation</summary>
+        <span class="mods-list">Wechselnder Bundführer</span>
+      </details>
+    </span>
   </div>
 
   <div class="legend-row">
@@ -1473,22 +1698,139 @@ body::before{
   </div>
 </section>
 
+<section class="card" style="margin-top:var(--gap)">
+  <h3 class="card-title">Spontane Modifikationen <span class="meta">max. 3 gleichzeitig</span></h3>
+  <div class="mod-table">
+    <div class="mod-row header">
+      <span>Modifikation</span><span>ZfP*</span><span>Probe</span><span>ZD+</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Veränderte Technik (fehlende Komponente)</span>
+      <span class="mod-zfp">7 ZfP/Komp.</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+3 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Veränderte Technik, zentrale Komponente</span>
+      <span class="mod-zfp">12 ZfP/Komp.</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+3 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Halbierte Zauberdauer</span>
+      <span class="mod-zfp">5 ZfP/Halbierung</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">–50 %</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Verdoppelte Zauberdauer</span>
+      <span class="mod-zfp">–</span>
+      <span class="mod-probe">–3</span>
+      <span class="mod-zd">+100 %</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Erzwingen (je –1 Erschwernis)</span>
+      <span class="mod-zfp">–</span>
+      <span class="mod-probe">je –1 / 1/2/4/8/16 … AsP</span>
+      <span class="mod-zd">+1 A/Punkt</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Kosten einsparen (–10 % AsP)</span>
+      <span class="mod-zfp">3 ZfP</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Unfreiwillig statt freiwillig</span>
+      <span class="mod-zfp">5 ZfP</span>
+      <span class="mod-probe">+MR</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Freiwillig statt unfreiwillig</span>
+      <span class="mod-zfp">2 ZfP</span>
+      <span class="mod-probe">–½ MR</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Mehrere Gefährten (freiwillig)</span>
+      <span class="mod-zfp">3 ZfP</span>
+      <span class="mod-probe">+1/Person</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Mehrere Gegner (unfreiwillig)</span>
+      <span class="mod-zfp">–</span>
+      <span class="mod-probe">+MRMax + Anzahl</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Reichweite/Radius vergrößern</span>
+      <span class="mod-zfp">5 ZfP/Stufe</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A/Stufe</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Reichweite/Radius verkleinern</span>
+      <span class="mod-zfp">3 ZfP/Stufe</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A/Stufe</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Wirkungsdauer verdoppeln</span>
+      <span class="mod-zfp">7 ZfP</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">Wirkungsdauer halbieren</span>
+      <span class="mod-zfp">3 ZfP</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+    <div class="mod-row">
+      <span class="mod-name">(A) auf feste Dauer ändern</span>
+      <span class="mod-zfp">7 ZfP</span>
+      <span class="mod-probe">–</span>
+      <span class="mod-zd">+1 A</span>
+    </div>
+  </div>
+</section>
+
 <div class="grid cols-2" style="margin-top:var(--gap)">
   <!-- Rituale -->
   <section class="card">
     <h3 class="card-title">Stabzauber &amp; Rituale <span class="meta">Ritualkenntnis 11</span></h3>
     <ul class="sf-list">
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Bindung</span><span class="sf-desc">Grundbindung; Voraussetzung für alle weiteren Stabzauber</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Fackel</span><span class="sf-desc">Stab leuchtet auf Kommando</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Hammer des Magus</span><span class="sf-desc">Stab als magische Waffe (erhöhte TP)</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Kraftfokus</span><span class="sf-desc">−1 AsP auf jeden Zauber</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Merkmalsfokus</span><span class="sf-desc">−1 auf Proben eines Merkmals (gewählt: ?)</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Modifikationsfokus</span><span class="sf-desc">+1 spontane Modifikation pro Zauber</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Seil (des Adepten)</span><span class="sf-desc">Stab als magisches Kletterseil</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Stabverlängerung</span><span class="sf-desc">Stab verlängert sich auf Befehl</span></span></li>
-      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Zauberspeicher</span><span class="sf-desc">Speichert Zauber (1 Vol / 20 AsP)</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Bindung<span class="vol-badge">1 pAsP</span></span><span class="sf-desc">Grundbindung; Voraussetzung für alle weiteren Stabzauber</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Fackel<span class="vol-badge">2</span></span><span class="sf-desc">Stab leuchtet auf Kommando</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Hammer des Magus<span class="vol-badge">3</span></span><span class="sf-desc">Stab als magische Waffe (erhöhte TP)</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Kraftfokus<span class="vol-badge">3</span></span><span class="sf-desc">−1 AsP auf jeden Zauber</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Merkmalsfokus<span class="vol-badge">5</span></span><span class="sf-desc">−1 auf Proben eines Merkmals (gewählt: ?)</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Modifikationsfokus<span class="vol-badge">3</span></span><span class="sf-desc">+1 spontane Modifikation pro Zauber</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Seil (des Adepten)<span class="vol-badge">2</span></span><span class="sf-desc">Stab als magisches Kletterseil</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Stabverlängerung<span class="vol-badge">?</span></span><span class="sf-desc">Stab verlängert sich auf Befehl</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">Stabzauber: Zauberspeicher<span class="vol-badge">1/20 AsP</span></span><span class="sf-desc">Speichert Zauber (1 Vol / 20 AsP)</span></span></li>
       <li><span class="ico">❖</span><span><span class="sf-name">Apport</span><span class="sf-desc">Telekinesezauber; Details → Rituale Grundregeln</span></span></li>
     </ul>
+    <div class="speicher-box">
+      <div class="speicher-title">Zauberspeicher-Inhalt</div>
+      <div class="speicher-slot leer">
+        <span class="slot-num">1</span>
+        <span class="slot-asp">—</span>
+        <span class="slot-zauber">— frei —</span>
+      </div>
+      <div class="speicher-slot leer">
+        <span class="slot-num">2</span>
+        <span class="slot-asp">—</span>
+        <span class="slot-zauber">— frei —</span>
+      </div>
+      <div class="speicher-slot leer">
+        <span class="slot-num">3</span>
+        <span class="slot-asp">—</span>
+        <span class="slot-zauber">— frei —</span>
+      </div>
+    </div>
   </section>
 
   <!-- Sonderfertigkeiten -->
@@ -1496,26 +1838,77 @@ body::before{
     <h3 class="card-title">Sonderfertigkeiten</h3>
     <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-magic);margin:0 0 8px;text-transform:uppercase">Magische SF</h4>
     <ul class="sf-list">
-      <li><span class="ico">✦</span><span><span class="sf-name">Astrale Meditation</span><span class="sf-desc">AsP-Regeneration beschleunigen; Voraussetzung für Große Meditation</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Große Meditation</span><span class="sf-desc">Erweiterte Form der Astralen Meditation; stärkere AsP-Regeneration</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Astrale Regeneration I</span><span class="sf-desc">+1 Asp pro Regenerationsphase</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Astrale Regeneration II</span><span class="sf-desc">+1 Asp pro Regenerationsphase (kumulativ mit Reg. I)</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Meisterliche Regeneration</span><span class="sf-desc">Regeneration Leiteigenschaft + 3 ASP anstatt Würfel (KL+3 Asp)</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Konzentrationsstärke</span><span class="sf-desc">Erleichterte Selbstbeherrschungs-Proben beim Zaubern unter Druck</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Kraftkontrolle</span><span class="sf-desc">AsP-Kosten senken bei niedrigem Zauberwert</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Merkmalskenntnis: Eigenschaften</span><span class="sf-desc">Merkmalsgebundene SF; Eigenschaften-Zauber günstiger modifizierbar</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Merkmalskenntnis: Schaden</span><span class="sf-desc">Merkmalsgebundene SF; Schaden-Zauber günstiger modifizierbar</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Repräsentation: Magier</span><span class="sf-desc">Zaubern in Rüstung, Grundlage für die meisten Gildenmagier-Zauber</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Ritualkenntnis: Gildenmagie</span><span class="sf-desc">Voraussetzung für alle Stabzauber; Wert 11</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Verbotene Pforten</span><span class="sf-desc">Sondermerkmal / eingeschränkter Zugriff auf bestimmte Zaubersphären</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Zauber bereithalten</span><span class="sf-desc">Zauber vorbereiten ohne sofortige Wirkung (spätere Auslösung)</span></span></li>
-      <li><span class="ico">✦</span><span><span class="sf-name">Zauberkontrolle</span><span class="sf-desc">Präzisere Steuerung von Zaubern (Wirkungsbereich / Stärke)</span></span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Astrale%20Meditation">Astrale Meditation</a></span>
+        <span class="sf-desc">AsP-Regeneration beschleunigen; Voraussetzung für Große Meditation</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Gro%C3%9Fe%20Meditation">Große Meditation</a></span>
+        <span class="sf-desc">Erweiterte Form der Astralen Meditation; stärkere AsP-Regeneration</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">Astrale Regeneration I</span>
+        <span class="sf-desc">+1 Asp pro Regenerationsphase</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">Astrale Regeneration II</span>
+        <span class="sf-desc">+1 Asp pro Regenerationsphase (kumulativ mit Reg. I)</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Meisterliche%20Regeneration">Meisterliche Regeneration</a></span>
+        <span class="sf-desc">Regeneration Leiteigenschaft + 3 ASP anstatt Würfel (KL+3 Asp)</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Konzentrationsst%C3%A4rke">Konzentrationsstärke</a></span>
+        <span class="sf-desc">Erleichterte Selbstbeherrschungs-Proben beim Zaubern unter Druck</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Kraftkontrolle">Kraftkontrolle</a></span>
+        <span class="sf-desc">AsP-Kosten senken bei niedrigem Zauberwert</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">[[wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Merkmalskenntnis [einzelnes Merkmal]|Merkmalskenntnis: Eigenschaften]]</span>
+        <span class="sf-desc">Merkmalsgebundene SF; Eigenschaften-Zauber günstiger modifizierbar</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">[[wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Merkmalskenntnis [einzelnes Merkmal]|Merkmalskenntnis: Schaden]]</span>
+        <span class="sf-desc">Merkmalsgebundene SF; Schaden-Zauber günstiger modifizierbar</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Repr%C3%A4sentation">Repräsentation: Magier</a></span>
+        <span class="sf-desc">Zaubern in Rüstung, Grundlage für die meisten Gildenmagier-Zauber</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Ritualkenntnis%20%28Gildenmagie%29">Ritualkenntnis: Gildenmagie</a></span>
+        <span class="sf-desc">Voraussetzung für alle Stabzauber; Wert 11</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Verbotene%20Pforten">Verbotene Pforten</a></span>
+        <span class="sf-desc">Sondermerkmal / eingeschränkter Zugriff auf bestimmte Zaubersphären</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauber%20bereithalten">Zauber bereithalten</a></span>
+        <span class="sf-desc">Zauber vorbereiten ohne sofortige Wirkung (spätere Auslösung)</span>
+      </span></li>
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauberkontrolle">Zauberkontrolle</a></span>
+        <span class="sf-desc">Präzisere Steuerung von Zaubern (Wirkungsbereich / Stärke)</span>
+      </span></li>
     </ul>
     <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-gold);margin:18px 0 8px;text-transform:uppercase">Allgemeine SF</h4>
     <ul class="sf-list general">
-      <li><span class="ico">◈</span><span><span class="sf-name">Aufmerksamkeit</span><span class="sf-desc">Erleichterte Sinnenschärfe-Proben / Wahrnehmung</span></span></li>
-      <li><span class="ico">◈</span><span><span class="sf-name">Kulturkunde (Mittelreich)</span><span class="sf-desc">Soziale Interaktion im Mittelreich erleichtert</span></span></li>
-      <li><span class="ico">◈</span><span><span class="sf-name">Ortskenntnis (Stadtteil/Kleinstadt)</span><span class="sf-desc">Navigation + soziale Proben in bekanntem Stadtgebiet</span></span></li>
+      <li><span class="ico">◈</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Aufmerksamkeit">Aufmerksamkeit</a></span>
+        <span class="sf-desc">Erleichterte Sinnenschärfe-Proben / Wahrnehmung</span>
+      </span></li>
+      <li><span class="ico">◈</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Kulturkunde%20%28Mittelreich%29">Kulturkunde (Mittelreich)</a></span>
+        <span class="sf-desc">Soziale Interaktion im Mittelreich erleichtert</span>
+      </span></li>
+      <li><span class="ico">◈</span><span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Ortskenntnis%20%28Stadtteil%20/%20Kleinstadt%29">Ortskenntnis (Stadtteil/Kleinstadt)</a></span>
+        <span class="sf-desc">Navigation + soziale Proben in bekanntem Stadtgebiet</span>
+      </span></li>
     </ul>
   </section>
 </div>

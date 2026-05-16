@@ -341,8 +341,8 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns:1.6fr 1fr auto auto;
-  gap:12px;
+  grid-template-columns: minmax(200px,1.7fr) 90px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  gap:10px;
   align-items:start;
   padding:9px 10px;
   border-bottom:1px solid rgba(95,195,228,.06);
@@ -353,30 +353,35 @@ body::before{
 .spell .name .nlink{ color:var(--ink); text-decoration:none; border-bottom:1px dotted rgba(95,195,228,.25); }
 .spell .name .nlink:hover{ color:var(--accent-cold); border-bottom-color:var(--accent-cold); }
 .spell .name .nlink::after{ content:" ↗"; color:var(--accent-cold); font-size:10px; opacity:.6; }
-.spell .name .desc{
-  display:block; font-family:var(--subhead); font-style:italic;
-  font-size:12px; color:var(--ink-mute); line-height:1.4; margin-top:3px;
-}
 .spell .name .haus{ color:var(--accent-gold); font-family:var(--mono); font-size:12px; margin-left:6px; }
-.spell .merk,.spell .probe{ padding-top:2px; }
-.spell .merk{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.04em; }
-.spell .probe{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); letter-spacing:.04em; }
+.spell .submeta{
+  display:block; font-family:var(--mono); font-size:10px;
+  color:var(--ink-mute); letter-spacing:.04em; margin-top:4px; line-height:1.4;
+}
+.spell .probe{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); letter-spacing:.04em; padding-top:2px; }
 .zfw-num{
   display:inline-block; font-family:var(--mono); font-weight:700;
   font-size:13px; color:var(--ink); min-width:22px; text-align:right;
 }
+.spell .zd { font-family:var(--mono); font-size:11px; color:var(--ink-dim); padding-top:2px; }
+.spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
+.spell .wirkung-cell { padding-top:2px; }
+.spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
+.mods-details { margin-top:5px; }
+.mods-details summary.mods-toggle {
+  list-style:none; font-family:var(--mono); font-size:9px;
+  color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
+}
+.mods-details summary.mods-toggle::-webkit-details-marker { display:none; }
+.mods-details summary.mods-toggle::marker { display:none; }
+.mods-details[open] summary.mods-toggle { color:var(--accent-cold); }
+.mods-details .mods-list { display:block; font-size:10px; color:var(--ink-dim); font-style:italic; margin-top:3px; line-height:1.5; }
 .legend-row{
   margin-top:10px; padding-top:10px; border-top:1px dashed var(--rule);
   font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.04em;
   display:flex; flex-wrap:wrap; gap:14px;
 }
 .legend-row span b{ color:var(--accent-gold); }
-
-/* ---- Spell extra fields ---- */
-.spell .wirkung { font-size:11px; color:var(--ink-mute); margin-top:3px; display:block; font-style:italic; line-height:1.4; }
-.spell .zd { font-family:var(--mono); font-size:10px; color:var(--ink-dim); }
-.spell .kosten { font-family:var(--mono); font-size:10px; color:var(--ink-mute); }
-.spell .mods-txt { font-size:10px; color:var(--ink-dim); font-style:italic; }
 
 /* ---- Zauberspeicher ---- */
 .speicher-box { margin-top:12px; padding:8px 10px; background:rgba(95,195,228,.06); border-radius:6px; border:1px solid rgba(95,195,228,.15); }
@@ -914,27 +919,34 @@ body::before{
 <section class="card">
 
   <div class="spell" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
-    <span>Zauber</span><span>Merkmale</span><span>Probe</span><span>ZfW</span>
+    <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
   {% for z in held.zauber %}
   {% set url = z.wiki_path | obsidian if z.wiki_path else '' %}
+  {% set mods_raw = (z.mods or '').strip() %}
+  {% set mods_list = mods_raw.split(',') | map('trim') | reject('equalto', '') | reject('equalto', '—') | list %}
   <div class="spell">
     <span class="name">
       {% if url %}<a class="nlink" href="{{ url }}">{{ z.name }}</a>{% else %}{{ z.name }}{% endif %}
       {% if z.haus %}<span class="haus">×</span>{% endif %}
-      {% if z.desc %}<span class="desc">{{ z.desc }}</span>{% endif %}
-      {% if z.wirkung %}<span class="wirkung">{{ z.wirkung }}</span>{% endif %}
-      {% if z.zd or z.kosten %}
-      <span style="display:block;margin-top:2px;display:flex;gap:10px;flex-wrap:wrap">
-        {% if z.zd %}<span class="zd">ZD: {{ z.zd }}</span>{% endif %}
-        {% if z.kosten %}<span class="kosten">{{ z.kosten }}</span>{% endif %}
-      </span>
+      {% if z.merkmale or z.komp or z.lern %}
+      <span class="submeta">{{ z.merkmale }}{% if z.komp or z.lern %} · {{ z.komp }}/{{ z.lern }}{% endif %}</span>
       {% endif %}
     </span>
-    <span class="merk">{{ z.merkmale }}</span>
     <span class="probe">{{ z.probe }}</span>
     <span class="zfw-num">{{ z.zfw }}</span>
+    <span class="zd">{{ z.zd }}</span>
+    <span class="kosten">{{ z.kosten }}</span>
+    <span class="wirkung-cell">
+      {% if z.wirkung %}<span class="wirkung">{{ z.wirkung }}</span>{% endif %}
+      {% if mods_list %}
+      <details class="mods-details">
+        <summary class="mods-toggle">▸ {{ mods_list | length }} {{ 'Modifikation' if mods_list | length == 1 else 'Modifikationen' }}</summary>
+        <span class="mods-list">{{ mods_list | join(', ') }}</span>
+      </details>
+      {% endif %}
+    </span>
   </div>
   {% endfor %}
 

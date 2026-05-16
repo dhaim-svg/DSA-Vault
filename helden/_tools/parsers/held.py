@@ -241,6 +241,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
             'merkmale': row.get('Merkmale', ''),
             'haus': (row.get('Haus', '') or '').strip() == '×',
             'komp': row.get('Komp', ''),
+            'lern': row.get('Lern', ''),
             'desc': notizen,
             'zd': row.get('ZD', ''),
             'kosten': row.get('Kosten', ''),
