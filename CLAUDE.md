@@ -55,6 +55,16 @@
 
 Wiki-Mängel, die beim Spielereinsatz auffallen, werden in `wiki-luecken.md` (Vault-Root) gesammelt — jeder Eintrag mit Datum, betroffener Wiki-Datei, Befund, Vorschlag.
 
+# Backlog
+
+Übergreifender Aufgaben-Tracker liegt in `backlog.md` (Vault-Root).
+
+- Spezialisierte Tracker bleiben: `wiki-luecken.md` (Wiki-Mängel mit Buchquelle), `DSA-STATUS.md` (Buch-Extraktion).
+- Neue Tasks, die nicht sofort erledigt werden, kommen ins Backlog (Priorität = Position von oben in `## Backlog`).
+- Tasks die mehrere Bereiche betreffen (z.B. Held + Dashboard) werden in einer Zeile geführt.
+- LLM-Pflege: Status-Updates beim Start/Ende von Tasks, Done-Umzug mit Datum.
+- Kategorien: `wiki` / `held` / `dashboard` / `abenteuer` / `tooling` / `meta`
+
 # DSA-Regelwerk PDF-Extraktion
 
 DSA-Regelwerke liegen als PDFs unter:
