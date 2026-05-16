@@ -65,7 +65,7 @@ def main() -> None:
     args = parser.parse_args()
 
     out_path = render(args.slug)
-    print(f'Rendered → {out_path}')
+    print(f'Rendered -> {out_path}')
 
     if args.watch:
         from watcher import start_watch
