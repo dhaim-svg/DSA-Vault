@@ -949,8 +949,8 @@ body::before{
   <section class="card">
     <h3 class="card-title">Kampfwerte <span class="meta">Basis</span></h3>
     <div class="minor-stats" style="margin-top:0;border-top:0;padding-top:0;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="minor"><span class="v" style="color:var(--accent-gold)">{{ at_bw.aktuell }}</span><span class="k">AT-Basis</span></div>
-      <div class="minor"><span class="v" style="color:var(--accent-gold)">{{ pa_bw.aktuell }}</span><span class="k">PA-Basis</span></div>
+      <div class="minor" data-at="{{ at_bw.aktuell }}"><span class="v" style="color:var(--accent-gold)">{{ at_bw.aktuell }}</span><span class="k">AT-Basis</span></div>
+      <div class="minor" data-pa="{{ pa_bw.aktuell }}"><span class="v" style="color:var(--accent-gold)">{{ pa_bw.aktuell }}</span><span class="k">PA-Basis</span></div>
       <div class="minor"><span class="v" style="color:var(--accent-gold)">{{ held.basiswerte.get('FK', {}).aktuell }}</span><span class="k">FK-Basis</span></div>
     </div>
     {% if held.ausruestung.waffen %}
@@ -960,7 +960,7 @@ body::before{
         <div class="w-name">{{ w.name }}</div>
         <div class="weapon-grid">
           <div><span class="k">DK</span><span class="v">{{ w.dk }}</span></div>
-          <div><span class="k">TP</span><span class="v">{{ w.tp }}</span></div>
+          <div data-tp="{{ w.tp }}"><span class="k">TP</span><span class="v">{{ w.tp }}</span></div>
           <div><span class="k">AT</span><span class="v">{{ w.at }}</span></div>
           <div><span class="k">PA</span><span class="v">{{ w.pa if w.pa else '—' }}</span></div>
           <div><span class="k">INI</span><span class="v">{{ w.ini if w.ini else '+0' }}</span></div>
@@ -985,7 +985,7 @@ body::before{
     {% set eig_order = ['MU','KL','IN','CH','FF','GE','KO','KK'] %}
     {% for abbr in eig_order %}
     {% set e = held.eigenschaften.get(abbr, {}) %}
-    <div class="hex">
+    <div class="hex" data-eigenschaft="{{ abbr }}" data-wert="{{ e.get('aktuell', 0) }}">
       <div class="shape"></div>
       {% if e.get('mod', 0) != 0 %}<span class="mod">{% if e.mod > 0 %}+{% endif %}{{ e.mod }}</span>{% endif %}
       <div class="inner">
@@ -1062,7 +1062,7 @@ body::before{
       </h4>
       {% for row in grp_rows %}
       {% set cls = 'high' if row.taw >= 5 else ('zero' if row.taw == 0 else '') %}
-      <div class="talent-row {{ cls }}">
+      <div class="talent-row {{ cls }}"{% if not is_kampf and '/' in (row.probe or '') %} data-probe="{{ row.probe }}" data-taw="{{ row.taw }}" data-name="{{ row.name }}"{% endif %}>
         <span class="t-name">{{ row.name }}</span>
         <span class="t-probe">
           {%- if is_kampf %}{{ row.at }} / {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}
@@ -1092,7 +1092,7 @@ body::before{
   {% set url = z.wiki_path | obsidian if z.wiki_path else '' %}
   {% set mods_raw = (z.mods or '').strip() %}
   {% set mods_list = mods_raw.split(',') | map('trim') | reject('equalto', '') | reject('equalto', '—') | list %}
-  <div class="spell">
+  <div class="spell"{% if '/' in (z.probe or '') %} data-probe="{{ z.probe }}" data-zfw="{{ z.zfw }}" data-name="{{ z.name }}" data-kosten="{{ z.kosten }}"{% endif %}>
     <span class="name">
       {% if url %}<a class="nlink" href="{{ url }}">{{ z.name }}</a>{% else %}{{ z.name }}{% endif %}
       {% if z.haus %}<span class="haus">×</span>{% endif %}
@@ -1365,6 +1365,27 @@ body::before{
 })();
 </script>
 <div id="save-indicator"></div>
+<script>
+/* DSA character data for dice.js — regenerated on each render */
+window.DSA = {
+  eig: {
+    MU: {{ held.eigenschaften.MU.aktuell }},
+    KL: {{ held.eigenschaften.KL.aktuell }},
+    IN: {{ held.eigenschaften.IN.aktuell }},
+    CH: {{ held.eigenschaften.CH.aktuell }},
+    FF: {{ held.eigenschaften.FF.aktuell }},
+    GE: {{ held.eigenschaften.GE.aktuell }},
+    KO: {{ held.eigenschaften.KO.aktuell }},
+    KK: {{ held.eigenschaften.KK.aktuell }}
+  },
+  vitals: {
+    LE: { current: {{ le.current }}, max: {{ le.max }} },
+    AE: { current: {{ ae.current }}, max: {{ ae.max }} },
+    AU: { current: {{ au.current }}, max: {{ au.max }} }
+  },
+  slug: "{{ slug }}"
+};
+</script>
 <script src="/static/app.js"></script>
 <script src="/static/session.js"></script>
 </body>
