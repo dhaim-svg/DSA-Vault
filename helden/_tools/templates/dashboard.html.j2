@@ -936,6 +936,8 @@ body::before{
         </div>
       </div>
     </div>
+    <div data-wunden="{{ held.meta.wunden }}"></div>
+    <div id="zustand-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px"></div>
     <div class="minor-stats">
       <div class="minor"><span class="v">{{ mr.aktuell }}</span><span class="k">MR</span></div>
       <div class="minor"><span class="v">{{ ini.aktuell }}</span><span class="k">INI</span></div>
@@ -1338,6 +1340,7 @@ body::before{
 </div><!-- .codex -->
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
+<button id="session-reset-btn" class="print-btn screen-only" style="margin-left:8px">Session zurücksetzen</button>
 
 <script>
 /* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
