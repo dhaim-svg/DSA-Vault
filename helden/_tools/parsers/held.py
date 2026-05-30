@@ -142,9 +142,14 @@ def load_held(vault_root: Path, slug: str) -> dict:
             abbr = m.group(1)
         else:
             abbr = next((v for k, v in BASISWERT_MAP.items() if k in raw), raw)
-        aktuell_raw = row.get('Aktuell', '') or ''
+        max_raw = row.get('Max', '') or row.get('Aktuell', '') or ''
+        akt_raw = row.get('Akt.', '') or max_raw
+        max_val = safe_int(max_raw)
+        akt_val = safe_int(akt_raw) if (akt_raw and akt_raw.strip() not in ('—', '', '-')) else max_val
         basiswerte[abbr] = {
-            'aktuell': safe_int(aktuell_raw),
+            'max': max_val,
+            'current': akt_val,
+            'aktuell': max_val,   # backward-compat alias used by template
             'formel': row.get('Formel', ''),
         }
 
@@ -488,6 +493,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
             'wahrer_name': wahrer_name,
             'wahrer_name_bedeutung': wahrer_name_bedeutung,
             'stigma': stigma,
+            'wunden': int(fm.get('wunden', 0)),
         },
         'eigenschaften': eigenschaften,
         'basiswerte': basiswerte,
