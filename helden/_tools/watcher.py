@@ -1,6 +1,11 @@
-"""File-watcher for the hero dashboard. Used by render-held.py --watch."""
+"""File-watcher for the DSA hero dashboard.
+
+In serve mode: watching is implicit (GET / re-reads markdown on every request).
+The /api/held/<slug>/mtime endpoint is the change signal; app.js polls it.
+
+In render --watch mode: re-renders to the output file on .md changes.
+"""
 import sys
-import time
 import threading
 from pathlib import Path
 from typing import Callable
@@ -18,9 +23,8 @@ _WATCH_DIRS = [
 
 
 class _RenderHandler(FileSystemEventHandler):
-    def __init__(self, render_fn: Callable, server) -> None:
+    def __init__(self, render_fn: Callable) -> None:
         self._render_fn = render_fn
-        self._server = server
         self._debounce_timer: threading.Timer | None = None
 
     def on_any_event(self, event):
@@ -29,7 +33,6 @@ class _RenderHandler(FileSystemEventHandler):
         path = getattr(event, 'src_path', '')
         if not path.endswith('.md'):
             return
-        # Debounce: only render after 300ms of quiet
         if self._debounce_timer:
             self._debounce_timer.cancel()
         self._debounce_timer = threading.Timer(0.3, self._do_render)
@@ -39,45 +42,21 @@ class _RenderHandler(FileSystemEventHandler):
         try:
             out = self._render_fn()
             print(f'[watcher] re-rendered → {out}')
-            if self._server:
-                self._server.reload(str(out.name))
         except Exception as exc:
             print(f'[watcher] render error: {exc}', file=sys.stderr)
 
 
 def start_watch(slug: str, render_fn: Callable, open_browser: bool = False) -> None:
-    try:
-        from livereload import Server
-    except ImportError:
-        Server = None
+    """Start file watcher for render --watch mode (re-renders static HTML on .md change)."""
+    import time
+    import webbrowser
 
-    server = None
-    http_thread = None
+    if open_browser:
+        out = VAULT_ROOT / 'output' / f'{slug}-dashboard.html'
+        webbrowser.open(out.as_uri())
+        print(f'[watcher] opened {out.as_uri()}')
 
-    if Server:
-        server = Server()
-        output_dir = VAULT_ROOT / 'output'
-        server.watch(str(output_dir / f'{slug}-dashboard.html'))
-        port = 5500
-
-        def _serve():
-            server.serve(root=str(output_dir), port=port, open_url_delay=None)
-
-        http_thread = threading.Thread(target=_serve, daemon=True)
-        http_thread.start()
-        print(f'[watcher] livereload server at http://localhost:{port}')
-        if open_browser:
-            import webbrowser, time
-            time.sleep(0.5)
-            webbrowser.open(f'http://localhost:{port}/{slug}-dashboard.html')
-    else:
-        print('[watcher] livereload not installed — file watching active, manual refresh needed.')
-        if open_browser:
-            import webbrowser
-            out = VAULT_ROOT / 'output' / f'{slug}-dashboard.html'
-            webbrowser.open(out.as_uri())
-
-    handler = _RenderHandler(render_fn, server)
+    handler = _RenderHandler(render_fn)
     observer = Observer()
     for watch_dir in _WATCH_DIRS:
         if watch_dir.exists():
