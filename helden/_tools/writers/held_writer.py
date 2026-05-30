@@ -10,18 +10,14 @@ import hashlib
 import os
 import re
 import threading
-import yaml
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 # Import the same helpers the parser uses, so locator semantics stay consistent
 import sys
 _HERE = Path(__file__).parent.parent
 sys.path.insert(0, str(_HERE))
-from parsers.held import (
-    split_sections, _split_table_row, strip_wikilink, safe_int
-)
+from parsers.held import (_split_table_row, strip_wikilink)
 
 # Per-file lock to serialise concurrent PATCHes from the debounced client
 _FILE_LOCKS: dict[str, threading.Lock] = {}
@@ -71,12 +67,9 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
 
     lock = _get_lock(target)
     with lock:
-        raw = target.read_bytes()
         mtime_before = target.stat().st_mtime
+        raw = target.read_bytes()
         text = raw.decode('utf-8-sig')  # handle optional BOM
-
-        # Detect line ending style; we write it back unchanged
-        lf = '\r\n' if '\r\n' in text else '\n'
 
         # Optimistic concurrency: check etag if caller provided one
         etag = locator.get('etag', '')
@@ -87,21 +80,26 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                                    mtime_before=mtime_before, mtime_after=mtime_before,
                                    error='conflict')
 
-        kind = locator.get('kind')
-        if kind == 'frontmatter':
-            new_text, old_value = _patch_frontmatter(text, locator['key'], str(locator['value']))
-        elif kind == 'table_cell':
-            new_text, old_value = _patch_table_cell(
-                text,
-                section_path=locator.get('section_path', []),
-                row_key=locator['row_key'],
-                column=locator['column'],
-                value=str(locator['value']),
-            )
-        else:
+        try:
+            kind = locator.get('kind')
+            if kind == 'frontmatter':
+                new_text, old_value = _patch_frontmatter(text, locator['key'], str(locator['value']))
+            elif kind == 'table_cell':
+                new_text, old_value = _patch_table_cell(
+                    text,
+                    section_path=locator.get('section_path', []),
+                    row_key=locator['row_key'],
+                    column=locator['column'],
+                    value=str(locator['value']),
+                )
+            else:
+                return PatchResult(ok=False, old_value='', new_value='',
+                                   mtime_before=mtime_before, mtime_after=mtime_before,
+                                   error=f'unknown locator kind: {kind}')
+        except (KeyError, TypeError) as exc:
             return PatchResult(ok=False, old_value='', new_value='',
                                mtime_before=mtime_before, mtime_after=mtime_before,
-                               error=f'unknown locator kind: {kind}')
+                               error=f'bad locator: {exc}')
 
         if new_text is None:
             return PatchResult(ok=False, old_value=old_value, new_value=str(locator['value']),
