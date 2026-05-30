@@ -808,6 +808,131 @@ body::before{
   /* Show static value in print */
   .vital::after { content: attr(data-current) " / " attr(data-max); font-weight: 700; }
 }
+/* ── Dice Panel ────────────────────────────────────────── */
+.dice-panel {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--card-bg, #f5ebd8);
+  border-top: 2px solid var(--accent, #8b7355);
+  padding: 12px 16px 14px;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.18);
+  font-family: var(--body, serif);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+.dice-panel.hidden { transform: translateY(100%); pointer-events: none; }
+.dice-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#dp-title {
+  flex: 1;
+  font-family: var(--display, serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.dp-mode-btns { display: flex; gap: 4px; }
+.dp-btn {
+  padding: 6px 12px;
+  min-width: 44px; min-height: 44px;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+  touch-action: manipulation;
+  transition: background 0.12s;
+}
+.dp-btn.active, .dp-btn.primary {
+  background: var(--accent, #8b7355);
+  color: var(--bg, #fdf6e3);
+}
+.dp-btn:active { opacity: 0.75; }
+.dp-eig-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.dp-eig-slot { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.dp-eig-slot .dp-eig-abbr { font-size: 0.75rem; opacity: 0.7; }
+.dp-eig-slot .dp-eig-val { font-weight: 700; }
+.dp-dice-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dp-die {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.dp-die input[type=number] {
+  width: 52px; height: 48px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  -moz-appearance: textfield;
+}
+.dp-die input[type=number]::-webkit-inner-spin-button,
+.dp-die input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.dp-die-label { font-size: 0.7rem; opacity: 0.65; }
+.dp-die-fehl { font-size: 0.8rem; color: var(--accent-blood, #8b1c2a); font-weight: 700; }
+.dp-result {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-height: 2.2rem;
+}
+.dp-result.success { background: rgba(40,140,60,.15); color: #1a6b2a; }
+.dp-result.fail    { background: rgba(180,30,30,.12); color: #8b1c2a; }
+.dp-result.crit    { background: rgba(80,180,255,.15); color: #1a4a7a; }
+.dp-result.patzer  { background: rgba(180,120,30,.15); color: #6b4010; }
+.dp-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dp-controls label { font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+.dp-controls input[type=number] {
+  width: 56px;
+  padding: 4px;
+  text-align: center;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  -moz-appearance: textfield;
+}
+.dp-controls input[type=number]::-webkit-inner-spin-button,
+.dp-controls input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.dp-action { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Clickable rows */
+.talent-row[data-probe], .spell[data-probe], .hex[data-eigenschaft],
+.minor[data-at], .minor[data-pa], [data-tp] {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.talent-row[data-probe]:hover, .spell[data-probe]:hover,
+.hex[data-eigenschaft]:hover, .minor[data-at]:hover, .minor[data-pa]:hover,
+[data-tp]:hover { background: rgba(139,115,85,.1); border-radius: 4px; }
+@media print { .dice-panel { display: none !important; } }
 </style>
 </head>
 <body>
@@ -1364,6 +1489,24 @@ body::before{
   });
 })();
 </script>
+<div id="dice-panel" class="dice-panel hidden">
+  <div class="dice-panel-header">
+    <span id="dp-title">🎲 Probe</span>
+    <span class="dp-mode-btns">
+      <button id="dp-auto" class="dp-btn active" type="button">Auto</button>
+      <button id="dp-manual" class="dp-btn" type="button">Manuell</button>
+    </span>
+    <button id="dp-close" class="dp-btn" type="button" aria-label="Panel schließen">✕</button>
+  </div>
+  <div id="dp-eig-row" class="dp-eig-row"></div>
+  <div id="dp-dice-row" class="dp-dice-row"></div>
+  <div id="dp-result" class="dp-result"></div>
+  <div class="dp-controls">
+    <label>Erschwernis&thinsp;<input id="dp-mod" type="number" value="0" min="-20" max="20"></label>
+    <button id="dp-roll" class="dp-btn primary" type="button">🔁 Neu würfeln</button>
+  </div>
+  <div id="dp-action" class="dp-action"></div>
+</div>
 <div id="save-indicator"></div>
 <script>
 /* DSA character data for dice.js — regenerated on each render */
@@ -1388,5 +1531,6 @@ window.DSA = {
 </script>
 <script src="/static/app.js"></script>
 <script src="/static/session.js"></script>
+<script src="/static/dice.js"></script>
 </body>
 </html>
