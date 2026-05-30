@@ -10,6 +10,7 @@ ap_gesamt: 3850
 ap_eingesetzt: 3845
 ap_verfuegbar: 5
 spieler: David
+wunden: 0
 ---
 
 # Illaen Baernhold
@@ -44,17 +45,17 @@ spieler: David
 
 ### Basiswerte
 
-| Basiswert | Formel | Mod. | Start | Aktuell | Gekauft | Rest |
-|-----------|--------|------|-------|---------|---------|------|
-| Lebensenergie (LE) | (KO+KO+KK)/2 | +9 | 19 | 28 | 0 | 7 |
-| Ausdauer (AU) | (MU+KO+GE)/2 | +12 | 19 | 31 | 0 | 13 |
-| Astralenergie (AE) | (MU+IN+CH)/2 | +18 | 20 | 38 | 0 | 13 |
-| Karmaenergie (KE) | — | — | — | — | — | — |
-| Magieresistenz (MR) | (MU+KL+KO)/5 | −3 | 8 | 5 | — | — |
-| Initiative (INI) | (MU+MU+IN+GE)/5 | 0 | 10 | 10 | — | — |
-| Attacke (AT) | (MU+GE+KK)/5 | 0 | 7 | 7 | — | — |
-| Parade (PA) | (IN+GE+KK)/5 | 0 | 8 | 8 | — | — |
-| Fernkampf-Basis (FK) | (IN+FF+KK)/5 | 0 | 8 | 8 | — | — |
+| Basiswert | Formel | Mod. | Start | Max | Akt. | Gekauft | Rest |
+|-----------|--------|------|-------|-----|------|---------|------|
+| Lebensenergie (LE) | (KO+KO+KK)/2 | +9 | 19 | 28 | 28 | 0 | 7 |
+| Ausdauer (AU) | (MU+KO+GE)/2 | +12 | 19 | 31 | 31 | 0 | 13 |
+| Astralenergie (AE) | (MU+IN+CH)/2 | +18 | 20 | 38 | 38 | 0 | 13 |
+| Karmaenergie (KE) | — | — | — | — | — | — | — |
+| Magieresistenz (MR) | (MU+KL+KO)/5 | −3 | 8 | 5 | — | — | — |
+| Initiative (INI) | (MU+MU+IN+GE)/5 | 0 | 10 | 10 | — | — | — |
+| Attacke (AT) | (MU+GE+KK)/5 | 0 | 7 | 7 | — | — | — |
+| Parade (PA) | (IN+GE+KK)/5 | 0 | 8 | 8 | — | — | — |
+| Fernkampf-Basis (FK) | (IN+FF+KK)/5 | 0 | 8 | 8 | — | — | — |
 
 ## Abenteuerpunkte
 
