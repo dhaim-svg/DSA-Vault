@@ -702,6 +702,112 @@ body::before{
   .story p + p{ text-indent:14pt; }
   .story p:first-of-type::first-letter{ font-family:'Cinzel',serif; font-size:32pt; float:left; line-height:.9; margin:2pt 6pt 0 0; color:var(--paper-ink); }
 }
+
+/* ── Interactive vitals ──────────────────────────────────── */
+.vital-stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.vital-btn {
+  width: 44px;
+  height: 44px;
+  font-size: 1.4rem;
+  line-height: 1;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.15s;
+}
+.vital-btn:active { background: rgba(139,115,85,0.2); }
+.vital-input {
+  width: 52px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  padding: 4px 2px;
+  -moz-appearance: textfield;
+}
+.vital-input::-webkit-inner-spin-button,
+.vital-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.vital-sep, .vital-max { opacity: 0.7; font-size: 1rem; }
+#save-indicator {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 9999;
+}
+#save-indicator.visible { opacity: 1; }
+.wunden-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.wunden-counter button {
+  width: 44px; height: 44px;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.zustand-chip {
+  padding: 4px 10px;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s, color 0.15s;
+}
+.zustand-chip.active {
+  background: var(--accent, #8b7355);
+  color: var(--bg, #fdf6e3);
+}
+@media (max-width: 900px) {
+  .vitals-sticky {
+    position: sticky;
+    top: 0;
+    background: var(--bg, #fdf6e3);
+    z-index: 100;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--accent, #8b7355);
+    display: flex;
+    gap: 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+}
+@media (min-width: 901px) { .vitals-sticky { display: none; } }
+@media print {
+  .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
+  .wunden-counter, #zustand-chips, #session-reset-btn { display: none !important; }
+  .vital-max { font-weight: 700; }
+  .vital-stepper { display: none !important; }
+  /* Show static value in print */
+  .vital::after { content: attr(data-current) " / " attr(data-max); font-weight: 700; }
+}
 </style>
 </head>
 <body>
@@ -789,18 +895,45 @@ body::before{
     <div class="vitals">
       <div class="vital">
         <span class="lbl">LeP</span>
-        <div class="bar lep"><span class="fill" style="width:100%"></span><span class="ticks"></span></div>
-        <span class="val"><b>{{ le.aktuell }}</b> / {{ le.aktuell }}</span>
+        <div class="bar lep"><span class="fill" id="bar-lep" style="width:{{ (le.current / le.max * 100) | round | int if le.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Lebensenergie (LE)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ le.max }}"
+             data-bar-id="bar-lep">
+          <button class="vital-btn vital-btn--minus" aria-label="LeP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ le.current }}" min="0" max="{{ le.max }}" aria-label="Aktuelle Lebensenergie">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ le.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="LeP erhöhen" type="button">+</button>
+        </div>
       </div>
       <div class="vital">
         <span class="lbl">AsP</span>
-        <div class="bar asp"><span class="fill" style="width:100%"></span><span class="ticks"></span></div>
-        <span class="val"><b>{{ ae.aktuell }}</b> / {{ ae.aktuell }}</span>
+        <div class="bar asp"><span class="fill" id="bar-asp" style="width:{{ (ae.current / ae.max * 100) | round | int if ae.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Astralenergie (AE)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ ae.max }}"
+             data-bar-id="bar-asp">
+          <button class="vital-btn vital-btn--minus" aria-label="AsP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ ae.current }}" min="0" max="{{ ae.max }}" aria-label="Aktuelle Astralenergie">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ ae.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="AsP erhöhen" type="button">+</button>
+        </div>
       </div>
       <div class="vital">
         <span class="lbl">AuP</span>
-        <div class="bar aup"><span class="fill" style="width:100%"></span><span class="ticks"></span></div>
-        <span class="val"><b>{{ au.aktuell }}</b> / {{ au.aktuell }}</span>
+        <div class="bar aup"><span class="fill" id="bar-aup" style="width:{{ (au.current / au.max * 100) | round | int if au.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Ausdauer (AU)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ au.max }}"
+             data-bar-id="bar-aup">
+          <button class="vital-btn vital-btn--minus" aria-label="AuP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ au.current }}" min="0" max="{{ au.max }}" aria-label="Aktuelle Ausdauer">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ au.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="AuP erhöhen" type="button">+</button>
+        </div>
       </div>
     </div>
     <div class="minor-stats">
@@ -1228,5 +1361,8 @@ body::before{
   });
 })();
 </script>
+<div id="save-indicator"></div>
+<script src="/static/app.js"></script>
+<script src="/static/session.js"></script>
 </body>
 </html>
