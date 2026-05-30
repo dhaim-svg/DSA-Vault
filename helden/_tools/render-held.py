@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render a DSA 4.1 hero dashboard to output/illaen-dashboard.html."""
+"""Render a DSA 4.1 hero dashboard to output/<slug>-dashboard.html."""
 import argparse
 import sys
 import webbrowser
