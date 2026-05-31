@@ -5,9 +5,9 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-010+D-011 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-008/plan.md |
-| T1 | D-010 Commit-Message-Input | ⬜ todo | git_ops.py, server.py, static/commit.js, templates/dashboard.html.j2 |
-| T2 | D-011 showIndicator-Dedup | ⬜ todo | static/util.js (neu), static/app.js, static/commit.js, templates/dashboard.html.j2 |
-| T3 | Verifikation + /sprint-wrap | ⬜ todo | — |
+| T1 | D-010 Commit-Message-Input | ✅ done | git_ops.py, server.py, static/commit.js, templates/dashboard.html.j2 |
+| T2 | D-011 showIndicator-Dedup | ✅ done | static/util.js (neu), static/app.js, static/commit.js, templates/dashboard.html.j2 |
+| T3 | Verifikation + /sprint-wrap | ✅ done | — |
 
 ## Key Design Decisions
 
