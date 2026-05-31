@@ -933,10 +933,84 @@ body::before{
 .hex[data-eigenschaft]:hover, .minor[data-at]:hover, .minor[data-pa]:hover,
 [data-tp]:hover { background: rgba(139,115,85,.1); border-radius: 4px; }
 @media print { .dice-panel { display: none !important; } }
+
+/* ─── Tab Navigation ─────────────────────────────────────────── */
+.tab-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  gap: 2px;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 14px 0;
+  overflow-x: auto;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  color: var(--ink-mute);
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: .1em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.tab-btn:hover { color: var(--ink); background: rgba(95,195,228,.07); }
+.tab-btn--active {
+  color: var(--accent-cold);
+  background: var(--bg-elev);
+  border-color: var(--rule);
+}
+.tab-content { display: none; }
+.tab-content--active { display: block; }
+body { padding-top: 46px; }
+@media print {
+  .tab-bar { display: none !important; }
+  .tab-content { display: block !important; }
+  body { padding-top: 0 !important; }
+}
+/* Steigern Tab */
+.sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent-cold); margin: 20px 0 8px; }
+.sg-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
+  border-bottom: 1px solid var(--rule-soft); font-size: 13px; }
+.sg-row:last-child { border-bottom: none; }
+.sg-name { flex: 1; color: var(--ink); }
+.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; min-width: 60px; }
+.sg-cost { font-family: var(--mono); font-size: 12px; min-width: 52px; font-weight: bold; }
+.sg-cost.affordable { color: var(--accent-aup); }
+.sg-cost.expensive { color: var(--ink-dim); }
+.sg-btn-area { display: flex; align-items: center; gap: 6px; }
+.sg-btn { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 4px;
+  background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; }
+.sg-btn:hover { background: var(--bg-elev); }
+.sg-btn.disabled { opacity: .4; cursor: default; }
+.sg-btn--ok { background: rgba(40,120,60,.3); color: #7fe8a0; border-color: #4a8a60; }
+.sg-confirm { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-mute); }
+.sg-confirm.hidden, .sg-btn.hidden { display: none; }
+.sg-error { font-size: 11px; color: var(--accent-blood); margin-left: 8px; }
+.sg-ap-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; margin-bottom: 8px; }
+.sg-ap-label { font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .1em; }
+.sg-ap-val { font-family: var(--mono); font-size: 18px; font-weight: bold; color: var(--ink); margin-left: 4px; }
+.sg-ap-val.avail { color: var(--accent-gold); }
+.sg-stufe { font-size: 12px; color: var(--ink-mute); }
 </style>
 </head>
 <body>
 <div class="codex">
+<nav class="tab-bar" role="tablist" aria-label="Dashboard-Bereiche">
+  <button class="tab-btn" data-tab="kampf"    type="button">⚔️ Kampf</button>
+  <button class="tab-btn" data-tab="talente"  type="button">🎯 Talente</button>
+  <button class="tab-btn" data-tab="zauber"   type="button">✨ Zauber</button>
+  <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
+  <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
+</nav>
 
 {% set name_parts = held.meta.name.split(' ') %}
 {% set first_name = name_parts[:-1] | join(' ') %}
@@ -1001,6 +1075,7 @@ body::before{
   </div>
 </header>
 
+<div class="tab-content" id="tab-kampf">
 <!-- ============================================================
      VITALS + KAMPFWERTE
      ============================================================ -->
@@ -1123,6 +1198,9 @@ body::before{
   </div>
 </section>
 
+</div><!-- end tab-kampf -->
+<div class="tab-content" id="tab-talente">
+
 <!-- Vor- & Nachteile -->
 <div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
 <section class="card">
@@ -1203,6 +1281,8 @@ body::before{
   </div>
 </section>
 
+</div><!-- end tab-talente -->
+<div class="tab-content" id="tab-zauber">
 <!-- ============================================================
      SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
      ============================================================ -->
@@ -1349,6 +1429,15 @@ body::before{
   </section>
 </div>
 
+</div><!-- end tab-zauber -->
+
+<div class="tab-content" id="tab-steigern">
+  <div class="sec-head"><h2>AP &amp; Steigerung</h2><span class="rule"></span></div>
+  <section class="card" id="steigern-ap-overview"></section>
+  <section class="card" id="steigern-list" style="margin-top:var(--gap)"></section>
+</div><!-- end tab-steigern -->
+
+<div class="tab-content" id="tab-profil">
 <!-- ============================================================
      SEITE 4 — AUSRÜSTUNG + KAMPAGNE + VORGESCHICHTE
      ============================================================ -->
@@ -1462,6 +1551,8 @@ body::before{
   {% endfor %}
 </section>
 
+</div><!-- end tab-profil -->
+
 </div><!-- .codex -->
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
@@ -1526,11 +1617,24 @@ window.DSA = {
     AE: { current: {{ ae.current }}, max: {{ ae.max }} },
     AU: { current: {{ au.current }}, max: {{ au.max }} }
   },
+  steigern: {
+    talente: {{ held.steigerbar_talente | tojson }},
+    zauber:  {{ held.steigerbar_zauber  | tojson }},
+    ap: {
+      verfuegbar:   {{ held.meta.ap_verfuegbar }},
+      eingesetzt:   {{ held.meta.ap_eingesetzt }},
+      gesamt:       {{ held.meta.ap_gesamt }},
+      stufe:        {{ held.meta.stufe }},
+      bis_naechste: {{ held.get('_ap_bis_naechste_stufe') | tojson }}
+    }
+  },
   slug: "{{ slug }}"
 };
 </script>
 <script src="/static/app.js"></script>
 <script src="/static/session.js"></script>
 <script src="/static/dice.js"></script>
+<script src="/static/tabs.js"></script>
+<script src="/static/steigern.js"></script>
 </body>
 </html>
