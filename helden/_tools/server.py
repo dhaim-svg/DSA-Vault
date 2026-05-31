@@ -3,6 +3,7 @@
 Serves the dashboard live-rendered from markdown and exposes a
 PATCH /api/held/<slug>/value endpoint as the single write path.
 """
+import re
 import sys
 import threading
 import webbrowser
@@ -25,7 +26,7 @@ def _render_dashboard(slug: str) -> str:
     kampagne = load_kampagne(VAULT_ROOT, 'drachenchronik')
     env = make_env()
     return env.get_template('dashboard.html.j2').render(
-        held=held, kampagne=kampagne, slug=slug
+        held=held, kampagne=kampagne, slug=slug, kampagne_slug='drachenchronik'
     )
 
 
@@ -95,6 +96,8 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/kampagne/<camp>/value', methods=['PATCH'])
     def api_patch_kampagne(camp):
+        if not re.fullmatch(r'[a-z0-9_-]+', camp):
+            return jsonify({'error': 'invalid campaign name'}), 400
         locator = request.get_json(force=True)
         if not locator:
             return jsonify({'error': 'missing JSON body'}), 400
@@ -105,7 +108,7 @@ def create_app(slug: str) -> Flask:
         if not result.ok:
             status = 409 if result.error == 'conflict' else 400
             return jsonify({'ok': False, 'error': result.error}), status
-        return jsonify({'ok': True, 'old': result.old_value, 'new': result.new_value})
+        return jsonify({'ok': True, 'old': result.old_value, 'new': result.new_value, 'mtime': result.mtime_after})
 
     return app
 

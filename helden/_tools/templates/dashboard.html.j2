@@ -996,6 +996,7 @@ body { padding-top: 46px; }
   .tab-content { display: block !important; }
   body { padding-top: 0 !important; }
   .inv-stepper, .inv-add-form { display: none !important; }
+  .journal-actions { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
@@ -1049,7 +1050,7 @@ body { padding-top: 46px; }
 .journal-save-btn { padding: 4px 12px; border: 1px solid var(--accent-cold); border-radius: 3px; background: rgba(95,195,228,.12); color: var(--accent-cold); font-family: var(--mono); font-size: 11px; cursor: pointer; }
 .journal-save-btn:hover { background: rgba(95,195,228,.25); }
 .journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
-.journal-save-ok { font-size: 11px; color: #7fe8a0; }
+.journal-save-ok { font-size: 11px; color: var(--accent-aup); }
 </style>
 </head>
 <body>
@@ -1664,9 +1665,9 @@ body { padding-top: 46px; }
       <tbody>
       {% for s in kampagne.sessions %}
       <tr style="border-bottom:1px dotted var(--rule)">
-        <td style="padding:5px 0;color:var(--ink-mute)">{{ s.nr }}</td>
-        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">{{ s.datum }}</td>
-        <td style="padding:5px 0;color:var(--ink)">{{ s.inhalt }}</td>
+        <td style="padding:5px 0;color:var(--ink-mute)">{{ s.nr | e }}</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">{{ s.datum | e }}</td>
+        <td style="padding:5px 0;color:var(--ink)">{{ s.inhalt | e }}</td>
       </tr>
       {% endfor %}
       </tbody>
@@ -1714,12 +1715,12 @@ body { padding-top: 46px; }
 {% if kampagne.sessions %}
   {% for s in kampagne.sessions %}
   <section class="card journal-session" data-session-nr="{{ s.nr }}">
-    <h3 class="journal-session-header">#{{ s.nr }} &middot; {{ s.datum }}</h3>
+    <h3 class="journal-session-header">#{{ s.nr | e }} &middot; {{ s.datum | e }}</h3>
 
     {% if s.sektionen.get('Zusammenfassung') %}
     <div class="journal-section">
       <h4>Zusammenfassung</h4>
-      <p class="journal-readonly">{{ s.sektionen.get('Zusammenfassung', '') }}</p>
+      <p class="journal-readonly">{{ s.sektionen.get('Zusammenfassung', '') | e }}</p>
     </div>
     {% endif %}
 
@@ -1736,28 +1737,28 @@ body { padding-top: 46px; }
     {% if s.sektionen.get('AsP/LeP-Verlauf') %}
     <details class="journal-section journal-collapsed">
       <summary>AsP/LeP-Verlauf</summary>
-      <p class="journal-readonly">{{ s.sektionen.get('AsP/LeP-Verlauf', '') }}</p>
+      <p class="journal-readonly">{{ s.sektionen.get('AsP/LeP-Verlauf', '') | e }}</p>
     </details>
     {% endif %}
 
     {% if s.sektionen.get('Neue NSCs / Orte') %}
     <details class="journal-section journal-collapsed">
       <summary>Neue NSCs / Orte</summary>
-      <p class="journal-readonly">{{ s.sektionen.get('Neue NSCs / Orte', '') }}</p>
+      <p class="journal-readonly">{{ s.sektionen.get('Neue NSCs / Orte', '') | e }}</p>
     </details>
     {% endif %}
 
     {% if s.sektionen.get('Offene Fäden / Cliffhanger') %}
     <details class="journal-section journal-collapsed">
       <summary>Offene Fäden / Cliffhanger</summary>
-      <p class="journal-readonly">{{ s.sektionen.get('Offene Fäden / Cliffhanger', '') }}</p>
+      <p class="journal-readonly">{{ s.sektionen.get('Offene Fäden / Cliffhanger', '') | e }}</p>
     </details>
     {% endif %}
 
     {% if s.sektionen.get('Loot / AP-Vergabe') %}
     <details class="journal-section journal-collapsed">
       <summary>Loot / AP-Vergabe</summary>
-      <p class="journal-readonly">{{ s.sektionen.get('Loot / AP-Vergabe', '') }}</p>
+      <p class="journal-readonly">{{ s.sektionen.get('Loot / AP-Vergabe', '') | e }}</p>
     </details>
     {% endif %}
 
@@ -1854,7 +1855,7 @@ window.DSA = {
   },
   zauberspeicher: {{ held.rituale.zauberspeicher_slots | tojson }},
   kampagne: {{ kampagne.sessions | tojson }},
-  kampagne_slug: "drachenchronik"
+  kampagne_slug: "{{ kampagne_slug }}"
 };
 </script>
 <script src="/static/app.js"></script>
