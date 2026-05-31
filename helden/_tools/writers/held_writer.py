@@ -303,6 +303,8 @@ def _append_table_row(
 
     Returns (new_text, '') on success, (None, '') if section or table not found.
     """
+    if not cells:
+        return None, ''
     all_lines = text.splitlines(keepends=True)
     start, end = _find_section_lines(all_lines, section_path)
     if start is None:

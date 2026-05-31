@@ -223,6 +223,16 @@ def test_table_append_row_section_not_found_returns_none():
     assert result is None
 
 
+def test_table_append_row_empty_cells_returns_none():
+    from writers.held_writer import _append_table_row
+    result, _ = _append_table_row(
+        STEIGERUNGS_LOG_TEXT,
+        section_path=['Protokoll'],
+        cells=[],
+    )
+    assert result is None
+
+
 def test_table_append_row_via_patch_api(tmp_path):
     """End-to-end: patch() dispatches table_append_row correctly."""
     from writers.held_writer import patch
