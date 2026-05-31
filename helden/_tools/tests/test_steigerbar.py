@@ -88,3 +88,46 @@ def test_steigerbar_zauber_normalizes_hauszeichen():
     armatrutz = next((i for i in items if i['name'] == 'Armatrutz'), None)
     assert armatrutz is not None, "Armatrutz not found in steigerbar_zauber"
     assert armatrutz['lern'] == 'A'
+
+
+# ---------------------------------------------------------------------------
+# Integration tests: Sprachen Komplexität field
+# ---------------------------------------------------------------------------
+
+def test_sprachen_have_komplexitaet_in_talente():
+    """Sprachen entries in talente dict carry numeric komplexitaet and correct probe string."""
+    from parsers.held import load_held
+    held = load_held(VAULT_ROOT, 'illaen-baernhold')
+    sprachen = held['talente']['Sprachen (SKT A)']
+    bosparano = next((e for e in sprachen if e['name'] == 'Bosparano'), None)
+    garethi = next((e for e in sprachen if e['name'] == 'Garethi'), None)
+    assert bosparano is not None, "Bosparano not found in Sprachen (SKT A)"
+    assert garethi is not None, "Garethi not found in Sprachen (SKT A)"
+    assert bosparano['komplexitaet'] == 21
+    assert garethi['komplexitaet'] == 18
+    # No regression on existing probe string
+    assert bosparano['probe'] == 'K 21'
+    assert garethi['probe'] == 'K 18'
+
+
+def test_sprachen_have_komplexitaet_in_steigerbar():
+    """Sprachen entries in steigerbar_talente carry numeric komplexitaet."""
+    from parsers.held import load_held
+    held = load_held(VAULT_ROOT, 'illaen-baernhold')
+    items = held['steigerbar_talente']
+    garethi = next((i for i in items if i['name'] == 'Garethi'), None)
+    bosparano = next((i for i in items if i['name'] == 'Bosparano'), None)
+    assert garethi is not None, "Garethi not found in steigerbar_talente"
+    assert bosparano is not None, "Bosparano not found in steigerbar_talente"
+    assert garethi['komplexitaet'] == 18
+    assert bosparano['komplexitaet'] == 21
+
+
+def test_non_sprachen_have_none_komplexitaet():
+    """Non-Sprachen/Schriften entries in steigerbar_talente have komplexitaet == None."""
+    from parsers.held import load_held
+    held = load_held(VAULT_ROOT, 'illaen-baernhold')
+    items = held['steigerbar_talente']
+    klettern = next((i for i in items if i['name'] == 'Klettern'), None)
+    assert klettern is not None, "Klettern not found in steigerbar_talente"
+    assert klettern['komplexitaet'] is None

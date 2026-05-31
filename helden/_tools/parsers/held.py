@@ -233,6 +233,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 entry['stk'] = r.get('Stk', '')
             if is_sprache or is_schrift:
                 entry['probe'] = 'K ' + (r.get('Komplexität', '') or '')
+                entry['komplexitaet'] = safe_int(r.get('Komplexität'), None)
             else:
                 entry['probe'] = r.get('Probe', '') or r.get('Komplexität', '')
             entry['taw'] = safe_int(r.get('TaW', 0))
@@ -266,6 +267,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 'section': sec_name,
                 'file': 'talente.md',
                 'row_key_column': row_key_column,
+                'komplexitaet': entry.get('komplexitaet'),
             })
 
     # ------------------------------------------------------------------ #
