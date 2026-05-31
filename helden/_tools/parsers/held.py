@@ -44,6 +44,27 @@ def _skt_for_section(sec_name: str) -> str:
     return SECTION_SKT_MAP.get(base, 'B')
 
 
+# DSA 4.1 cumulative AP required to REACH each Stufe
+AP_STUFEN = {2: 300, 3: 750, 4: 1500, 5: 2700, 6: 4200, 7: 6300, 8: 9450,
+             9: 13500, 10: 18900}
+
+
+def _compute_ap_bis_naechste(stufe: int, ap_gesamt: int):
+    """Return AP still needed to meet the threshold for the next Stufe.
+
+    Returns None when:
+    - stufe is already at the maximum (10), or
+    - ap_gesamt has already reached or exceeded the next-Stufe threshold
+      (Stufe advancement in DSA 4.1 requires GM approval regardless of AP).
+    """
+    next_stufe_ap = AP_STUFEN.get(stufe + 1)
+    if next_stufe_ap is None:
+        return None  # max Stufe reached
+    if ap_gesamt >= next_stufe_ap:
+        return None  # AP threshold already met; GM grants Stufe separately
+    return next_stufe_ap - ap_gesamt
+
+
 def strip_wikilink(s: str) -> str:
     def repl(m):
         path, display = m.group(1), m.group(2)
@@ -527,11 +548,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
     # ------------------------------------------------------------------ #
     ap_gesamt = fm.get('ap_gesamt', 0)
     stufe = int(fm.get('stufe', 1))
-    # DSA 4.1 AP thresholds per stage
-    AP_STUFEN = {2: 300, 3: 750, 4: 1500, 5: 2700, 6: 4200, 7: 6300, 8: 9450,
-                 9: 13500, 10: 18900}
-    next_stufe_ap = AP_STUFEN.get(stufe + 1)
-    ap_bis_naechste = (next_stufe_ap - ap_gesamt) if next_stufe_ap else None
+    ap_bis_naechste = _compute_ap_bis_naechste(stufe, ap_gesamt)
 
     # Short profession (strip parenthetical)
     profession_raw = fm.get('profession', '')
