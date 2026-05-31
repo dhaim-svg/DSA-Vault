@@ -5,13 +5,14 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-004 | Inventar / Geld / Verbrauch | M | in-progress | — |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-004 | Inventar / Geld / Verbrauch | M | ready | — |
 | D-005 | Zauberspeicher im Stab | M | ready | D-004 |
 | D-006 | Session-Notizen → Journal | M | ready | — |
 | D-007 | Session-Commit-Button | S | ready | — |
