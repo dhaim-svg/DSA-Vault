@@ -19,6 +19,7 @@ from parsers.held import load_held
 from parsers.kampagne import load_kampagne
 from rendering import make_env           # shared Jinja helpers — no duplication
 from writers.held_writer import patch, etag_for, mtime_map
+from git_ops import commit_helden
 
 
 def _render_dashboard(slug: str) -> str:
@@ -109,6 +110,21 @@ def create_app(slug: str) -> Flask:
             status = 409 if result.error == 'conflict' else 400
             return jsonify({'ok': False, 'error': result.error}), status
         return jsonify({'ok': True, 'old': result.old_value, 'new': result.new_value, 'mtime': result.mtime_after})
+
+    # ------------------------------------------------------------------ #
+    # API: git commit
+    # ------------------------------------------------------------------ #
+
+    @app.route('/api/commit', methods=['POST'])
+    def api_commit():
+        result = commit_helden(VAULT_ROOT, slug)
+        if not result.get('ok'):
+            return jsonify({'ok': False, 'error': result.get('error', 'unknown error')}), 500
+        return jsonify({
+            'ok': True,
+            'committed': result['committed'],
+            'message': result['message'],
+        })
 
     return app
 
