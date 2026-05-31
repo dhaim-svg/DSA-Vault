@@ -98,6 +98,13 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                     section_path=locator.get('section_path', []),
                     cells=locator.get('cells', []),
                 )
+            elif kind == 'table_row':
+                new_text, old_value = _set_table_row(
+                    text,
+                    section_path=locator.get('section_path', []),
+                    row_key=locator['row_key'],
+                    cells=locator.get('cells', {}),
+                )
             else:
                 return PatchResult(ok=False, old_value='', new_value='',
                                    mtime_before=mtime_before, mtime_after=mtime_before,
@@ -175,6 +182,53 @@ def _patch_frontmatter(text: str, key: str, value: str) -> tuple[str | None, str
 # Table cell patcher
 # ---------------------------------------------------------------------------
 
+def _locate_row(
+    all_lines: list[str],
+    section_path: list[str],
+    row_key: dict,
+) -> tuple[int | None, list[str], dict[str, int]]:
+    """Locate a row in a markdown table.
+
+    Returns (abs_line_idx, header_names, col_name_to_idx) where abs_line_idx is
+    the absolute index in all_lines of the target data row.
+    Returns (None, [], {}) if section/table/row not found.
+    """
+    start, end = _find_section_lines(all_lines, section_path)
+    if start is None:
+        return None, [], {}
+
+    section_lines = all_lines[start:end]
+    tbl_start, tbl_end = _find_first_table(section_lines)
+    if tbl_start is None:
+        return None, [], {}
+
+    table_lines = section_lines[tbl_start:tbl_end]
+    if not table_lines:
+        return None, [], {}
+
+    headers = _split_table_row(table_lines[0].rstrip('\r\n'))
+    header_names = [h.strip() for h in headers]
+    col_name_to_idx = {name: i for i, name in enumerate(header_names)}
+
+    # Resolve key column index
+    key_col_name = row_key['column']
+    if key_col_name not in col_name_to_idx:
+        return None, [], {}
+    key_col_idx = col_name_to_idx[key_col_name]
+
+    # Find data row (skip header + separator = indices 0 and 1)
+    for i, line in enumerate(table_lines[2:], start=2):
+        row_cells = _split_table_row(line.rstrip('\r\n'))
+        if key_col_idx >= len(row_cells):
+            continue
+        cell_display = strip_wikilink(row_cells[key_col_idx])
+        if cell_display == row_key['match']:
+            abs_line_idx = start + tbl_start + i
+            return abs_line_idx, header_names, col_name_to_idx
+
+    return None, [], {}
+
+
 def _patch_table_cell(
     text: str,
     section_path: list[str],
@@ -191,56 +245,58 @@ def _patch_table_cell(
     row_key = {'column': 'Basiswert', 'match': 'Lebensenergie (LE)'}
     The row whose row_key.column cell (after strip_wikilink) == row_key.match is targeted.
     """
-    # Split text into lines, preserving line endings
     all_lines = text.splitlines(keepends=True)
-
-    # Locate the contiguous line range for the section
-    start, end = _find_section_lines(all_lines, section_path)
-    if start is None:
+    abs_line_idx, _header_names, col_name_to_idx = _locate_row(all_lines, section_path, row_key)
+    if abs_line_idx is None:
         return None, ''
 
-    section_lines = all_lines[start:end]
-
-    # Find the first table within the section
-    tbl_start, tbl_end = _find_first_table(section_lines)
-    if tbl_start is None:
+    if column not in col_name_to_idx:
         return None, ''
+    val_col_idx = col_name_to_idx[column]
 
-    table_lines = section_lines[tbl_start:tbl_end]
-
-    # Parse header row to get column indices
-    if not table_lines:
-        return None, ''
-    headers = _split_table_row(table_lines[0].rstrip('\r\n'))
-
-    try:
-        key_col_idx = next(i for i, h in enumerate(headers) if h.strip() == row_key['column'])
-        val_col_idx = next(i for i, h in enumerate(headers) if h.strip() == column)
-    except StopIteration:
-        return None, ''
-
-    # Find data row (skip header + separator = indices 0 and 1)
-    target_line_in_table = None
-    old_value = ''
-    for i, line in enumerate(table_lines[2:], start=2):
-        cells = _split_table_row(line.rstrip('\r\n'))
-        if key_col_idx >= len(cells):
-            continue
-        cell_display = strip_wikilink(cells[key_col_idx])
-        if cell_display == row_key['match']:
-            target_line_in_table = i
-            old_value = cells[val_col_idx] if val_col_idx < len(cells) else ''
-            break
-
-    if target_line_in_table is None:
-        return None, ''
-
-    # Rebuild the target line with only the one cell changed
-    abs_line_idx = start + tbl_start + target_line_in_table
     original_line = all_lines[abs_line_idx]
+    row_cells = _split_table_row(original_line.rstrip('\r\n'))
+    old_value = row_cells[val_col_idx].strip() if val_col_idx < len(row_cells) else ''
+
     new_line = _replace_cell_in_line(original_line, val_col_idx, value)
     new_lines = all_lines[:abs_line_idx] + [new_line] + all_lines[abs_line_idx + 1:]
-    return ''.join(new_lines), old_value.strip()
+    return ''.join(new_lines), old_value
+
+
+def _set_table_row(
+    text: str,
+    section_path: list[str],
+    row_key: dict,
+    cells: dict,  # {column_name: new_value}
+) -> tuple[str | None, str]:
+    """Set multiple cells in a single table row with one operation.
+
+    Returns (new_text, old_row_text) on success where old_row_text is the
+    raw content of the original row (trimmed of line ending).
+    Returns (None, '') if section/table/row not found or any column in cells
+    is not in the table headers.
+    """
+    all_lines = text.splitlines(keepends=True)
+    abs_line_idx, _header_names, col_name_to_idx = _locate_row(all_lines, section_path, row_key)
+    if abs_line_idx is None:
+        return None, ''
+
+    # Verify all requested columns exist before making any change
+    for col_name in cells:
+        if col_name not in col_name_to_idx:
+            return None, ''
+
+    original_line = all_lines[abs_line_idx]
+    old_row_text = original_line.rstrip('\r\n')
+
+    # Apply all cell replacements in sequence on the same line
+    new_line = original_line
+    for col_name, new_value in cells.items():
+        col_idx = col_name_to_idx[col_name]
+        new_line = _replace_cell_in_line(new_line, col_idx, str(new_value))
+
+    new_lines = all_lines[:abs_line_idx] + [new_line] + all_lines[abs_line_idx + 1:]
+    return ''.join(new_lines), old_row_text
 
 
 def _find_section_lines(lines: list[str], section_path: list[str]) -> tuple[int | None, int | None]:

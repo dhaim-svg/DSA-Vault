@@ -13,6 +13,7 @@ from writers.held_writer import (
     _patch_table_cell,
     _find_section_lines,
     _find_first_table,
+    _set_table_row,
 )
 
 # ---------------------------------------------------------------------------
@@ -252,3 +253,134 @@ def test_table_append_row_via_patch_api(tmp_path):
     updated = log_file.read_text(encoding='utf-8')
     assert '2026-05-31' in updated
     assert 'Klettern TaW 4→5' in updated
+
+
+# ---------------------------------------------------------------------------
+# table_row tests
+# ---------------------------------------------------------------------------
+
+def test_set_table_row_fills_slot():
+    """Fill slot 1: all 4 columns updated in one call, slot 2 unchanged."""
+    new_text, old_row = _set_table_row(
+        MULTI_TABLE_TEXT,
+        section_path=['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        row_key={'column': 'Slot', 'match': '1'},
+        cells={
+            'AsP': '15',
+            'Gespeicherter Zauber': 'Ignifaxius',
+            'Erschwernis-Mods': '—',
+            'Letzte Erneuerung': '2026-05-31',
+        },
+    )
+    assert new_text is not None
+    # old_row is the original slot-1 line (stripped of line ending)
+    assert '5' in old_row
+    assert 'Armatrutz' in old_row
+
+    # Re-parse and check all 4 columns updated
+    h2 = split_sections(new_text, 2)
+    h3 = split_sections(h2['Stabzauber (9 Rituale)'], 3)
+    rows = parse_md_table(h3['Zauberspeicher-Inhalt'])
+    slot1 = next(r for r in rows if r['Slot'] == '1')
+    assert slot1['AsP'] == '15'
+    assert slot1['Gespeicherter Zauber'] == 'Ignifaxius'
+    assert slot1['Erschwernis-Mods'] == '—'
+    assert slot1['Letzte Erneuerung'] == '2026-05-31'
+
+    # Slot 2 must be untouched
+    slot2 = next(r for r in rows if r['Slot'] == '2')
+    assert slot2['AsP'] == '0'
+    assert slot2['Gespeicherter Zauber'] == '—'
+
+
+def test_set_table_row_clears_slot():
+    """Clear slot 1 back to sentinel values; slot 2 unchanged."""
+    new_text, _ = _set_table_row(
+        MULTI_TABLE_TEXT,
+        section_path=['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        row_key={'column': 'Slot', 'match': '1'},
+        cells={
+            'AsP': '—',
+            'Gespeicherter Zauber': '— frei —',
+            'Erschwernis-Mods': '—',
+            'Letzte Erneuerung': '—',
+        },
+    )
+    assert new_text is not None
+    h2 = split_sections(new_text, 2)
+    h3 = split_sections(h2['Stabzauber (9 Rituale)'], 3)
+    rows = parse_md_table(h3['Zauberspeicher-Inhalt'])
+    slot1 = next(r for r in rows if r['Slot'] == '1')
+    assert slot1['AsP'] == '—'
+    assert slot1['Gespeicherter Zauber'] == '— frei —'
+    assert slot1['Erschwernis-Mods'] == '—'
+    assert slot1['Letzte Erneuerung'] == '—'
+
+    # Slot 2 must remain unchanged
+    slot2 = next(r for r in rows if r['Slot'] == '2')
+    assert slot2['AsP'] == '0'
+
+
+def test_set_table_row_not_found_row():
+    """row_key match doesn't exist → returns (None, '')."""
+    result, old = _set_table_row(
+        MULTI_TABLE_TEXT,
+        section_path=['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        row_key={'column': 'Slot', 'match': '99'},
+        cells={'AsP': '5'},
+    )
+    assert result is None
+    assert old == ''
+
+
+def test_set_table_row_unknown_column():
+    """cells contains a column not in table headers → returns (None, '')."""
+    result, old = _set_table_row(
+        MULTI_TABLE_TEXT,
+        section_path=['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        row_key={'column': 'Slot', 'match': '1'},
+        cells={'AsP': '5', 'NonexistentColumn': 'x'},
+    )
+    assert result is None
+    assert old == ''
+
+
+def test_set_table_row_crlf_preserved():
+    """CRLF text in → CRLF text out."""
+    crlf_text = MULTI_TABLE_TEXT.replace('\n', '\r\n')
+    new_text, _ = _set_table_row(
+        crlf_text,
+        section_path=['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        row_key={'column': 'Slot', 'match': '1'},
+        cells={'AsP': '15', 'Gespeicherter Zauber': 'Ignifaxius'},
+    )
+    assert new_text is not None
+    assert '\r\n' in new_text, "CRLF line endings must be preserved"
+
+
+def test_set_table_row_via_patch_api(tmp_path):
+    """End-to-end: patch() dispatches table_row correctly."""
+    from writers.held_writer import patch
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    ritual_file = hero_dir / 'rituale.md'
+    ritual_file.write_text(MULTI_TABLE_TEXT, encoding='utf-8')
+
+    result = patch(tmp_path, slug, {
+        'kind': 'table_row',
+        'file': 'rituale.md',
+        'section_path': ['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'],
+        'row_key': {'column': 'Slot', 'match': '1'},
+        'cells': {
+            'AsP': '15',
+            'Gespeicherter Zauber': 'Ignifaxius',
+            'Erschwernis-Mods': '—',
+            'Letzte Erneuerung': '2026-05-31',
+        },
+    })
+    assert result.ok
+    updated = ritual_file.read_text(encoding='utf-8')
+    assert 'Ignifaxius' in updated
+    assert '15' in updated
+    assert '2026-05-31' in updated
