@@ -5,11 +5,11 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold | ✅ done | BACKLOG.md, sprints/sprint-004/plan.md |
-| T1 | AP_STUFEN bugfix | ⬜ todo | parsers/held.py, tests/ |
-| T2 | D-004 data model (money + weight) | ⬜ todo | parsers/held.py, helden/illaen-baernhold/_illaen.md |
-| T3 | D-004 UI (dedicated Inventar tab) | ⬜ todo | templates/dashboard.html.j2 |
-| T4 | D-004 write-back | ⬜ todo | static/inventar.js, templates/dashboard.html.j2 |
-| T5 | Verification + wrap-up | ⬜ todo | BACKLOG.md, sprints/sprint-004/handoff.md |
+| T1 | AP_STUFEN bugfix | ✅ done | parsers/held.py, tests/ |
+| T2 | D-004 data model (money + weight) | ✅ done | parsers/held.py, helden/illaen-baernhold/_illaen.md |
+| T3 | D-004 UI (dedicated Inventar tab) | ✅ done | templates/dashboard.html.j2 |
+| T4 | D-004 write-back | ✅ done | static/inventar.js, templates/dashboard.html.j2 |
+| T5 | Verification + wrap-up | ✅ done | BACKLOG.md, sprints/sprint-004/handoff.md |
 
 ## Key Design Decisions
 
