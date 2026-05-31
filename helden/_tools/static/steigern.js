@@ -209,6 +209,43 @@
     return row;
   }
 
+  /* ── Stufenaufstieg: 3 sequential PATCHes ─────────────────────────────── */
+  /* Known limitation: no rollback on partial failure. Recovery: git revert. */
+  function doStufenaufstieg(onSuccess, onError) {
+    var slug = window.DSA.slug;
+    var ap = window.DSA.steigern.ap;
+    var oldStufe = ap.stufe;
+    var newStufe = oldStufe + 1;
+
+    /* PATCH 1: frontmatter stufe +1 */
+    patchLocator({
+      kind: 'frontmatter', file: '_illaen.md', slug: slug,
+      key: 'stufe', value: String(newStufe)
+    })
+    .then(function () {
+      /* PATCH 2: sync ## Abenteuerpunkte display table */
+      return patchLocator({
+        kind: 'table_cell', file: '_illaen.md', slug: slug,
+        section_path: ['Abenteuerpunkte'],
+        row_key: { column: 'Stufe', match: String(oldStufe) },
+        column: 'Stufe', value: String(newStufe)
+      });
+    })
+    .then(function () {
+      /* PATCH 3: log to steigerungs-log.md */
+      var today = new Date().toISOString().slice(0, 10);
+      return patchLocator({
+        kind: 'table_append_row', file: 'steigerungs-log.md', slug: slug,
+        section_path: ['Protokoll'],
+        cells: [today, ap.verfuegbar + ' verf.',
+                'Stufe ' + oldStufe + '→' + newStufe + ' (GM)', '—',
+                'Stufenaufstieg im Dashboard']
+      });
+    })
+    .then(function () { onSuccess(); })
+    .catch(function (err) { onError(err.message || 'Fehler'); });
+  }
+
   /* ── Tab renderer ─────────────────────────────────────────────────────── */
   var EIG_ORDER = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK'];
   var EIG_FULL = {
@@ -231,6 +268,65 @@
         ? '<div class="sg-stufe">Nächste Stufe (Stufe ' + (ap.stufe + 1) + '): noch ' + ap.bis_naechste + ' AP<\/div>'
         : '';
       overview.innerHTML = '<div class="sg-ap-row">' + availStr + einsStr + gesStr + '<\/div>' + stufeStr;
+
+      /* Stufen-Aufstieg button */
+      var stufeBox = document.createElement('div');
+      stufeBox.style.marginTop = '12px';
+
+      var stufeBtn = document.createElement('button');
+      stufeBtn.type = 'button';
+      stufeBtn.className = 'sg-btn';
+      stufeBtn.textContent = '⬆ Stufe aufsteigen (GM)';
+
+      var stufeConfirm = document.createElement('div');
+      stufeConfirm.className = 'sg-confirm hidden';
+      stufeConfirm.textContent = 'Stufe ' + ap.stufe + ' → ' + (ap.stufe + 1) + ' bestätigen?';
+
+      var stufeJa = document.createElement('button');
+      stufeJa.type = 'button';
+      stufeJa.className = 'sg-btn sg-btn--ok';
+      stufeJa.textContent = 'Ja';
+
+      var stufeNein = document.createElement('button');
+      stufeNein.type = 'button';
+      stufeNein.className = 'sg-btn';
+      stufeNein.textContent = 'Nein';
+
+      var stufeErr = document.createElement('span');
+      stufeErr.className = 'sg-error';
+      stufeErr.style.display = 'none';
+
+      stufeConfirm.appendChild(stufeJa);
+      stufeConfirm.appendChild(stufeNein);
+
+      stufeBtn.addEventListener('click', function () {
+        stufeBtn.classList.add('hidden');
+        stufeConfirm.classList.remove('hidden');
+      });
+      stufeNein.addEventListener('click', function () {
+        stufeConfirm.classList.add('hidden');
+        stufeBtn.classList.remove('hidden');
+        stufeErr.style.display = 'none';
+      });
+      stufeJa.addEventListener('click', function () {
+        stufeJa.disabled = true;
+        stufeJa.textContent = '…';
+        doStufenaufstieg(function () {
+          window.location.reload();
+        }, function (err) {
+          stufeJa.disabled = false;
+          stufeJa.textContent = 'Ja';
+          stufeConfirm.classList.add('hidden');
+          stufeBtn.classList.remove('hidden');
+          stufeErr.textContent = '⚠ ' + err;
+          stufeErr.style.display = '';
+        });
+      });
+
+      stufeBox.appendChild(stufeBtn);
+      stufeBox.appendChild(stufeConfirm);
+      stufeBox.appendChild(stufeErr);
+      overview.appendChild(stufeBox);
     }
 
     /* Steigerungsliste */
