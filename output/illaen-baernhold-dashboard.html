@@ -974,6 +974,7 @@ body { padding-top: 46px; }
   .tab-bar { display: none !important; }
   .tab-content { display: block !important; }
   body { padding-top: 0 !important; }
+  .inv-stepper, .inv-add-form { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
@@ -1000,6 +1001,21 @@ body { padding-top: 46px; }
 .sg-ap-val { font-family: var(--mono); font-size: 18px; font-weight: bold; color: var(--ink); margin-left: 4px; }
 .sg-ap-val.avail { color: var(--accent-gold); }
 .sg-stufe { font-size: 12px; color: var(--ink-mute); }
+/* Inventar Tab */
+.inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
+.inv-coin-label { font-family: var(--subhead); color: var(--ink-mute); font-size: 13px; }
+.inv-coin-val { font-family: var(--mono); color: var(--accent-gold); font-size: 18px; font-weight: bold; text-align: right; min-width: 52px; }
+.inv-stepper { display: flex; gap: 4px; align-items: center; }
+.inv-stepper-btn { width: 26px; height: 26px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; font-family: var(--mono); }
+.inv-stepper-btn:hover { background: var(--bg-elev); }
+.inv-coin-total { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); border-top: 1px solid var(--rule-soft); padding-top: 8px; margin-top: 2px; text-align: right; }
+.inv-weight-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); margin-top: 8px; letter-spacing: .05em; }
+.inv-add-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.inv-add-input { flex: 1; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
+.inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
+.inv-add-btn:hover { background: var(--bg-elev); }
+.inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
+#inventar-list li { grid-template-columns: auto 1fr auto auto; }
 </style>
 </head>
 <body>
@@ -1009,6 +1025,7 @@ body { padding-top: 46px; }
   <button class="tab-btn" data-tab="talente"  type="button">🎯 Talente</button>
   <button class="tab-btn" data-tab="zauber"   type="button">✨ Zauber</button>
   <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
+  <button class="tab-btn" data-tab="inventar" type="button">🎒 Inventar</button>
   <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
 </nav>
 
@@ -2210,6 +2227,162 @@ body { padding-top: 46px; }
   <section class="card" id="steigern-list" style="margin-top:var(--gap)"></section>
 </div><!-- end tab-steigern -->
 
+<div class="tab-content" id="tab-inventar">
+
+<!-- Finanzen -->
+<div class="sec-head"><h2>Finanzen</h2><span class="rule"></span></div>
+<div class="grid cols-2">
+  <section class="card">
+    <h3 class="card-title">Münzbeutel</h3>
+    <div class="inv-coin-grid">
+      <span class="inv-coin-label">Dukaten</span>
+      <span class="inv-coin-val" id="geld-dukaten">10</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="-1" type="button">−</button>
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="1"  type="button">+</button>
+      </div>
+      <span class="inv-coin-label">Silbertaler</span>
+      <span class="inv-coin-val" id="geld-silbertaler">64</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="-1" type="button">−</button>
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="1"  type="button">+</button>
+      </div>
+      <span class="inv-coin-label">Heller</span>
+      <span class="inv-coin-val" id="geld-heller">0</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="-1" type="button">−</button>
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="1"  type="button">+</button>
+      </div>
+      <span class="inv-coin-label">Kreuzer</span>
+      <span class="inv-coin-val" id="geld-kreuzer">0</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="-1" type="button">−</button>
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="1"  type="button">+</button>
+      </div>
+    </div>
+    <div class="inv-coin-total">Gesamt: 16400 Kr (10 D · 64 S · 0 H · 0 Kr)</div>
+  </section>
+
+  <section class="card">
+    <h3 class="card-title">Schulden &amp; Verbindlichkeiten</h3>
+    <div class="equip-stat">
+      <span class="k">Schulden</span>
+      <span class="v">1.500 Dukaten</span>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:12px;line-height:1.6">
+      1 Dukaten = 10 Silbertaler = 100 Heller = 1000 Kreuzer
+    </p>
+  </section>
+</div>
+
+<!-- Inventar -->
+<div class="sec-head"><h2>Inventar</h2><span class="rule"></span></div>
+<section class="card">
+  <h3 class="card-title">Gegenstände <span class="meta">Inventar-Abschnitt</span></h3>
+  <ul class="inv-list" id="inventar-list">
+    <li data-item-name="Magierstab (als Stab)">
+      <span>Magierstab (als Stab)</span>
+      <span class="qty">1</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-item="Magierstab (als Stab)" data-delta="-1" type="button">−</button>
+        <button class="inv-stepper-btn" data-item="Magierstab (als Stab)" data-delta="1"  type="button">+</button>
+      </div>
+    </li>
+  </ul>
+  <div class="inv-weight-note">Teilgewicht (nur Inventar-Abschnitt): 90 Unzen — Reiseausrüstung ohne Gewichtsangabe</div>
+  <div class="inv-add-form">
+    <input class="inv-add-input" id="inv-add-name"  type="text" placeholder="Gegenstand" />
+    <input class="inv-add-input" id="inv-add-anzahl" type="text" placeholder="Anzahl" style="max-width:80px" />
+    <button class="inv-add-btn" id="inv-add-submit" type="button">+ Hinzufügen</button>
+  </div>
+</section>
+
+<!-- Reiseausrüstung -->
+<div class="sec-head"><h2>Reiseausrüstung</h2><span class="rule"></span></div>
+<section class="card">
+  <h3 class="card-title">Ausrüstung unterwegs</h3>
+  <p class="inv-reise-note">Mengenangaben werden in dieser Version nicht bearbeitet (z.B. "5 Tage", "10 Schritt").</p>
+  <ul class="inv-list">
+    <li>
+      <span>Rucksack</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Leder, mittlere Größe</span>
+    </li>
+    <li>
+      <span>Feuerstahl + Zunder</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">im Lederbeutel</span>
+    </li>
+    <li>
+      <span>Wasserschlauch</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Leder, ca. 1 Maß</span>
+    </li>
+    <li>
+      <span>Reiseproviant</span>
+      <span class="qty">5 Tage</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Hartkäse, Zwieback, Dörrfleisch *(kein H</span>
+    </li>
+    <li>
+      <span>Schlafsack / Reisedecke</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">gerollt am Rucksack</span>
+    </li>
+    <li>
+      <span>Kochtopf (klein)</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Eisen</span>
+    </li>
+    <li>
+      <span>Becher + Löffel</span>
+      <span class="qty">1 je</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Holz</span>
+    </li>
+    <li>
+      <span>Laterne + Kerzen</span>
+      <span class="qty">1 + 6</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">für Studium und Nachtlager</span>
+    </li>
+    <li>
+      <span>Wetzstein</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">für den Dolch</span>
+    </li>
+    <li>
+      <span>Seil</span>
+      <span class="qty">10 Schritt</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Hanf *(Stabzauber-Seil als Backup, koste</span>
+    </li>
+    <li>
+      <span>Ersatzpergament</span>
+      <span class="qty">10 Blatt</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">zusätzlich zum Schreibzeug</span>
+    </li>
+    <li>
+      <span>Erste-Hilfe-Set</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Verbandtücher (3), Schienenholz, Faden +</span>
+    </li>
+    <li>
+      <span>Heilkräuter (Grundset)</span>
+      <span class="qty">1 Bündel</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">passt zu Heilkunde: Wunden 4 / Heilkunde</span>
+    </li>
+    <li>
+      <span>Siegelring</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Stoerrebrandt-Siegel (Leibwächter-Auswei</span>
+    </li>
+    <li>
+      <span>Münzgürtel</span>
+      <span class="qty">1</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">versteckter Gurt für Notreserve</span>
+    </li>
+  </ul>
+</section>
+
+</div><!-- end tab-inventar -->
+
 <div class="tab-content" id="tab-profil">
 
 <!-- Vor- & Nachteile -->
@@ -2298,54 +2471,6 @@ body { padding-top: 46px; }
   </div>
 </section>
 
-<!-- ============================================================
-     SEITE 4 — AUSRÜSTUNG + KAMPAGNE + VORGESCHICHTE
-     ============================================================ -->
-<div class="sec-head"><h2>Ausrüstung &amp; Inventar</h2><span class="rule"></span></div>
-<div class="grid cols-2">
-  <section class="card">
-    <h3 class="card-title">Waffen &amp; Kampf</h3>
-    <div class="weapon-card">
-      <div class="w-name">Magierstab (als Stab)</div>
-      <div class="weapon-grid">
-        <div><span class="k">DK</span><span class="v">N S</span></div>
-        <div><span class="k">TP</span><span class="v">1W+1</span></div>
-        <div><span class="k">AT</span><span class="v">13</span></div>
-        <div><span class="k">PA</span><span class="v">9</span></div>
-        <div><span class="k">INI</span><span class="v">0</span></div>
-        <div><span class="k">BF</span><span class="v">−9</span></div>
-      </div>
-    </div>
-    <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-gold);margin:14px 0 8px;text-transform:uppercase">Finanzen</h4>
-    <div class="equip-stat"><span class="k">Schulden</span><span class="v">1.500 Dukaten</span></div>
-<div class="equip-stat"><span class="k">Bargeld</span><span class="v">Startgeld (im Geldbeutel): 10 Dukaten (Teil der Stoerrebrandt-Leibwächter-Ausrüstung, WdH S. 192)</span></div>  </section>
-
-  <section class="card">
-    <h3 class="card-title">Inventar</h3>
-    <ul class="inv-list">
-      <li>Magierstab (als Stab)<span class="qty">1</span></li>
-    </ul>
-    <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-cold);margin:14px 0 8px;text-transform:uppercase">Reiseausrüstung</h4>
-    <ul class="inv-list">
-      <li>Rucksack<span class="qty">1</span></li>
-      <li>Feuerstahl + Zunder<span class="qty">1</span></li>
-      <li>Wasserschlauch<span class="qty">1</span></li>
-      <li>Reiseproviant<span class="qty">5 Tage</span></li>
-      <li>Schlafsack / Reisedecke<span class="qty">1</span></li>
-      <li>Kochtopf (klein)<span class="qty">1</span></li>
-      <li>Becher + Löffel<span class="qty">1 je</span></li>
-      <li>Laterne + Kerzen<span class="qty">1 + 6</span></li>
-      <li>Wetzstein<span class="qty">1</span></li>
-      <li>Seil<span class="qty">10 Schritt</span></li>
-      <li>Ersatzpergament<span class="qty">10 Blatt</span></li>
-      <li>Erste-Hilfe-Set<span class="qty">1</span></li>
-      <li>Heilkräuter (Grundset)<span class="qty">1 Bündel</span></li>
-      <li>Siegelring<span class="qty">1</span></li>
-      <li>Münzgürtel<span class="qty">1</span></li>
-    </ul>
-  </section>
-</div>
-
 <!-- Kampagne + Steigerungs-Log -->
 <div class="sec-head"><h2>Kampagne · Steigerung</h2><span class="rule"></span></div>
 <div class="grid cols-2">
@@ -2371,11 +2496,6 @@ body { padding-top: 46px; }
         <span class="when">2026-05-15</span>
         <span class="what">(Übernahme aus Heldendokument)</span>
 <small style="font-family:var(--mono);color:var(--ink-dim);font-size:10px;letter-spacing:.05em">Initialstand: 3850 AP gesamt, 3845 eingesetzt</small>      </li>
-      <li>
-        <span class="when">— in Aussicht</span>
-        <span class="what">Stufe 4 bei 1 500 AP gesamt</span>
-        <small style="font-family:var(--mono);color:var(--ink-dim);font-size:10px;letter-spacing:.05em">noch -2350 AP bis Aufstieg</small>
-      </li>
     </ul>
   </section>
 </div>
@@ -2466,10 +2586,15 @@ window.DSA = {
       eingesetzt:   3845,
       gesamt:       3850,
       stufe:        3,
-      bis_naechste: -2350
+      bis_naechste: null
     }
   },
-  slug: "illaen-baernhold"
+  slug: "illaen-baernhold",
+  inventar: {
+    geld: {"dukaten": 10, "gesamt_kreuzer": 16400, "heller": 0, "kreuzer": 0, "silbertaler": 64},
+    items: [{"anzahl": "1", "gewicht": 90, "name": "Magierstab (als Stab)"}],
+    inventar_gewicht_unzen: 90
+  }
 };
 </script>
 <script src="/static/app.js"></script>
@@ -2477,5 +2602,6 @@ window.DSA = {
 <script src="/static/dice.js"></script>
 <script src="/static/tabs.js"></script>
 <script src="/static/steigern.js"></script>
+<script src="/static/inventar.js"></script>
 </body>
 </html>
