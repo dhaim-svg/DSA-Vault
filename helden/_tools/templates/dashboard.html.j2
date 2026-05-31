@@ -1201,48 +1201,6 @@ body { padding-top: 46px; }
 </div><!-- end tab-kampf -->
 <div class="tab-content" id="tab-talente">
 
-<!-- Vor- & Nachteile -->
-<div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
-<section class="card">
-  <div class="vn-grid">
-    <div class="vn-grp pos">
-      <h4>Vorteile</h4>
-      <ul class="vn-list">
-        {% for v in held.vor_nachteile.vorteile %}
-        <li>
-          <span><b>{{ v.name }}</b>{% if v.anmerkung %}<small>{{ v.anmerkung }}</small>{% endif %}</span>
-          <span class="stufe">{{ v.stufe }}</span>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="vn-grp neg">
-      <h4>Nachteile</h4>
-      <ul class="vn-list">
-        {% for n in held.vor_nachteile.nachteile %}
-        <li>
-          <span><b>{{ n.name }}</b>{% if n.anmerkung %}<small>{{ n.anmerkung }}</small>{% endif %}</span>
-          <span class="stufe">{{ n.stufe }}</span>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% if held.vor_nachteile.schlecht %}
-    <div class="vn-grp bad" style="grid-column:1/-1">
-      <h4>Schlechte Eigenschaften</h4>
-      <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
-        {% for s in held.vor_nachteile.schlecht %}
-        <li>
-          <span><b>{{ s.name }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz[:60] }}{% if s.konsequenz|length > 60 %}…{% endif %}</small>{% endif %}</span>
-          <span class="stufe">{{ s.stufe }}</span>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-  </div>
-</section>
-
 <!-- ============================================================
      SEITE 2 — TALENTE
      ============================================================ -->
@@ -1438,6 +1396,49 @@ body { padding-top: 46px; }
 </div><!-- end tab-steigern -->
 
 <div class="tab-content" id="tab-profil">
+
+<!-- Vor- & Nachteile -->
+<div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
+<section class="card">
+  <div class="vn-grid">
+    <div class="vn-grp pos">
+      <h4>Vorteile</h4>
+      <ul class="vn-list">
+        {% for v in held.vor_nachteile.vorteile %}
+        <li>
+          <span><b>{{ v.name }}</b>{% if v.anmerkung %}<small>{{ v.anmerkung }}</small>{% endif %}</span>
+          <span class="stufe">{{ v.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="vn-grp neg">
+      <h4>Nachteile</h4>
+      <ul class="vn-list">
+        {% for n in held.vor_nachteile.nachteile %}
+        <li>
+          <span><b>{{ n.name }}</b>{% if n.anmerkung %}<small>{{ n.anmerkung }}</small>{% endif %}</span>
+          <span class="stufe">{{ n.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if held.vor_nachteile.schlecht %}
+    <div class="vn-grp bad" style="grid-column:1/-1">
+      <h4>Schlechte Eigenschaften</h4>
+      <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
+        {% for s in held.vor_nachteile.schlecht %}
+        <li>
+          <span><b>{{ s.name }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz[:60] }}{% if s.konsequenz|length > 60 %}…{% endif %}</small>{% endif %}</span>
+          <span class="stufe">{{ s.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
 <!-- ============================================================
      SEITE 4 — AUSRÜSTUNG + KAMPAGNE + VORGESCHICHTE
      ============================================================ -->
