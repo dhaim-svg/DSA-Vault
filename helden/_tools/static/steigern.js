@@ -269,7 +269,8 @@
         : '';
       overview.innerHTML = '<div class="sg-ap-row">' + availStr + einsStr + gesStr + '<\/div>' + stufeStr;
 
-      /* Stufen-Aufstieg button */
+      /* Stufen-Aufstieg button (DSA 4.1 max Stufe = 10) */
+      if (ap.stufe >= 10) return;
       var stufeBox = document.createElement('div');
       stufeBox.style.marginTop = '12px';
 
