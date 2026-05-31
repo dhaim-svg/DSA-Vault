@@ -242,7 +242,7 @@
                 'Stufenaufstieg im Dashboard']
       });
     })
-    .then(function () { onSuccess(); })
+    .then(function () { ap.stufe = newStufe; onSuccess(); })
     .catch(function (err) { onError(err.message || 'Fehler'); });
   }
 
@@ -280,7 +280,6 @@
 
       var stufeConfirm = document.createElement('div');
       stufeConfirm.className = 'sg-confirm hidden';
-      stufeConfirm.textContent = 'Stufe ' + ap.stufe + ' → ' + (ap.stufe + 1) + ' bestätigen?';
 
       var stufeJa = document.createElement('button');
       stufeJa.type = 'button';
@@ -296,6 +295,9 @@
       stufeErr.className = 'sg-error';
       stufeErr.style.display = 'none';
 
+      stufeConfirm.appendChild(
+        document.createTextNode('Stufe ' + ap.stufe + ' → ' + (ap.stufe + 1) + ' bestätigen? ')
+      );
       stufeConfirm.appendChild(stufeJa);
       stufeConfirm.appendChild(stufeNein);
 
