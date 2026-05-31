@@ -62,7 +62,19 @@ def load_kampagne(vault_root: Path, slug: str) -> dict:
             if line and not line.startswith('#') and not line.startswith('→'):
                 inhalt = strip_wikilink(line)
                 break
-        file_sessions.append({'nr': str(nr), 'datum': str(datum), 'inhalt': inhalt})
+        # Parse H2 sections for editor access
+        sektionen = {
+            k: v.strip()
+            for k, v in split_sections(sf_rest, 2).items()
+            if k != '__pre__'
+        }
+        file_sessions.append({
+            'nr': str(nr),
+            'datum': str(datum),
+            'inhalt': inhalt,
+            'datei': sf.name,
+            'sektionen': sektionen,
+        })
 
     if file_sessions:
         sessions = file_sessions
