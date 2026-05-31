@@ -5,5 +5,8 @@ raw/pdf-extracted/**
 !raw/pdf-extracted/EXTRACTION-PLAN.md
 __pycache__/
 
+# Superpowers brainstorm sessions
+.superpowers/
+
 # Debug
 Screenshots/**
