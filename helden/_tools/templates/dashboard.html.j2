@@ -1423,29 +1423,29 @@ body { padding-top: 46px; }
       <span class="inv-coin-label">Dukaten</span>
       <span class="inv-coin-val" id="geld-dukaten">{{ held.ausruestung.geld.dukaten }}</span>
       <div class="inv-stepper">
-        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="-1" type="button">−</button>
-        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="1"  type="button">+</button>
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="-1" type="button" aria-label="Dukaten verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="1"  type="button" aria-label="Dukaten erhöhen">+</button>
       </div>
       <span class="inv-coin-label">Silbertaler</span>
       <span class="inv-coin-val" id="geld-silbertaler">{{ held.ausruestung.geld.silbertaler }}</span>
       <div class="inv-stepper">
-        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="-1" type="button">−</button>
-        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="1"  type="button">+</button>
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="-1" type="button" aria-label="Silbertaler verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="1"  type="button" aria-label="Silbertaler erhöhen">+</button>
       </div>
       <span class="inv-coin-label">Heller</span>
       <span class="inv-coin-val" id="geld-heller">{{ held.ausruestung.geld.heller }}</span>
       <div class="inv-stepper">
-        <button class="inv-stepper-btn" data-coin="heller" data-delta="-1" type="button">−</button>
-        <button class="inv-stepper-btn" data-coin="heller" data-delta="1"  type="button">+</button>
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="-1" type="button" aria-label="Heller verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="1"  type="button" aria-label="Heller erhöhen">+</button>
       </div>
       <span class="inv-coin-label">Kreuzer</span>
       <span class="inv-coin-val" id="geld-kreuzer">{{ held.ausruestung.geld.kreuzer }}</span>
       <div class="inv-stepper">
-        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="-1" type="button">−</button>
-        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="1"  type="button">+</button>
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="-1" type="button" aria-label="Kreuzer verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="1"  type="button" aria-label="Kreuzer erhöhen">+</button>
       </div>
     </div>
-    <div class="inv-coin-total">Gesamt: {{ held.ausruestung.geld.gesamt_kreuzer }} Kr ({{ held.ausruestung.geld.dukaten }} D · {{ held.ausruestung.geld.silbertaler }} S · {{ held.ausruestung.geld.heller }} H · {{ held.ausruestung.geld.kreuzer }} Kr)</div>
+    <div class="inv-coin-total" id="geld-total">Gesamt: {{ held.ausruestung.geld.gesamt_kreuzer }} Kr ({{ held.ausruestung.geld.dukaten }} D · {{ held.ausruestung.geld.silbertaler }} S · {{ held.ausruestung.geld.heller }} H · {{ held.ausruestung.geld.kreuzer }} Kr)</div>
   </section>
 
   <section class="card">
@@ -1467,12 +1467,12 @@ body { padding-top: 46px; }
   {% if held.ausruestung.inventar %}
   <ul class="inv-list" id="inventar-list">
     {% for item in held.ausruestung.inventar %}
-    <li data-item-name="{{ item.name }}">
+    <li data-item-name="{{ item.name | e }}">
       <span>{{ item.name }}</span>
       <span class="qty">{{ item.anzahl }}</span>
       <div class="inv-stepper">
-        <button class="inv-stepper-btn" data-item="{{ item.name }}" data-delta="-1" type="button">−</button>
-        <button class="inv-stepper-btn" data-item="{{ item.name }}" data-delta="1"  type="button">+</button>
+        <button class="inv-stepper-btn" data-item="{{ item.name | e }}" data-delta="-1" type="button" aria-label="{{ item.name | e }} verringern">−</button>
+        <button class="inv-stepper-btn" data-item="{{ item.name | e }}" data-delta="1"  type="button" aria-label="{{ item.name | e }} erhöhen">+</button>
       </div>
     </li>
     {% endfor %}
