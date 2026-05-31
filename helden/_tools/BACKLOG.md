@@ -5,10 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | Sprint |
-|------|-------|--------|--------|
-| D-010 | Commit-Message-Input | S | 008 |
-| D-011 | showIndicator-Dedup | S | 008 |
+_(keine)_
 
 ## Backlog
 
@@ -18,6 +15,8 @@ _(keine)_
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-011 | showIndicator-Dedup | S | 008 |
+| D-010 | Commit-Message-Input | S | 008 |
 | D-009 | Stufen-Aufstieg | M | 007 |
 | D-008 | Sprachen mit Komplexitäts-Grenze | S | 007 |
 | D-007 | Session-Commit-Button | S | 006 |
