@@ -28,7 +28,7 @@
       btn.textContent = '…';
 
       var msgInput = document.getElementById('commit-msg');
-      var msgValue = msgInput ? msgInput.value : '';
+      var msgValue = msgInput ? msgInput.value.trim() : '';
 
       fetch('/api/commit', {
         method: 'POST',
