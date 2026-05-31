@@ -5,10 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-008 | Sprachen mit Komplexitäts-Grenze | S | in-progress | — |
-| D-009 | Stufen-Aufstieg | M | in-progress | — |
+_(keine)_
 
 ## Backlog
 
@@ -18,6 +15,8 @@ _(keine)_
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-009 | Stufen-Aufstieg | M | 007 |
+| D-008 | Sprachen mit Komplexitäts-Grenze | S | 007 |
 | D-007 | Session-Commit-Button | S | 006 |
 | D-006 | Session-Notizen → Journal | M | 006 |
 | D-005 | Zauberspeicher im Stab | M | 005 |
