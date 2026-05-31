@@ -14,6 +14,10 @@ from writers.held_writer import (
     _find_section_lines,
     _find_first_table,
     _set_table_row,
+    _patch_section_body,
+    patch,
+    etag_for,
+    mtime_map,
 )
 
 # ---------------------------------------------------------------------------
@@ -384,3 +388,129 @@ def test_set_table_row_via_patch_api(tmp_path):
     assert 'Ignifaxius' in updated
     assert '15' in updated
     assert '2026-05-31' in updated
+
+
+# ---------------------------------------------------------------------------
+# Fixtures for section_body and kampagne scope tests
+# ---------------------------------------------------------------------------
+
+SECTION_BODY_TEXT = """\
+## Hintergrund
+
+Illaen wurde in Waldungen erzogen.
+
+## Verlauf
+
+Hier steht der alte Verlauf.
+Mehrere Zeilen.
+
+## Notizen
+
+Verschiedene Notizen.
+"""
+
+
+# ---------------------------------------------------------------------------
+# section_body tests
+# ---------------------------------------------------------------------------
+
+def test_section_body_replaces_content():
+    """Basic replace: old_value is old text, new body is written, heading preserved."""
+    new_text, old_value = _patch_section_body(
+        SECTION_BODY_TEXT,
+        section='Verlauf',
+        value='Neuer Verlaufstext.\nZweite Zeile.',
+    )
+    assert new_text is not None
+    assert old_value == 'Hier steht der alte Verlauf.\nMehrere Zeilen.'
+    assert '## Verlauf' in new_text
+    assert 'Neuer Verlaufstext.' in new_text
+    assert 'Zweite Zeile.' in new_text
+    # Old content must be gone
+    assert 'Hier steht der alte Verlauf.' not in new_text
+
+
+def test_section_body_section_not_found():
+    """Unknown heading → returns (None, ''), patch() reports error='section not found'."""
+    result, old = _patch_section_body(
+        SECTION_BODY_TEXT,
+        section='NichtVorhanden',
+        value='irgendwas',
+    )
+    assert result is None
+    assert old == ''
+
+
+def test_section_body_preserves_surrounding_headings():
+    """Neighbouring H2 sections are fully untouched after replace."""
+    new_text, _ = _patch_section_body(
+        SECTION_BODY_TEXT,
+        section='Verlauf',
+        value='Neuer Text.',
+    )
+    assert new_text is not None
+    # Both neighbouring sections still present with their content
+    assert '## Hintergrund' in new_text
+    assert 'Illaen wurde in Waldungen erzogen.' in new_text
+    assert '## Notizen' in new_text
+    assert 'Verschiedene Notizen.' in new_text
+
+
+def test_section_body_via_patch_api_error_message(tmp_path):
+    """patch() with section_body + missing section → ok=False, error='section not found'."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    md_file = hero_dir / 'abenteuer.md'
+    md_file.write_text(SECTION_BODY_TEXT, encoding='utf-8')
+
+    result = patch(tmp_path, slug, {
+        'kind': 'section_body',
+        'file': 'abenteuer.md',
+        'section': 'NichtVorhanden',
+        'value': 'x',
+    })
+    assert not result.ok
+    assert result.error == 'section not found'
+
+
+# ---------------------------------------------------------------------------
+# scope='kampagne' tests
+# ---------------------------------------------------------------------------
+
+def test_patch_kampagne_scope(tmp_path):
+    """patch() with scope='kampagne' resolves to abenteuer/<campaign>/file.md."""
+    campaign = 'drachenchronik'
+    kampagne_dir = tmp_path / 'abenteuer' / campaign
+    kampagne_dir.mkdir(parents=True)
+    md_file = kampagne_dir / 'session.md'
+    md_file.write_text(SECTION_BODY_TEXT, encoding='utf-8')
+
+    result = patch(tmp_path, 'any-slug', {
+        'kind': 'section_body',
+        'file': 'session.md',
+        'section': 'Verlauf',
+        'value': 'Neue Session-Notizen.',
+        'scope': 'kampagne',
+        'campaign': campaign,
+    })
+    assert result.ok
+    updated = md_file.read_text(encoding='utf-8')
+    assert 'Neue Session-Notizen.' in updated
+    # Heading preserved
+    assert '## Verlauf' in updated
+
+
+def test_etag_for_kampagne_scope(tmp_path):
+    """etag_for with scope='kampagne' reads from abenteuer/<campaign>/<file>."""
+    campaign = 'drachenchronik'
+    kampagne_dir = tmp_path / 'abenteuer' / campaign
+    kampagne_dir.mkdir(parents=True)
+    md_file = kampagne_dir / 'session.md'
+    content = b'hello kampagne'
+    md_file.write_bytes(content)
+
+    import hashlib
+    expected = hashlib.md5(content).hexdigest()
+    actual = etag_for(tmp_path, 'any-slug', 'session.md', scope='kampagne', campaign=campaign)
+    assert actual == expected

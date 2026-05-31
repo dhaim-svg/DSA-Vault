@@ -46,6 +46,17 @@ class PatchResult:
 # Public API
 # ---------------------------------------------------------------------------
 
+def _resolve_base(vault_root: Path, slug: str, locator: dict) -> Path:
+    """Return the base directory for a locator, honouring the optional scope field.
+
+    scope='held' (default) → vault_root/helden/<slug>
+    scope='kampagne'       → vault_root/abenteuer/<campaign>
+    """
+    if locator.get('scope') == 'kampagne':
+        return vault_root / 'abenteuer' / locator['campaign']
+    return vault_root / 'helden' / slug
+
+
 def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
     """Apply a single-field patch described by locator.
 
@@ -54,12 +65,17 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
       frontmatter:      {kind, file, key, value}
       table_append_row: {kind, file, section_path, cells: [col1, col2, ...]}
       table_row:        {kind, file, section_path, row_key: {column, match}, cells: {col_name: value}}
+      section_body:     {kind, file, section, value}
+
+    Optional scope field:
+      scope='held' (default) → vault_root/helden/<slug>
+      scope='kampagne'       → vault_root/abenteuer/<campaign>
 
     Includes optimistic-concurrency check: if the caller supplies
     locator['etag'] (md5 of file content at read time), we reject with
     error='conflict' if the file changed since then.
     """
-    base = vault_root / 'helden' / slug
+    base = _resolve_base(vault_root, slug, locator)
     rel_file = locator.get('file', '')
     target = base / rel_file
     if not target.exists():
@@ -107,6 +123,12 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                     row_key=locator['row_key'],
                     cells=locator.get('cells', {}),
                 )
+            elif kind == 'section_body':
+                new_text, old_value = _patch_section_body(
+                    text,
+                    section=locator['section'],
+                    value=str(locator.get('value', '')),
+                )
             else:
                 return PatchResult(ok=False, old_value='', new_value='',
                                    mtime_before=mtime_before, mtime_after=mtime_before,
@@ -120,9 +142,11 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
         # (multi-cell operations); callers should not rely on this field for those kinds.
         new_value_str = str(locator.get('value', ''))
         if new_text is None:
+            kind = locator.get('kind')
+            err = 'section not found' if kind == 'section_body' else 'cell not found'
             return PatchResult(ok=False, old_value=old_value, new_value=new_value_str,
                                mtime_before=mtime_before, mtime_after=mtime_before,
-                               error='cell not found')
+                               error=err)
 
         # Atomic write: temp file in same dir + os.replace
         tmp = target.with_suffix('.tmp_patch')
@@ -135,15 +159,41 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                            mtime_before=mtime_before, mtime_after=mtime_after)
 
 
-def etag_for(vault_root: Path, slug: str, rel_file: str) -> str:
-    """Return md5 hex of file content — used as optimistic-concurrency token."""
-    path = vault_root / 'helden' / slug / rel_file
+def etag_for(
+    vault_root: Path,
+    slug: str,
+    rel_file: str,
+    scope: str | None = None,
+    campaign: str | None = None,
+) -> str:
+    """Return md5 hex of file content — used as optimistic-concurrency token.
+
+    scope='kampagne' with campaign=<name> resolves to abenteuer/<campaign>/<rel_file>.
+    Default (scope=None or 'held') resolves to helden/<slug>/<rel_file>.
+    """
+    if scope == 'kampagne' and campaign:
+        base = vault_root / 'abenteuer' / campaign
+    else:
+        base = vault_root / 'helden' / slug
+    path = base / rel_file
     return hashlib.md5(path.read_bytes()).hexdigest()
 
 
-def mtime_map(vault_root: Path, slug: str) -> dict[str, float]:
-    """Return {filename: mtime} for all .md files in the hero folder."""
-    base = vault_root / 'helden' / slug
+def mtime_map(
+    vault_root: Path,
+    slug: str,
+    scope: str | None = None,
+    campaign: str | None = None,
+) -> dict[str, float]:
+    """Return {filename: mtime} for all .md files in the target folder.
+
+    scope='kampagne' with campaign=<name> resolves to abenteuer/<campaign>/.
+    Default (scope=None or 'held') resolves to helden/<slug>/.
+    """
+    if scope == 'kampagne' and campaign:
+        base = vault_root / 'abenteuer' / campaign
+    else:
+        base = vault_root / 'helden' / slug
     return {p.name: p.stat().st_mtime for p in base.glob('*.md')}
 
 
@@ -385,6 +435,37 @@ def _append_table_row(
 
     new_lines = all_lines[:abs_tbl_end] + [new_row] + all_lines[abs_tbl_end:]
     return ''.join(new_lines), ''
+
+
+def _patch_section_body(text: str, section: str, value: str) -> tuple[str | None, str]:
+    """Replace the prose body of a named H2 section.
+
+    Locates ## <section> in text, replaces everything between that heading and
+    the next H1/H2 with value (stripped), preserving the heading line itself.
+
+    Returns (new_text, old_body_stripped) on success.
+    Returns (None, '') if the heading is not found.
+    """
+    all_lines = text.splitlines(keepends=True)
+    start, end = _find_section_lines(all_lines, [section])
+    if start is None:
+        return None, ''
+
+    old_body = ''.join(all_lines[start:end]).strip()
+
+    # Build replacement lines: leading newline (already implicit — heading line
+    # ends with \n), the new content, then a trailing blank line separator
+    # (unless we're at EOF).
+    new_content = value.strip()
+    if end < len(all_lines):
+        # There is content after this section — leave a blank line before the
+        # next heading so the document stays well-formed.
+        replacement = '\n' + new_content + '\n\n'
+    else:
+        replacement = '\n' + new_content + '\n'
+
+    new_lines = all_lines[:start] + [replacement] + all_lines[end:]
+    return ''.join(new_lines), old_body
 
 
 def _replace_cell_in_line(line: str, col_idx: int, new_value: str) -> str:

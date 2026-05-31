@@ -5,14 +5,15 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-006 | Session-Notizen → Journal | M | in-progress | 006 |
+| D-007 | Session-Commit-Button | S | in-progress | 006 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-006 | Session-Notizen → Journal | M | ready | — |
-| D-007 | Session-Commit-Button | S | ready | — |
 | D-008 | Sprachen mit Komplexitäts-Grenze | S | ready | — |
 | D-009 | Stufen-Aufstieg | M | ready | — |
 
