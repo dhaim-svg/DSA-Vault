@@ -1381,10 +1381,11 @@ body { padding-top: 46px; }
           {% set asp_sum.val = asp_sum.val + (slot.asp | int(default=0)) %}
         {% endif %}
       {% endfor %}
+      {# TODO: capacity 20 AsP is hardcoded — pull from ritual data if Zauberspeicher variant changes #}
       <div class="speicher-summary">belegt: {{ asp_sum.val }} / 20 AsP</div>
 
       {% for slot in held.rituale.zauberspeicher_slots %}
-      {% set is_leer = '—' in slot.zauber or slot.zauber == '' %}
+      {% set is_leer = not slot.zauber or '—' in slot.zauber %}
       <div class="speicher-slot {% if is_leer %}leer{% endif %}"
            data-slot="{{ slot.slot }}">
         <div class="slot-header">
@@ -1415,6 +1416,9 @@ body { padding-top: 46px; }
             </label>
             <label class="slot-form-label">Mods
               <input class="slot-form-mods" type="text" placeholder="— oder Erschwernis" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">Erneuerung
+              <input class="slot-form-erneuerung" type="text" placeholder="Datum oder —" data-slot="{{ slot.slot }}" />
             </label>
             <div class="slot-form-actions">
               <button class="slot-befuellen-submit" data-slot="{{ slot.slot }}" type="button">Speichern</button>
