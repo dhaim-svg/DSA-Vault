@@ -5,10 +5,10 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-005 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-005/plan.md |
-| T1 | Writer: new `table_row` locator kind + tests | ⬜ todo | writers/held_writer.py, tests/ |
-| T2 | Template UI: Befüllen/Entleeren controls per slot (all 5 cols), CSS, window.DSA expose | ⬜ todo | templates/dashboard.html.j2 |
-| T3 | Client JS: build `table_row` PATCH on befüllen + clear-to-sentinel on entleeren | ⬜ todo | static/zauberspeicher.js, templates/dashboard.html.j2 |
-| T4 | Verifikation + `/sprint-wrap` | ⬜ todo | BACKLOG.md, sprints/sprint-005/handoff.md |
+| T1 | Writer: new `table_row` locator kind + tests | ✅ done | writers/held_writer.py, tests/ |
+| T2 | Template UI: Befüllen/Entleeren controls per slot (all 5 cols), CSS, window.DSA expose | ✅ done | templates/dashboard.html.j2 |
+| T3 | Client JS: build `table_row` PATCH on befüllen + clear-to-sentinel on entleeren | ✅ done | static/zauberspeicher.js, templates/dashboard.html.j2 |
+| T4 | Verifikation + `/sprint-wrap` | ✅ done | BACKLOG.md, sprints/sprint-005/handoff.md |
 
 ## Key Design Decisions
 

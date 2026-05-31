@@ -5,9 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-005 | Zauberspeicher im Stab | M | in-progress | — |
+_(keine)_
 
 ## Backlog
 
@@ -22,6 +20,7 @@
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-005 | Zauberspeicher im Stab | M | 005 |
 | D-004 | Inventar / Geld / Verbrauch | M | 004 |
 | D-003 | Tab-Navigation + AP & Steigerung | L | 003 |
 | D-001 | Flask-Server + Vitalia Write-back + Wunden + Zustände | L | 001 |
