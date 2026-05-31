@@ -50,8 +50,10 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
     """Apply a single-field patch described by locator.
 
     locator kinds:
-      table_cell:  {kind, file, section_path, row_key: {column, match}, column, value}
-      frontmatter: {kind, file, key, value}
+      table_cell:       {kind, file, section_path, row_key: {column, match}, column, value}
+      frontmatter:      {kind, file, key, value}
+      table_append_row: {kind, file, section_path, cells: [col1, col2, ...]}
+      table_row:        {kind, file, section_path, row_key: {column, match}, cells: {col_name: value}}
 
     Includes optimistic-concurrency check: if the caller supplies
     locator['etag'] (md5 of file content at read time), we reject with
@@ -114,6 +116,8 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                                mtime_before=mtime_before, mtime_after=mtime_before,
                                error=f'bad locator: {exc}')
 
+        # NOTE: new_value is intentionally '' for table_row and table_append_row
+        # (multi-cell operations); callers should not rely on this field for those kinds.
         new_value_str = str(locator.get('value', ''))
         if new_text is None:
             return PatchResult(ok=False, old_value=old_value, new_value=new_value_str,
@@ -208,7 +212,10 @@ def _locate_row(
 
     headers = _split_table_row(table_lines[0].rstrip('\r\n'))
     header_names = [h.strip() for h in headers]
-    col_name_to_idx = {name: i for i, name in enumerate(header_names)}
+    # Build column name → index map; first occurrence wins (matches prior next()-based lookup)
+    col_name_to_idx = {}
+    for i, name in enumerate(header_names):
+        col_name_to_idx.setdefault(name, i)
 
     # Resolve key column index
     key_col_name = row_key['column']
