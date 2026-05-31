@@ -5,14 +5,14 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-008 | Sprachen mit Komplexitäts-Grenze | S | in-progress | — |
+| D-009 | Stufen-Aufstieg | M | in-progress | — |
 
 ## Backlog
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-008 | Sprachen mit Komplexitäts-Grenze | S | ready | — |
-| D-009 | Stufen-Aufstieg | M | ready | — |
+_(keine)_
 
 ## Done
 
