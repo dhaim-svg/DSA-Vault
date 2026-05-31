@@ -93,6 +93,20 @@ def create_app(slug: str) -> Flask:
             'mtime': result.mtime_after,
         })
 
+    @app.route('/api/kampagne/<camp>/value', methods=['PATCH'])
+    def api_patch_kampagne(camp):
+        locator = request.get_json(force=True)
+        if not locator:
+            return jsonify({'error': 'missing JSON body'}), 400
+        # Force scope=kampagne and campaign=camp into the locator
+        locator['scope'] = 'kampagne'
+        locator['campaign'] = camp
+        result = patch(VAULT_ROOT, camp, locator)
+        if not result.ok:
+            status = 409 if result.error == 'conflict' else 400
+            return jsonify({'ok': False, 'error': result.error}), status
+        return jsonify({'ok': True, 'old': result.old_value, 'new': result.new_value})
+
     return app
 
 

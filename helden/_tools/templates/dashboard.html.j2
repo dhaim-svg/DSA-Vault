@@ -1037,6 +1037,19 @@ body { padding-top: 46px; }
 .inv-add-btn:hover { background: var(--bg-elev); }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
+/* ---- Journal tab ---- */
+.journal-session { margin-bottom: var(--gap); }
+.journal-session-header { font-family: var(--display); font-size: 14px; color: var(--gold); letter-spacing: .06em; margin: 0 0 12px; }
+.journal-section { margin-bottom: 12px; }
+.journal-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); margin: 0 0 4px; }
+.journal-section summary { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); cursor: pointer; }
+.journal-readonly { font-size: 13px; color: var(--ink-dim); white-space: pre-wrap; margin: 0; }
+.journal-verlauf { width: 100%; box-sizing: border-box; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-family: var(--mono); font-size: 12px; padding: 6px 8px; resize: vertical; }
+.journal-actions { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.journal-save-btn { padding: 4px 12px; border: 1px solid var(--accent-cold); border-radius: 3px; background: rgba(95,195,228,.12); color: var(--accent-cold); font-family: var(--mono); font-size: 11px; cursor: pointer; }
+.journal-save-btn:hover { background: rgba(95,195,228,.25); }
+.journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
+.journal-save-ok { font-size: 11px; color: #7fe8a0; }
 </style>
 </head>
 <body>
@@ -1048,6 +1061,7 @@ body { padding-top: 46px; }
   <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
   <button class="tab-btn" data-tab="inventar" type="button">🎒 Inventar</button>
   <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
+  <button class="tab-btn" data-tab="journal"  type="button">📓 Journal</button>
 </nav>
 
 {% set name_parts = held.meta.name.split(' ') %}
@@ -1693,6 +1707,70 @@ body { padding-top: 46px; }
 
 </div><!-- end tab-profil -->
 
+<div class="tab-content" id="tab-journal">
+
+<div class="sec-head"><h2>📓 Kampagnen-Journal</h2><span class="rule"></span></div>
+
+{% if kampagne.sessions %}
+  {% for s in kampagne.sessions %}
+  <section class="card journal-session" data-session-nr="{{ s.nr }}">
+    <h3 class="journal-session-header">#{{ s.nr }} &middot; {{ s.datum }}</h3>
+
+    {% if s.sektionen.get('Zusammenfassung') %}
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">{{ s.sektionen.get('Zusammenfassung', '') }}</p>
+    </div>
+    {% endif %}
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="{{ s.datei }}" rows="8">{{ s.sektionen.get('Verlauf', '') | e }}</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="{{ s.datei }}" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    {% if s.sektionen.get('AsP/LeP-Verlauf') %}
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('AsP/LeP-Verlauf', '') }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Neue NSCs / Orte') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Neue NSCs / Orte', '') }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Offene Fäden / Cliffhanger') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Offene Fäden / Cliffhanger', '') }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Loot / AP-Vergabe') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Loot / AP-Vergabe', '') }}</p>
+    </details>
+    {% endif %}
+
+  </section>
+  {% endfor %}
+{% else %}
+  <section class="card">
+    <p style="color:var(--ink-dim);text-align:center;padding:2rem 0;">Noch keine Sessions gespielt.</p>
+  </section>
+{% endif %}
+
+</div><!-- end tab-journal -->
+
 </div><!-- .codex -->
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
@@ -1774,7 +1852,9 @@ window.DSA = {
     items: {{ held.ausruestung.inventar | tojson }},
     inventar_gewicht_unzen: {{ held.ausruestung.inventar_gewicht_unzen }}
   },
-  zauberspeicher: {{ held.rituale.zauberspeicher_slots | tojson }}
+  zauberspeicher: {{ held.rituale.zauberspeicher_slots | tojson }},
+  kampagne: {{ kampagne.sessions | tojson }},
+  kampagne_slug: "drachenchronik"
 };
 </script>
 <script src="/static/app.js"></script>
@@ -1784,5 +1864,6 @@ window.DSA = {
 <script src="/static/steigern.js"></script>
 <script src="/static/inventar.js"></script>
 <script src="/static/zauberspeicher.js"></script>
+<script src="/static/journal.js"></script>
 </body>
 </html>
