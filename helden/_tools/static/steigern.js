@@ -139,6 +139,14 @@
     row.appendChild(valEl);
     row.appendChild(costEl);
 
+    /* Komplexitätsgrenze warning (Sprachen/Schriften only) */
+    if (item.komplexitaet != null && item.currentVal >= item.komplexitaet) {
+      var warnEl = document.createElement('span');
+      warnEl.className = 'sg-cap-warn';
+      warnEl.textContent = '⚠ Komplexitätsgrenze K' + item.komplexitaet;
+      row.appendChild(warnEl);
+    }
+
     if (item.cost !== null && canAfford) {
       var btnArea = document.createElement('span');
       btnArea.className = 'sg-btn-area';
@@ -256,7 +264,8 @@
         kind: 'talent', name: t.name,
         displayName: t.name + ' · SKT ' + t.skt,
         currentVal: t.taw, cost: calcApCost(t.skt, t.taw),
-        section: t.section, file: t.file, rowKeyCol: t.row_key_column
+        section: t.section, file: t.file, rowKeyCol: t.row_key_column,
+        komplexitaet: t.komplexitaet
       }));
     });
 
