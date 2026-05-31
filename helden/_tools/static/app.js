@@ -15,17 +15,7 @@ function initDashboard() {
   const DEBOUNCE_MS = 1600;
   const POLL_INTERVAL_MS = 8000;
 
-  const indicator = document.getElementById('save-indicator');
-  let indicatorTimer = null;
-
-  function showIndicator(text, isError) {
-    if (!indicator) return;
-    indicator.textContent = text;
-    indicator.style.background = isError ? 'rgba(180,40,40,0.85)' : 'rgba(0,0,0,0.75)';
-    indicator.classList.add('visible');
-    clearTimeout(indicatorTimer);
-    indicatorTimer = setTimeout(() => indicator.classList.remove('visible'), 2500);
-  }
+  const showIndicator = window.dsaShowIndicator;
 
   async function sendPatch(locator) {
     showIndicator('speichern…', false);
