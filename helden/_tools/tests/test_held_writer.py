@@ -514,3 +514,16 @@ def test_etag_for_kampagne_scope(tmp_path):
     expected = hashlib.md5(content).hexdigest()
     actual = etag_for(tmp_path, 'any-slug', 'session.md', scope='kampagne', campaign=campaign)
     assert actual == expected
+
+
+def test_mtime_map_kampagne_scope(tmp_path):
+    """mtime_map with scope='kampagne' lists .md files from abenteuer/<campaign>/."""
+    campaign = 'drachenchronik'
+    kampagne_dir = tmp_path / 'abenteuer' / campaign
+    kampagne_dir.mkdir(parents=True)
+    md_file = kampagne_dir / 'session.md'
+    md_file.write_text('content', encoding='utf-8')
+
+    result = mtime_map(tmp_path, 'any-slug', scope='kampagne', campaign=campaign)
+    assert 'session.md' in result
+    assert result['session.md'] == pytest.approx(md_file.stat().st_mtime)

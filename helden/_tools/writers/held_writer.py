@@ -46,17 +46,6 @@ class PatchResult:
 # Public API
 # ---------------------------------------------------------------------------
 
-def _resolve_base(vault_root: Path, slug: str, locator: dict) -> Path:
-    """Return the base directory for a locator, honouring the optional scope field.
-
-    scope='held' (default) → vault_root/helden/<slug>
-    scope='kampagne'       → vault_root/abenteuer/<campaign>
-    """
-    if locator.get('scope') == 'kampagne':
-        return vault_root / 'abenteuer' / locator['campaign']
-    return vault_root / 'helden' / slug
-
-
 def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
     """Apply a single-field patch described by locator.
 
@@ -75,8 +64,15 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
     locator['etag'] (md5 of file content at read time), we reject with
     error='conflict' if the file changed since then.
     """
-    base = _resolve_base(vault_root, slug, locator)
     rel_file = locator.get('file', '')
+
+    try:
+        base = _resolve_base(vault_root, slug, locator.get('scope'), locator.get('campaign'))
+    except (KeyError, TypeError) as exc:
+        return PatchResult(ok=False, old_value='', new_value='',
+                           mtime_before=0, mtime_after=0,
+                           error=f'bad locator: {exc}')
+
     target = base / rel_file
     if not target.exists():
         return PatchResult(ok=False, old_value='', new_value='',
@@ -171,10 +167,7 @@ def etag_for(
     scope='kampagne' with campaign=<name> resolves to abenteuer/<campaign>/<rel_file>.
     Default (scope=None or 'held') resolves to helden/<slug>/<rel_file>.
     """
-    if scope == 'kampagne' and campaign:
-        base = vault_root / 'abenteuer' / campaign
-    else:
-        base = vault_root / 'helden' / slug
+    base = _resolve_base(vault_root, slug, scope, campaign)
     path = base / rel_file
     return hashlib.md5(path.read_bytes()).hexdigest()
 
@@ -190,11 +183,23 @@ def mtime_map(
     scope='kampagne' with campaign=<name> resolves to abenteuer/<campaign>/.
     Default (scope=None or 'held') resolves to helden/<slug>/.
     """
-    if scope == 'kampagne' and campaign:
-        base = vault_root / 'abenteuer' / campaign
-    else:
-        base = vault_root / 'helden' / slug
+    base = _resolve_base(vault_root, slug, scope, campaign)
     return {p.name: p.stat().st_mtime for p in base.glob('*.md')}
+
+
+# ---------------------------------------------------------------------------
+# Private helpers
+# ---------------------------------------------------------------------------
+
+def _resolve_base(vault_root: Path, slug: str, scope: str | None, campaign: str | None) -> Path:
+    """Return the base directory, honouring the optional scope field.
+
+    scope='held' (default) → vault_root/helden/<slug>
+    scope='kampagne'       → vault_root/abenteuer/<campaign>
+    """
+    if scope == 'kampagne':
+        return vault_root / 'abenteuer' / campaign
+    return vault_root / 'helden' / slug
 
 
 # ---------------------------------------------------------------------------
@@ -457,7 +462,10 @@ def _patch_section_body(text: str, section: str, value: str) -> tuple[str | None
     # ends with \n), the new content, then a trailing blank line separator
     # (unless we're at EOF).
     new_content = value.strip()
-    if end < len(all_lines):
+    if not new_content:
+        # Empty value: no blank lines — heading is immediately followed by the next heading.
+        replacement = '\n'
+    elif end < len(all_lines):
         # There is content after this section — leave a blank line before the
         # next heading so the document stays well-formed.
         replacement = '\n' + new_content + '\n\n'
