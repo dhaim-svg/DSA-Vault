@@ -5,9 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-003 | Tab-Navigation + AP & Steigerung | L | in-progress | — |
+_(keine)_
 
 ## Backlog
 
@@ -24,5 +22,6 @@
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-003 | Tab-Navigation + AP & Steigerung | L | 003 |
 | D-001 | Flask-Server + Vitalia Write-back + Wunden + Zustände | L | 001 |
 | D-002 | Würfelintegration (3W20 Proben, Schaden, Panel) | L | 002 |
