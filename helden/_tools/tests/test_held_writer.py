@@ -161,3 +161,84 @@ def test_patch_table_cell_crlf_preserved():
     )
     assert new_text is not None
     assert '\r\n' in new_text, "CRLF line endings must be preserved"
+
+
+# ---------------------------------------------------------------------------
+# Fixtures for table_append_row
+# ---------------------------------------------------------------------------
+
+STEIGERUNGS_LOG_TEXT = """\
+---
+typ: held-section
+held: Test Held
+---
+
+# Steigerungs-Log
+
+## Protokoll
+
+| Datum | AP danach (verf.) | Aktion | Kosten | Begründung |
+|-------|-------------------|--------|--------|------------|
+| 2026-05-15 | 5 verf. | Initialstand | — | Übernahme |
+"""
+
+
+# ---------------------------------------------------------------------------
+# table_append_row tests
+# ---------------------------------------------------------------------------
+
+def test_table_append_row_adds_new_row():
+    from writers.held_writer import _append_table_row
+    new_text, _ = _append_table_row(
+        STEIGERUNGS_LOG_TEXT,
+        section_path=['Protokoll'],
+        cells=['2026-05-31', '4 verf.', 'Klettern TaW 4→5', '4', 'Test'],
+    )
+    assert new_text is not None
+    assert '2026-05-31' in new_text
+    assert 'Klettern TaW 4→5' in new_text
+
+
+def test_table_append_row_increases_row_count():
+    from writers.held_writer import _append_table_row
+    from parsers.held import parse_frontmatter, split_sections, parse_md_table
+    new_text, _ = _append_table_row(
+        STEIGERUNGS_LOG_TEXT,
+        section_path=['Protokoll'],
+        cells=['2026-05-31', '4 verf.', 'Klettern TaW 4→5', '4', 'Test'],
+    )
+    _, body = parse_frontmatter(new_text)
+    h2 = split_sections(body, 2)
+    rows = parse_md_table(h2['Protokoll'])
+    assert len(rows) == 2  # original 1 + new 1
+
+
+def test_table_append_row_section_not_found_returns_none():
+    from writers.held_writer import _append_table_row
+    result, _ = _append_table_row(
+        STEIGERUNGS_LOG_TEXT,
+        section_path=['NonExistent'],
+        cells=['x'],
+    )
+    assert result is None
+
+
+def test_table_append_row_via_patch_api(tmp_path):
+    """End-to-end: patch() dispatches table_append_row correctly."""
+    from writers.held_writer import patch
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    log_file = hero_dir / 'steigerungs-log.md'
+    log_file.write_text(STEIGERUNGS_LOG_TEXT, encoding='utf-8')
+
+    result = patch(tmp_path, slug, {
+        'kind': 'table_append_row',
+        'file': 'steigerungs-log.md',
+        'section_path': ['Protokoll'],
+        'cells': ['2026-05-31', '4 verf.', 'Klettern TaW 4→5', '4', 'Test'],
+    })
+    assert result.ok
+    updated = log_file.read_text(encoding='utf-8')
+    assert '2026-05-31' in updated
+    assert 'Klettern TaW 4→5' in updated

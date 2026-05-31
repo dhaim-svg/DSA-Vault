@@ -92,6 +92,12 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                     column=locator['column'],
                     value=str(locator['value']),
                 )
+            elif kind == 'table_append_row':
+                new_text, old_value = _append_table_row(
+                    text,
+                    section_path=locator.get('section_path', []),
+                    cells=locator.get('cells', []),
+                )
             else:
                 return PatchResult(ok=False, old_value='', new_value='',
                                    mtime_before=mtime_before, mtime_after=mtime_before,
@@ -101,8 +107,9 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
                                mtime_before=mtime_before, mtime_after=mtime_before,
                                error=f'bad locator: {exc}')
 
+        new_value_str = str(locator.get('value', ''))
         if new_text is None:
-            return PatchResult(ok=False, old_value=old_value, new_value=str(locator['value']),
+            return PatchResult(ok=False, old_value=old_value, new_value=new_value_str,
                                mtime_before=mtime_before, mtime_after=mtime_before,
                                error='cell not found')
 
@@ -113,7 +120,7 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
 
         mtime_after = target.stat().st_mtime
         return PatchResult(ok=True, old_value=old_value,
-                           new_value=str(locator['value']),
+                           new_value=new_value_str,
                            mtime_before=mtime_before, mtime_after=mtime_after)
 
 
@@ -285,6 +292,34 @@ def _find_first_table(lines: list[str]) -> tuple[int | None, int | None]:
     if start is not None:
         return start, len(lines)
     return None, None
+
+
+def _append_table_row(
+    text: str,
+    section_path: list[str],
+    cells: list[str],
+) -> tuple[str | None, str]:
+    """Append a new data row to the first table found in section_path.
+
+    Returns (new_text, '') on success, (None, '') if section or table not found.
+    """
+    all_lines = text.splitlines(keepends=True)
+    start, end = _find_section_lines(all_lines, section_path)
+    if start is None:
+        return None, ''
+    section_lines = all_lines[start:end]
+    tbl_start, tbl_end = _find_first_table(section_lines)
+    if tbl_start is None:
+        return None, ''
+
+    abs_tbl_end = start + tbl_end  # absolute index of first line AFTER the table
+    # Detect line ending from the last table line
+    last_line = all_lines[abs_tbl_end - 1] if abs_tbl_end > 0 else ''
+    lend = '\r\n' if last_line.endswith('\r\n') else '\n'
+    new_row = '| ' + ' | '.join(str(c) for c in cells) + ' |' + lend
+
+    new_lines = all_lines[:abs_tbl_end] + [new_row] + all_lines[abs_tbl_end:]
+    return ''.join(new_lines), ''
 
 
 def _replace_cell_in_line(line: str, col_idx: int, new_value: str) -> str:
