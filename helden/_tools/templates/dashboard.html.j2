@@ -386,11 +386,32 @@ body::before{
 /* ---- Zauberspeicher ---- */
 .speicher-box { margin-top:12px; padding:8px 10px; background:rgba(95,195,228,.06); border-radius:6px; border:1px solid rgba(95,195,228,.15); }
 .speicher-title { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:6px; font-family:var(--mono); }
-.speicher-slot { display:grid; grid-template-columns:16px 40px 1fr; gap:6px; font-size:12px; padding:2px 0; font-family:var(--subhead); }
-.speicher-slot.leer { color:var(--ink-dim); font-style:italic; }
 .slot-num { font-family:var(--mono); color:var(--accent-cold); }
 .slot-asp { font-family:var(--mono); color:var(--ink-dim); }
 .slot-zauber { color:var(--ink); }
+
+/* ---- Zauberspeicher interactive (Sprint 005) ---- */
+.speicher-summary { font-size:11px; color:var(--ink-mute); font-family:var(--mono); margin-bottom:8px; }
+.slot-header { display:flex; align-items:center; gap:6px; font-size:12px; padding:2px 0; font-family:var(--subhead); flex-wrap:wrap; }
+.slot-mods-row { font-size:11px; color:var(--ink-dim); padding-left:22px; padding-bottom:2px; display:flex; gap:8px; flex-wrap:wrap; }
+.slot-mods-label, .slot-erneuerung-label { color:var(--ink-mute); font-family:var(--mono); }
+.slot-entleeren-btn { margin-left:auto; font-size:10px; padding:1px 6px; background:rgba(228,95,95,.15); border:1px solid rgba(228,95,95,.3); color:rgba(228,95,95,.8); border-radius:3px; cursor:pointer; font-family:var(--mono); }
+.slot-entleeren-btn:hover { background:rgba(228,95,95,.28); }
+.slot-befuellen-area { margin-top:3px; padding-left:22px; }
+.slot-befuellen-toggle { font-size:10px; padding:1px 7px; background:rgba(95,195,228,.1); border:1px solid rgba(95,195,228,.25); color:var(--accent-cold); border-radius:3px; cursor:pointer; font-family:var(--mono); }
+.slot-befuellen-toggle:hover { background:rgba(95,195,228,.2); }
+.slot-befuellen-form { margin-top:6px; display:flex; flex-direction:column; gap:4px; }
+.slot-befuellen-form.hidden { display:none; }
+.slot-form-label { font-size:11px; color:var(--ink-mute); font-family:var(--mono); display:flex; gap:6px; align-items:center; }
+.slot-form-label input { font-size:12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.15); border-radius:3px; padding:2px 5px; color:var(--ink); font-family:var(--subhead); flex:1; min-width:0; }
+.slot-form-actions { display:flex; gap:6px; }
+.slot-befuellen-submit { font-size:11px; padding:2px 10px; background:rgba(95,195,228,.18); border:1px solid var(--accent-cold); color:var(--accent-cold); border-radius:3px; cursor:pointer; font-family:var(--mono); }
+.slot-befuellen-submit:hover { background:rgba(95,195,228,.32); }
+.slot-befuellen-cancel { font-size:11px; padding:2px 8px; background:transparent; border:1px solid rgba(255,255,255,.1); color:var(--ink-dim); border-radius:3px; cursor:pointer; font-family:var(--mono); }
+/* Keep existing .speicher-slot layout but adapt for new inner structure */
+.speicher-slot { padding:4px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+.speicher-slot:last-child { border-bottom:none; }
+.speicher-slot.leer .slot-header { color:var(--ink-dim); font-style:italic; }
 
 /* ---- Vol badge (Stabzauber) ---- */
 .vol-badge { font-family:var(--mono); font-size:10px; color:var(--ink-dim); background:rgba(95,195,228,.08); border:1px solid rgba(95,195,228,.15); border-radius:2px; padding:1px 5px; margin-left:6px; }
@@ -1353,11 +1374,55 @@ body { padding-top: 46px; }
     {% if held.rituale.zauberspeicher_slots %}
     <div class="speicher-box">
       <div class="speicher-title">Zauberspeicher-Inhalt</div>
+      {# AsP-Summe über alle Slots #}
+      {% set asp_sum = namespace(val=0) %}
       {% for slot in held.rituale.zauberspeicher_slots %}
-      <div class="speicher-slot {% if '—' in slot.zauber or slot.zauber == '' %}leer{% endif %}">
-        <span class="slot-num">{{ slot.slot }}</span>
-        <span class="slot-asp">{{ slot.asp }}</span>
-        <span class="slot-zauber">{{ slot.zauber }}</span>
+        {% if slot.asp != '—' and slot.asp != '' %}
+          {% set asp_sum.val = asp_sum.val + (slot.asp | int(default=0)) %}
+        {% endif %}
+      {% endfor %}
+      <div class="speicher-summary">belegt: {{ asp_sum.val }} / 20 AsP</div>
+
+      {% for slot in held.rituale.zauberspeicher_slots %}
+      {% set is_leer = '—' in slot.zauber or slot.zauber == '' %}
+      <div class="speicher-slot {% if is_leer %}leer{% endif %}"
+           data-slot="{{ slot.slot }}">
+        <div class="slot-header">
+          <span class="slot-num">{{ slot.slot }}</span>
+          <span class="slot-asp">{{ slot.asp }} AsP</span>
+          <span class="slot-zauber">{{ slot.zauber }}</span>
+          {% if not is_leer %}
+          <button class="slot-entleeren-btn" data-slot="{{ slot.slot }}" type="button">Entleeren</button>
+          {% endif %}
+        </div>
+        {% if not is_leer %}
+        <div class="slot-mods-row">
+          <span class="slot-mods-label">Mods:</span>
+          <span class="slot-mods">{{ slot.mods }}</span>
+          <span class="slot-erneuerung-label">Erneuerung:</span>
+          <span class="slot-erneuerung">{{ slot.erneuerung }}</span>
+        </div>
+        {% endif %}
+        {% if is_leer %}
+        <div class="slot-befuellen-area" data-slot="{{ slot.slot }}">
+          <button class="slot-befuellen-toggle" data-slot="{{ slot.slot }}" type="button">+ Befüllen</button>
+          <form class="slot-befuellen-form hidden" data-slot="{{ slot.slot }}">
+            <label class="slot-form-label">Zauber
+              <input class="slot-form-zauber" type="text" placeholder="Zauber-Name" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">AsP
+              <input class="slot-form-asp" type="number" min="0" max="20" placeholder="AsP" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">Mods
+              <input class="slot-form-mods" type="text" placeholder="— oder Erschwernis" data-slot="{{ slot.slot }}" />
+            </label>
+            <div class="slot-form-actions">
+              <button class="slot-befuellen-submit" data-slot="{{ slot.slot }}" type="button">Speichern</button>
+              <button class="slot-befuellen-cancel" data-slot="{{ slot.slot }}" type="button">Abbrechen</button>
+            </div>
+          </form>
+        </div>
+        {% endif %}
       </div>
       {% endfor %}
     </div>
@@ -1704,7 +1769,8 @@ window.DSA = {
     geld: {{ held.ausruestung.geld | tojson }},
     items: {{ held.ausruestung.inventar | tojson }},
     inventar_gewicht_unzen: {{ held.ausruestung.inventar_gewicht_unzen }}
-  }
+  },
+  zauberspeicher: {{ held.rituale.zauberspeicher_slots | tojson }}
 };
 </script>
 <script src="/static/app.js"></script>
