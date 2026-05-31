@@ -32,6 +32,10 @@
   // ---------- The common PATCH locator shape for Zauberspeicher ----------
   // section_path MUST be ['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt']
   // row_key: {column: 'Slot', match: <slot number as string>}
+  // FRAGILITY: '(9 Rituale)' in the H2 heading is a literal that the writer matches
+  // exactly. If a ritual is ever added/removed, the heading count changes and every
+  // PATCH will silently fail with "cell not found". The render (parser uses substring
+  // match) would still work, masking the break. Update both here and rituale.md if needed.
 
   var SECTION_PATH = ['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'];
 
