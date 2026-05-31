@@ -5,10 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-006 | Session-Notizen → Journal | M | in-progress | 006 |
-| D-007 | Session-Commit-Button | S | in-progress | 006 |
+_(keine)_
 
 ## Backlog
 
@@ -21,6 +18,8 @@
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-007 | Session-Commit-Button | S | 006 |
+| D-006 | Session-Notizen → Journal | M | 006 |
 | D-005 | Zauberspeicher im Stab | M | 005 |
 | D-004 | Inventar / Geld / Verbrauch | M | 004 |
 | D-003 | Tab-Navigation + AP & Steigerung | L | 003 |
