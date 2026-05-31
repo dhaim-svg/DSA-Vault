@@ -5,7 +5,10 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | Sprint |
+|------|-------|--------|--------|
+| D-010 | Commit-Message-Input | S | 008 |
+| D-011 | showIndicator-Dedup | S | 008 |
 
 ## Backlog
 
