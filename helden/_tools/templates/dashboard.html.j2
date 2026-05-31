@@ -823,7 +823,7 @@ body::before{
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
   .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
-  .wunden-counter, #zustand-chips, #session-reset-btn { display: none !important; }
+  .wunden-counter, #zustand-chips, #session-reset-btn, #commit-msg { display: none !important; }
   .vital-max { font-weight: 700; }
   .vital-stepper { display: none !important; }
   /* Show static value in print */
@@ -1858,7 +1858,7 @@ body { padding-top: 46px; }
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
 <button id="session-reset-btn" class="print-btn screen-only" style="margin-left:8px">Session zurücksetzen</button>
-<button id="commit-btn" class="print-btn screen-only" style="margin-left:8px">💾 Sichern</button>
+<input id="commit-msg" type="text" class="screen-only" placeholder="Commit-Nachricht (optional)" style="margin-left:8px; padding:4px 8px; border-radius:4px; border:1px solid #555; background:#2a2a2a; color:#eee; font-size:0.85rem; width:220px;"><button id="commit-btn" class="print-btn screen-only" style="margin-left:8px">💾 Sichern</button>
 
 <script>
 /* Sortierung Zauber-Tabelle: Click auf ZfW-Header */

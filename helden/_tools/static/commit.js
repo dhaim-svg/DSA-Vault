@@ -27,7 +27,14 @@
       btn.disabled = true;
       btn.textContent = '…';
 
-      fetch('/api/commit', { method: 'POST' })
+      var msgInput = document.getElementById('commit-msg');
+      var msgValue = msgInput ? msgInput.value : '';
+
+      fetch('/api/commit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msgValue }),
+      })
         .then(function (resp) {
           return resp.json().then(function (data) {
             return { ok: resp.ok, data: data };
@@ -41,6 +48,7 @@
             showIndicator('nichts zu sichern', false);
           } else {
             showIndicator('committed ✓', false);
+            if (msgInput) msgInput.value = '';
           }
         })
         .catch(function (err) {

@@ -8,12 +8,16 @@ import subprocess
 from pathlib import Path
 
 
-def commit_helden(vault_root: Path, slug: str) -> dict:
-    """Stage helden/ and commit with an auto-generated message.
+def commit_helden(vault_root: Path, slug: str, message=None) -> dict:
+    """Stage helden/ and commit with an auto-generated or custom message.
 
     Args:
         vault_root: Path to the git repository root (the vault directory).
         slug: Hero slug used in the commit message.
+        message: Optional custom message suffix. If non-empty, the commit
+            message becomes ``f'dashboard: {slug} — {message}'`` (em-dash).
+            If None or empty, falls back to the auto-generated timestamp form
+            ``f'dashboard: {slug} {timestamp}'``.
 
     Returns:
         On success (changes committed):
@@ -25,7 +29,11 @@ def commit_helden(vault_root: Path, slug: str) -> dict:
     """
     root = str(vault_root)
     timestamp = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M')
-    commit_msg = f'dashboard: {slug} {timestamp}'
+    if message and message.strip():
+        safe_msg = message.strip().replace('\n', ' ').replace('\r', ' ')
+        commit_msg = f'dashboard: {slug} — {safe_msg}'
+    else:
+        commit_msg = f'dashboard: {slug} {timestamp}'
 
     # Step 1: stage helden/
     add_result = subprocess.run(

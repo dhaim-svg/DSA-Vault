@@ -117,7 +117,9 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/commit', methods=['POST'])
     def api_commit():
-        result = commit_helden(VAULT_ROOT, slug)
+        body = request.get_json(silent=True)
+        message = (body or {}).get('message', None)
+        result = commit_helden(VAULT_ROOT, slug, message=message)
         if not result.get('ok'):
             return jsonify({'ok': False, 'error': result.get('error', 'unknown error')}), 500
         return jsonify({
