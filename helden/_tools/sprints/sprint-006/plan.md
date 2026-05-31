@@ -5,11 +5,11 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-006+D-007 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-006/plan.md |
-| T1 | D-006 Parser: `load_kampagne` → volle Body-Sektionen pro Session; Platzhalter-Session anlegen | ⬜ todo | parsers/kampagne.py, tests/test_kampagne.py, abenteuer/drachenchronik/ |
-| T2 | D-006 Writer: neuer Locator-Kind `section_body` + `scope:'kampagne'` Datei-Auflösung | ⬜ todo | writers/held_writer.py, tests/test_held_writer.py |
-| T3 | D-006 UI + Route: Journal-Tab, `PATCH /api/kampagne/<camp>/value`, `static/journal.js` | ⬜ todo | templates/dashboard.html.j2, server.py, static/journal.js |
-| T4 | D-007 Commit-Button: `git_ops.py`, `POST /api/commit`, `static/commit.js`, Button im Template | ⬜ todo | git_ops.py, server.py, templates/dashboard.html.j2, static/commit.js, tests/test_commit.py |
-| T5 | Verifikation (pytest grün, Browser-Smoke) + `/sprint-wrap` | ⬜ todo | — |
+| T1 | D-006 Parser: `load_kampagne` → volle Body-Sektionen pro Session; Platzhalter-Session anlegen | ✅ done | parsers/kampagne.py, tests/test_kampagne.py, abenteuer/drachenchronik/ |
+| T2 | D-006 Writer: neuer Locator-Kind `section_body` + `scope:'kampagne'` Datei-Auflösung | ✅ done | writers/held_writer.py, tests/test_held_writer.py |
+| T3 | D-006 UI + Route: Journal-Tab, `PATCH /api/kampagne/<camp>/value`, `static/journal.js` | ✅ done | templates/dashboard.html.j2, server.py, static/journal.js |
+| T4 | D-007 Commit-Button: `git_ops.py`, `POST /api/commit`, `static/commit.js`, Button im Template | ✅ done | git_ops.py, server.py, templates/dashboard.html.j2, static/commit.js, tests/test_commit.py |
+| T5 | Verifikation (pytest grün, Browser-Smoke) + `/sprint-wrap` | ✅ done | — |
 
 ## Key Design Decisions
 
