@@ -996,6 +996,7 @@ body { padding-top: 46px; }
   .tab-content { display: block !important; }
   body { padding-top: 0 !important; }
   .inv-stepper, .inv-add-form { display: none !important; }
+  .journal-actions { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
@@ -1037,6 +1038,31 @@ body { padding-top: 46px; }
 .inv-add-btn:hover { background: var(--bg-elev); }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
+/* ---- Journal tab ---- */
+.journal-session { margin-bottom: var(--gap); }
+.journal-session-header { font-family: var(--display); font-size: 14px; color: var(--gold); letter-spacing: .06em; margin: 0 0 12px; }
+.journal-section { margin-bottom: 12px; }
+.journal-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); margin: 0 0 4px; }
+.journal-section summary { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); cursor: pointer; }
+.journal-readonly { font-size: 13px; color: var(--ink-dim); white-space: pre-wrap; margin: 0; }
+.journal-verlauf { width: 100%; box-sizing: border-box; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-family: var(--mono); font-size: 12px; padding: 6px 8px; resize: vertical; }
+.journal-actions { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.journal-save-btn { padding: 4px 12px; border: 1px solid var(--accent-cold); border-radius: 3px; background: rgba(95,195,228,.12); color: var(--accent-cold); font-family: var(--mono); font-size: 11px; cursor: pointer; }
+.journal-save-btn:hover { background: rgba(95,195,228,.25); }
+.journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
+.journal-save-ok { font-size: 11px; color: var(--accent-aup); }
+/* ---- Sprachen-Tab ---- */
+.lang-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lang-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-mute); font-weight: 600; padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; }
+.lang-table th:last-child, .lang-table td:last-child { text-align: right; }
+.lang-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
+.lang-table tr:last-child td { border-bottom: none; }
+.lang-table .l-name { color: var(--ink); }
+.lang-table .l-kompl { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; }
+.lang-table .l-taw { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
+.lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+.lang-section-head:first-child { margin-top: 0; }
 </style>
 </head>
 <body>
@@ -1048,6 +1074,8 @@ body { padding-top: 46px; }
   <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
   <button class="tab-btn" data-tab="inventar" type="button">🎒 Inventar</button>
   <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
+  <button class="tab-btn" data-tab="journal"  type="button">📓 Journal</button>
+  <button class="tab-btn" data-tab="sprachen" type="button">🗣️ Sprachen</button>
 </nav>
 
 
@@ -2577,11 +2605,24 @@ body { padding-top: 46px; }
         <span class="status"><span class="dot-s"></span> In Vorbereitung — noch keine Spielsitzungen.</span>
       </div>
       <div class="c-meta">
-        <span><b>0</b> Sessions</span>
+        <span><b>1</b> Sessions</span>
         <span><b>1</b> Held</span>
       </div>
     </div>
-    <p style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:12px">Noch keine Sessions gespielt.</p>
+    <table style="width:100%;border-collapse:collapse;margin-top:14px;font-size:12px;font-family:var(--subhead)">
+      <thead><tr style="border-bottom:1px solid var(--rule)">
+        <th style="text-align:left;padding:4px 0;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">#</th>
+        <th style="text-align:left;padding:4px 8px;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">Datum</th>
+        <th style="text-align:left;padding:4px 0;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">Inhalt</th>
+      </tr></thead>
+      <tbody>
+      <tr style="border-bottom:1px dotted var(--rule)">
+        <td style="padding:5px 0;color:var(--ink-mute)">1</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2025-10-04</td>
+        <td style="padding:5px 0;color:var(--ink)">Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne &#34;Zum Goldenen Anker&#34; trifft er auf den mysteriösen Händler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.</td>
+      </tr>
+      </tbody>
+    </table>
   </section>
 
   <section class="card">
@@ -2609,10 +2650,133 @@ body { padding-top: 46px; }
 
 </div><!-- end tab-profil -->
 
+<div class="tab-content" id="tab-journal">
+
+<div class="sec-head"><h2>📓 Kampagnen-Journal</h2><span class="rule"></span></div>
+
+  <section class="card journal-session" data-session-nr="1">
+    <h3 class="journal-session-header">#1 &middot; 2025-10-04</h3>
+
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne &#34;Zum Goldenen Anker&#34; trifft er auf den mysteriösen Händler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.</p>
+    </div>
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="2025-10-04-session-01.md" rows="8">Die Gruppe trifft sich im Hafen von Havena. [[helden/illaen-baernhold/_illaen|Illaen]] spricht mit dem Hafenmeister Ardaniel, der von einem unbekannten Schiff berichtet, das vor drei Tagen ohne Ladescheine eingelaufen ist. In der Taverne &#34;Zum Goldenen Anker&#34; wartet Ferdok der Händler — für 5 Silbertaler teilt er seinen Hinweis auf die Ruinen südlich von Kuslik mit. Unterwegs werden die Helden von einer Räuberbande aufgehalten (Kampf, 2 Räuber fliehen, 1 gefangen). Der Gefangene nennt den Namen &#34;Borbarad-Diener&#34; bevor er schweigt. Ankunft am Stadttor Kuslik kurz vor Sonnenuntergang.</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="2025-10-04-session-01.md" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">Illaen: LeP 30 → 24 (Räuberkampf, Schwerthieb) → 24 (Ende Session)
+Illaen: AsP 38 → 32 (Odem Arcanum 2×) → 32 (Ende Session)</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">- **Ardaniel** — Hafenmeister Havena, misstrauisch, hilfreich gegen Bezahlung
+- **Ferdok** — reisender Händler, Informant, Motiv unklar
+- **Kuslik Stadttor** — Wachen kennen Illaens Elfen-Abstammung, leicht feindlich</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">- Wer ist der &#34;Borbarad-Diener&#34; den der Räuber erwähnte?
+- Was befindet sich in den Ruinen südlich von Kuslik?
+- Ferdok verschwand nach dem Gespräch spurlos — war er verkleidet?</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">- 5 Silbertaler ausgegeben (Hinweis von Ferdok)
+- Beute: 12 Silbertaler von Räubern, 1 Dolch (Qualität +1)
+- AP: 15 AP (gute Rollenspiel-Entscheidungen, Informationsbeschaffung)</p>
+    </details>
+
+  </section>
+
+</div><!-- end tab-journal -->
+
+<div class="tab-content" id="tab-sprachen">
+<div class="sec-head"><h2>Sprachen &amp; Schriften</h2><span class="rule"></span></div>
+<section class="card">
+
+
+  <h4 class="lang-section-head">Sprachen</h4>
+  <table class="lang-table">
+    <thead>
+      <tr>
+        <th>Sprache</th>
+        <th>Komplexität</th>
+        <th>TaW</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="l-name">
+          Bosparano
+        </td>
+        <td class="l-kompl">21</td>
+        <td class="l-taw">6</td>
+      </tr>
+      <tr>
+        <td class="l-name">
+          Garethi
+        </td>
+        <td class="l-kompl">18</td>
+        <td class="l-taw">16</td>
+      </tr>
+      <tr>
+        <td class="l-name">
+          Tulamidya
+        </td>
+        <td class="l-kompl">18</td>
+        <td class="l-taw">8</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="lang-section-head">Schriften</h4>
+  <table class="lang-table">
+    <thead>
+      <tr>
+        <th>Schrift</th>
+        <th>Komplexität</th>
+        <th>TaW</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="l-name">
+          Kusliker Zeichen
+        </td>
+        <td class="l-kompl">10</td>
+        <td class="l-taw">8</td>
+      </tr>
+      <tr>
+        <td class="l-name">
+          Tulamidya
+        </td>
+        <td class="l-kompl">14</td>
+        <td class="l-taw">7</td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+</div><!-- end tab-sprachen -->
+
 </div><!-- .codex -->
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
 <button id="session-reset-btn" class="print-btn screen-only" style="margin-left:8px">Session zurücksetzen</button>
+<button id="commit-btn" class="print-btn screen-only" style="margin-left:8px">💾 Sichern</button>
 
 <script>
 /* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
@@ -2674,7 +2838,7 @@ window.DSA = {
     AU: { current: 31, max: 31 }
   },
   steigern: {
-    talente: [{"file": "talente.md", "name": "Armbrust", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 1}, {"file": "talente.md", "name": "Dolche", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Hiebwaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Infanteriewaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Raufen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 3}, {"file": "talente.md", "name": "Ringen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "S\u00e4bel", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "St\u00e4be", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 9}, {"file": "talente.md", "name": "Wurfmesser", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 2}, {"file": "talente.md", "name": "Athletik", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Klettern", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "K\u00f6rperbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "Reiten", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "Schleichen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Schwimmen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Selbstbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "name": "Sich verstecken", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Singen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Sinnensch\u00e4rfe", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "name": "Tanzen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Zechen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Etikette", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Gassenwissen", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Lehren", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Menschenkenntnis", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "\u00dcberreden", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "F\u00e4hrtensuchen", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Orientierung", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "Wildnisleben", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Geografie", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "Geschichtswissen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "G\u00f6tter und Kulte", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Heraldik", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Kriegskunst", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Magiekunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Pflanzenkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Rechnen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 7}, {"file": "talente.md", "name": "Rechtskunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Sagen und Legenden", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Sch\u00e4tzen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Sternkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Tierkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Bosparano", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 6}, {"file": "talente.md", "name": "Garethi", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 16}, {"file": "talente.md", "name": "Tulamidya", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "name": "Kusliker Zeichen", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "name": "Tulamidya", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 7}, {"file": "talente.md", "name": "Alchimie", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Handel", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Hauswirtschaft", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Heilkunde: Gift", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Heilkunde: Wunden", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Holzbearbeitung", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Kochen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Lederarbeiten", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Malen/Zeichnen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Schneidern", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 7}],
+    talente: [{"file": "talente.md", "komplexitaet": null, "name": "Armbrust", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Dolche", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Hiebwaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Infanteriewaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Raufen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Ringen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "S\u00e4bel", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "St\u00e4be", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 9}, {"file": "talente.md", "komplexitaet": null, "name": "Wurfmesser", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Athletik", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Klettern", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "K\u00f6rperbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "Reiten", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "Schleichen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Schwimmen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Selbstbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "komplexitaet": null, "name": "Sich verstecken", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Singen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Sinnensch\u00e4rfe", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "komplexitaet": null, "name": "Tanzen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Zechen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Etikette", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "Gassenwissen", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Lehren", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Menschenkenntnis", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "\u00dcberreden", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "F\u00e4hrtensuchen", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Orientierung", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Wildnisleben", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Geografie", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "Geschichtswissen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "komplexitaet": null, "name": "G\u00f6tter und Kulte", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "Heraldik", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Kriegskunst", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Magiekunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "Pflanzenkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Rechnen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 7}, {"file": "talente.md", "komplexitaet": null, "name": "Rechtskunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "Sagen und Legenden", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "Sch\u00e4tzen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Sternkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Tierkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": 21, "name": "Bosparano", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 6}, {"file": "talente.md", "komplexitaet": 18, "name": "Garethi", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 16}, {"file": "talente.md", "komplexitaet": 18, "name": "Tulamidya", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "komplexitaet": 10, "name": "Kusliker Zeichen", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "komplexitaet": 14, "name": "Tulamidya", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 7}, {"file": "talente.md", "komplexitaet": null, "name": "Alchimie", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "komplexitaet": null, "name": "Handel", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Hauswirtschaft", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "komplexitaet": null, "name": "Heilkunde: Gift", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "Heilkunde: Wunden", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "komplexitaet": null, "name": "Holzbearbeitung", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Kochen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Lederarbeiten", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "komplexitaet": null, "name": "Malen/Zeichnen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "komplexitaet": null, "name": "Schneidern", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 7}],
     zauber:  [{"file": "zauber.md", "lern": "C", "name": "Abvenenum reine Speise", "zfw": 7}, {"file": "zauber.md", "lern": "C", "name": "Accuratum Zaubernadel", "zfw": 7}, {"file": "zauber.md", "lern": "D", "name": "Analys Arkanstruktur", "zfw": 4}, {"file": "zauber.md", "lern": "A", "name": "Armatrutz", "zfw": 10}, {"file": "zauber.md", "lern": "A", "name": "Attributo", "zfw": 10}, {"file": "zauber.md", "lern": "B", "name": "Balsam Salabunde", "zfw": 9}, {"file": "zauber.md", "lern": "C", "name": "Blick aufs Wesen", "zfw": 4}, {"file": "zauber.md", "lern": "A", "name": "Blitz dich find", "zfw": 13}, {"file": "zauber.md", "lern": "C", "name": "Custodosigil Diebesbann", "zfw": 2}, {"file": "zauber.md", "lern": "C", "name": "Duplicatus Doppelbild", "zfw": 5}, {"file": "zauber.md", "lern": "A", "name": "Flim Flam Funkel", "zfw": 10}, {"file": "zauber.md", "lern": "D", "name": "Fortifex arkane Wand", "zfw": 8}, {"file": "zauber.md", "lern": "A", "name": "Fulminictus Donnerkeil", "zfw": 10}, {"file": "zauber.md", "lern": "C", "name": "Gardianum Zauberschild", "zfw": 8}, {"file": "zauber.md", "lern": "B", "name": "Horriphobus Schreckgestalt", "zfw": 7}, {"file": "zauber.md", "lern": "A", "name": "Ignifaxius Flammenstrahl", "zfw": 10}, {"file": "zauber.md", "lern": "C", "name": "Ignisphaero Feuerball", "zfw": 7}, {"file": "zauber.md", "lern": "D", "name": "Impersona Maskenbild", "zfw": 5}, {"file": "zauber.md", "lern": "A", "name": "Manifesto Element", "zfw": 7}, {"file": "zauber.md", "lern": "A", "name": "Odem Arcanum", "zfw": 6}, {"file": "zauber.md", "lern": "B", "name": "Pectetondo Zauberhaar", "zfw": 7}, {"file": "zauber.md", "lern": "B", "name": "Psychostabilis", "zfw": 4}, {"file": "zauber.md", "lern": "C", "name": "Sapefacta Zauberschwamm", "zfw": 8}, {"file": "zauber.md", "lern": "C", "name": "Sensibar Empathicus", "zfw": 5}, {"file": "zauber.md", "lern": "B", "name": "Unitatio Geistesbund", "zfw": 3}],
     ap: {
       verfuegbar:   5,
@@ -2690,7 +2854,9 @@ window.DSA = {
     items: [{"anzahl": "1", "gewicht": 90, "name": "Magierstab (als Stab)"}],
     inventar_gewicht_unzen: 90
   },
-  zauberspeicher: [{"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "1", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "2", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "3", "zauber": "\u2014 frei \u2014"}]
+  zauberspeicher: [{"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "1", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "2", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "3", "zauber": "\u2014 frei \u2014"}],
+  kampagne: [{"datei": "2025-10-04-session-01.md", "datum": "2025-10-04", "inhalt": "Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne \"Zum Goldenen Anker\" trifft er auf den mysteri\u00f6sen H\u00e4ndler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.", "nr": "1", "sektionen": {"AsP/LeP-Verlauf": "Illaen: LeP 30 \u2192 24 (R\u00e4uberkampf, Schwerthieb) \u2192 24 (Ende Session)\nIllaen: AsP 38 \u2192 32 (Odem Arcanum 2\u00d7) \u2192 32 (Ende Session)", "Loot / AP-Vergabe": "- 5 Silbertaler ausgegeben (Hinweis von Ferdok)\n- Beute: 12 Silbertaler von R\u00e4ubern, 1 Dolch (Qualit\u00e4t +1)\n- AP: 15 AP (gute Rollenspiel-Entscheidungen, Informationsbeschaffung)", "Neue NSCs / Orte": "- **Ardaniel** \u2014 Hafenmeister Havena, misstrauisch, hilfreich gegen Bezahlung\n- **Ferdok** \u2014 reisender H\u00e4ndler, Informant, Motiv unklar\n- **Kuslik Stadttor** \u2014 Wachen kennen Illaens Elfen-Abstammung, leicht feindlich", "Offene F\u00e4den / Cliffhanger": "- Wer ist der \"Borbarad-Diener\" den der R\u00e4uber erw\u00e4hnte?\n- Was befindet sich in den Ruinen s\u00fcdlich von Kuslik?\n- Ferdok verschwand nach dem Gespr\u00e4ch spurlos \u2014 war er verkleidet?", "Verlauf": "Die Gruppe trifft sich im Hafen von Havena. [[helden/illaen-baernhold/_illaen|Illaen]] spricht mit dem Hafenmeister Ardaniel, der von einem unbekannten Schiff berichtet, das vor drei Tagen ohne Ladescheine eingelaufen ist. In der Taverne \"Zum Goldenen Anker\" wartet Ferdok der H\u00e4ndler \u2014 f\u00fcr 5 Silbertaler teilt er seinen Hinweis auf die Ruinen s\u00fcdlich von Kuslik mit. Unterwegs werden die Helden von einer R\u00e4uberbande aufgehalten (Kampf, 2 R\u00e4uber fliehen, 1 gefangen). Der Gefangene nennt den Namen \"Borbarad-Diener\" bevor er schweigt. Ankunft am Stadttor Kuslik kurz vor Sonnenuntergang.", "Zusammenfassung": "Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne \"Zum Goldenen Anker\" trifft er auf den mysteri\u00f6sen H\u00e4ndler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik."}}],
+  kampagne_slug: ""
 };
 </script>
 <script src="/static/app.js"></script>
@@ -2700,5 +2866,7 @@ window.DSA = {
 <script src="/static/steigern.js"></script>
 <script src="/static/inventar.js"></script>
 <script src="/static/zauberspeicher.js"></script>
+<script src="/static/journal.js"></script>
+<script src="/static/commit.js"></script>
 </body>
 </html>
