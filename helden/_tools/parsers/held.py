@@ -20,6 +20,29 @@ BASISWERT_MAP = {
 
 HAUPTEIGENSCHAFTEN = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK']
 
+SECTION_SKT_MAP = {
+    'Körperliche Talente': 'D',
+    'Gesellschaftliche Talente': 'B',
+    'Natur-Talente': 'B',
+    'Wissenstalente': 'B',
+    'Sprachen': 'A',
+    'Schriften': 'A',
+    'Handwerkliche Talente': 'B',
+}
+
+
+def _skt_for_section(sec_name: str) -> str:
+    """Return DSA 4.1 SKT category for a talent section heading.
+
+    Tries to extract from heading like 'Körperliche Talente (SKT D)'.
+    Falls back to SECTION_SKT_MAP. Defaults to 'B' for unknown sections.
+    """
+    m = re.search(r'\(SKT ([A-H])\)', sec_name)
+    if m:
+        return m.group(1)
+    base = re.sub(r'\s*\(.*?\)', '', sec_name).strip()
+    return SECTION_SKT_MAP.get(base, 'B')
+
 
 def strip_wikilink(s: str) -> str:
     def repl(m):
@@ -196,6 +219,31 @@ def load_held(vault_root: Path, slug: str) -> dict:
         if grp:
             talente[sec_name] = grp
 
+    # Build steigerbar_talente — one entry per talent, with SKT and locator info
+    steigerbar_talente: list[dict] = []
+    for sec_name, grp in talente.items():
+        is_kampf = 'Kampftechnik' in sec_name
+        if 'Sprach' in sec_name:
+            row_key_column = 'Sprache'
+        elif 'Schrift' in sec_name:
+            row_key_column = 'Schrift'
+        elif is_kampf:
+            row_key_column = 'Kampftechnik'
+        else:
+            row_key_column = 'Talent'
+        for entry in grp:
+            skt = entry.get('stk', 'D') if is_kampf else _skt_for_section(sec_name)
+            if not skt:
+                skt = 'B'
+            steigerbar_talente.append({
+                'name': entry['name'],
+                'taw': entry['taw'],
+                'skt': skt,
+                'section': sec_name,
+                'file': 'talente.md',
+                'row_key_column': row_key_column,
+            })
+
     # ------------------------------------------------------------------ #
     # zauber.md
     # ------------------------------------------------------------------ #
@@ -252,6 +300,19 @@ def load_held(vault_root: Path, slug: str) -> dict:
             'kosten': row.get('Kosten', ''),
             'wirkung': strip_wikilink(row.get('Wirkung', '') or ''),
             'mods': row.get('Modifikationen', ''),
+        })
+
+    # Build steigerbar_zauber — normalize lern (A+ → A)
+    steigerbar_zauber: list[dict] = []
+    for z in zauber:
+        lern = (z.get('lern') or '').strip().replace('+', '')
+        if not lern:
+            continue
+        steigerbar_zauber.append({
+            'name': z['name'],
+            'zfw': z['zfw'],
+            'lern': lern,
+            'file': 'zauber.md',
         })
 
     # ------------------------------------------------------------------ #
@@ -498,7 +559,9 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'eigenschaften': eigenschaften,
         'basiswerte': basiswerte,
         'talente': talente,
+        'steigerbar_talente': steigerbar_talente,
         'zauber': zauber,
+        'steigerbar_zauber': steigerbar_zauber,
         'rituale': {'stabzauber': stabzauber, 'andere': andere_rituale, 'zauberspeicher_slots': zauberspeicher_slots},
         'spontane_mods': spontane_mods,
         'mods_max': illaen_mods_max,
