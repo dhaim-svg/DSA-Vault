@@ -106,6 +106,19 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 
 ---
 
+---
+
+## 2026-05-31 — Sprint 007 (D-009 Stufen-Aufstieg)
+
+### L15: Fehlender Wiki-Artikel zu Stufe / Stufenaufstieg
+
+- **Wiki-Datei:** fehlt (vorgeschlagen: `wiki/dsa-4.1/grundregeln/stufenaufstieg.md`)
+- **Befund:** Kein Artikel definiert was Stufe bedeutet, wie Stufenaufstieg funktioniert, welche AP-Schwellen gelten, und was ein Charakter pro Stufe erhält. `erfahrung.md` und `steigerung.md` decken AP-Ausgaben ab, aber nicht das Stufen-Konzept.
+- **Datenkonflikt:** `held.py::AP_STUFEN` sagt Stufe 4 = 1500 AP kumulativ. Die handgeschriebene Notiz in `helden/illaen-baernhold/steigerungs-log.md` Z. 31 nennt „Stufe 4 = 4.200 AP" — das entspricht laut Code Stufe 6. Welche Quelle korrekt ist, muss per Regelwerk geklärt und dann im Code / Log korrigiert werden.
+- **Weiterer Befund (aus Code):** `held.py:57-64` dokumentiert, dass Stufenaufstieg in DSA 4.1 GM-Freigabe erfordert, nicht automatisch bei AP-Schwelle passiert — diese Regel fehlt im Wiki.
+- **Vorschlag:** Neuen Artikel anlegen mit: AP-Schwellen-Tabelle (aus Regelwerk verifiziert), Mechanik (GM-Grant), was eine Stufe bringt (falls im Regelwerk beschrieben). Datenkonflikt im steigerungs-log bereinigen.
+- **Priorität:** mittel (Dashboard-Stufen-Feature funktioniert ohne Wiki-Artikel; Korrektheit der AP-Schwellen relevant für Spielerberatung).
+
 ### L4: Rassen-Artikel ohne Volkstracht — *geschlossen (kein WdH-Quellmaterial)*
 
 - **Befund:** Das WdH-Rassen-Kapitel enthält **keine „Tracht und Bewaffnung"-Abschnitte** für die Rassen (nur Startwerte). Diese Information liegt im Kulturen-Kapitel (→ L3), nicht im Rassen-Kapitel.

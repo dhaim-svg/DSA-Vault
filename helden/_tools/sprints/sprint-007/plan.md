@@ -5,11 +5,11 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-008+D-009 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-007/plan.md |
-| T1 | D-008 Parser — Komplexität als numerisches Feld in `talente` + `steigerbar_talente` | ⬜ todo | parsers/held.py, tests/ |
-| T2 | D-008 UI — neuer 🗣️ Sprachen-Tab (Name · Komplexität · TaW · Warn-Badge) | ⬜ todo | templates/dashboard.html.j2 |
-| T3 | D-008 Steigern — warn-only Komplexitätsgrenze in Steigern-Tab | ⬜ todo | static/steigern.js |
-| T4 | D-009 Stufen-Aufstieg — GM-Grant-Button, 3 PATCHes, Protokoll-Eintrag | ⬜ todo | static/steigern.js, templates/dashboard.html.j2 |
-| T5 | Verifikation + `/sprint-wrap` | ⬜ todo | — |
+| T1 | D-008 Parser — Komplexität als numerisches Feld in `talente` + `steigerbar_talente` | ✅ done | parsers/held.py, tests/ |
+| T2 | D-008 UI — neuer 🗣️ Sprachen-Tab (Name · Komplexität · TaW · Warn-Badge) | ✅ done | templates/dashboard.html.j2 |
+| T3 | D-008 Steigern — warn-only Komplexitätsgrenze in Steigern-Tab | ✅ done | static/steigern.js |
+| T4 | D-009 Stufen-Aufstieg — GM-Grant-Button, 3 PATCHes, Protokoll-Eintrag | ✅ done | static/steigern.js, templates/dashboard.html.j2 |
+| T5 | Verifikation + `/sprint-wrap` | ✅ done | — |
 
 ## Key Design Decisions
 
