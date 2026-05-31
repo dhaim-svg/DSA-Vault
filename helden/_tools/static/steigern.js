@@ -46,7 +46,9 @@
     });
   }
 
-  /* ── Steigern: 3 sequential PATCHes ──────────────────────────────────── */
+  /* ── Steigern: 4 sequential PATCHes ──────────────────────────────────── */
+  /* Known limitation: no rollback on partial failure. If PATCH 1 (stat) succeeds
+     but a later PATCH fails, the stat on disk is already raised. Recovery: git revert. */
   function doSteigern(item, onSuccess, onError) {
     var slug = window.DSA.slug;
     var ap = window.DSA.steigern.ap;
@@ -177,6 +179,10 @@
         doSteigern(item, function () {
           window.location.reload();
         }, function (err) {
+          jaBtn.disabled = false;
+          jaBtn.textContent = 'Ja';
+          var prev = row.querySelector('.sg-error');
+          if (prev) prev.remove();
           var errEl = document.createElement('span');
           errEl.className = 'sg-error';
           errEl.textContent = '⚠ ' + err;
