@@ -11,6 +11,7 @@ ap_eingesetzt: 3845
 ap_verfuegbar: 5
 spieler: David
 wunden: 0
+geld: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}
 ---
 
 # Illaen Baernhold

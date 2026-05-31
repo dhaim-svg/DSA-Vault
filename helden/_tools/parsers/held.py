@@ -482,12 +482,17 @@ def load_held(vault_root: Path, slug: str) -> dict:
         })
 
     inventar: list[dict] = []
+    inventar_gewicht_unzen = 0
     for row in parse_md_table(aus_secs.get('Inventar', '')):
         name = strip_wikilink(row.get('Gegenstand', ''))
         if name:
+            gew_raw = row.get('Gewicht (Unzen)', '')
+            gew = safe_int(gew_raw) if gew_raw.strip() not in ('—', '', '-') else 0
+            inventar_gewicht_unzen += gew
             inventar.append({
                 'name': name,
                 'anzahl': row.get('Anzahl', ''),
+                'gewicht': gew,
             })
 
     reise: list[dict] = []
@@ -500,15 +505,25 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 'anmerkung': strip_wikilink(row.get('Anmerkung', '')),
             })
 
-    geld = ''
-    for line in aus_secs.get('Geld', '').splitlines():
-        stripped = line.strip()
-        if stripped.startswith('**Startgeld'):
-            geld = re.sub(r'\*+', '', stripped)
-            geld = re.sub(r'\s+', ' ', geld).strip()
-            break
-        elif 'Dukaten' in stripped and not geld:
-            geld = strip_markdown(strip_wikilink(stripped))
+    # Structured money from _illaen.md frontmatter (machine-readable/patchable)
+    geld_fm = fm.get('geld', {})
+    if isinstance(geld_fm, dict):
+        geld = {
+            'dukaten': int(geld_fm.get('dukaten', 0)),
+            'silbertaler': int(geld_fm.get('silbertaler', 0)),
+            'heller': int(geld_fm.get('heller', 0)),
+            'kreuzer': int(geld_fm.get('kreuzer', 0)),
+        }
+        # Derive total in Kreuzer for display
+        geld['gesamt_kreuzer'] = (
+            geld['dukaten'] * 1000 +
+            geld['silbertaler'] * 100 +
+            geld['heller'] * 10 +
+            geld['kreuzer']
+        )
+    else:
+        # Fallback if frontmatter not set
+        geld = {'dukaten': 0, 'silbertaler': 0, 'heller': 0, 'kreuzer': 0, 'gesamt_kreuzer': 0}
 
     # ------------------------------------------------------------------ #
     # steigerungs-log.md
@@ -587,7 +602,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'mods_max': illaen_mods_max,
         'sf': {'magisch': sf_magisch, 'allgemein': sf_allg},
         'vor_nachteile': {'vorteile': vorteile, 'nachteile': nachteile, 'schlecht': schlecht},
-        'ausruestung': {'waffen': waffen, 'inventar': inventar, 'reise': reise, 'geld': geld},
+        'ausruestung': {'waffen': waffen, 'inventar': inventar, 'inventar_gewicht_unzen': inventar_gewicht_unzen, 'reise': reise, 'geld': geld},
         'steigerungslog': steigerungslog,
         'vorgeschichte': vorgeschichte,
         'vorgeschichte_paragraphs': paragraphs,
