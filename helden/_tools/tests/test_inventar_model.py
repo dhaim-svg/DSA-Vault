@@ -110,3 +110,23 @@ def test_inventar_gewicht():
     # Verify all items have the 'gewicht' key
     for item in inventar:
         assert 'gewicht' in item, f"Missing 'gewicht' in {item}"
+
+
+# ---------------------------------------------------------------------------
+# test_load_held_geld_integration
+# ---------------------------------------------------------------------------
+
+def test_load_held_geld_integration():
+    """Integration: load_held returns structured geld dict from _illaen.md frontmatter."""
+    from parsers.held import load_held
+
+    vault_root = Path(__file__).parent.parent.parent.parent  # DSA-Vault root
+    held = load_held(vault_root, 'illaen-baernhold')
+    geld = held['ausruestung']['geld']
+    # Illaen's frontmatter: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}
+    assert geld['dukaten'] == 10
+    assert geld['silbertaler'] == 64
+    assert geld['heller'] == 0
+    assert geld['kreuzer'] == 0
+    # gesamt_kreuzer = 10*1000 + 64*100 + 0 + 0 = 16400
+    assert geld['gesamt_kreuzer'] == 16400

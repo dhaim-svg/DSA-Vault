@@ -808,10 +808,209 @@ body::before{
   /* Show static value in print */
   .vital::after { content: attr(data-current) " / " attr(data-max); font-weight: 700; }
 }
+/* ── Dice Panel ────────────────────────────────────────── */
+.dice-panel {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--card-bg, #f5ebd8);
+  border-top: 2px solid var(--accent, #8b7355);
+  padding: 12px 16px 14px;
+  z-index: 200;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.18);
+  font-family: var(--body, serif);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+.dice-panel.hidden { transform: translateY(100%); pointer-events: none; }
+.dice-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#dp-title {
+  flex: 1;
+  font-family: var(--display, serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.dp-mode-btns { display: flex; gap: 4px; }
+.dp-btn {
+  padding: 6px 12px;
+  min-width: 44px; min-height: 44px;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+  touch-action: manipulation;
+  transition: background 0.12s;
+}
+.dp-btn.active, .dp-btn.primary {
+  background: var(--accent, #8b7355);
+  color: var(--bg, #fdf6e3);
+}
+.dp-btn:active { opacity: 0.75; }
+.dp-eig-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.dp-eig-slot { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.dp-eig-slot .dp-eig-abbr { font-size: 0.75rem; opacity: 0.7; }
+.dp-eig-slot .dp-eig-val { font-weight: 700; }
+.dp-dice-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.dp-die {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.dp-die input[type=number] {
+  width: 52px; height: 48px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  -moz-appearance: textfield;
+}
+.dp-die input[type=number]::-webkit-inner-spin-button,
+.dp-die input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.dp-die-label { font-size: 0.7rem; opacity: 0.65; }
+.dp-die-fehl { font-size: 0.8rem; color: var(--accent-blood, #8b1c2a); font-weight: 700; }
+.dp-result {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-height: 2.2rem;
+}
+.dp-result.success { background: rgba(40,140,60,.15); color: #1a6b2a; }
+.dp-result.fail    { background: rgba(180,30,30,.12); color: #8b1c2a; }
+.dp-result.crit    { background: rgba(80,180,255,.15); color: #1a4a7a; }
+.dp-result.patzer  { background: rgba(180,120,30,.15); color: #6b4010; }
+.dp-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dp-controls label { font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+.dp-controls input[type=number] {
+  width: 56px;
+  padding: 4px;
+  text-align: center;
+  border: 1.5px solid var(--accent, #8b7355);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 1rem;
+  -moz-appearance: textfield;
+}
+.dp-controls input[type=number]::-webkit-inner-spin-button,
+.dp-controls input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.dp-action { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Clickable rows */
+.talent-row[data-probe], .spell[data-probe], .hex[data-eigenschaft],
+.minor[data-at], .minor[data-pa], [data-tp] {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.talent-row[data-probe]:hover, .spell[data-probe]:hover,
+.hex[data-eigenschaft]:hover, .minor[data-at]:hover, .minor[data-pa]:hover,
+[data-tp]:hover { background: rgba(139,115,85,.1); border-radius: 4px; }
+@media print { .dice-panel { display: none !important; } }
+
+/* ─── Tab Navigation ─────────────────────────────────────────── */
+.tab-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  gap: 2px;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--rule);
+  padding: 6px 14px 0;
+  overflow-x: auto;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  color: var(--ink-mute);
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: .1em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, background .15s;
+}
+.tab-btn:hover { color: var(--ink); background: rgba(95,195,228,.07); }
+.tab-btn--active {
+  color: var(--accent-cold);
+  background: var(--bg-elev);
+  border-color: var(--rule);
+}
+.tab-content { display: none; }
+.tab-content--active { display: block; }
+body { padding-top: 46px; }
+@media print {
+  .tab-bar { display: none !important; }
+  .tab-content { display: block !important; }
+  body { padding-top: 0 !important; }
+}
+/* Steigern Tab */
+.sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent-cold); margin: 20px 0 8px; }
+.sg-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
+  border-bottom: 1px solid var(--rule-soft); font-size: 13px; }
+.sg-row:last-child { border-bottom: none; }
+.sg-name { flex: 1; color: var(--ink); }
+.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; min-width: 60px; }
+.sg-cost { font-family: var(--mono); font-size: 12px; min-width: 52px; font-weight: bold; }
+.sg-cost.affordable { color: var(--accent-aup); }
+.sg-cost.expensive { color: var(--ink-dim); }
+.sg-btn-area { display: flex; align-items: center; gap: 6px; }
+.sg-btn { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 4px;
+  background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; }
+.sg-btn:hover { background: var(--bg-elev); }
+.sg-btn.disabled { opacity: .4; cursor: default; }
+.sg-btn--ok { background: rgba(40,120,60,.3); color: #7fe8a0; border-color: #4a8a60; }
+.sg-confirm { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-mute); }
+.sg-confirm.hidden, .sg-btn.hidden { display: none; }
+.sg-error { font-size: 11px; color: var(--accent-blood); margin-left: 8px; }
+.sg-ap-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; margin-bottom: 8px; }
+.sg-ap-label { font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .1em; }
+.sg-ap-val { font-family: var(--mono); font-size: 18px; font-weight: bold; color: var(--ink); margin-left: 4px; }
+.sg-ap-val.avail { color: var(--accent-gold); }
+.sg-stufe { font-size: 12px; color: var(--ink-mute); }
 </style>
 </head>
 <body>
 <div class="codex">
+<nav class="tab-bar" role="tablist" aria-label="Dashboard-Bereiche">
+  <button class="tab-btn" data-tab="kampf"    type="button">⚔️ Kampf</button>
+  <button class="tab-btn" data-tab="talente"  type="button">🎯 Talente</button>
+  <button class="tab-btn" data-tab="zauber"   type="button">✨ Zauber</button>
+  <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
+  <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
+</nav>
 
 
 <!-- ============================================================
@@ -871,6 +1070,7 @@ body::before{
 <span class="sep">·</span><span>Stigma <strong>Stigma</strong></span>  </div>
 </header>
 
+<div class="tab-content" id="tab-kampf">
 <!-- ============================================================
      VITALS + KAMPFWERTE
      ============================================================ -->
@@ -935,8 +1135,8 @@ body::before{
   <section class="card">
     <h3 class="card-title">Kampfwerte <span class="meta">Basis</span></h3>
     <div class="minor-stats" style="margin-top:0;border-top:0;padding-top:0;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="minor"><span class="v" style="color:var(--accent-gold)">7</span><span class="k">AT-Basis</span></div>
-      <div class="minor"><span class="v" style="color:var(--accent-gold)">8</span><span class="k">PA-Basis</span></div>
+      <div class="minor" data-at="7"><span class="v" style="color:var(--accent-gold)">7</span><span class="k">AT-Basis</span></div>
+      <div class="minor" data-pa="8"><span class="v" style="color:var(--accent-gold)">8</span><span class="k">PA-Basis</span></div>
       <div class="minor"><span class="v" style="color:var(--accent-gold)">8</span><span class="k">FK-Basis</span></div>
     </div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--rule)">
@@ -944,7 +1144,7 @@ body::before{
         <div class="w-name">Magierstab (als Stab)</div>
         <div class="weapon-grid">
           <div><span class="k">DK</span><span class="v">N S</span></div>
-          <div><span class="k">TP</span><span class="v">1W+1</span></div>
+          <div data-tp="1W+1"><span class="k">TP</span><span class="v">1W+1</span></div>
           <div><span class="k">AT</span><span class="v">13</span></div>
           <div><span class="k">PA</span><span class="v">9</span></div>
           <div><span class="k">INI</span><span class="v">0</span></div>
@@ -959,7 +1159,7 @@ body::before{
 <div class="sec-head"><h2>Eigenschaften</h2><span class="rule"></span></div>
 <section class="card attr-card">
   <div class="hex-grid">
-    <div class="hex">
+    <div class="hex" data-eigenschaft="MU" data-wert="12">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">MU</span>
@@ -967,7 +1167,7 @@ body::before{
         <span class="full">Mut</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="KL" data-wert="14">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">KL</span>
@@ -975,7 +1175,7 @@ body::before{
         <span class="full">Klugheit</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="IN" data-wert="15">
       <div class="shape"></div>
 <span class="mod">+1</span>      <div class="inner">
         <span class="abbr">IN</span>
@@ -983,7 +1183,7 @@ body::before{
         <span class="full">Intuition</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="CH" data-wert="13">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">CH</span>
@@ -991,7 +1191,7 @@ body::before{
         <span class="full">Charisma</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="FF" data-wert="12">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">FF</span>
@@ -999,7 +1199,7 @@ body::before{
         <span class="full">Fingerfertigkeit</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="GE" data-wert="13">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">GE</span>
@@ -1007,7 +1207,7 @@ body::before{
         <span class="full">Gewandtheit</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="KO" data-wert="13">
       <div class="shape"></div>
 <span class="mod">+1</span>      <div class="inner">
         <span class="abbr">KO</span>
@@ -1015,7 +1215,7 @@ body::before{
         <span class="full">Konstitution</span>
       </div>
     </div>
-    <div class="hex">
+    <div class="hex" data-eigenschaft="KK" data-wert="11">
       <div class="shape"></div>
       <div class="inner">
         <span class="abbr">KK</span>
@@ -1026,91 +1226,8 @@ body::before{
   </div>
 </section>
 
-<!-- Vor- & Nachteile -->
-<div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
-<section class="card">
-  <div class="vn-grid">
-    <div class="vn-grp pos">
-      <h4>Vorteile</h4>
-      <ul class="vn-list">
-        <li>
-          <span><b>Akademische Ausbildung (Magier)</b><small>Gildenmagier-Ausbildung am Stoerrebrandt-Kolleg</small></span>
-          <span class="stufe"></span>
-        </li>
-        <li>
-          <span><b>Astrale Regeneration</b><small>+3 AE pro Regenerationsphase</small></span>
-          <span class="stufe">3</span>
-        </li>
-        <li>
-          <span><b>Eisern</b><small>+2 LE</small></span>
-          <span class="stufe"></span>
-        </li>
-        <li>
-          <span><b>Gutes Gedächtnis</b><small>Erleichterte Lern-/Erinnerungsproben</small></span>
-          <span class="stufe"></span>
-        </li>
-        <li>
-          <span><b>Vollzauberer</b><small>Kein Malus auf Zaubern in Rüstung (Voraussetzung für Magischen Leibwächter)</small></span>
-          <span class="stufe"></span>
-        </li>
-      </ul>
-    </div>
-    <div class="vn-grp neg">
-      <h4>Nachteile</h4>
-      <ul class="vn-list">
-        <li>
-          <span><b>Schulden</b><small>Ausbildungsschulden Stoerrebrandt-Kolleg (Rückzahlung durch Leibwächter-Dienst)</small></span>
-          <span class="stufe">1.500 Dukaten</span>
-        </li>
-        <li>
-          <span><b>Speisegebote</b><small>Kein Wolfs-/Hundefleisch (Ehrfurcht vor dem Wolfstier — Nivesen-Tabu); kein Huftier-Fleisch an Festtagen (Mondphasen-Feste, Stammes-Riten)</small></span>
-          <span class="stufe"></span>
-        </li>
-        <li>
-          <span><b>Stigma</b><small>Hexensträhne — eine markante silber-weiße Strähne im kupferroten Haar; seit erstem Kontakt mit starker Magie; in konservativen Regionen als Hexenzeichen gedeutet</small></span>
-          <span class="stufe">6</span>
-        </li>
-        <li>
-          <span><b>Verpflichtungen</b><small>Stoerrebrandt-Imperium + Akademie; Leibwächter-Dienst auf Abruf; Berichtspflicht</small></span>
-          <span class="stufe"></span>
-        </li>
-        <li>
-          <span><b>Vorurteile gegen Adel</b><small>Gesellschaftliche Proben mit Adeligen −6; tritt auch bei Adels-Symbolen/Titeln auf</small></span>
-          <span class="stufe">6</span>
-        </li>
-        <li>
-          <span><b>Wahrer Name</b><small>Ikha-Shaar („der brennende Hunger nach Licht") — bekannt nur engsten Vertrauten + Stoerrebrandt-Kolleg (Registrierungspflicht); korrekte Aussprache gibt magische Macht</small></span>
-          <span class="stufe"></span>
-        </li>
-      </ul>
-    </div>
-    <div class="vn-grp bad" style="grid-column:1/-1">
-      <h4>Schlechte Eigenschaften</h4>
-      <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
-        <li>
-          <span><b>Arroganz</b><small>Probe bei Demütigung/Unterordnung</small></span>
-          <span class="stufe">6</span>
-        </li>
-        <li>
-          <span><b>Eitelkeit</b><small>Probe bei Äußerlichkeiten</small></span>
-          <span class="stufe">5</span>
-        </li>
-        <li>
-          <span><b>Goldgier</b><small>Probe bei Geldverzicht</small></span>
-          <span class="stufe">5</span>
-        </li>
-        <li>
-          <span><b>Neugier</b><small>Probe bei Geheimnissen/Unbekanntem — Hauptantrieb</small></span>
-          <span class="stufe">12</span>
-        </li>
-        <li>
-          <span><b>Prinzipientreue</b><small>Prinzip: „Das Leben des Schutzbefohlenen steht über dem eige…</small></span>
-          <span class="stufe">10</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
+</div><!-- end tab-kampf -->
+<div class="tab-content" id="tab-talente">
 
 <!-- ============================================================
      SEITE 2 — TALENTE
@@ -1175,62 +1292,62 @@ body::before{
         Körperliche Talente
         <span class="skt">SKT D</span>
       </h4>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="GE/KO/KK" data-taw="0" data-name="Athletik">
         <span class="t-name">Athletik</span>
         <span class="t-probe">GE/KO/KK</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/GE/KK" data-taw="4" data-name="Klettern">
         <span class="t-name">Klettern</span>
         <span class="t-probe">MU/GE/KK</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/IN/GE" data-taw="4" data-name="Körperbeherrschung">
         <span class="t-name">Körperbeherrschung</span>
         <span class="t-probe">MU/IN/GE</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="CH/GE/KK" data-taw="4" data-name="Reiten">
         <span class="t-name">Reiten</span>
         <span class="t-probe">CH/GE/KK</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/IN/GE" data-taw="3" data-name="Schleichen">
         <span class="t-name">Schleichen</span>
         <span class="t-probe">MU/IN/GE</span>
         <span class="t-zfw">3</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="GE/KO/KK" data-taw="3" data-name="Schwimmen">
         <span class="t-name">Schwimmen</span>
         <span class="t-probe">GE/KO/KK</span>
         <span class="t-zfw">3</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="MU/KO/KK" data-taw="7" data-name="Selbstbeherrschung">
         <span class="t-name">Selbstbeherrschung</span>
         <span class="t-probe">MU/KO/KK</span>
         <span class="t-zfw">7</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/IN/GE" data-taw="1" data-name="Sich verstecken">
         <span class="t-name">Sich verstecken</span>
         <span class="t-probe">MU/IN/GE</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="IN/CH/CH" data-taw="0" data-name="Singen">
         <span class="t-name">Singen</span>
         <span class="t-probe">IN/CH/CH</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/IN/IN" data-taw="7" data-name="Sinnenschärfe">
         <span class="t-name">Sinnenschärfe</span>
         <span class="t-probe">KL/IN/IN</span>
         <span class="t-zfw">7</span>
       </div>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="CH/GE/GE" data-taw="0" data-name="Tanzen">
         <span class="t-name">Tanzen</span>
         <span class="t-probe">CH/GE/GE</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="IN/KO/KK" data-taw="1" data-name="Zechen">
         <span class="t-name">Zechen</span>
         <span class="t-probe">IN/KO/KK</span>
         <span class="t-zfw">1</span>
@@ -1241,27 +1358,27 @@ body::before{
         Gesellschaftliche Talente
         <span class="skt">SKT B</span>
       </h4>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Etikette">
         <span class="t-name">Etikette</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/CH" data-taw="1" data-name="Gassenwissen">
         <span class="t-name">Gassenwissen</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/CH" data-taw="2" data-name="Lehren">
         <span class="t-name">Lehren</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">2</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Menschenkenntnis">
         <span class="t-name">Menschenkenntnis</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/IN/CH" data-taw="3" data-name="Überreden">
         <span class="t-name">Überreden</span>
         <span class="t-probe">MU/IN/CH</span>
         <span class="t-zfw">3</span>
@@ -1272,17 +1389,17 @@ body::before{
         Natur-Talente
         <span class="skt">SKT B</span>
       </h4>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="KL/IN/KO" data-taw="0" data-name="Fährtensuchen">
         <span class="t-name">Fährtensuchen</span>
         <span class="t-probe">KL/IN/KO</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/IN" data-taw="3" data-name="Orientierung">
         <span class="t-name">Orientierung</span>
         <span class="t-probe">KL/IN/IN</span>
         <span class="t-zfw">3</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="IN/GE/KO" data-taw="2" data-name="Wildnisleben">
         <span class="t-name">Wildnisleben</span>
         <span class="t-probe">IN/GE/KO</span>
         <span class="t-zfw">2</span>
@@ -1293,67 +1410,67 @@ body::before{
         Wissenstalente
         <span class="skt">SKT B</span>
       </h4>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/IN" data-taw="3" data-name="Geografie">
         <span class="t-name">Geografie</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">3</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/IN" data-taw="3" data-name="Geschichtswissen">
         <span class="t-name">Geschichtswissen</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">3</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/KL/IN" data-taw="5" data-name="Götter und Kulte">
         <span class="t-name">Götter und Kulte</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/FF" data-taw="1" data-name="Heraldik">
         <span class="t-name">Heraldik</span>
         <span class="t-probe">KL/KL/FF</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/KL/CH" data-taw="2" data-name="Kriegskunst">
         <span class="t-name">Kriegskunst</span>
         <span class="t-probe">MU/KL/CH</span>
         <span class="t-zfw">2</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/IN" data-taw="4" data-name="Magiekunde">
         <span class="t-name">Magiekunde</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/FF" data-taw="1" data-name="Pflanzenkunde">
         <span class="t-name">Pflanzenkunde</span>
         <span class="t-probe">KL/IN/FF</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/KL/IN" data-taw="7" data-name="Rechnen">
         <span class="t-name">Rechnen</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">7</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/IN" data-taw="4" data-name="Rechtskunde">
         <span class="t-name">Rechtskunde</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Sagen und Legenden">
         <span class="t-name">Sagen und Legenden</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/IN" data-taw="2" data-name="Schätzen">
         <span class="t-name">Schätzen</span>
         <span class="t-probe">KL/IN/IN</span>
         <span class="t-zfw">2</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/KL/IN" data-taw="2" data-name="Sternkunde">
         <span class="t-name">Sternkunde</span>
         <span class="t-probe">KL/KL/IN</span>
         <span class="t-zfw">2</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/KL/IN" data-taw="2" data-name="Tierkunde">
         <span class="t-name">Tierkunde</span>
         <span class="t-probe">MU/KL/IN</span>
         <span class="t-zfw">2</span>
@@ -1401,52 +1518,52 @@ body::before{
         Handwerkliche Talente
         <span class="skt">SKT B</span>
       </h4>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="MU/KL/FF" data-taw="2" data-name="Alchimie">
         <span class="t-name">Alchimie</span>
         <span class="t-probe">MU/KL/FF</span>
         <span class="t-zfw">2</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/IN/CH" data-taw="1" data-name="Handel">
         <span class="t-name">Handel</span>
         <span class="t-probe">KL/IN/CH</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="IN/CH/FF" data-taw="1" data-name="Hauswirtschaft">
         <span class="t-name">Hauswirtschaft</span>
         <span class="t-probe">IN/CH/FF</span>
         <span class="t-zfw">1</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="MU/KL/IN" data-taw="5" data-name="Heilkunde: Gift">
         <span class="t-name">Heilkunde: Gift</span>
         <span class="t-probe">MU/KL/IN</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row ">
+      <div class="talent-row " data-probe="KL/CH/FF" data-taw="4" data-name="Heilkunde: Wunden">
         <span class="t-name">Heilkunde: Wunden</span>
         <span class="t-probe">KL/CH/FF</span>
         <span class="t-zfw">4</span>
       </div>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="KL/FF/KK" data-taw="0" data-name="Holzbearbeitung">
         <span class="t-name">Holzbearbeitung</span>
         <span class="t-probe">KL/FF/KK</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="KL/IN/FF" data-taw="0" data-name="Kochen">
         <span class="t-name">Kochen</span>
         <span class="t-probe">KL/IN/FF</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row zero">
+      <div class="talent-row zero" data-probe="KL/FF/FF" data-taw="0" data-name="Lederarbeiten">
         <span class="t-name">Lederarbeiten</span>
         <span class="t-probe">KL/FF/FF</span>
         <span class="t-zfw">0</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/IN/FF" data-taw="5" data-name="Malen/Zeichnen">
         <span class="t-name">Malen/Zeichnen</span>
         <span class="t-probe">KL/IN/FF</span>
         <span class="t-zfw">5</span>
       </div>
-      <div class="talent-row high">
+      <div class="talent-row high" data-probe="KL/FF/FF" data-taw="7" data-name="Schneidern">
         <span class="t-name">Schneidern</span>
         <span class="t-probe">KL/FF/FF</span>
         <span class="t-zfw">7</span>
@@ -1467,6 +1584,8 @@ body::before{
   </div>
 </section>
 
+</div><!-- end tab-talente -->
+<div class="tab-content" id="tab-zauber">
 <!-- ============================================================
      SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
      ============================================================ -->
@@ -1477,7 +1596,7 @@ body::before{
     <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
-  <div class="spell">
+  <div class="spell" data-probe="KL/KL/FF" data-zfw="7" data-name="Abvenenum reine Speise" data-kosten="4 AsP/Mahlzeit">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/abvenenum.md">Abvenenum reine Speise</a>      <span class="submeta">Objk · C/C</span>
     </span>
@@ -1492,7 +1611,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/CH/FF" data-zfw="7" data-name="Accuratum Zaubernadel" data-kosten="4 AsP/Stein (mind. 7)">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/accuratum.md">Accuratum Zaubernadel</a>      <span class="submeta">Objk · C/C</span>
     </span>
@@ -1507,7 +1626,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/KL/IN" data-zfw="4" data-name="Analys Arkanstruktur" data-kosten="6 AsP + 3/½h">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/analys.md">Analys Arkanstruktur</a>      <span class="submeta">Hell, Meta · D/D</span>
     </span>
@@ -1518,7 +1637,7 @@ body::before{
     <span class="wirkung-cell">
 <span class="wirkung">Zeigt Zaubermatrix von Artefakt oder Wesen</span>    </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="IN/GE/KO" data-zfw="10" data-name="Armatrutz" data-kosten="mind. 4 AsP (RS²−ZfP*/2)">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/armatrutz.md">Armatrutz</a>      <span class="submeta">Eign, Elem(Erz) · B/A</span>
     </span>
@@ -1533,7 +1652,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/CH/**" data-zfw="10" data-name="Attributo" data-kosten="7 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/attributo.md">Attributo</a><span class="haus">×</span>      <span class="submeta">Eign · B/A+</span>
     </span>
@@ -1548,7 +1667,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/CH" data-zfw="9" data-name="Balsam Salabunde" data-kosten="1 AsP/LeP (mind. 5)">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/balsam-salabunde.md">Balsam Salabunde</a><span class="haus">×</span>      <span class="submeta">Form, Heil · C/B</span>
     </span>
@@ -1563,7 +1682,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/CH" data-zfw="4" data-name="Blick aufs Wesen" data-kosten="6 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blick-aufs-wesen.md">Blick aufs Wesen</a>      <span class="submeta">Hell · C/C</span>
     </span>
@@ -1578,7 +1697,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/GE" data-zfw="13" data-name="Blitz dich find" data-kosten="4 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blitz-dich-find.md">Blitz dich find</a><span class="haus">×</span>      <span class="submeta">Einfl · B/A</span>
     </span>
@@ -1593,7 +1712,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/FF/FF" data-zfw="2" data-name="Custodosigil Diebesbann" data-kosten="1 AsP/Stein (mind. 5)">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/custodosigil.md">Custodosigil Diebesbann</a>      <span class="submeta">Elem(Feu), Meta, Objk · C/C</span>
     </span>
@@ -1608,7 +1727,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/CH/GE" data-zfw="5" data-name="Duplicatus Doppelbild" data-kosten="6 AsP + 3/weiterer">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/duplicatus.md">Duplicatus Doppelbild</a>      <span class="submeta">Illu · C/C</span>
     </span>
@@ -1623,7 +1742,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/KL/FF" data-zfw="10" data-name="Flim Flam Funkel" data-kosten="1 AsP/SR">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/flim-flam.md">Flim Flam Funkel</a>      <span class="submeta">Umwt · A/A</span>
     </span>
@@ -1638,7 +1757,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="IN/KO/KK" data-zfw="8" data-name="Fortifex arkane Wand" data-kosten="11 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fortifex.md">Fortifex arkane Wand</a>      <span class="submeta">Elem(Erz), Umwt · D/D</span>
     </span>
@@ -1653,7 +1772,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="IN/GE/KO" data-zfw="10" data-name="Fulminictus Donnerkeil" data-kosten="1 AsP/SP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fulminictus.md">Fulminictus Donnerkeil</a><span class="haus">×</span>      <span class="submeta">Krft, Scha · C/A</span>
     </span>
@@ -1668,7 +1787,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/KO" data-zfw="8" data-name="Gardianum Zauberschild" data-kosten="mind. 3 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/gardianum.md">Gardianum Zauberschild</a><span class="haus">×</span>      <span class="submeta">Anti, Krft, Meta · D/C</span>
     </span>
@@ -1683,7 +1802,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="MU/IN/CH" data-zfw="7" data-name="Horriphobus Schreckgestalt" data-kosten="7 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/horriphobus-schreckgestalt.md">Horriphobus Schreckgestalt</a><span class="haus">×</span>      <span class="submeta">Einfl · C/B</span>
     </span>
@@ -1694,7 +1813,7 @@ body::before{
     <span class="wirkung-cell">
 <span class="wirkung">Erscheint dem Opfer als bedrohliche Schreckgestalt</span>    </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/FF/KO" data-zfw="10" data-name="Ignifaxius Flammenstrahl" data-kosten="ZfW Würfel × 1W6 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md">Ignifaxius Flammenstrahl</a><span class="haus">×</span>      <span class="submeta">Elem(Feu), Scha · C/A</span>
     </span>
@@ -1709,7 +1828,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="MU/IN/KO" data-zfw="7" data-name="Ignisphaero Feuerball" data-kosten="21 AsP + 1W6 LeP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignisphaero-feuerball.md">Ignisphaero Feuerball</a>      <span class="submeta">Elem(Feu), Scha, Tele · D/C</span>
     </span>
@@ -1724,7 +1843,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/FF" data-zfw="5" data-name="Impersona Maskenbild" data-kosten="9 AsP + 3/h">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/impersona-maskenbild.md">Impersona Maskenbild</a>      <span class="submeta">Illu · D/D</span>
     </span>
@@ -1739,7 +1858,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/CH" data-zfw="7" data-name="Manifesto Element" data-kosten="3 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/manifesto-element.md">Manifesto Element</a>      <span class="submeta">Elem · A/A</span>
     </span>
@@ -1754,7 +1873,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/IN" data-zfw="6" data-name="Odem Arcanum" data-kosten="4 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/odem-arcanum.md">Odem Arcanum</a>      <span class="submeta">Hell, Krft · A/A</span>
     </span>
@@ -1769,7 +1888,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/CH/FF" data-zfw="7" data-name="Pectetondo Zauberhaar" data-kosten="4 AsP + 2/Spann">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/pectetondo-zauberhaar.md">Pectetondo Zauberhaar</a>      <span class="submeta">Form · B/B</span>
     </span>
@@ -1784,7 +1903,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="MU/KL/KO" data-zfw="4" data-name="Psychostabilis" data-kosten="8 AsP + 1/SR">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/psychostabilis.md">Psychostabilis</a>      <span class="submeta">Anti, Eign · C/B</span>
     </span>
@@ -1799,7 +1918,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/CH/FF" data-zfw="8" data-name="Sapefacta Zauberschwamm" data-kosten="5 AsP">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sapefacta-zauberschwamm.md">Sapefacta Zauberschwamm</a>      <span class="submeta">Elem(Luf), Elem(Was), Tele · C/C</span>
     </span>
@@ -1814,7 +1933,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="KL/IN/CH" data-zfw="5" data-name="Sensibar Empathicus" data-kosten="3 AsP/10 A">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sensibar-empathicus.md">Sensibar Empathicus</a>      <span class="submeta">Hell · C/C</span>
     </span>
@@ -1829,7 +1948,7 @@ body::before{
       </details>
     </span>
   </div>
-  <div class="spell">
+  <div class="spell" data-probe="IN/CH/KO" data-zfw="3" data-name="Unitatio Geistesbund" data-kosten="1 AsP/Person">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/unitatio-geistesbund.md">Unitatio Geistesbund</a>      <span class="submeta">Krft, Vers · B/B</span>
     </span>
@@ -2083,6 +2202,102 @@ body::before{
   </section>
 </div>
 
+</div><!-- end tab-zauber -->
+
+<div class="tab-content" id="tab-steigern">
+  <div class="sec-head"><h2>AP &amp; Steigerung</h2><span class="rule"></span></div>
+  <section class="card" id="steigern-ap-overview"></section>
+  <section class="card" id="steigern-list" style="margin-top:var(--gap)"></section>
+</div><!-- end tab-steigern -->
+
+<div class="tab-content" id="tab-profil">
+
+<!-- Vor- & Nachteile -->
+<div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
+<section class="card">
+  <div class="vn-grid">
+    <div class="vn-grp pos">
+      <h4>Vorteile</h4>
+      <ul class="vn-list">
+        <li>
+          <span><b>Akademische Ausbildung (Magier)</b><small>Gildenmagier-Ausbildung am Stoerrebrandt-Kolleg</small></span>
+          <span class="stufe"></span>
+        </li>
+        <li>
+          <span><b>Astrale Regeneration</b><small>+3 AE pro Regenerationsphase</small></span>
+          <span class="stufe">3</span>
+        </li>
+        <li>
+          <span><b>Eisern</b><small>+2 LE</small></span>
+          <span class="stufe"></span>
+        </li>
+        <li>
+          <span><b>Gutes Gedächtnis</b><small>Erleichterte Lern-/Erinnerungsproben</small></span>
+          <span class="stufe"></span>
+        </li>
+        <li>
+          <span><b>Vollzauberer</b><small>Kein Malus auf Zaubern in Rüstung (Voraussetzung für Magischen Leibwächter)</small></span>
+          <span class="stufe"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="vn-grp neg">
+      <h4>Nachteile</h4>
+      <ul class="vn-list">
+        <li>
+          <span><b>Schulden</b><small>Ausbildungsschulden Stoerrebrandt-Kolleg (Rückzahlung durch Leibwächter-Dienst)</small></span>
+          <span class="stufe">1.500 Dukaten</span>
+        </li>
+        <li>
+          <span><b>Speisegebote</b><small>Kein Wolfs-/Hundefleisch (Ehrfurcht vor dem Wolfstier — Nivesen-Tabu); kein Huftier-Fleisch an Festtagen (Mondphasen-Feste, Stammes-Riten)</small></span>
+          <span class="stufe"></span>
+        </li>
+        <li>
+          <span><b>Stigma</b><small>Hexensträhne — eine markante silber-weiße Strähne im kupferroten Haar; seit erstem Kontakt mit starker Magie; in konservativen Regionen als Hexenzeichen gedeutet</small></span>
+          <span class="stufe">6</span>
+        </li>
+        <li>
+          <span><b>Verpflichtungen</b><small>Stoerrebrandt-Imperium + Akademie; Leibwächter-Dienst auf Abruf; Berichtspflicht</small></span>
+          <span class="stufe"></span>
+        </li>
+        <li>
+          <span><b>Vorurteile gegen Adel</b><small>Gesellschaftliche Proben mit Adeligen −6; tritt auch bei Adels-Symbolen/Titeln auf</small></span>
+          <span class="stufe">6</span>
+        </li>
+        <li>
+          <span><b>Wahrer Name</b><small>Ikha-Shaar („der brennende Hunger nach Licht") — bekannt nur engsten Vertrauten + Stoerrebrandt-Kolleg (Registrierungspflicht); korrekte Aussprache gibt magische Macht</small></span>
+          <span class="stufe"></span>
+        </li>
+      </ul>
+    </div>
+    <div class="vn-grp bad" style="grid-column:1/-1">
+      <h4>Schlechte Eigenschaften</h4>
+      <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
+        <li>
+          <span><b>Arroganz</b><small>Probe bei Demütigung/Unterordnung</small></span>
+          <span class="stufe">6</span>
+        </li>
+        <li>
+          <span><b>Eitelkeit</b><small>Probe bei Äußerlichkeiten</small></span>
+          <span class="stufe">5</span>
+        </li>
+        <li>
+          <span><b>Goldgier</b><small>Probe bei Geldverzicht</small></span>
+          <span class="stufe">5</span>
+        </li>
+        <li>
+          <span><b>Neugier</b><small>Probe bei Geheimnissen/Unbekanntem — Hauptantrieb</small></span>
+          <span class="stufe">12</span>
+        </li>
+        <li>
+          <span><b>Prinzipientreue</b><small>Prinzip: „Das Leben des Schutzbefohlenen steht über dem eige…</small></span>
+          <span class="stufe">10</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================
      SEITE 4 — AUSRÜSTUNG + KAMPAGNE + VORGESCHICHTE
      ============================================================ -->
@@ -2177,6 +2392,8 @@ body::before{
   <p>Der Eid ist keine Theorie mehr.</p>
 </section>
 
+</div><!-- end tab-profil -->
+
 </div><!-- .codex -->
 
 <button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
@@ -2204,8 +2421,61 @@ body::before{
   });
 })();
 </script>
+<div id="dice-panel" class="dice-panel hidden">
+  <div class="dice-panel-header">
+    <span id="dp-title">🎲 Probe</span>
+    <span class="dp-mode-btns">
+      <button id="dp-auto" class="dp-btn active" type="button">Auto</button>
+      <button id="dp-manual" class="dp-btn" type="button">Manuell</button>
+    </span>
+    <button id="dp-close" class="dp-btn" type="button" aria-label="Panel schließen">✕</button>
+  </div>
+  <div id="dp-eig-row" class="dp-eig-row"></div>
+  <div id="dp-dice-row" class="dp-dice-row"></div>
+  <div id="dp-result" class="dp-result"></div>
+  <div class="dp-controls">
+    <label>Erschwernis&thinsp;<input id="dp-mod" type="number" value="0" min="-20" max="20"></label>
+    <button id="dp-roll" class="dp-btn primary" type="button">🔁 Neu würfeln</button>
+  </div>
+  <div id="dp-action" class="dp-action"></div>
+</div>
 <div id="save-indicator"></div>
+<script>
+/* DSA character data for dice.js — regenerated on each render */
+window.DSA = {
+  eig: {
+    MU: 12,
+    KL: 14,
+    IN: 15,
+    CH: 13,
+    FF: 12,
+    GE: 13,
+    KO: 13,
+    KK: 11
+  },
+  vitals: {
+    LE: { current: 28, max: 28 },
+    AE: { current: 38, max: 38 },
+    AU: { current: 31, max: 31 }
+  },
+  steigern: {
+    talente: [{"file": "talente.md", "name": "Armbrust", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 1}, {"file": "talente.md", "name": "Dolche", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Hiebwaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Infanteriewaffen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Raufen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 3}, {"file": "talente.md", "name": "Ringen", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "S\u00e4bel", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "St\u00e4be", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "D", "taw": 9}, {"file": "talente.md", "name": "Wurfmesser", "row_key_column": "Kampftechnik", "section": "Kampftechniken", "skt": "C", "taw": 2}, {"file": "talente.md", "name": "Athletik", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Klettern", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "K\u00f6rperbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "Reiten", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 4}, {"file": "talente.md", "name": "Schleichen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Schwimmen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 3}, {"file": "talente.md", "name": "Selbstbeherrschung", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "name": "Sich verstecken", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Singen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Sinnensch\u00e4rfe", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 7}, {"file": "talente.md", "name": "Tanzen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 0}, {"file": "talente.md", "name": "Zechen", "row_key_column": "Talent", "section": "K\u00f6rperliche Talente (SKT D)", "skt": "D", "taw": 1}, {"file": "talente.md", "name": "Etikette", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Gassenwissen", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Lehren", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Menschenkenntnis", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "\u00dcberreden", "row_key_column": "Talent", "section": "Gesellschaftliche Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "F\u00e4hrtensuchen", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Orientierung", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "Wildnisleben", "row_key_column": "Talent", "section": "Natur-Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Geografie", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "Geschichtswissen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 3}, {"file": "talente.md", "name": "G\u00f6tter und Kulte", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Heraldik", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Kriegskunst", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Magiekunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Pflanzenkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Rechnen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 7}, {"file": "talente.md", "name": "Rechtskunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Sagen und Legenden", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Sch\u00e4tzen", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Sternkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Tierkunde", "row_key_column": "Talent", "section": "Wissenstalente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Bosparano", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 6}, {"file": "talente.md", "name": "Garethi", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 16}, {"file": "talente.md", "name": "Tulamidya", "row_key_column": "Sprache", "section": "Sprachen (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "name": "Kusliker Zeichen", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 8}, {"file": "talente.md", "name": "Tulamidya", "row_key_column": "Schrift", "section": "Schriften (SKT A)", "skt": "A", "taw": 7}, {"file": "talente.md", "name": "Alchimie", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 2}, {"file": "talente.md", "name": "Handel", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Hauswirtschaft", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 1}, {"file": "talente.md", "name": "Heilkunde: Gift", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Heilkunde: Wunden", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 4}, {"file": "talente.md", "name": "Holzbearbeitung", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Kochen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Lederarbeiten", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 0}, {"file": "talente.md", "name": "Malen/Zeichnen", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 5}, {"file": "talente.md", "name": "Schneidern", "row_key_column": "Talent", "section": "Handwerkliche Talente (SKT B)", "skt": "B", "taw": 7}],
+    zauber:  [{"file": "zauber.md", "lern": "C", "name": "Abvenenum reine Speise", "zfw": 7}, {"file": "zauber.md", "lern": "C", "name": "Accuratum Zaubernadel", "zfw": 7}, {"file": "zauber.md", "lern": "D", "name": "Analys Arkanstruktur", "zfw": 4}, {"file": "zauber.md", "lern": "A", "name": "Armatrutz", "zfw": 10}, {"file": "zauber.md", "lern": "A", "name": "Attributo", "zfw": 10}, {"file": "zauber.md", "lern": "B", "name": "Balsam Salabunde", "zfw": 9}, {"file": "zauber.md", "lern": "C", "name": "Blick aufs Wesen", "zfw": 4}, {"file": "zauber.md", "lern": "A", "name": "Blitz dich find", "zfw": 13}, {"file": "zauber.md", "lern": "C", "name": "Custodosigil Diebesbann", "zfw": 2}, {"file": "zauber.md", "lern": "C", "name": "Duplicatus Doppelbild", "zfw": 5}, {"file": "zauber.md", "lern": "A", "name": "Flim Flam Funkel", "zfw": 10}, {"file": "zauber.md", "lern": "D", "name": "Fortifex arkane Wand", "zfw": 8}, {"file": "zauber.md", "lern": "A", "name": "Fulminictus Donnerkeil", "zfw": 10}, {"file": "zauber.md", "lern": "C", "name": "Gardianum Zauberschild", "zfw": 8}, {"file": "zauber.md", "lern": "B", "name": "Horriphobus Schreckgestalt", "zfw": 7}, {"file": "zauber.md", "lern": "A", "name": "Ignifaxius Flammenstrahl", "zfw": 10}, {"file": "zauber.md", "lern": "C", "name": "Ignisphaero Feuerball", "zfw": 7}, {"file": "zauber.md", "lern": "D", "name": "Impersona Maskenbild", "zfw": 5}, {"file": "zauber.md", "lern": "A", "name": "Manifesto Element", "zfw": 7}, {"file": "zauber.md", "lern": "A", "name": "Odem Arcanum", "zfw": 6}, {"file": "zauber.md", "lern": "B", "name": "Pectetondo Zauberhaar", "zfw": 7}, {"file": "zauber.md", "lern": "B", "name": "Psychostabilis", "zfw": 4}, {"file": "zauber.md", "lern": "C", "name": "Sapefacta Zauberschwamm", "zfw": 8}, {"file": "zauber.md", "lern": "C", "name": "Sensibar Empathicus", "zfw": 5}, {"file": "zauber.md", "lern": "B", "name": "Unitatio Geistesbund", "zfw": 3}],
+    ap: {
+      verfuegbar:   5,
+      eingesetzt:   3845,
+      gesamt:       3850,
+      stufe:        3,
+      bis_naechste: -2350
+    }
+  },
+  slug: "illaen-baernhold"
+};
+</script>
 <script src="/static/app.js"></script>
 <script src="/static/session.js"></script>
+<script src="/static/dice.js"></script>
+<script src="/static/tabs.js"></script>
+<script src="/static/steigern.js"></script>
 </body>
 </html>

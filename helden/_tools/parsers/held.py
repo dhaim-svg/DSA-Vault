@@ -509,10 +509,10 @@ def load_held(vault_root: Path, slug: str) -> dict:
     geld_fm = fm.get('geld', {})
     if isinstance(geld_fm, dict):
         geld = {
-            'dukaten': int(geld_fm.get('dukaten', 0)),
-            'silbertaler': int(geld_fm.get('silbertaler', 0)),
-            'heller': int(geld_fm.get('heller', 0)),
-            'kreuzer': int(geld_fm.get('kreuzer', 0)),
+            'dukaten': safe_int(geld_fm.get('dukaten', 0)),
+            'silbertaler': safe_int(geld_fm.get('silbertaler', 0)),
+            'heller': safe_int(geld_fm.get('heller', 0)),
+            'kreuzer': safe_int(geld_fm.get('kreuzer', 0)),
         }
         # Derive total in Kreuzer for display
         geld['gesamt_kreuzer'] = (
