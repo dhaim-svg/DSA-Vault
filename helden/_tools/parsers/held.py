@@ -220,8 +220,11 @@ def load_held(vault_root: Path, slug: str) -> dict:
             talente[sec_name] = grp
 
     # Build steigerbar_talente — one entry per talent, with SKT and locator info
+    SKIP_SECTIONS = {'Andere Talente'}  # sections that are not AP-steigerbar
     steigerbar_talente: list[dict] = []
     for sec_name, grp in talente.items():
+        if sec_name in SKIP_SECTIONS:
+            continue
         is_kampf = 'Kampftechnik' in sec_name
         if 'Sprach' in sec_name:
             row_key_column = 'Sprache'
@@ -234,7 +237,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
         for entry in grp:
             skt = entry.get('stk', 'D') if is_kampf else _skt_for_section(sec_name)
             if not skt:
-                skt = 'B'
+                skt = 'D'
             steigerbar_talente.append({
                 'name': entry['name'],
                 'taw': entry['taw'],
