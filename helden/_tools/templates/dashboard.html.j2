@@ -1056,7 +1056,7 @@ body { padding-top: 46px; }
 .inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
 .inv-add-btn:hover { background: var(--bg-elev); }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
-#inventar-list li { grid-template-columns: auto 1fr auto auto; }
+#inventar-list li { grid-template-columns: auto 1fr auto auto; overflow-wrap: break-word; }
 /* ---- Journal tab ---- */
 .journal-session { margin-bottom: var(--gap); }
 .journal-session-header { font-family: var(--display); font-size: 14px; color: var(--gold); letter-spacing: .06em; margin: 0 0 12px; }
@@ -1617,7 +1617,7 @@ body { padding-top: 46px; }
     <li>
       <span>{{ item.name }}</span>
       <span class="qty">{{ item.menge }}</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">{{ item.anmerkung[:40] if item.anmerkung else '' }}</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">{{ item.anmerkung if item.anmerkung else '' }}</span>
     </li>
     {% endfor %}
   </ul>
