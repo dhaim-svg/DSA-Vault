@@ -643,7 +643,7 @@ body::before{
 @media print{
   @page{ size:A4; margin:14mm 12mm; }
   body{ background:var(--paper) !important; color:var(--paper-ink); font-family:'Cardo','Spectral',serif; font-size:10pt; line-height:1.35; }
-  body::before,.sparkles,.print-btn{ display:none !important; }
+  body::before,.sparkles{ display:none !important; }
   .codex{ max-width:100%; padding:0; }
   .page{ page-break-after:always; }
   .page:last-child{ page-break-after:auto; }
@@ -839,8 +839,8 @@ body::before{
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
   .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
-  .wunden-counter, #zustand-chips, #session-reset-btn { display: none !important; }
-  /* #commit-msg already hidden by .screen-only */
+  .wunden-counter, #zustand-chips { display: none !important; }
+  /* #commit-msg hidden via #footer-bar.screen-only */
   .vital-max { font-weight: 700; }
   .vital-stepper { display: none !important; }
   /* Show static value in print */
