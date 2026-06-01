@@ -4,14 +4,14 @@
 
 | # | Task | State | Files |
 |---|------|-------|-------|
-| T0 | Sprint scaffold (BACKLOG.md D-012…D-017 → in-progress, plan.md anlegen) | ⬜ todo | BACKLOG.md, sprints/sprint-009/plan.md |
-| T1 | D-012 Würfel-Panel Lesbarkeit: `.dice-panel` dunkles `color` + Kinder, an Dark-Tokens angleichen | ⬜ todo | dashboard.html.j2 (`:834-957`) |
-| T2 | D-013 Vitalia-Stepper in einer Reihe: `.vital-stepper`-Elemente horizontal in einer Flucht | ⬜ todo | dashboard.html.j2 (`:728`, `:1167-1215`) |
-| T3 | D-017 Sprachen Komplexitäts-Spalte: `.l-kompl` rechts-/zentriert ausrichten (beide Tabellen) | ⬜ todo | dashboard.html.j2 (`:1063`) |
-| T4 | D-014 Footer-Layout: Überlappung „Session zurücksetzen"/„Sichern" auflösen; Commit-Feld + 💾 als sichtbare Gruppe via Flex/Gap statt Inline-Styles | ⬜ todo | dashboard.html.j2 (`:1862`, Footer-Markup) |
-| T5 | D-015 Inventar: Hart-Truncation `item.anmerkung[:40]` entfernen + `#inventar-list li`/`.inv-*` Umbruch erlauben | ⬜ todo | dashboard.html.j2 (`:1042`, `:1603`) |
-| T6 | D-016 Profil: `s.konsequenz[:60]` Truncation entfernen, mehrzeilige Darstellung in `.vn-grp.bad` | ⬜ todo | dashboard.html.j2 (`:1641-1652`, `:1646`) |
-| T7 | Verifikation (Test-Suite + Static-Render + Sicht-Check) + `/sprint-wrap` | ⬜ todo | — |
+| T0 | Sprint scaffold (BACKLOG.md D-012…D-017 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-009/plan.md |
+| T1 | D-012 Würfel-Panel Lesbarkeit: `.dice-panel` dunkles `color` + Kinder, an Dark-Tokens angleichen | ✅ done | dashboard.html.j2 (`:834-957`) |
+| T2 | D-013 Vitalia-Stepper in einer Reihe: `.vital-stepper`-Elemente horizontal in einer Flucht | ✅ done | dashboard.html.j2 (`:728`, `:1167-1215`) |
+| T3 | D-017 Sprachen Komplexitäts-Spalte: `.l-kompl` rechts-/zentriert ausrichten (beide Tabellen) | ✅ done | dashboard.html.j2 (`:1063`) |
+| T4 | D-014 Footer-Layout: Überlappung „Session zurücksetzen"/„Sichern" auflösen; Commit-Feld + 💾 als sichtbare Gruppe via Flex/Gap statt Inline-Styles | ✅ done | dashboard.html.j2 (`:1862`, Footer-Markup) |
+| T5 | D-015 Inventar: Hart-Truncation `item.anmerkung[:40]` entfernen + `#inventar-list li`/`.inv-*` Umbruch erlauben | ✅ done | dashboard.html.j2 (`:1042`, `:1603`) |
+| T6 | D-016 Profil: `s.konsequenz[:60]` Truncation entfernen, mehrzeilige Darstellung in `.vn-grp.bad` | ✅ done | dashboard.html.j2 (`:1641-1652`, `:1646`) |
+| T7 | Verifikation (Test-Suite + Static-Render + Sicht-Check) + `/sprint-wrap` | ✅ done | — |
 
 ## Key Design Decisions
 
