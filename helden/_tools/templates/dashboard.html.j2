@@ -1660,7 +1660,7 @@ body { padding-top: 46px; }
       <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
         {% for s in held.vor_nachteile.schlecht %}
         <li>
-          <span><b>{{ s.name }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz[:60] }}{% if s.konsequenz|length > 60 %}…{% endif %}</small>{% endif %}</span>
+          <span><b>{{ s.name }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz | e }}</small>{% endif %}</span>
           <span class="stufe">{{ s.stufe }}</span>
         </li>
         {% endfor %}
