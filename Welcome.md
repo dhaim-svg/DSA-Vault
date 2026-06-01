@@ -40,5 +40,61 @@ Da man das zum Spielen immer wieder braucht, möchte ich bei den Zaubern bzw. be
 ## Korrekturen
 Nachdem mir ein Fehler aufgefallen ist, bin ich meinen Helden nochmal Schritt für Schritt durchgegangen um zu kontrollieren ob noch etwas nachkorrigiert oder angepasst werden muss.
 
+## Nächster Schritt
+Wir hatten jetzt letzte Woche unsere erste Spiele-Session, und mit der Homepage hat das echt gut funktioniert. Die Zauber waren übersichtlich, ich hatte alles bei der Hand. Jetzt möchte ich das noch eine Stufe weiterbringen und durchaus auch etwas Zeit investieren.
+
+Da geht mein Gedanke eher dahin, dass wir den Charakter, den wir anzeigen auf der Homepage, voll interaktionsfähig machen, sodass ich von der Homepage aus direkt auch seine Werte anpassen kann. Das ist so meine Idee.
+
+Wenn du jetzt auch noch mit einsteigst und über den Kontext einer Spiele-Session hinaus denkst, was könnten sonst noch nützliche Funktionen für die Seite sein? Unser Backlog ist leer, also können wir uns einige helfende Punkte überlegen, wie wir das Ganze auf Pepmon erweitern können. 
+
+## Manual Test 01.06.2026
+Ich hab jetzt mal alle Seiten/Tabs durchgesehen und mir sind folgende Dinge aufgefallen die angepasst werden sollen. Lese dir alle Rückmeldungen durch und frage bei unklarheiten nach. Ziel ist es daraus verbesserungen als einzelen Punkte abzuleiten und diese in unseren Backlog zur abarbeitung zu bringen.
+
+### Kampf
+- Die Vitalia Buttons schauen komisch aus - das wäre besser wenn es in einer Reihe nebeneinander wäre
+- Unten rechts sind die Buttons Session und Sichern überlagert
+- Und ich bin mir nicht sicher wo das Commit Feld dazgehört - zu sichern?
+- Zu Kampfwerte - die untere Sektion die Aufklappt - und das gillt dann für andere Seiten auch - die Schrift ist nicht lesbar
+
+Screenshots:
+- `Screenshots\1.png`
+- `Screenshots\2.png`
+
+### Talente
+- Hier auch wieder im unteren Bereich (Würfelsektion) - gleich wie auf dem ersten Tab, die Schriftfarbe macht das lesen quasi unmöglich
+
+### Zauber
+- Es funktioniert zwar ganz gut, dass ein Klick auf den link Obsidian öffnet - aber es wäre cool wenn wir hier eine eigene kleine Webseite hätten die das gleich anzeigt, ein Link zum öffnen von Obsidian soll trotzdem bleiben
+
+### Steigern
+- Der Ansatz, dass es nur diejenigen anzeigt welche aufgrund der verfügbaren AP gesteigert werden gefällt mir ganz gut.
+- Folgendes fällt mir ein das es noch besser machen würde:
+  - Statt pro möglicher Zeile zu steigern ist es oft ineressanter zuerst zu schauen was man steigern möchte und zu experimentieren und erst dann zu bestätigen. Dann kann man leichter berrechnen was man wirklich steigern möchte
+  - Die Steigerungsspalte könnte man in eine eigene Tabelle packen
+  - Man kann in einer Session besondere oder schlechte Erfahrung bekommen, was das Steigern für einmal eine Spalte erleichter oder erhöht
+
+Screenshots:
+- `Screenshots\3.png`
+
+### Inventar
+- Hier passt etwas mit der Formatierung nicht
+- Teilweise scheint die schrift abgeschnitten zu sein (zB beim `Reiseproviant`)
+
+Screenshots:
+- `Screenshots\4.png`
+
+### Profil
+- Hier scheint der Text der Prinzipientreue abgeschnitten zu sein, lieber die schlechten Eigenschaften in 2 Zeilen und dafür kann man alles lesen
 
 
+Screenshots:
+- `Screenshots\5.png`
+
+### Journal
+- schaut aufs erste gut aus, kann ich wahrscheinlich nach dem ersten mal verwenden mehr dazu sagen
+
+### Sprachen
+- Hier schaut es einfach eigenartig aus, dass die beiden Komplexitäts-Spalten nicht in einer Flucht untereinander sind.
+
+Screenshots:
+- `Screenshots\6.png`
