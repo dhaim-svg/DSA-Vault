@@ -596,6 +596,22 @@ body::before{
   box-shadow:0 0 0 1px rgba(0,0,0,.5),0 12px 28px -8px rgba(0,0,0,.7),0 0 50px -6px rgba(95,195,228,.7);
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
+#footer-bar{
+  position:fixed; bottom:28px; right:28px;
+  display:flex; gap:8px; align-items:center;
+  z-index:100;
+}
+#footer-bar .print-btn{ position:static; }
+#save-group{
+  display:flex; align-items:center; gap:4px;
+  border:1px solid var(--rule,#2b3a52); border-radius:4px;
+  padding:2px 4px;
+}
+.commit-input{
+  padding:4px 8px; border-radius:4px;
+  border:1px solid #555; background:#2a2a2a;
+  color:#eee; font-size:0.85rem; width:220px;
+}
 
 /* ---- Section Header ---- */
 .sec-head{ margin:30px 0 14px; display:flex; align-items:baseline; gap:16px; }
@@ -1858,9 +1874,14 @@ body { padding-top: 46px; }
 
 </div><!-- .codex -->
 
-<button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
-<button id="session-reset-btn" class="print-btn screen-only" style="margin-left:8px">Session zurücksetzen</button>
-<input id="commit-msg" type="text" class="screen-only" placeholder="Commit-Nachricht (optional)" style="margin-left:8px; padding:4px 8px; border-radius:4px; border:1px solid #555; background:#2a2a2a; color:#eee; font-size:0.85rem; width:220px;"><button id="commit-btn" class="print-btn screen-only" style="margin-left:8px">💾 Sichern</button>
+<div id="footer-bar" class="screen-only">
+  <button class="print-btn" onclick="window.print()">Kodex drucken</button>
+  <button id="session-reset-btn" class="print-btn">Session zurücksetzen</button>
+  <div id="save-group">
+    <input id="commit-msg" type="text" class="commit-input" placeholder="Commit-Nachricht (optional)">
+    <button id="commit-btn" class="print-btn">💾 Sichern</button>
+  </div>
+</div>
 
 <script>
 /* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
