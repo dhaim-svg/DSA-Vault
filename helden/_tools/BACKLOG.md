@@ -12,7 +12,6 @@ _(keine)_
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
-| D-021 | Steigern: Session-Erfahrungs-Kostenmodifikator | M | ready | Manual-Test 01.06.2026 |
 
 ### Beschreibungen
 
@@ -32,6 +31,7 @@ Besondere/schlechte Erfahrung in einer Session senkt/erhöht Steigerungskosten e
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-021 | Steigern: Session-Erfahrungs-Modifikator (SKT-Spaltenverschiebung) | M | 011 |
 | D-020 | Steigern: Steigerungsspalte in eigene Tabelle (steiger-table) | M | 010 |
 | D-019 | Steigern: Experiment-/Auswahl-Modus (Warenkorb) | L | 010 |
 | D-017 | Sprachen: Komplexitäts-Spalte ausrichten | S | 009 |
