@@ -115,37 +115,48 @@
       .catch(function (err) { onError(err.message || 'Fehler'); });
   }
 
-  /* ── Row renderer ─────────────────────────────────────────────────────── */
+  /* ── Row renderer (one <tr> for the steiger-table) ───────────────────── */
   function renderRow(item) {
     var ap = window.DSA.steigern.ap.verfuegbar;
     var canAfford = item.cost !== null && ap >= item.cost;
 
-    var row = document.createElement('div');
+    var row = document.createElement('tr');
     row.className = 'sg-row';
 
-    var nameEl = document.createElement('span');
-    nameEl.className = 'sg-name';
-    nameEl.textContent = item.displayName;
+    /* Name cell */
+    var nameCell = document.createElement('td');
+    nameCell.className = 'sg-name';
 
-    var valEl = document.createElement('span');
-    valEl.className = 'sg-val';
-    valEl.textContent = item.currentVal + ' → ' + (item.currentVal + 1);
-
-    var costEl = document.createElement('span');
-    costEl.className = 'sg-cost ' + (canAfford ? 'affordable' : 'expensive');
-    costEl.textContent = item.cost !== null ? item.cost + ' AP' : '—';
-
-    row.appendChild(nameEl);
-    row.appendChild(valEl);
-    row.appendChild(costEl);
+    var nameLabel = document.createElement('span');
+    nameLabel.textContent = item.displayName;
+    nameCell.appendChild(nameLabel);
 
     /* Komplexitätsgrenze warning (Sprachen/Schriften only) */
     if (item.komplexitaet != null && item.currentVal >= item.komplexitaet) {
       var warnEl = document.createElement('span');
       warnEl.className = 'sg-cap-warn';
       warnEl.textContent = '⚠ Komplexitätsgrenze K' + item.komplexitaet;
-      row.appendChild(warnEl);
+      nameCell.appendChild(warnEl);
     }
+
+    /* Wert cell (aktuell → nächster) */
+    var valCell = document.createElement('td');
+    valCell.className = 'sg-val';
+    valCell.textContent = item.currentVal + ' → ' + (item.currentVal + 1);
+
+    /* Kosten cell */
+    var costCell = document.createElement('td');
+    costCell.className = 'sg-cost ' + (canAfford ? 'affordable' : 'expensive');
+    costCell.textContent = item.cost !== null ? item.cost + ' AP' : '—';
+
+    /* Aktion cell */
+    var actionCell = document.createElement('td');
+    actionCell.className = 'sg-action';
+
+    row.appendChild(nameCell);
+    row.appendChild(valCell);
+    row.appendChild(costCell);
+    row.appendChild(actionCell);
 
     if (item.cost !== null && canAfford) {
       var btnArea = document.createElement('span');
@@ -189,12 +200,12 @@
         }, function (err) {
           jaBtn.disabled = false;
           jaBtn.textContent = 'Ja';
-          var prev = row.querySelector('.sg-error');
+          var prev = actionCell.querySelector('.sg-error');
           if (prev) prev.remove();
           var errEl = document.createElement('span');
           errEl.className = 'sg-error';
           errEl.textContent = '⚠ ' + err;
-          row.appendChild(errEl);
+          actionCell.appendChild(errEl);
           confirm.classList.add('hidden');
           steigBtn.classList.remove('hidden');
           steigBtn.disabled = false;
@@ -203,7 +214,7 @@
 
       btnArea.appendChild(steigBtn);
       btnArea.appendChild(confirm);
-      row.appendChild(btnArea);
+      actionCell.appendChild(btnArea);
     }
 
     return row;
@@ -337,47 +348,67 @@
     if (!list) return;
     list.innerHTML = '';
 
-    function addSection(title) {
+    /* Build one <table class="steiger-table"> per section with its own heading.
+       `items` are pre-mapped objects ready for renderRow(). */
+    function addSection(title, items) {
       var h = document.createElement('h4');
       h.className = 'sg-section-head';
       h.textContent = title;
       list.appendChild(h);
+
+      var table = document.createElement('table');
+      table.className = 'steiger-table';
+
+      var thead = document.createElement('thead');
+      var headRow = document.createElement('tr');
+      ['Name', 'Wert', 'Kosten', 'Aktion'].forEach(function (label) {
+        var th = document.createElement('th');
+        th.textContent = label;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      var tbody = document.createElement('tbody');
+      items.forEach(function (item) {
+        tbody.appendChild(renderRow(item));
+      });
+      table.appendChild(tbody);
+
+      list.appendChild(table);
     }
 
     /* Eigenschaften */
-    addSection('Eigenschaften (Zielwert × 15 AP)');
-    EIG_ORDER.forEach(function (abbr) {
+    addSection('Eigenschaften (Zielwert × 15 AP)', EIG_ORDER.map(function (abbr) {
       var val = dsa.eig[abbr];
-      list.appendChild(renderRow({
+      return {
         kind: 'eigenschaft', abbr: abbr,
         displayName: abbr + ' · ' + EIG_FULL[abbr],
         currentVal: val, cost: calcEigCost(val),
         eigFull: EIG_FULL[abbr] + ' (' + abbr + ')'
-      }));
-    });
+      };
+    }));
 
     /* Talente & Kampftechniken */
-    addSection('Talente & Kampftechniken');
-    dsa.steigern.talente.forEach(function (t) {
-      list.appendChild(renderRow({
+    addSection('Talente & Kampftechniken', dsa.steigern.talente.map(function (t) {
+      return {
         kind: 'talent', name: t.name,
         displayName: t.name + ' · SKT ' + t.skt,
         currentVal: t.taw, cost: calcApCost(t.skt, t.taw),
         section: t.section, file: t.file, rowKeyCol: t.row_key_column,
         komplexitaet: t.komplexitaet
-      }));
-    });
+      };
+    }));
 
     /* Zauber */
-    addSection('Zauber');
-    dsa.steigern.zauber.forEach(function (z) {
-      list.appendChild(renderRow({
+    addSection('Zauber', dsa.steigern.zauber.map(function (z) {
+      return {
         kind: 'zauber', name: z.name,
         displayName: z.name + ' · Lern ' + z.lern,
         currentVal: z.zfw, cost: calcApCost(z.lern, z.zfw),
         file: z.file
-      }));
-    });
+      };
+    }));
   }
 
   document.addEventListener('DOMContentLoaded', renderSteigernTab);

@@ -1019,12 +1019,13 @@ body { padding-top: 46px; }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
   text-transform: uppercase; color: var(--accent-cold); margin: 20px 0 8px; }
-.sg-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
-  border-bottom: 1px solid var(--rule-soft); font-size: 13px; }
-.sg-row:last-child { border-bottom: none; }
-.sg-name { flex: 1; color: var(--ink); }
-.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; min-width: 60px; }
-.sg-cost { font-family: var(--mono); font-size: 12px; min-width: 52px; font-weight: bold; }
+.steiger-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.steiger-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-mute); font-weight: 600; padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; }
+.steiger-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: middle; }
+.steiger-table tr:last-child td { border-bottom: none; }
+.sg-name { color: var(--ink); }
+.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.sg-cost { font-family: var(--mono); font-size: 12px; font-weight: bold; white-space: nowrap; }
 .sg-cost.affordable { color: var(--accent-aup); }
 .sg-cost.expensive { color: var(--ink-dim); }
 .sg-btn-area { display: flex; align-items: center; gap: 6px; }

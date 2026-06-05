@@ -260,7 +260,7 @@ body::before{
 .vitals{ display:flex; flex-direction:column; gap:14px; }
 .vital{
   display:grid;
-  grid-template-columns:60px 1fr 110px;
+  grid-template-columns:60px 1fr auto;
   align-items:center;
   gap:14px;
 }
@@ -596,6 +596,22 @@ body::before{
   box-shadow:0 0 0 1px rgba(0,0,0,.5),0 12px 28px -8px rgba(0,0,0,.7),0 0 50px -6px rgba(95,195,228,.7);
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
+#footer-bar{
+  position:fixed; bottom:28px; right:28px;
+  display:flex; gap:8px; align-items:center;
+  z-index:100;
+}
+#footer-bar .print-btn{ position:static; }
+#save-group{
+  display:flex; align-items:center; gap:4px;
+  border:1px solid var(--rule,#2b3a52); border-radius:4px;
+  padding:2px 4px;
+}
+.commit-input{
+  padding:4px 8px; border-radius:4px;
+  border:1px solid #555; background:#2a2a2a;
+  color:#eee; font-size:0.85rem; width:220px;
+}
 
 /* ---- Section Header ---- */
 .sec-head{ margin:30px 0 14px; display:flex; align-items:baseline; gap:16px; }
@@ -627,7 +643,7 @@ body::before{
 @media print{
   @page{ size:A4; margin:14mm 12mm; }
   body{ background:var(--paper) !important; color:var(--paper-ink); font-family:'Cardo','Spectral',serif; font-size:10pt; line-height:1.35; }
-  body::before,.sparkles,.print-btn{ display:none !important; }
+  body::before,.sparkles{ display:none !important; }
   .codex{ max-width:100%; padding:0; }
   .page{ page-break-after:always; }
   .page:last-child{ page-break-after:auto; }
@@ -729,7 +745,7 @@ body::before{
   display: flex;
   align-items: center;
   gap: 4px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-top: 4px;
 }
 .vital-btn {
@@ -823,8 +839,8 @@ body::before{
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
   .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
-  .wunden-counter, #zustand-chips, #session-reset-btn { display: none !important; }
-  /* #commit-msg already hidden by .screen-only */
+  .wunden-counter, #zustand-chips { display: none !important; }
+  /* #commit-msg hidden via #footer-bar.screen-only */
   .vital-max { font-weight: 700; }
   .vital-stepper { display: none !important; }
   /* Show static value in print */
@@ -834,7 +850,8 @@ body::before{
 .dice-panel {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: var(--card-bg, #f5ebd8);
+  background: var(--bg-card, #131c28);
+  color: var(--ink);
   border-top: 2px solid var(--accent, #8b7355);
   padding: 12px 16px 14px;
   z-index: 200;
@@ -1002,12 +1019,13 @@ body { padding-top: 46px; }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
   text-transform: uppercase; color: var(--accent-cold); margin: 20px 0 8px; }
-.sg-row { display: flex; align-items: center; gap: 10px; padding: 5px 0;
-  border-bottom: 1px solid var(--rule-soft); font-size: 13px; }
-.sg-row:last-child { border-bottom: none; }
-.sg-name { flex: 1; color: var(--ink); }
-.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; min-width: 60px; }
-.sg-cost { font-family: var(--mono); font-size: 12px; min-width: 52px; font-weight: bold; }
+.steiger-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.steiger-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-mute); font-weight: 600; padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; }
+.steiger-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); vertical-align: middle; }
+.steiger-table tr:last-child td { border-bottom: none; }
+.sg-name { color: var(--ink); }
+.sg-val { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.sg-cost { font-family: var(--mono); font-size: 12px; font-weight: bold; white-space: nowrap; }
 .sg-cost.affordable { color: var(--accent-aup); }
 .sg-cost.expensive { color: var(--ink-dim); }
 .sg-btn-area { display: flex; align-items: center; gap: 6px; }
@@ -1060,7 +1078,7 @@ body { padding-top: 46px; }
 .lang-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
 .lang-table tr:last-child td { border-bottom: none; }
 .lang-table .l-name { color: var(--ink); }
-.lang-table .l-kompl { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; }
+.lang-table .l-kompl { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; text-align: right; }
 .lang-table .l-taw { font-family: var(--mono); font-size: 13px; font-weight: 700; }
 .lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
 .lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
@@ -2431,77 +2449,77 @@ body { padding-top: 46px; }
     <li>
       <span>Rucksack</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Leder, mittlere Größe</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Leder, mittlere Größe</span>
     </li>
     <li>
       <span>Feuerstahl + Zunder</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">im Lederbeutel</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">im Lederbeutel</span>
     </li>
     <li>
       <span>Wasserschlauch</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Leder, ca. 1 Maß</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Leder, ca. 1 Maß</span>
     </li>
     <li>
       <span>Reiseproviant</span>
       <span class="qty">5 Tage</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Hartkäse, Zwieback, Dörrfleisch *(kein H</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Hartkäse, Zwieback, Dörrfleisch *(kein Huftier an Festtagen)*</span>
     </li>
     <li>
       <span>Schlafsack / Reisedecke</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">gerollt am Rucksack</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">gerollt am Rucksack</span>
     </li>
     <li>
       <span>Kochtopf (klein)</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Eisen</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Eisen</span>
     </li>
     <li>
       <span>Becher + Löffel</span>
       <span class="qty">1 je</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Holz</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Holz</span>
     </li>
     <li>
       <span>Laterne + Kerzen</span>
       <span class="qty">1 + 6</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">für Studium und Nachtlager</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">für Studium und Nachtlager</span>
     </li>
     <li>
       <span>Wetzstein</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">für den Dolch</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">für den Dolch</span>
     </li>
     <li>
       <span>Seil</span>
       <span class="qty">10 Schritt</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Hanf *(Stabzauber-Seil als Backup, koste</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Hanf *(Stabzauber-Seil als Backup, kostet aber keine AsP)*</span>
     </li>
     <li>
       <span>Ersatzpergament</span>
       <span class="qty">10 Blatt</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">zusätzlich zum Schreibzeug</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">zusätzlich zum Schreibzeug</span>
     </li>
     <li>
       <span>Erste-Hilfe-Set</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Verbandtücher (3), Schienenholz, Faden +</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Verbandtücher (3), Schienenholz, Faden + Nadel — passt zu Heilkunde: Wunden 4</span>
     </li>
     <li>
       <span>Heilkräuter (Grundset)</span>
       <span class="qty">1 Bündel</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">passt zu Heilkunde: Wunden 4 / Heilkunde</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">passt zu Heilkunde: Wunden 4 / Heilkunde: Gift 5</span>
     </li>
     <li>
       <span>Siegelring</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Stoerrebrandt-Siegel (Leibwächter-Auswei</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">Stoerrebrandt-Siegel (Leibwächter-Ausweis)</span>
     </li>
     <li>
       <span>Münzgürtel</span>
       <span class="qty">1</span>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">versteckter Gurt für Notreserve</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">versteckter Gurt für Notreserve</span>
     </li>
   </ul>
 </section>
@@ -2563,7 +2581,7 @@ body { padding-top: 46px; }
           <span class="stufe">6</span>
         </li>
         <li>
-          <span><b>Wahrer Name</b><small>Ikha-Shaar („der brennende Hunger nach Licht") — bekannt nur engsten Vertrauten + Stoerrebrandt-Kolleg (Registrierungspflicht); korrekte Aussprache gibt magische Macht</small></span>
+          <span><b>Wahrer Name</b><small>Ikha-Shaar („der brennende Hunger nach Licht&#34;) — bekannt nur engsten Vertrauten + Stoerrebrandt-Kolleg (Registrierungspflicht); korrekte Aussprache gibt magische Macht</small></span>
           <span class="stufe"></span>
         </li>
       </ul>
@@ -2588,7 +2606,7 @@ body { padding-top: 46px; }
           <span class="stufe">12</span>
         </li>
         <li>
-          <span><b>Prinzipientreue</b><small>Prinzip: „Das Leben des Schutzbefohlenen steht über dem eige…</small></span>
+          <span><b>Prinzipientreue</b><small>Prinzip: „Das Leben des Schutzbefohlenen steht über dem eigenen.&#34; Probe bei: Schutzbefohlenen gefährden, zurücklassen, eigenes Leben über das des Schützlings stellen. Gilt für alle unter unmittelbarem Schutz.</small></span>
           <span class="stufe">10</span>
         </li>
       </ul>
@@ -2776,9 +2794,14 @@ Illaen: AsP 38 → 32 (Odem Arcanum 2×) → 32 (Ende Session)</p>
 
 </div><!-- .codex -->
 
-<button class="print-btn screen-only" onclick="window.print()">Kodex drucken</button>
-<button id="session-reset-btn" class="print-btn screen-only" style="margin-left:8px">Session zurücksetzen</button>
-<input id="commit-msg" type="text" class="screen-only" placeholder="Commit-Nachricht (optional)" style="margin-left:8px; padding:4px 8px; border-radius:4px; border:1px solid #555; background:#2a2a2a; color:#eee; font-size:0.85rem; width:220px;"><button id="commit-btn" class="print-btn screen-only" style="margin-left:8px">💾 Sichern</button>
+<div id="footer-bar" class="screen-only">
+  <button class="print-btn" onclick="window.print()">Kodex drucken</button>
+  <button id="session-reset-btn" class="print-btn">Session zurücksetzen</button>
+  <div id="save-group">
+    <input id="commit-msg" type="text" class="commit-input" placeholder="Commit-Nachricht (optional)">
+    <button id="commit-btn" class="print-btn">💾 Sichern</button>
+  </div>
+</div>
 
 <script>
 /* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
