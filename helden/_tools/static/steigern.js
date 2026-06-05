@@ -43,6 +43,12 @@
     return (currentVal + 1) * 15;
   }
 
+  /* Render a Kosten-Zelle einheitlich (Initial-Render + Erfahrungs-Wechsel). */
+  function setCostCell(cell, cost, canAfford) {
+    cell.textContent = cost !== null ? cost + ' AP' : '—';
+    cell.className = 'sg-cost ' + (canAfford ? 'affordable' : 'expensive');
+  }
+
   /* ── PATCH helper ─────────────────────────────────────────────────────── */
   function patchLocator(locator) {
     if (window.location.protocol === 'file:') return Promise.resolve({ ok: true });
@@ -149,7 +155,7 @@
   };
 
   function cartTotal() {
-    return cart.selected.reduce(function (sum, e) { return sum + e.item.cost; }, 0);
+    return cart.selected.reduce(function (sum, e) { return sum + (e.item.cost || 0); }, 0);
   }
 
   function cartUpdate() {
@@ -278,8 +284,7 @@
 
     /* Kosten cell */
     var costCell = document.createElement('td');
-    costCell.className = 'sg-cost ' + (canAfford ? 'affordable' : 'expensive');
-    costCell.textContent = item.cost !== null ? item.cost + ' AP' : '—';
+    setCostCell(costCell, item.cost, canAfford);
 
     /* Aktion cell */
     var actionCell = document.createElement('td');
@@ -296,7 +301,7 @@
       erfSel.className = 'sg-erf';
       erfSel.setAttribute('aria-label', 'Erfahrung: ' + item.displayName);
       [
-        { label: '—',          value: '0'  },
+        { label: '—', value: '0' },
         { label: 'gut (−1 Sp.)', value: '-1' },
         { label: 'schlecht (+1 Sp.)', value: '1' }
       ].forEach(function (opt) {
@@ -308,12 +313,10 @@
 
       erfSel.addEventListener('change', function () {
         var shift = parseInt(erfSel.value, 10);
-        item.erf = shift;
         item.cost = calcApCost(item.skt, item.currentVal, shift);
         var canAffordNow = item.cost !== null &&
           window.DSA.steigern.ap.verfuegbar >= item.cost;
-        costCell.textContent = item.cost !== null ? item.cost + ' AP' : '—';
-        costCell.className = 'sg-cost ' + (canAffordNow ? 'affordable' : 'expensive');
+        setCostCell(costCell, item.cost, canAffordNow);
         cartUpdate();
       });
 
