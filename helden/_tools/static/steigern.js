@@ -180,6 +180,7 @@
 
     var queue = cart.selected.slice();
     var done = 0;
+    var ERR_RELOAD_DELAY_MS = 2500; // Fehlertext lesbar lassen, bevor neu geladen wird
 
     function step(i) {
       if (i >= queue.length) {
@@ -198,7 +199,7 @@
         cart.statusEl.classList.add('over');
         cart.statusEl.textContent = '⚠ ' + err.message + ' — ' + done +
           ' von ' + queue.length + ' gesteigert. Seite wird neu geladen …';
-        setTimeout(function () { window.location.reload(); }, 2500);
+        setTimeout(function () { window.location.reload(); }, ERR_RELOAD_DELAY_MS);
       });
     }
     step(0);
