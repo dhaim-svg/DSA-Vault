@@ -937,10 +937,10 @@ body::before{
   border-radius: 6px;
   min-height: 2.2rem;
 }
-.dp-result.success { background: rgba(40,140,60,.15); color: #1a6b2a; }
-.dp-result.fail    { background: rgba(180,30,30,.12); color: #8b1c2a; }
-.dp-result.crit    { background: rgba(80,180,255,.15); color: #1a4a7a; }
-.dp-result.patzer  { background: rgba(180,120,30,.15); color: #6b4010; }
+.dp-result.success { background: rgba(40,140,60,.15); color: var(--accent-aup); }
+.dp-result.fail    { background: rgba(180,30,30,.12); color: var(--accent-blood); }
+.dp-result.crit    { background: rgba(80,180,255,.15); color: var(--accent-cold); }
+.dp-result.patzer  { background: rgba(180,120,30,.15); color: var(--accent-gold); }
 .dp-controls {
   display: flex;
   gap: 10px;
@@ -1651,7 +1651,7 @@ body { padding-top: 46px; }
       <ul class="vn-list">
         {% for v in held.vor_nachteile.vorteile %}
         <li>
-          <span><b>{{ v.name }}</b>{% if v.anmerkung %}<small>{{ v.anmerkung | e }}</small>{% endif %}</span>
+          <span><b>{{ v.name | e }}</b>{% if v.anmerkung %}<small>{{ v.anmerkung | e }}</small>{% endif %}</span>
           <span class="stufe">{{ v.stufe }}</span>
         </li>
         {% endfor %}
@@ -1662,7 +1662,7 @@ body { padding-top: 46px; }
       <ul class="vn-list">
         {% for n in held.vor_nachteile.nachteile %}
         <li>
-          <span><b>{{ n.name }}</b>{% if n.anmerkung %}<small>{{ n.anmerkung | e }}</small>{% endif %}</span>
+          <span><b>{{ n.name | e }}</b>{% if n.anmerkung %}<small>{{ n.anmerkung | e }}</small>{% endif %}</span>
           <span class="stufe">{{ n.stufe }}</span>
         </li>
         {% endfor %}
@@ -1674,7 +1674,7 @@ body { padding-top: 46px; }
       <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
         {% for s in held.vor_nachteile.schlecht %}
         <li>
-          <span><b>{{ s.name }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz | e }}</small>{% endif %}</span>
+          <span><b>{{ s.name | e }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz | e }}</small>{% endif %}</span>
           <span class="stufe">{{ s.stufe }}</span>
         </li>
         {% endfor %}
