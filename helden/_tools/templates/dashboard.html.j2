@@ -28,6 +28,7 @@
   --accent-cold:  #5fc3e4;
   --accent-magic: #6a5acd;
   --accent-blood: #a83246;
+  --accent-fail:  #e07a8a; /* helleres Rot für Fail-Status auf dunklem Panel (WCAG-lesbar) */
   --accent-gold:  #d4a84b;
   --accent-aup:   #9ec6a8;
 
@@ -929,7 +930,7 @@ body::before{
 .dp-die input[type=number]::-webkit-inner-spin-button,
 .dp-die input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 .dp-die-label { font-size: 0.7rem; opacity: 0.65; }
-.dp-die-fehl { font-size: 0.8rem; color: var(--accent-blood, #8b1c2a); font-weight: 700; }
+.dp-die-fehl { font-size: 0.8rem; color: var(--accent-blood); font-weight: 700; }
 .dp-result {
   font-size: 1.1rem;
   font-weight: 700;
@@ -938,7 +939,7 @@ body::before{
   min-height: 2.2rem;
 }
 .dp-result.success { background: rgba(40,140,60,.15); color: var(--accent-aup); }
-.dp-result.fail    { background: rgba(180,30,30,.12); color: var(--accent-blood); }
+.dp-result.fail    { background: rgba(180,30,30,.12); color: var(--accent-fail); }
 .dp-result.crit    { background: rgba(80,180,255,.15); color: var(--accent-cold); }
 .dp-result.patzer  { background: rgba(180,120,30,.15); color: var(--accent-gold); }
 .dp-controls {
