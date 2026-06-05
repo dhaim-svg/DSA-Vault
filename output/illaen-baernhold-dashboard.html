@@ -1037,12 +1037,26 @@ body { padding-top: 46px; }
 .sg-confirm { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-mute); }
 .sg-confirm.hidden, .sg-btn.hidden { display: none; }
 .sg-error { font-size: 11px; color: var(--accent-blood); margin-left: 8px; }
-.sg-cap-warn { font-size: 10px; font-weight: 600; letter-spacing: .06em; color: var(--accent-gold); white-space: nowrap; flex-shrink: 0; }
+.sg-cap-warn { font-size: 10px; font-weight: 600; letter-spacing: .06em; color: var(--accent-gold); white-space: nowrap; }
 .sg-ap-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: baseline; margin-bottom: 8px; }
 .sg-ap-label { font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .1em; }
 .sg-ap-val { font-family: var(--mono); font-size: 18px; font-weight: bold; color: var(--ink); margin-left: 4px; }
 .sg-ap-val.avail { color: var(--accent-gold); }
 .sg-stufe { font-size: 12px; color: var(--ink-mute); }
+/* Steigern Warenkorb */
+.sg-select { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; color: var(--ink-mute); }
+.sg-select-box { width: 15px; height: 15px; accent-color: var(--accent-gold); cursor: pointer; }
+.sg-select-hint { letter-spacing: .04em; }
+.sg-row.sg-selected td { background: rgba(212,168,75,.08); }
+.sg-cart { position: sticky; bottom: 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 18px; padding: 10px 12px; border-top: 1px solid var(--rule);
+  background: var(--bg-inset); }
+.sg-cart-summary { font-family: var(--mono); font-size: 13px; font-weight: bold; color: var(--ink); }
+.sg-cart-summary.over { color: var(--accent-blood); }
+.sg-cart-status { flex: 1; min-width: 120px; font-size: 11px; color: var(--ink-mute); }
+.sg-cart-status.over { color: var(--accent-blood); }
+.sg-cart-commit { margin-left: auto; padding: 6px 14px; font-size: 13px; }
+.sg-cart-commit:disabled { opacity: .4; cursor: default; }
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
 .inv-coin-label { font-family: var(--subhead); color: var(--ink-mute); font-size: 13px; }

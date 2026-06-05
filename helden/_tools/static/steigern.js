@@ -115,6 +115,124 @@
       .catch(function (err) { onError(err.message || 'Fehler'); });
   }
 
+  /* Promise-Wrapper um doSteigern — additiv, ändert die PATCH-Logik nicht.
+     Erlaubt sequentielles await im Sammel-Commit. */
+  function doSteigernAsync(item) {
+    return new Promise(function (resolve, reject) {
+      doSteigern(item, resolve, function (msg) { reject(new Error(msg)); });
+    });
+  }
+
+  /* ── Warenkorb (cart) ─────────────────────────────────────────────────
+     Sammelt ausgewählte Items über alle 3 Sektionen, zeigt laufende
+     AP-Summe gegen den Vorrat, committet sequentiell mit EINEM reload. */
+  var cart = {
+    selected: [],          /* {item, row} */
+    bar: null,             /* footer DOM-Leiste */
+    summaryEl: null,       /* Summen-/Zähler-Anzeige */
+    commitBtn: null,       /* Sammel-Bestätigen-Button */
+    statusEl: null,        /* Fehler-/Fortschritts-Meldung */
+    committing: false
+  };
+
+  function cartTotal() {
+    return cart.selected.reduce(function (sum, e) { return sum + e.item.cost; }, 0);
+  }
+
+  function cartUpdate() {
+    if (!cart.bar) return;
+    var n = cart.selected.length;
+    var total = cartTotal();
+    var avail = window.DSA.steigern.ap.verfuegbar;
+    var over = total > avail;
+
+    cart.summaryEl.textContent = n === 0
+      ? 'Keine Auswahl'
+      : n + (n === 1 ? ' Eintrag' : ' Einträge') + ' · ' + total + ' / ' + avail + ' AP';
+    cart.summaryEl.classList.toggle('over', over && n > 0);
+
+    cart.commitBtn.textContent = n === 0
+      ? 'Steigern'
+      : 'Steigern (' + n + ', ' + total + ' AP)';
+    cart.commitBtn.disabled = cart.committing || n === 0 || over;
+  }
+
+  function cartToggle(item, row, on) {
+    if (on) {
+      cart.selected.push({ item: item, row: row });
+      row.classList.add('sg-selected');
+    } else {
+      cart.selected = cart.selected.filter(function (e) { return e.item !== item; });
+      row.classList.remove('sg-selected');
+    }
+    cartUpdate();
+  }
+
+  /* Sequentieller Sammel-Commit: pro Eintrag die volle doSteigern-Sequenz,
+     await zwischen den Einträgen (jeder PATCH schreibt ap_* fort).
+     Beim ersten Fehler: stoppen, melden was durchlief, dann reload. */
+  function cartCommit() {
+    if (cart.committing || cart.selected.length === 0) return;
+    cart.committing = true;
+    cart.commitBtn.disabled = true;
+    cart.statusEl.classList.remove('over');
+    cart.statusEl.textContent = 'Steigere …';
+
+    var queue = cart.selected.slice();
+    var done = 0;
+
+    function step(i) {
+      if (i >= queue.length) {
+        cart.statusEl.textContent = 'Fertig — Seite wird neu geladen …';
+        window.location.reload();
+        return;
+      }
+      var entry = queue[i];
+      cart.statusEl.textContent = 'Steigere ' + entry.item.displayName +
+        ' (' + (i + 1) + '/' + queue.length + ') …';
+      doSteigernAsync(entry.item).then(function () {
+        done += 1;
+        step(i + 1);
+      }).catch(function (err) {
+        /* Beim ersten Fehler stoppen. Melden, was bis hier durchlief, dann reload. */
+        cart.statusEl.classList.add('over');
+        cart.statusEl.textContent = '⚠ ' + err.message + ' — ' + done +
+          ' von ' + queue.length + ' gesteigert. Seite wird neu geladen …';
+        setTimeout(function () { window.location.reload(); }, 2500);
+      });
+    }
+    step(0);
+  }
+
+  function buildCartBar() {
+    var bar = document.createElement('div');
+    bar.className = 'sg-cart';
+
+    var summary = document.createElement('div');
+    summary.className = 'sg-cart-summary';
+    summary.textContent = 'Keine Auswahl';
+
+    var status = document.createElement('div');
+    status.className = 'sg-cart-status';
+
+    var commit = document.createElement('button');
+    commit.type = 'button';
+    commit.className = 'sg-btn sg-btn--ok sg-cart-commit';
+    commit.textContent = 'Steigern';
+    commit.disabled = true;
+    commit.addEventListener('click', cartCommit);
+
+    bar.appendChild(summary);
+    bar.appendChild(status);
+    bar.appendChild(commit);
+
+    cart.bar = bar;
+    cart.summaryEl = summary;
+    cart.statusEl = status;
+    cart.commitBtn = commit;
+    return bar;
+  }
+
   /* ── Row renderer (one <tr> for the steiger-table) ───────────────────── */
   function renderRow(item) {
     var ap = window.DSA.steigern.ap.verfuegbar;
@@ -158,63 +276,30 @@
     row.appendChild(costCell);
     row.appendChild(actionCell);
 
-    if (item.cost !== null && canAfford) {
-      var btnArea = document.createElement('span');
-      btnArea.className = 'sg-btn-area';
+    /* Warenkorb-Auswahl: Checkbox statt Einzel-Steigern-Button.
+       Nur für Items mit bekannten Kosten (cost !== null). */
+    if (item.cost !== null) {
+      var label = document.createElement('label');
+      label.className = 'sg-select';
 
-      var steigBtn = document.createElement('button');
-      steigBtn.type = 'button';
-      steigBtn.className = 'sg-btn';
-      steigBtn.textContent = 'Steigern';
+      var box = document.createElement('input');
+      box.type = 'checkbox';
+      box.className = 'sg-select-box';
+      box.setAttribute('aria-label', 'In Warenkorb: ' + item.displayName);
 
-      var confirm = document.createElement('div');
-      confirm.className = 'sg-confirm hidden';
-      confirm.textContent = item.displayName + ' für ' + item.cost + ' AP?';
+      var hint = document.createElement('span');
+      hint.className = 'sg-select-hint';
+      hint.textContent = 'auswählen';
 
-      var jaBtn = document.createElement('button');
-      jaBtn.type = 'button';
-      jaBtn.className = 'sg-btn sg-btn--ok';
-      jaBtn.textContent = 'Ja';
-
-      var neinBtn = document.createElement('button');
-      neinBtn.type = 'button';
-      neinBtn.className = 'sg-btn';
-      neinBtn.textContent = 'Nein';
-
-      confirm.appendChild(jaBtn);
-      confirm.appendChild(neinBtn);
-
-      steigBtn.addEventListener('click', function () {
-        steigBtn.classList.add('hidden');
-        confirm.classList.remove('hidden');
-      });
-      neinBtn.addEventListener('click', function () {
-        confirm.classList.add('hidden');
-        steigBtn.classList.remove('hidden');
-      });
-      jaBtn.addEventListener('click', function () {
-        jaBtn.disabled = true;
-        jaBtn.textContent = '…';
-        doSteigern(item, function () {
-          window.location.reload();
-        }, function (err) {
-          jaBtn.disabled = false;
-          jaBtn.textContent = 'Ja';
-          var prev = actionCell.querySelector('.sg-error');
-          if (prev) prev.remove();
-          var errEl = document.createElement('span');
-          errEl.className = 'sg-error';
-          errEl.textContent = '⚠ ' + err;
-          actionCell.appendChild(errEl);
-          confirm.classList.add('hidden');
-          steigBtn.classList.remove('hidden');
-          steigBtn.disabled = false;
-        });
+      box.addEventListener('change', function () {
+        cartToggle(item, row, box.checked);
       });
 
-      btnArea.appendChild(steigBtn);
-      btnArea.appendChild(confirm);
-      actionCell.appendChild(btnArea);
+      label.appendChild(box);
+      label.appendChild(hint);
+      actionCell.appendChild(label);
+    } else {
+      actionCell.textContent = '—';
     }
 
     return row;
@@ -347,6 +432,7 @@
     var list = document.getElementById('steigern-list');
     if (!list) return;
     list.innerHTML = '';
+    cart.selected = [];   /* frischer Warenkorb pro Render */
 
     /* Build one <table class="steiger-table"> per section with its own heading.
        `items` are pre-mapped objects ready for renderRow(). */
@@ -409,6 +495,10 @@
         file: z.file
       };
     }));
+
+    /* Warenkorb-Leiste (Summe + Sammel-Commit) unter den Tabellen */
+    list.appendChild(buildCartBar());
+    cartUpdate();
   }
 
   document.addEventListener('DOMContentLoaded', renderSteigernTab);

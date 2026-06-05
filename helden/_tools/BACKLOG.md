@@ -5,15 +5,15 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-020 | Steigern: Steigerungsspalte in eigene Tabelle | M | in-progress | 010 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
-| D-019 | Steigern: Experiment-/Auswahl-Modus mit Gesamtkosten vor Bestätigung | L | ready | Manual-Test 01.06.2026 |
-| D-020 | Steigern: Steigerungsspalte in eigene Tabelle | M | ready | Manual-Test 01.06.2026 |
 | D-021 | Steigern: Session-Erfahrungs-Kostenmodifikator | M | ready | Manual-Test 01.06.2026 |
 
 ### Beschreibungen
@@ -34,6 +34,7 @@ Besondere/schlechte Erfahrung in einer Session senkt/erhöht Steigerungskosten e
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-019 | Steigern: Experiment-/Auswahl-Modus (Warenkorb) | L | 010 |
 | D-017 | Sprachen: Komplexitäts-Spalte ausrichten | S | 009 |
 | D-016 | Profil: Schlechte Eigenschaften / Prinzipientreue ohne Truncation | S | 009 |
 | D-015 | Inventar: Formatierung & abgeschnittener Text | S | 009 |
