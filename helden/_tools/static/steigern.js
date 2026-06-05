@@ -15,10 +15,23 @@
     H: [8, 16, 24, 32]
   };
 
+  /* Shift a SKT column left (negative) or right (positive), clamped to [A, H]. */
+  var SKT_ORDER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  function shiftSktColumn(skt, shift) {
+    var idx = SKT_ORDER.indexOf(skt);
+    if (idx === -1) return skt;
+    var newIdx = idx + shift;
+    if (newIdx < 0) newIdx = 0;
+    if (newIdx > SKT_ORDER.length - 1) newIdx = SKT_ORDER.length - 1;
+    return SKT_ORDER[newIdx];
+  }
+
   /* Cost to raise currentTaw → currentTaw+1.
-     Bracket is determined by the TARGET value (currentTaw + 1). */
-  function calcApCost(skt, currentTaw) {
-    var costs = SKT_COSTS[skt];
+     Bracket is determined by the TARGET value (currentTaw + 1).
+     Optional shift: applied via shiftSktColumn before bracket lookup. */
+  function calcApCost(skt, currentTaw, shift) {
+    var effectiveSkt = shift ? shiftSktColumn(skt, shift) : skt;
+    var costs = SKT_COSTS[effectiveSkt];
     if (!costs) return null;
     var targetTaw = currentTaw + 1;
     var bracket = targetTaw <= 5 ? 0 : targetTaw <= 10 ? 1 : targetTaw <= 15 ? 2 : 3;
@@ -277,6 +290,36 @@
     row.appendChild(costCell);
     row.appendChild(actionCell);
 
+    /* Erfahrungs-Selektor (nur talent + zauber, nicht eigenschaft) */
+    if (item.skt) {
+      var erfSel = document.createElement('select');
+      erfSel.className = 'sg-erf';
+      erfSel.setAttribute('aria-label', 'Erfahrung: ' + item.displayName);
+      [
+        { label: '—',          value: '0'  },
+        { label: 'gut (−1 Sp.)', value: '-1' },
+        { label: 'schlecht (+1 Sp.)', value: '1' }
+      ].forEach(function (opt) {
+        var o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        erfSel.appendChild(o);
+      });
+
+      erfSel.addEventListener('change', function () {
+        var shift = parseInt(erfSel.value, 10);
+        item.erf = shift;
+        item.cost = calcApCost(item.skt, item.currentVal, shift);
+        var canAffordNow = item.cost !== null &&
+          window.DSA.steigern.ap.verfuegbar >= item.cost;
+        costCell.textContent = item.cost !== null ? item.cost + ' AP' : '—';
+        costCell.className = 'sg-cost ' + (canAffordNow ? 'affordable' : 'expensive');
+        cartUpdate();
+      });
+
+      actionCell.appendChild(erfSel);
+    }
+
     /* Warenkorb-Auswahl: Checkbox statt Einzel-Steigern-Button.
        Nur für Items mit bekannten Kosten (cost !== null). */
     if (item.cost !== null) {
@@ -482,6 +525,7 @@
         kind: 'talent', name: t.name,
         displayName: t.name + ' · SKT ' + t.skt,
         currentVal: t.taw, cost: calcApCost(t.skt, t.taw),
+        skt: t.skt,
         section: t.section, file: t.file, rowKeyCol: t.row_key_column,
         komplexitaet: t.komplexitaet
       };
@@ -493,6 +537,7 @@
         kind: 'zauber', name: z.name,
         displayName: z.name + ' · Lern ' + z.lern,
         currentVal: z.zfw, cost: calcApCost(z.lern, z.zfw),
+        skt: z.lern,
         file: z.file
       };
     }));
