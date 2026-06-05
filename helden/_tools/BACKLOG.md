@@ -5,9 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-020 | Steigern: Steigerungsspalte in eigene Tabelle | M | in-progress | 010 |
+_(keine)_
 
 ## Backlog
 
@@ -34,6 +32,7 @@ Besondere/schlechte Erfahrung in einer Session senkt/erhöht Steigerungskosten e
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-020 | Steigern: Steigerungsspalte in eigene Tabelle (steiger-table) | M | 010 |
 | D-019 | Steigern: Experiment-/Auswahl-Modus (Warenkorb) | L | 010 |
 | D-017 | Sprachen: Komplexitäts-Spalte ausrichten | S | 009 |
 | D-016 | Profil: Schlechte Eigenschaften / Prinzipientreue ohne Truncation | S | 009 |

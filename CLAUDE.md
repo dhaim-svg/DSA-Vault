@@ -40,7 +40,7 @@ Dashboard-Entwicklung (`helden/_tools/`) läuft in Sprint-Sessions.
 - **EPIC-Tracker:** `helden/_tools/BACKLOG.md` (D-NNN-IDs, State, Effort)
 - **Sprint-Pläne:** `helden/_tools/sprints/sprint-NNN/plan.md`
 - **Handoff-Notes:** am Session-Ende `sprints/sprint-NNN/handoff.md` schreiben (fertig / als nächstes / Blocker)
-- **Laufende Sprint-Nr.:** 9
+- **Laufende Sprint-Nr.:** 10
 - **Subagent-Driven Development** + zwei-stufige Review (spec + code quality) pro Task
 
 ## Grundregel
