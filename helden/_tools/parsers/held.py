@@ -79,6 +79,23 @@ def extract_wiki_path(s: str) -> str | None:
     return m.group(1).strip() if m else None
 
 
+def extract_section_intro(sec_content: str) -> str:
+    """Return the non-table intro text of a section, wikilinks stripped.
+
+    Collects non-empty lines until the first markdown table row (matching
+    ``\\s*\\|``) and stops there — i.e. it assumes the intro text precedes the
+    table. Returns ``''`` if there is no intro before the table.
+    """
+    intro_lines = []
+    for line in sec_content.splitlines():
+        if re.match(r'\s*\|', line):
+            break
+        stripped = line.strip()
+        if stripped:
+            intro_lines.append(strip_wikilink(stripped))
+    return ' '.join(intro_lines)
+
+
 def strip_markdown(s: str) -> str:
     s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
     s = re.sub(r'\*(.+?)\*', r'\1', s)
@@ -352,15 +369,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
     stabzauber_regel: str = ''
     for sec_name, sec_content in rit_secs.items():
         if 'Stabzauber' in sec_name:
-            # Extract intro lines that appear before the first table row
-            intro_lines = []
-            for line in sec_content.splitlines():
-                if re.match(r'\s*\|', line):
-                    break
-                stripped = line.strip()
-                if stripped:
-                    intro_lines.append(strip_wikilink(stripped))
-            stabzauber_regel = ' '.join(intro_lines)
+            stabzauber_regel = extract_section_intro(sec_content)
             for row in parse_md_table(sec_content):
                 name = strip_wikilink(row.get('Stabzauber', ''))
                 if name:
