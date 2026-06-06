@@ -359,7 +359,7 @@ body::before{
   display:block; font-family:var(--mono); font-size:10px;
   color:var(--ink-mute); letter-spacing:.04em; margin-top:4px; line-height:1.4;
 }
-.spell .probe{ font-family:var(--mono); font-size:11px; color:var(--ink-dim); letter-spacing:.04em; padding-top:2px; }
+.spell .probe{ font-family:var(--mono); font-size:11px; color:#b8c4d0; letter-spacing:.04em; font-weight:600; padding-top:2px; }
 .zfw-num{
   display:inline-block; font-family:var(--mono); font-weight:700;
   font-size:13px; color:var(--ink); min-width:22px; text-align:right;
@@ -451,7 +451,7 @@ body::before{
   font-size:13px;
 }
 .talent-row .t-name{ color:var(--ink); font-family:var(--subhead); }
-.talent-row .t-probe{ font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:.03em; font-weight:600; }
+.talent-row .t-probe{ font-family:var(--mono); font-size:11px; color:#b8c4d0; letter-spacing:.03em; font-weight:600; }
 .talent-row .t-zfw{ font-family:var(--mono); font-weight:700; color:var(--ink); min-width:28px; text-align:right; }
 .talent-row.high .t-zfw{ color:var(--accent-gold); }
 .talent-row.high .t-name{ color:#f3e8c8; font-weight:700; }
@@ -1101,6 +1101,18 @@ body { padding-top: 46px; }
 </style>
 </head>
 <body>
+{#- ── Macro: render probe abbreviations with inline eigenschaft values ── -#}
+{%- macro probe_eig(probe, eig) -%}
+  {%- if '/' in (probe or '') -%}
+    {%- for abbr in probe.split('/') -%}
+      {%- set a = abbr | trim -%}
+      {%- if not loop.first %} / {% endif -%}
+      {%- if a == '**' %}**{%- elif eig.get(a) %}{{ a }} {{ eig[a].aktuell }}{%- else %}{{ a }}{%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {{ probe }}
+  {%- endif -%}
+{%- endmacro -%}
 <div class="codex">
 <nav class="tab-bar" role="tablist" aria-label="Dashboard-Bereiche">
   <button class="tab-btn" data-tab="kampf"    type="button">⚔️ Kampf</button>
@@ -1328,7 +1340,7 @@ body { padding-top: 46px; }
         <span class="t-name">{{ row.name }}</span>
         <span class="t-probe">
           {%- if is_kampf %}{{ row.at }} / {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}
-          {%- else %}{{ row.probe }}
+          {%- else %}{{ probe_eig(row.probe, held.eigenschaften) }}
           {%- endif -%}
         </span>
         <span class="t-zfw">{{ row.taw }}</span>
@@ -1364,7 +1376,7 @@ body { padding-top: 46px; }
       <span class="submeta">{{ z.merkmale }}{% if z.komp or z.lern %} · {{ z.komp }}/{{ z.lern }}{% endif %}</span>
       {% endif %}
     </span>
-    <span class="probe">{{ z.probe }}</span>
+    <span class="probe">{{ probe_eig(z.probe, held.eigenschaften) }}</span>
     <span class="zfw-num">{{ z.zfw }}</span>
     <span class="zd">{{ z.zd }}</span>
     <span class="kosten">{{ z.kosten }}</span>
