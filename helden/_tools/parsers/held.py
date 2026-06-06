@@ -349,8 +349,18 @@ def load_held(vault_root: Path, slug: str) -> dict:
     rit_secs = split_sections(rest, 2)
 
     stabzauber: list[dict] = []
+    stabzauber_regel: str = ''
     for sec_name, sec_content in rit_secs.items():
         if 'Stabzauber' in sec_name:
+            # Extract intro lines that appear before the first table row
+            intro_lines = []
+            for line in sec_content.splitlines():
+                if re.match(r'\s*\|', line):
+                    break
+                stripped = line.strip()
+                if stripped:
+                    intro_lines.append(strip_wikilink(stripped))
+            stabzauber_regel = ' '.join(intro_lines)
             for row in parse_md_table(sec_content):
                 name = strip_wikilink(row.get('Stabzauber', ''))
                 if name:
@@ -599,7 +609,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'steigerbar_talente': steigerbar_talente,
         'zauber': zauber,
         'steigerbar_zauber': steigerbar_zauber,
-        'rituale': {'stabzauber': stabzauber, 'andere': andere_rituale, 'zauberspeicher_slots': zauberspeicher_slots},
+        'rituale': {'stabzauber': stabzauber, 'andere': andere_rituale, 'zauberspeicher_slots': zauberspeicher_slots, 'stabzauber_regel': stabzauber_regel},
         'spontane_mods': spontane_mods,
         'mods_max': illaen_mods_max,
         'sf': {'magisch': sf_magisch, 'allgemein': sf_allg},

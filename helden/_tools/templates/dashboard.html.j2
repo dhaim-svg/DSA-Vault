@@ -1426,6 +1426,7 @@ body { padding-top: 46px; }
   <!-- Rituale -->
   <section class="card">
     <h3 class="card-title">Stabzauber &amp; Rituale <span class="meta">Ritualkenntnis {{ held.talente.get('Andere Talente', [{}])[0].get('taw', '') }}</span></h3>
+    {% if held.rituale.stabzauber_regel %}<p class="meta" style="margin:0 0 0.4em;font-style:italic;color:var(--ink-dim)">{{ held.rituale.stabzauber_regel | e }}</p>{% endif %}
     <ul class="sf-list">
       {% for r in held.rituale.stabzauber %}
       <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>

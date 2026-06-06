@@ -1,4 +1,5 @@
 """Tests for held_writer — format-preserving surgical markdown write-back."""
+import re
 import sys
 from pathlib import Path
 import pytest
@@ -7,7 +8,7 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from parsers.held import parse_md_table, parse_frontmatter, split_sections
+from parsers.held import parse_md_table, parse_frontmatter, split_sections, strip_wikilink
 from writers.held_writer import (
     _patch_frontmatter,
     _patch_table_cell,
@@ -55,6 +56,54 @@ MULTI_TABLE_TEXT = """\
 | 1 | 5 | Armatrutz | — | 2024-01-01 |
 | 2 | 0 | — | — | — |
 """
+
+STABZAUBER_WITH_INTRO_TEXT = """\
+## Stabzauber (9 Rituale)
+
+Alle Stabzauber sind an Illaens gebundenen Magierstab geknüpft. Aktivierung = freie Aktion. Details → [[wiki/dsa-4.1/rituale/stabzauber|Stabzauber & Kugelzauber]].
+
+| Stabzauber | Vol | Effekt (Kurzform) |
+|---|---|---|
+| Bindung | 1 pAsP | Grundbindung |
+"""
+
+
+def _extract_stabzauber_regel(sec_content: str) -> str:
+    """Mirror of the extraction logic in held.py load_held()."""
+    intro_lines = []
+    for line in sec_content.splitlines():
+        if re.match(r'\s*\|', line):
+            break
+        stripped = line.strip()
+        if stripped:
+            intro_lines.append(strip_wikilink(stripped))
+    return ' '.join(intro_lines)
+
+
+# ---------------------------------------------------------------------------
+# Parser tests — stabzauber_regel extraction (D-024)
+# ---------------------------------------------------------------------------
+
+def test_stabzauber_regel_extracted_from_intro():
+    secs = split_sections(STABZAUBER_WITH_INTRO_TEXT, 2)
+    sec_name = next(k for k in secs if 'Stabzauber' in k)
+    regel = _extract_stabzauber_regel(secs[sec_name])
+    assert 'Magierstab' in regel
+    assert 'freie Aktion' in regel
+
+
+def test_stabzauber_regel_strips_wikilinks():
+    secs = split_sections(STABZAUBER_WITH_INTRO_TEXT, 2)
+    sec_name = next(k for k in secs if 'Stabzauber' in k)
+    regel = _extract_stabzauber_regel(secs[sec_name])
+    assert '[[' not in regel
+
+
+def test_stabzauber_regel_empty_when_no_intro():
+    secs = split_sections(MULTI_TABLE_TEXT, 2)
+    sec_name = next(k for k in secs if 'Stabzauber' in k)
+    regel = _extract_stabzauber_regel(secs[sec_name])
+    assert regel == ''
 
 
 # ---------------------------------------------------------------------------
