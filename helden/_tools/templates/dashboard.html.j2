@@ -561,6 +561,17 @@ body::before{
 .feed li .when{ font-family:var(--mono); font-size:10px; color:var(--accent-cold); letter-spacing:.15em; display:block; margin-bottom:2px; }
 .feed li .what{ color:var(--ink); }
 
+/* ---- Aussehen & Kleidung ---- */
+.aussehen-list{ margin:0; padding:0; }
+.aussehen-row{
+  display:grid; grid-template-columns:160px 1fr; gap:8px;
+  padding:5px 0; border-bottom:1px dotted var(--rule);
+  font-size:13px; font-family:var(--subhead);
+}
+.aussehen-row:last-child{ border-bottom:0; }
+.aussehen-row dt{ color:var(--ink-mute); font-family:var(--mono); font-size:11px; letter-spacing:.06em; padding-top:1px; }
+.aussehen-row dd{ margin:0; color:var(--ink); }
+
 /* ---- Vor/Nachteile ---- */
 .vn-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 @media(max-width:700px){ .vn-grid{ grid-template-columns:1fr; } }
@@ -1657,6 +1668,21 @@ body { padding-top: 46px; }
 </div><!-- end tab-inventar -->
 
 <div class="tab-content" id="tab-profil">
+
+{% if held.aussehen %}
+<!-- Aussehen & Kleidung -->
+<div class="sec-head"><h2>Aussehen &amp; Kleidung</h2><span class="rule"></span></div>
+<section class="card">
+  <dl class="aussehen-list">
+    {% for a in held.aussehen %}
+    <div class="aussehen-row">
+      <dt>{{ a.merkmal | e }}</dt>
+      <dd>{{ a.beschreibung | e }}</dd>
+    </div>
+    {% endfor %}
+  </dl>
+</section>
+{% endif %}
 
 <!-- Vor- & Nachteile -->
 <div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>

@@ -174,6 +174,15 @@ def load_held(vault_root: Path, slug: str) -> dict:
     fm, rest = parse_frontmatter(text)
     h2 = split_sections(rest, 2)
 
+    # ------------------------------------------------------------------ #
+    # Aussehen & Kleidung (D-022)
+    # ------------------------------------------------------------------ #
+    aussehen = [
+        {'merkmal': strip_wikilink(row.get('Merkmal', '')), 'beschreibung': strip_wikilink(row.get('Beschreibung', ''))}
+        for row in parse_md_table(h2.get('Aussehen', ''))
+        if row.get('Merkmal', '').strip()
+    ]
+
     eig_bw_text = h2.get('Eigenschaften & Basiswerte', '')
     h3 = split_sections(eig_bw_text, 3)
 
@@ -628,4 +637,5 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'vorgeschichte': vorgeschichte,
         'vorgeschichte_paragraphs': paragraphs,
         '_ap_bis_naechste_stufe': ap_bis_naechste,
+        'aussehen': aussehen,
     }

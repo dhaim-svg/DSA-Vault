@@ -27,6 +27,17 @@ geld: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}
 | **Profession** | [[wiki/dsa-4.1/professionen/akademien/stoerrebrandt-kolleg-riva\|Magischer Leibwächter]] (Stoerrebrandt-Kolleg zu Riva) |
 | **Tradition** | Gildenmagier (Vollzauberer) |
 
+## Aussehen
+
+| Merkmal | Beschreibung |
+|---------|--------------|
+| Haarfarbe | Kupferrot, mit markanter silber-weißer Strähne („Hexensträhne") |
+| Augen | Mandelförmig (nivesische Herkunft); Farbe nicht festgelegt |
+| Größe | — (nicht festgelegt) |
+| Statur | — (nicht festgelegt) |
+| Besondere Merkmale | Silber-weiße Hexensträhne im kupferroten Haar (seit erstem Kontakt mit starker Magie); Stoerrebrandt-Siegelring am Finger |
+| Typische Kleidung | Reisegewand + Hut (Akademie-Kleidung, ersetzt das Magiergewand), Wollmantel, Stiefel; der Steineiche-Magierstab stets griffbereit |
+
 ## Eigenschaften & Basiswerte
 
 ### Eigenschaften
