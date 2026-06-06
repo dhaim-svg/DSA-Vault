@@ -15,6 +15,15 @@ _(keine)_
 
 ### Beschreibungen
 
+**D-024 — Stabzauber: allgemeine Aktivierungsregel anzeigen**
+Stabzauber-Liste zeigt nur Name + Vol + Effekt (`parsers/held.py:351-362`, Template `dashboard.html.j2:1430-1432`). Die allgemeine Aktivierungsregel („Alle Stabzauber an Illaens gebundenen Magierstab geknüpft; Aktivierung = freie Aktion", `rituale.md` ~Z.16) wird nicht angezeigt. Gewünscht: diese allgemeine Regel prominent im Stabzauber-Abschnitt (Hinweiszeile unter dem Header `dashboard.html.j2:1428`). Keine Probe pro Einzelzauber. Umfang: Intro-Zeile aus `rituale.md` parsen (oder im Template ergänzen) + Render. Effort S.
+
+**D-023 — Talente/Zauber: Eigenschaftswerte inline + prominenter**
+Talent- und Zauberzeilen zeigen nur die Probe-Kürzel (z.B. `MU/GE/KK`), nicht die tatsächlichen Eigenschaftswerte des Helden. Gewünscht: Werte inline anzeigen (z.B. „MU 14 / GE 13 / KK 12") **und** die Probe-Anzeige etwas prominenter gestalten. Werte sind client-seitig über `window.DSA.eig` (`static/dice.js` `parseProbe`) bzw. server-seitig aus `held.eigenschaften` verfügbar. Umfang: Talent-Zeile (`dashboard.html.j2:1325-1335`, `.t-probe`) und Zauber-Zeile (`1359-1380`, `.probe`) um Werte ergänzen (server-seitig im Template oder kleine JS-Annotation beim Laden), CSS für Lesbarkeit/Prominenz. Kampftechniken (AT/PA) ausgenommen. Effort M.
+
+**D-022 — Profil: Aussehen & Kleidung**
+Profil-Tab zeigt keine Infos zu Aussehen/Kleidung. Heute existieren Daten nur verstreut (Haar/Augen in `vorgeschichte.md`, silberne Strähne als Stigma in `vor-nachteile.md`, Kleidungsstücke in `ausruestung.md`). Lösung: neue strukturierte Sektion (z.B. `## Aussehen` mit Tabelle/Feldern: Haarfarbe, Augenfarbe, Größe, Statur, besondere Merkmale, typische Kleidung) in einer Helden-Datei; `parsers/held.py` parst sie (analog bestehender Section-Split/`parse_md_table`-Loader) und liefert sie ins `held.meta`/eigenes Dict; neue Profil-Karte im Template (`dashboard.html.j2:1645-1757`). Umfang: Datenschema + Parser + Template. Effort M.
+
 **D-018 — Zauber: Inline-Vorschau**
 Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`dashboard.html.j2:1311-1506`); Klick-Guard in `static/dice.js:520-532` beachten.
 
@@ -31,6 +40,9 @@ Besondere/schlechte Erfahrung in einer Session senkt/erhöht Steigerungskosten e
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-024 | Stabzauber: allgemeine Aktivierungsregel als Hinweiszeile | S | 012 |
+| D-023 | Talente/Zauber: Eigenschaftswerte inline + Probe prominenter | M | 012 |
+| D-022 | Profil: Aussehen & Kleidung als strukturierte Sektion | M | 012 |
 | D-021 | Steigern: Session-Erfahrungs-Modifikator (SKT-Spaltenverschiebung) | M | 011 |
 | D-020 | Steigern: Steigerungsspalte in eigene Tabelle (steiger-table) | M | 010 |
 | D-019 | Steigern: Experiment-/Auswahl-Modus (Warenkorb) | L | 010 |
