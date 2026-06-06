@@ -7,7 +7,7 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from parsers.held import parse_md_table, parse_frontmatter, split_sections, extract_section_intro, strip_wikilink
+from parsers.held import parse_md_table, parse_frontmatter, split_sections, extract_section_intro, parse_aussehen
 from writers.held_writer import (
     _patch_frontmatter,
     _patch_table_cell,
@@ -84,37 +84,45 @@ AUSSEHEN_TEXT = """\
 # Parser tests — Aussehen parsing (D-022)
 # ---------------------------------------------------------------------------
 
-def _parse_aussehen(text: str) -> list:
-    """Helper: replicates the aussehen-parsing logic from load_held."""
-    secs = split_sections(text, 2)
-    return [
-        {'merkmal': strip_wikilink(row.get('Merkmal', '')), 'beschreibung': strip_wikilink(row.get('Beschreibung', ''))}
-        for row in parse_md_table(secs.get('Aussehen', ''))
-        if row.get('Merkmal', '').strip()
-    ]
+AUSSEHEN_WITH_BLANK_MERKMAL_TEXT = """\
+## Aussehen
+
+| Merkmal | Beschreibung |
+|---------|--------------|
+| Haarfarbe | Kupferrot |
+|  | Zeile ohne Merkmal — soll gedroppt werden |
+| Augen | Mandelförmig |
+"""
 
 
-def test_aussehen_parses_six_rows():
-    result = _parse_aussehen(AUSSEHEN_TEXT)
-    assert len(result) == 6
+def _aussehen(text: str) -> list:
+    """Parse the Aussehen section out of a full-document fixture via real production code."""
+    return parse_aussehen(split_sections(text, 2).get('Aussehen', ''))
 
 
 def test_aussehen_first_row_haarfarbe():
-    result = _parse_aussehen(AUSSEHEN_TEXT)
+    result = _aussehen(AUSSEHEN_TEXT)
     assert result[0]['merkmal'] == 'Haarfarbe'
     assert 'Kupferrot' in result[0]['beschreibung']
     assert 'Hexensträhne' in result[0]['beschreibung']
 
 
 def test_aussehen_missing_section_returns_empty():
-    result = _parse_aussehen("## AndereSektion\n\nKein Inhalt.\n")
+    result = _aussehen("## AndereSektion\n\nKein Inhalt.\n")
     assert result == []
 
 
 def test_aussehen_merkmal_keys_correct():
-    result = _parse_aussehen(AUSSEHEN_TEXT)
+    result = _aussehen(AUSSEHEN_TEXT)
     merkmale = [r['merkmal'] for r in result]
     assert merkmale == ['Haarfarbe', 'Augen', 'Größe', 'Statur', 'Besondere Merkmale', 'Typische Kleidung']
+    assert len(result) == 6
+
+
+def test_aussehen_drops_rows_with_empty_merkmal():
+    result = _aussehen(AUSSEHEN_WITH_BLANK_MERKMAL_TEXT)
+    # 3 table rows, one with blank Merkmal — only 2 real entries survive
+    assert [r['merkmal'] for r in result] == ['Haarfarbe', 'Augen']
 
 
 # ---------------------------------------------------------------------------

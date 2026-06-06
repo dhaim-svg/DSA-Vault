@@ -96,6 +96,15 @@ def extract_section_intro(sec_content: str) -> str:
     return ' '.join(intro_lines)
 
 
+def parse_aussehen(section_text: str) -> list[dict]:
+    """Parse an Aussehen section's table into [{merkmal, beschreibung}], dropping rows with empty Merkmal."""
+    return [
+        {'merkmal': strip_wikilink(row.get('Merkmal', '')), 'beschreibung': strip_wikilink(row.get('Beschreibung', ''))}
+        for row in parse_md_table(section_text)
+        if row.get('Merkmal', '').strip()
+    ]
+
+
 def strip_markdown(s: str) -> str:
     s = re.sub(r'\*\*(.+?)\*\*', r'\1', s)
     s = re.sub(r'\*(.+?)\*', r'\1', s)
@@ -177,11 +186,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
     # ------------------------------------------------------------------ #
     # Aussehen & Kleidung (D-022)
     # ------------------------------------------------------------------ #
-    aussehen = [
-        {'merkmal': strip_wikilink(row.get('Merkmal', '')), 'beschreibung': strip_wikilink(row.get('Beschreibung', ''))}
-        for row in parse_md_table(h2.get('Aussehen', ''))
-        if row.get('Merkmal', '').strip()
-    ]
+    aussehen = parse_aussehen(h2.get('Aussehen', ''))
 
     eig_bw_text = h2.get('Eigenschaften & Basiswerte', '')
     h3 = split_sections(eig_bw_text, 3)
