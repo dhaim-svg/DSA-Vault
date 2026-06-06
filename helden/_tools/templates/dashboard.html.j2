@@ -1122,7 +1122,7 @@ body { padding-top: 46px; }
       {%- if a == '**' %}**{%- elif eig.get(a) %}{{ a }} {{ eig[a].aktuell }}{%- else %}{{ a }}{%- endif -%}
     {%- endfor -%}
   {%- else -%}
-    {{ probe }}
+    {{ probe | e }}
   {%- endif -%}
 {%- endmacro -%}
 <div class="codex">
