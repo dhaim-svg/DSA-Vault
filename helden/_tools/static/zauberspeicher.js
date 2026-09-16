@@ -41,14 +41,21 @@
 
   // ---------- Entleeren ----------
 
-  function handleEntleeren(btn) {
+  // opts.skipReload: caller takes responsibility for reloading (used when
+  // clearing several slots at once — e.g. a Patzer on the Zauberspeicher-
+  // Auslöseprobe in dice.js — so each independent PATCH doesn't navigate the
+  // page away and abort the others still in flight). Always resolves (never
+  // rejects) so Promise.all over several calls waits for every attempt to
+  // settle, success or failure, before the caller reloads once.
+  function handleEntleeren(btn, opts) {
+    opts = opts || {};
     var slot = btn.dataset.slot;
     var slotEl = btn.closest('.speicher-slot');
     if (slotEl) { var old = slotEl.querySelector('.sg-error'); if (old) old.remove(); }
     btn.disabled = true;
     btn.textContent = '…';
 
-    patchLocator({
+    return patchLocator({
       kind: 'table_row',
       file: 'rituale.md',
       section_path: SECTION_PATH,
@@ -60,11 +67,13 @@
         'Letzte Erneuerung': '—'
       }
     }).then(function() {
-      window.location.reload();
+      if (!opts.skipReload) window.location.reload();
+      return true;
     }).catch(function(err) {
       btn.disabled = false;
       btn.textContent = 'Entleeren';
       if (slotEl) showSlotError(slotEl, err.message || 'PATCH fehlgeschlagen');
+      return false;
     });
   }
 

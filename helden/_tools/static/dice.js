@@ -347,9 +347,18 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
           patzerBtn.textContent = 'Patzer — alle Speicher entleeren…';
           patzerBtn.onclick = function () {
             if (!confirm('Patzer! Alle gespeicherten Zauber lösen sich ebenfalls aus. Alle Slots entleeren?')) return;
+            if (!window.Zauberspeicher) return;
             patzerBtn.disabled = true;
-            document.querySelectorAll('.slot-entleeren-btn').forEach(function (btn) {
-              if (window.Zauberspeicher) window.Zauberspeicher.handleEntleeren(btn);
+            patzerBtn.textContent = '…';
+            var btns = Array.prototype.slice.call(document.querySelectorAll('.slot-entleeren-btn'));
+            // skipReload on every call — each PATCH runs independently, and a
+            // per-call reload would navigate away and abort the others still
+            // in flight (see zauberspeicher.js handleEntleeren). Wait for all
+            // to settle, then reload exactly once.
+            Promise.all(btns.map(function (btn) {
+              return window.Zauberspeicher.handleEntleeren(btn, { skipReload: true });
+            })).then(function () {
+              window.location.reload();
             });
           };
           actionEl.appendChild(patzerBtn);
