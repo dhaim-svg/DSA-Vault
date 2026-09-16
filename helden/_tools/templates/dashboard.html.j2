@@ -417,6 +417,7 @@ body::before{
 
 /* ---- Vol badge (Stabzauber) ---- */
 .vol-badge { font-family:var(--mono); font-size:10px; color:var(--ink-dim); background:rgba(95,195,228,.08); border:1px solid rgba(95,195,228,.15); border-radius:2px; padding:1px 5px; margin-left:6px; }
+.sf-name .meta { font-family:var(--mono); font-size:10px; color:var(--ink-dim); margin-left:6px; }
 
 /* ---- Spontane Modifikationen ---- */
 .mod-table { display:grid; grid-template-columns:minmax(0,1fr) 130px 175px 80px; column-gap:12px; }
@@ -1453,7 +1454,7 @@ body { padding-top: 46px; }
     {% if held.rituale.stabzauber_regel %}<p class="meta" style="margin:0 0 0.4em;font-style:italic;color:var(--ink-dim)">{{ held.rituale.stabzauber_regel | e }}</p>{% endif %}
     <ul class="sf-list">
       {% for r in held.rituale.stabzauber %}
-      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}{% if r.erschaffungsprobe %}<span class="meta">{{ r.erschaffungsprobe | e }} · {{ r.asp | e }} AsP</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
       {% endfor %}
       {% for r in held.rituale.andere %}
       <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>

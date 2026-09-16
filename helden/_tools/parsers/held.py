@@ -389,6 +389,8 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 if name:
                     stabzauber.append({
                         'name': name,
+                        'erschaffungsprobe': row.get('Erschaffungsprobe', ''),
+                        'asp': row.get('AsP', ''),
                         'vol': row.get('Vol', ''),
                         'effekt': strip_wikilink(row.get('Effekt (Kurzform)', '') or row.get('Effekt', '')),
                     })

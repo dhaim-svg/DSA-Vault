@@ -156,6 +156,51 @@ def test_stabzauber_regel_empty_when_no_intro():
 
 
 # ---------------------------------------------------------------------------
+# Parser tests — Erschaffungsprobe / AsP columns on Stabzauber (D-028)
+# ---------------------------------------------------------------------------
+
+STABZAUBER_WITH_PROBE_TEXT = """\
+## Stabzauber (9 Rituale)
+
+| Stabzauber | Erschaffungsprobe | AsP | Vol | Effekt (Kurzform) |
+|---|---|---|---|---|
+| Stabzauber: Bindung | KL / CH / FF (+3) | 22 | 1 pAsP | Grundbindung |
+| Stabzauber: Stabverlaengerung |  |  | ? | Stab verlaengert sich auf Befehl |
+"""
+
+
+def test_parse_md_table_reads_erschaffungsprobe_and_asp_columns():
+    secs = split_sections(STABZAUBER_WITH_PROBE_TEXT, 2)
+    sec_name = next(k for k in secs if 'Stabzauber' in k)
+    rows = parse_md_table(secs[sec_name])
+    assert rows[0]['Erschaffungsprobe'] == 'KL / CH / FF (+3)'
+    assert rows[0]['AsP'] == '22'
+
+
+def test_parse_md_table_stabverlaengerung_row_left_empty():
+    secs = split_sections(STABZAUBER_WITH_PROBE_TEXT, 2)
+    sec_name = next(k for k in secs if 'Stabzauber' in k)
+    rows = parse_md_table(secs[sec_name])
+    assert rows[1]['Erschaffungsprobe'] == ''
+    assert rows[1]['AsP'] == ''
+
+
+def test_load_held_stabzauber_has_erschaffungsprobe_and_asp():
+    """Integration: load_held reads the new columns from the real vault fixture."""
+    from parsers.held import load_held
+    vault_root = Path(__file__).parent.parent.parent.parent  # DSA-Vault root
+    held = load_held(vault_root, 'illaen-baernhold')
+    stabzauber = held['rituale']['stabzauber']
+    assert len(stabzauber) == 9
+    bindung = next(r for r in stabzauber if r['name'] == 'Stabzauber: Bindung')
+    assert bindung['erschaffungsprobe'] == 'KL / CH / FF (+3)'
+    assert bindung['asp'] == '22'
+    verlaengerung = next(r for r in stabzauber if r['name'] == 'Stabzauber: Stabverlängerung')
+    assert verlaengerung['erschaffungsprobe'] == ''
+    assert verlaengerung['asp'] == ''
+
+
+# ---------------------------------------------------------------------------
 # Frontmatter tests
 # ---------------------------------------------------------------------------
 
