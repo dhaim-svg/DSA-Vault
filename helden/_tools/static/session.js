@@ -65,6 +65,7 @@ function initSession() {
     countEl.textContent = next;
     penaltyEl.textContent = next > 0 ? '(−' + computeWundPenalty(next) + ' auf Proben)' : '';
     anchor.dataset.wunden = next;
+    updateEigLeisteBadge();
 
     const stpr2 = document.querySelector('.vital-stepper');
     if (!stpr2) return;
@@ -98,6 +99,36 @@ function initSession() {
     container.querySelectorAll('.zustand-chip').forEach(btn => {
       btn.addEventListener('click', () => toggleZustand(btn.dataset.key));
     });
+    updateEigLeisteBadge();
+  }
+
+  // ── Eigenschafts-Leiste mod badge (Talente/Zauber tabs, D-025/D-026) ──
+  // Signals THAT a malus is active (wounds + Zustand-chips combined); does
+  // not compute per-attribute effective values (separate task).
+  // Note: the bar macro is rendered once per tab (Talente + Zauber), so the
+  // hook is a class (not an id) — both instances are updated in lockstep.
+  function updateEigLeisteBadge() {
+    const badges = document.querySelectorAll('.eig-leiste-mods');
+    if (!badges.length) return;
+
+    const effects = [];
+    const wundenAnchor = document.querySelector('[data-wunden]');
+    const wunden = wundenAnchor ? parseInt(wundenAnchor.dataset.wunden, 10) || 0 : 0;
+    if (wunden > 0) effects.push({ label: 'Wunden', penalty: computeWundPenalty(wunden) });
+
+    const active = new Set((loadState().zustaende) || []);
+    ZUSTAENDE.forEach(z => {
+      if (active.has(z.key)) effects.push({ label: z.label, penalty: -z.mod });
+    });
+
+    let text = '';
+    if (effects.length === 1) {
+      text = '−' + effects[0].penalty + ' ' + effects[0].label;
+    } else if (effects.length > 1) {
+      const total = effects.reduce((sum, e) => sum + e.penalty, 0);
+      text = '−' + total + ' (' + effects.length + ' Effekte)';
+    }
+    badges.forEach(badge => { badge.textContent = text; });
   }
 
   function toggleZustand(key) {

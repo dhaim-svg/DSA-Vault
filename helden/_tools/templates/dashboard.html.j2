@@ -340,6 +340,22 @@ body::before{
 .hex .full{ font-family:var(--subhead); font-size:8px; color:var(--ink-dim); display:block; margin-top:0; letter-spacing:.04em; }
 .hex .mod{ position:absolute; top:14%; right:8%; font-family:var(--mono); font-size:8px; color:var(--accent-gold); z-index:2; }
 
+/* ---- Eigenschafts-Leiste (Talente/Zauber, D-025) ---- */
+.eig-leiste{
+  position:sticky; top:46px; z-index:5;
+  display:flex; align-items:center; flex-wrap:wrap; gap:2px 10px;
+  margin-bottom:14px; padding:6px 12px;
+  background:var(--bg-inset); border:1px solid var(--rule); border-radius:4px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.03em;
+}
+.eig-leiste-grp{ display:flex; align-items:center; flex-wrap:wrap; gap:2px 8px; }
+.eig-leiste-abbr{ color:var(--accent-cold); }
+.eig-leiste-v{ color:var(--ink); font-weight:700; margin-left:2px; }
+.eig-leiste-sep{ color:var(--ink-dim); }
+.eig-leiste-div{ width:1px; align-self:stretch; background:var(--rule); margin:0 2px; }
+.eig-leiste-mods{ margin-left:auto; color:var(--accent-fail); font-weight:600; white-space:nowrap; }
+@media print { .eig-leiste{ display:none !important; } }
+
 /* ---- Zauber ---- */
 .spell{
   display:grid;
@@ -1126,6 +1142,26 @@ body { padding-top: 46px; }
     {{ probe | e }}
   {%- endif -%}
 {%- endmacro -%}
+{#- ── Macro: compact Eigenschaften+Basiswerte bar, sticky atop Talente/Zauber tabs (D-025) ── -#}
+{%- macro eig_leiste(eig, basis) -%}
+<div class="eig-leiste">
+  <span class="eig-leiste-grp">
+    {%- for a in ['MU','KL','IN','CH','FF','GE','KO','KK'] -%}
+    {%- if not loop.first %}<span class="eig-leiste-sep">·</span>{% endif -%}
+    <span class="eig-leiste-abbr">{{ a }}</span> <span class="eig-leiste-v">{{ eig.get(a, {}).get('aktuell', '?') | e }}</span>
+    {%- endfor -%}
+  </span>
+  <span class="eig-leiste-div"></span>
+  <span class="eig-leiste-grp">
+    <span class="eig-leiste-abbr">LE</span> <span class="eig-leiste-v">{{ basis.get('LE', {}).get('current', '?') | e }}</span>
+    <span class="eig-leiste-sep">·</span>
+    <span class="eig-leiste-abbr">AE</span> <span class="eig-leiste-v">{{ basis.get('AE', {}).get('current', '?') | e }}</span>
+    <span class="eig-leiste-sep">·</span>
+    <span class="eig-leiste-abbr">MR</span> <span class="eig-leiste-v">{{ basis.get('MR', {}).get('aktuell', '?') | e }}</span>
+  </span>
+  <span class="eig-leiste-mods"></span>
+</div>
+{%- endmacro -%}
 <div class="codex">
 <nav class="tab-bar" role="tablist" aria-label="Dashboard-Bereiche">
   <button class="tab-btn" data-tab="kampf"    type="button">⚔️ Kampf</button>
@@ -1326,6 +1362,7 @@ body { padding-top: 46px; }
 
 </div><!-- end tab-kampf -->
 <div class="tab-content" id="tab-talente">
+{{ eig_leiste(held.eigenschaften, held.basiswerte) }}
 
 <!-- ============================================================
      SEITE 2 — TALENTE
@@ -1367,6 +1404,7 @@ body { padding-top: 46px; }
 
 </div><!-- end tab-talente -->
 <div class="tab-content" id="tab-zauber">
+{{ eig_leiste(held.eigenschaften, held.basiswerte) }}
 <!-- ============================================================
      SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
      ============================================================ -->
