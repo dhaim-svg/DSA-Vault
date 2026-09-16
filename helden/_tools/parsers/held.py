@@ -188,6 +188,12 @@ def load_held(vault_root: Path, slug: str) -> dict:
     # ------------------------------------------------------------------ #
     aussehen = parse_aussehen(h2.get('Aussehen', ''))
 
+    portrait_path = None
+    for ext in ('png', 'jpg', 'webp'):
+        if (base / f'portrait.{ext}').exists():
+            portrait_path = f'helden/{slug}/portrait.{ext}'
+            break
+
     eig_bw_text = h2.get('Eigenschaften & Basiswerte', '')
     h3 = split_sections(eig_bw_text, 3)
 
@@ -645,4 +651,5 @@ def load_held(vault_root: Path, slug: str) -> dict:
         'vorgeschichte_paragraphs': paragraphs,
         '_ap_bis_naechste_stufe': ap_bis_naechste,
         'aussehen': aussehen,
+        'portrait_path': portrait_path,
     }

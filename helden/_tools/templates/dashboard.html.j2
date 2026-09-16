@@ -590,6 +590,9 @@ body::before{
 .aussehen-row:last-child{ border-bottom:0; }
 .aussehen-row dt{ color:var(--ink-mute); font-family:var(--mono); font-size:11px; letter-spacing:.06em; padding-top:1px; }
 .aussehen-row dd{ margin:0; color:var(--ink); }
+.aussehen-row--offen{ opacity:.55; }
+.aussehen-row--offen dd{ font-style:italic; }
+.aussehen-portrait{ max-width:160px; border-radius:4px; margin-bottom:12px; display:block; }
 
 /* ---- Vor/Nachteile ---- */
 .vn-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
@@ -1725,9 +1728,13 @@ body { padding-top: 46px; }
 <!-- Aussehen & Kleidung -->
 <div class="sec-head"><h2>Aussehen &amp; Kleidung</h2><span class="rule"></span></div>
 <section class="card">
+  {% if held.portrait_path %}
+  <img class="aussehen-portrait" src="{{ held.portrait_path }}" alt="Portrait {{ held.meta.name | e }}">
+  {% endif %}
   <dl class="aussehen-list">
     {% for a in held.aussehen %}
-    <div class="aussehen-row">
+    {% set offen = 'nicht festgelegt' in a.beschreibung or a.beschreibung.strip() == '—' %}
+    <div class="aussehen-row{% if offen %} aussehen-row--offen{% endif %}">
       <dt>{{ a.merkmal | e }}</dt>
       <dd>{{ a.beschreibung | e }}</dd>
     </div>

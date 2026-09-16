@@ -35,6 +35,7 @@ geld: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}
 | Augen | Mandelförmig (nivesische Herkunft); Farbe nicht festgelegt |
 | Größe | — (nicht festgelegt) |
 | Statur | — (nicht festgelegt) |
+| Gewicht | — (nicht festgelegt) |
 | Besondere Merkmale | Silber-weiße Hexensträhne im kupferroten Haar (seit erstem Kontakt mit starker Magie); Stoerrebrandt-Siegelring am Finger |
 | Typische Kleidung | Reisegewand + Hut (Akademie-Kleidung, ersetzt das Magiergewand), Wollmantel, Stiefel; der Steineiche-Magierstab stets griffbereit |
 
