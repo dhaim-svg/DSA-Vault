@@ -17,7 +17,7 @@ Rituale sind im Gegensatz zu Zaubern:
 | Aspekt | Regel |
 |--------|-------|
 | Bindung | Einmalige Erschaffungsprobe bringt das Objekt in die magische Bindung |
-| Aktivierung | Separat geprobt; nur der Besitzer kann aktivieren |
+| Aktivierung | Separat geprobt (Aktivierungsprobe auf Ritualkenntnis, volle Aktion), sofern beim Ritual nicht anders angegeben; nur der Besitzer kann aktivieren |
 | Vollmondphasen | Manche Traditionen (Geoden, Kristallomanten) haben Mondphase-Abhängigkeiten |
 | Permanente AsP | Erschaffung kostet oft 1+ pAsP, die permanent verloren sind |
 

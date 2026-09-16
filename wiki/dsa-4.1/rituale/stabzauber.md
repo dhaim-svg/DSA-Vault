@@ -29,10 +29,26 @@ Tabelle aller 13 Stabzauber. **Vol** = Volumen (eine Waffe verbraucht Vol, Stab 
 
 *Alle Erschaffungsproben werden um die Zahl der bereits vorhandenen Stabzauber erschwert.*
 
-### Aktivierung der Stabzauber
-- Aktivierung = freie Aktion (kein Zauberwurf)
-- Manche Stabzauber haben eigene Aktivierungskosten (AsP pro KR o.ä.)
-- Probe auf Erschaffung für Bindung; Probe auf Aktivierung für Wirkung (sofern angegeben)
+### Aktivierung der Stabzauber *(korrigiert 16.09.2026 — vorherige Fassung widersprach sich selbst, siehe [[wiki-luecken]])*
+Allgemeine Ritualregel (WdZ S. 106): die meisten gebundenen Kräfte müssen vom Magier **aktiviert** werden, wofür — sofern nicht anders angegeben — eine **Aktivierungsprobe auf Ritualkenntnis** mit voller Aktion Zeitaufwand fällig wird. Bei den Stabzaubern ist das **pro Ritual individuell geregelt** und keineswegs einheitlich „freie Aktion ohne Probe":
+
+| Stabzauber | Aktivierungsprobe | Aktivierungskosten | Wirkungsdauer |
+|-----------|-------------------|--------------------|----------------|
+| Bindung des Stabes | — (keine Probe) | 1 AsP | beliebig |
+| Ewige Flamme | — (keine Probe) | 1 AsP | beliebig |
+| Hammer des Magus | — (keine Probe) | 1 AsP | beliebig |
+| Seil des Adepten | — (keine Probe) | 1 AsP | beliebig |
+| Doppeltes Maß | Probe nötig zum Formwechsel (Details S. 108) | — | beliebig; Rückverwandlung = freie Aktion, keine AsP |
+| Kraftfokus | **keine Aktivierung** — passiv, wirkt automatisch bei jedem Zauber | — | dauerhaft |
+| Merkmalsfokus | **keine Aktivierung** — passiv | — | dauerhaft |
+| Modifikationsfokus | **keine Aktivierung** — passiv | — | dauerhaft |
+| Flammenschwert | MU / IN / GE | 3 AsP (Umwandlung) + 1 AsP/Attacke (Nahkampf) bzw. 2 AsP/Attacke (schwebend) | beliebig |
+| Schuppenhaut | MU / IN / KO | 3 AsP | beliebig (Aktivierungsdauer 5 Aktionen) |
+| Zauberspeicher | **MU / IN / KL** (+Mod., je +1 pro weiterem belegten Slot) | keine AsP | bis zur nächsten Sommersonnenwende (Aktivierungsdauer 1 Aktion) |
+
+Nur beim **Zauberspeicher** ist die Aktivierung selbst eine echte, gefährliche Probe (Misslingen = Zauber verpufft; Patzer = alle gespeicherten Zauber lösen aus). Die „einfachen" Stabzauber (Bindung, Ewige Flamme, Hammer des Magus, Seil des Adepten) benötigen zwar keine Probe, kosten aber jeweils 1 AsP pro Aktivierung — nicht komplett kostenlos, wie die alte Fassung dieses Artikels nahelegte. Die drei Foki sind dauerhaft aktiv und brauchen gar keine Aktivierung.
+
+*Quelle: WdZ S. 106–110 (`raw/pdf-extracted/wege-der-zauberei/kapitel-09-rituale.txt`).*
 
 ---
 

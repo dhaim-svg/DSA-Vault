@@ -124,3 +124,17 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 - **Befund:** Das WdH-Rassen-Kapitel enthält **keine „Tracht und Bewaffnung"-Abschnitte** für die Rassen (nur Startwerte). Diese Information liegt im Kulturen-Kapitel (→ L3), nicht im Rassen-Kapitel.
 - **Nivesen spezifisch:** Kein separater Tracht-Block im WdH für die Rasse Nivesen. Illaen ist durch die Stoerrebrandt-Ausrüstung vollständig versorgt; kulturspezifische Kleidung unter L3 (Mittelländische Städte) abgedeckt.
 - **Ergebnis:** Lücke geschlossen — keine Quelle vorhanden, kein Handlungsbedarf.
+
+---
+
+## 2026-09-16 — Sprint 013 (D-025…D-029, ausgelöst durch vier Spielsessions)
+
+### L16: Stabzauber-Aktivierung — Artikel widersprach sich selbst ✅ *behoben 2026-09-16*
+
+- **Wiki-Datei:** `wiki/dsa-4.1/rituale/stabzauber.md`, Sektion `### Aktivierung der Stabzauber`
+- **Befund:** Die Sektion behauptete pauschal „Aktivierung = freie Aktion (kein Zauberwurf)", nannte aber im selben Absatz „Probe auf Aktivierung für Wirkung (sofern angegeben)" — Selbstwiderspruch. `rituale-grundregeln.md` sagt zusätzlich generisch „Aktivierung: Separat geprobt", was der Kernaussage ebenfalls widerspricht. Ursache: die ursprüngliche Extraktion hatte die Stabzauber-Aktivierung fälschlich pauschalisiert, obwohl sie im Quellbuch pro Ritual individuell geregelt ist.
+- **Quellenprüfung:** `raw/pdf-extracted/wege-der-zauberei/kapitel-09-rituale.txt` (WdZ S. 106–110) gegengelesen. Ergebnis: die generische Objektritual-Regel („Aktivierungsprobe auf Ritualkenntnis, volle Aktion, sofern nicht anders angegeben") ist korrekt — `rituale-grundregeln.md` stimmte bereits. Die Stabzauber selbst weichen aber unterschiedlich stark davon ab: Bindung/Ewige Flamme/Hammer des Magus/Seil des Adepten brauchen keine Probe, kosten aber je 1 AsP; die drei Foki (Kraft/Merkmal/Modifikation) sind passiv ohne jede Aktivierung; Flammenschwert (MU/IN/GE) und Schuppenhaut (MU/IN/KO) haben eigene Aktivierungsproben; der Zauberspeicher hat die bereits korrekt dokumentierte Probe MU/IN/KL.
+- **Behoben:** `stabzauber.md` — Sektion durch korrekte Vergleichstabelle ersetzt (Probe/Kosten/Wirkungsdauer pro Stabzauber), Quelle zitiert. `rituale-grundregeln.md` — Formulierung „sofern beim Ritual nicht anders angegeben" ergänzt, um den Bezug zu den Stabzauber-Ausnahmen klarzustellen.
+- **Nicht behoben (User-Domäne, außerhalb Wiki-Scope):** `helden/illaen-baernhold/rituale.md` nennt zwei Stabzauber abweichend vom Wiki — „Stabzauber: Fackel" (Wiki: „Ewige Flamme") und „Stabzauber: Stabverlängerung" (deckt sich funktional mit „Doppeltes Maß"). Datei ist bereits mit eigenem Hinweis dazu versehen (Z. 30); keine Umbenennung ohne explizite User-Freigabe.
+
+---
