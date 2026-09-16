@@ -1141,7 +1141,7 @@ body { padding-top: 46px; }
     {%- for abbr in probe.split('/') -%}
       {%- set a = abbr | trim -%}
       {%- if not loop.first %} / {% endif -%}
-      {%- if a == '**' %}**{%- elif eig.get(a) %}<span class="pv" data-attr="{{ a }}" data-base="{{ eig[a].aktuell }}">{{ a }} {{ eig[a].aktuell }}</span>{%- else %}{{ a }}{%- endif -%}
+      {%- if a == '**' %}**{%- elif eig.get(a) %}<span class="pv" data-attr="{{ a | e }}" data-base="{{ eig[a].aktuell | e }}">{{ a }} {{ eig[a].aktuell }}</span>{%- else %}{{ a }}{%- endif -%}
     {%- endfor -%}
   {%- else -%}
     {{ probe | e }}
@@ -1394,7 +1394,7 @@ body { padding-top: 46px; }
       <div class="talent-row {{ cls }}"{% if not is_kampf and '/' in (row.probe or '') %} data-probe="{{ row.probe }}" data-taw="{{ row.taw }}" data-name="{{ row.name }}"{% endif %}>
         <span class="t-name">{{ row.name }}</span>
         <span class="t-probe">
-          {%- if is_kampf %}AT {{ row.at }} / PA {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}{% if row.stk %} · Stk {{ row.stk }}{% endif %}
+          {%- if is_kampf %}AT {{ row.at }} / PA {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}{% if row.stk %} · Stk {{ row.stk | e }}{% endif %}
           {%- else %}{{ probe_eig(row.probe, held.eigenschaften) }}
           {%- endif -%}
         </span>

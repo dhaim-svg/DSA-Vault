@@ -185,17 +185,46 @@ def test_parse_md_table_stabverlaengerung_row_left_empty():
     assert rows[1]['AsP'] == ''
 
 
-def test_load_held_stabzauber_has_erschaffungsprobe_and_asp():
-    """Integration: load_held reads the new columns from the real vault fixture."""
+RITUALE_WITH_PROBE_FIXTURE = """\
+## Stabzauber (2 Rituale)
+
+| Stabzauber | Erschaffungsprobe | AsP | Vol | Effekt (Kurzform) |
+|---|---|---|---|---|
+| Stabzauber: Bindung | KL / CH / FF (+3) | 22 | 1 pAsP | Grundbindung |
+| Stabzauber: Stabverlaengerung |  |  | ? | Stab verlaengert sich auf Befehl |
+"""
+
+
+def test_load_held_stabzauber_has_erschaffungsprobe_and_asp(tmp_path):
+    """Integration: load_held reads the new columns end-to-end.
+
+    Uses an isolated fixture vault rather than the user's live, editable
+    helden/ character file — that file's own values (e.g. the
+    Stabverlängerung row) are expected to change once the game clarifies
+    them (see rituale.md's D-028 footnote), which would break an assertion
+    pinned to today's exact values/row count.
+    """
     from parsers.held import load_held
-    vault_root = Path(__file__).parent.parent.parent.parent  # DSA-Vault root
-    held = load_held(vault_root, 'illaen-baernhold')
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    (hero_dir / '_illaen.md').write_text('', encoding='utf-8')
+    (hero_dir / 'talente.md').write_text('', encoding='utf-8')
+    (hero_dir / 'zauber.md').write_text('', encoding='utf-8')
+    (hero_dir / 'rituale.md').write_text(RITUALE_WITH_PROBE_FIXTURE, encoding='utf-8')
+    (hero_dir / 'sonderfertigkeiten.md').write_text('', encoding='utf-8')
+    (hero_dir / 'vor-nachteile.md').write_text('', encoding='utf-8')
+    (hero_dir / 'ausruestung.md').write_text('', encoding='utf-8')
+    (hero_dir / 'steigerungs-log.md').write_text('', encoding='utf-8')
+    (hero_dir / 'vorgeschichte.md').write_text('', encoding='utf-8')
+
+    held = load_held(tmp_path, slug)
     stabzauber = held['rituale']['stabzauber']
-    assert len(stabzauber) == 9
+    assert len(stabzauber) == 2
     bindung = next(r for r in stabzauber if r['name'] == 'Stabzauber: Bindung')
     assert bindung['erschaffungsprobe'] == 'KL / CH / FF (+3)'
     assert bindung['asp'] == '22'
-    verlaengerung = next(r for r in stabzauber if r['name'] == 'Stabzauber: Stabverlängerung')
+    verlaengerung = next(r for r in stabzauber if r['name'] == 'Stabzauber: Stabverlaengerung')
     assert verlaengerung['erschaffungsprobe'] == ''
     assert verlaengerung['asp'] == ''
 

@@ -122,6 +122,11 @@ function initSession() {
     return effects;
   }
 
+  // Exposed so dice.js's getWundMod() can pre-fill the roll panel's modifier
+  // with the same total (wounds + Zustände) shown by the badge/overlay above
+  // — session.js loads before dice.js in dashboard.html.j2.
+  window.DSASession = { computeActiveEffects: computeActiveEffects };
+
   function updateEigLeisteBadge() {
     const effects = computeActiveEffects();
 

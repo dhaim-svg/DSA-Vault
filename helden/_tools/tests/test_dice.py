@@ -52,6 +52,12 @@ def calc_talent_probe(eig3, taw, rolls, mod):
     perSlot (list of dicts with roll, eig, fehl).
     """
     eff_taw = taw + mod
+    # Negative effective TaW (talentregeln.md:24): the overflow becomes a
+    # per-die Erschwernis on each attribute check instead of being
+    # subtracted wholesale from tap (which would make tap negative for
+    # every possible roll). When eff_taw >= 0, overflow is 0 and this is
+    # identical to the original formula.
+    overflow = min(eff_taw, 0)
     per_slot = []
     total_fehl = 0
     for i in range(3):
@@ -60,17 +66,22 @@ def calc_talent_probe(eig3, taw, rolls, mod):
         if eig is None:
             per_slot.append({'roll': roll, 'eig': None, 'fehl': 0})
         else:
-            fehl = max(0, roll - eig)
+            fehl = max(0, roll - (eig + overflow))
             total_fehl += fehl
             per_slot.append({'roll': roll, 'eig': eig, 'fehl': fehl})
-    tap = eff_taw - total_fehl
     ones = sum(1 for r in rolls if r == 1)
     twenties = sum(1 for r in rolls if r == 20)
     is_crit = ones >= 2
     is_patzer = twenties >= 2
+    if eff_taw >= 0:
+        tap = eff_taw - total_fehl
+        success = tap >= 0 or is_crit
+    else:
+        tap = eff_taw if total_fehl == 0 else eff_taw - total_fehl
+        success = total_fehl == 0 or is_crit
     return {
         'tap': tap,
-        'success': tap >= 0 or is_crit,
+        'success': success,
         'isCrit': is_crit,
         'isPatzer': is_patzer,
         'perSlot': per_slot,
@@ -184,6 +195,43 @@ def test_talent_probe_star_star_slot():
     assert result['perSlot'][2] == {'roll': 18, 'eig': None, 'fehl': 0}
     assert result['tap'] == 8 - 3  # 5
     assert result['success'] is True
+
+
+def test_talent_probe_negative_eff_taw_can_succeed():
+    """D-027 Zauberspeicher-Auslöseprobe: taw=0, mod=-1 → effTaw=-1.
+
+    Before the fix, tap = effTaw - totalFehl was negative for every roll
+    (totalFehl >= 0 always), making the probe mathematically unwinnable.
+    The -1 must instead spill in as a per-die Erschwernis: favorable rolls
+    (all three <= eig - 1) must be able to succeed, with TaP* = effTaw.
+    """
+    result = calc_talent_probe([10, 10, 10], 0, [5, 5, 5], -1)
+    assert result['perSlot'] == [
+        {'roll': 5, 'eig': 10, 'fehl': 0},
+        {'roll': 5, 'eig': 10, 'fehl': 0},
+        {'roll': 5, 'eig': 10, 'fehl': 0},
+    ]
+    assert result['success'] is True
+    assert result['tap'] == -1
+
+
+def test_talent_probe_negative_eff_taw_fails_on_bad_roll():
+    """Same setup, but one roll exceeds eig - 1 → fails despite the crit rule not applying."""
+    result = calc_talent_probe([10, 10, 10], 0, [5, 5, 10], -1)
+    assert result['perSlot'][2]['fehl'] == 1   # 10 - (10 - 1)
+    assert result['success'] is False
+
+
+def test_talent_probe_positive_eff_taw_unchanged_by_fix():
+    """Existing positive-effTaw call sites must be byte-identical to before the fix."""
+    result = calc_talent_probe([13, 13, 11], 7, [8, 11, 4], 0)
+    assert result['tap'] == 7
+    assert result['success'] is True
+    assert result['perSlot'] == [
+        {'roll': 8, 'eig': 13, 'fehl': 0},
+        {'roll': 11, 'eig': 13, 'fehl': 0},
+        {'roll': 4, 'eig': 11, 'fehl': 0},
+    ]
 
 
 # ---------------------------------------------------------------------------

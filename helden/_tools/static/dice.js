@@ -81,6 +81,12 @@ window.Dice.rollParsed = function(spec) {
  */
 window.Dice.calcTalentProbe = function(eig3, taw, rolls, mod) {
   var effTaw = taw + (mod || 0);
+  // Negative effective TaW (talentregeln.md:24): the overflow is applied as
+  // a per-die Erschwernis on each attribute check, not subtracted wholesale
+  // from tap — otherwise tap = effTaw - totalFehl is negative for every
+  // possible roll and the probe becomes unwinnable. When effTaw >= 0 this
+  // is 0 and the formula below is identical to the original.
+  var overflow = Math.min(effTaw, 0);
   var perSlot = [];
   var totalFehl = 0;
   for (var i = 0; i < 3; i++) {
@@ -89,19 +95,28 @@ window.Dice.calcTalentProbe = function(eig3, taw, rolls, mod) {
     if (eig === null || eig === undefined) {
       perSlot.push({ roll: roll, eig: null, fehl: 0 });
     } else {
-      var fehl = Math.max(0, roll - eig);
+      var fehl = Math.max(0, roll - (eig + overflow));
       totalFehl += fehl;
       perSlot.push({ roll: roll, eig: eig, fehl: fehl });
     }
   }
-  var tap = effTaw - totalFehl;
   var ones = rolls.filter(function(r) { return r === 1; }).length;
   var twenties = rolls.filter(function(r) { return r === 20; }).length;
   var isCrit = ones >= 2;
   var isPatzer = twenties >= 2;
+  var tap, success;
+  if (effTaw >= 0) {
+    tap = effTaw - totalFehl;
+    success = tap >= 0 || isCrit;
+  } else {
+    // All three (non-**) attribute checks passed → probe besteht, but
+    // TaP* mirrors the negative effective TaW rather than going positive.
+    tap = totalFehl === 0 ? effTaw : effTaw - totalFehl;
+    success = totalFehl === 0 || isCrit;
+  }
   return {
     tap: tap,
-    success: tap >= 0 || isCrit,
+    success: success,
     isCrit: isCrit,
     isPatzer: isPatzer,
     perSlot: perSlot,
@@ -179,10 +194,19 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   // ------------------------------------------------------------------
-  // Get current Wunden penalty as a negative modifier (e.g. -2 for 1 wound).
-  // DSA 4.1 simplified rule: each wound = -2 on all checks.
+  // Get current Wunden+Zustände penalty as a negative modifier (e.g. -2 for
+  // 1 wound). Delegates to session.js's computeActiveEffects() — the same
+  // source of truth the Eigenschafts-Leiste badge and probe overlay use —
+  // so a toggled Zustand chip (Schmerz, Furcht, ...) reaches the dice panel
+  // too, not just wounds. Falls back to wounds-only when session.js hasn't
+  // run (e.g. opened as file://).
   // ------------------------------------------------------------------
   function getWundMod() {
+    if (window.DSASession && window.DSASession.computeActiveEffects) {
+      var effects = window.DSASession.computeActiveEffects();
+      var total = effects.reduce(function (sum, e) { return sum + e.penalty; }, 0);
+      return -total;
+    }
     var el = document.querySelector('[data-wunden]');
     var w = el ? parseInt(el.dataset.wunden, 10) : 0;
     return w > 0 ? -(w * 2) : 0;
