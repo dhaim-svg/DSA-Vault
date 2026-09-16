@@ -5,7 +5,13 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Quelle |
+|------|-------|--------|-------|--------|
+| D-025 | Eigenschafts-Leiste über Talente-/Zauber-Tab | M | in-progress | Spielsession-Feedback 16.09.2026 |
+| D-026 | Inline-Eigenschaftswerte vervollständigen (Kampftechniken, Spontane Mods, Wundabzug) | M | in-progress | Spielsession-Feedback 16.09.2026 |
+| D-027 | Zauberspeicher-Auslöseprobe (MU/IN/KL) | M | in-progress | Spielsession-Feedback 16.09.2026 |
+| D-028 | Erschaffungsprobe je Stabzauber | S | in-progress | Spielsession-Feedback 16.09.2026 |
+| D-029 | Aussehen vervollständigen (Augenfarbe/Größe/Statur/Gewicht) | S | in-progress | Spielsession-Feedback 16.09.2026 |
 
 ## Backlog
 
@@ -15,26 +21,23 @@ _(keine)_
 
 ### Beschreibungen
 
-**D-024 — Stabzauber: allgemeine Aktivierungsregel anzeigen**
-Stabzauber-Liste zeigt nur Name + Vol + Effekt (`parsers/held.py:351-362`, Template `dashboard.html.j2:1430-1432`). Die allgemeine Aktivierungsregel („Alle Stabzauber an Illaens gebundenen Magierstab geknüpft; Aktivierung = freie Aktion", `rituale.md` ~Z.16) wird nicht angezeigt. Gewünscht: diese allgemeine Regel prominent im Stabzauber-Abschnitt (Hinweiszeile unter dem Header `dashboard.html.j2:1428`). Keine Probe pro Einzelzauber. Umfang: Intro-Zeile aus `rituale.md` parsen (oder im Template ergänzen) + Render. Effort S.
-
-**D-023 — Talente/Zauber: Eigenschaftswerte inline + prominenter**
-Talent- und Zauberzeilen zeigen nur die Probe-Kürzel (z.B. `MU/GE/KK`), nicht die tatsächlichen Eigenschaftswerte des Helden. Gewünscht: Werte inline anzeigen (z.B. „MU 14 / GE 13 / KK 12") **und** die Probe-Anzeige etwas prominenter gestalten. Werte sind client-seitig über `window.DSA.eig` (`static/dice.js` `parseProbe`) bzw. server-seitig aus `held.eigenschaften` verfügbar. Umfang: Talent-Zeile (`dashboard.html.j2:1325-1335`, `.t-probe`) und Zauber-Zeile (`1359-1380`, `.probe`) um Werte ergänzen (server-seitig im Template oder kleine JS-Annotation beim Laden), CSS für Lesbarkeit/Prominenz. Kampftechniken (AT/PA) ausgenommen. Effort M.
-
-**D-022 — Profil: Aussehen & Kleidung**
-Profil-Tab zeigt keine Infos zu Aussehen/Kleidung. Heute existieren Daten nur verstreut (Haar/Augen in `vorgeschichte.md`, silberne Strähne als Stigma in `vor-nachteile.md`, Kleidungsstücke in `ausruestung.md`). Lösung: neue strukturierte Sektion (z.B. `## Aussehen` mit Tabelle/Feldern: Haarfarbe, Augenfarbe, Größe, Statur, besondere Merkmale, typische Kleidung) in einer Helden-Datei; `parsers/held.py` parst sie (analog bestehender Section-Split/`parse_md_table`-Loader) und liefert sie ins `held.meta`/eigenes Dict; neue Profil-Karte im Template (`dashboard.html.j2:1645-1757`). Umfang: Datenschema + Parser + Template. Effort M.
-
 **D-018 — Zauber: Inline-Vorschau**
-Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`dashboard.html.j2:1311-1506`); Klick-Guard in `static/dice.js:520-532` beachten.
+Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`dashboard.html.j2:1311-1506`); Klick-Guard in `static/dice.js:520-532` beachten. Seit Sprint 012 günstiger: `popover` + CSS Anchor Positioning sind seit Firefox 147 (Jan. 2026) Baseline — spart die JS-Positionierung; `@position-try` (Flip bei Overflow) braucht noch einen sinnvollen Fallback (Safari 18.4+).
 
-**D-019 — Steigern: Experiment-/Auswahl-Modus**
-Statt pro Zeile sofort zu steigern: erst Auswahl treffen, Gesamtkosten gegen AP-Vorrat sehen, dann gesammelt bestätigen. Heute: jede Zeile committet sofort (`steigern.js:doSteigern:52` → 4× PATCH + reload). Umfang: Auswahl-/Warenkorb-Modell in `steigern.js` gegen `window.DSA.steigern.ap.verfuegbar`, laufende AP-Summe, finaler Commit-Button.
+**D-025 — Eigenschafts-Leiste über Talente-/Zauber-Tab**
+Die Eigenschaften-Karte liegt nur im Kampf-Tab; beim Talent-/Zauberwürfeln sind die Werte nicht sichtbar. Gewünscht: sticky Leiste am oberen Rand von `#tab-talente` und `#tab-zauber` mit allen acht Eigenschaften (`aktuell`-Wert) plus LE/AE/MR, aus `held.eigenschaften`/`held.basiswerte` (`parsers/held.py:194-210`, kein Parser-Eingriff nötig). Neues Jinja-Macro `eig_leiste(eig, basis)` neben `probe_eig` (`dashboard.html.j2:1116`). Aktive Zustands-/Wundmodifikatoren als Badge rechts, gespeist aus `session.js`/`dice.js:185 getWundMod()`. Quelle: Spielsession-Feedback 16.09.2026, Plan `C:\Users\David\.claude\plans\ich-habe-jetzt-die-mellow-beaver.md`.
 
-**D-020 — Steigern: Steigerungsspalte in eigene Tabelle**
-Steigerungsspalte separieren. Heute Flex-Zeilen (`steigern.js:renderRow:119`, CSS `.sg-row:1005`). Vorlage: `<table class="lang-table">` (Sprachen-Tab 1799-1850). Hinweis: überlappt mit D-019; idealerweise zusammen oder nach D-019 umsetzen.
+**D-026 — Inline-Eigenschaftswerte vervollständigen**
+`probe_eig` (D-023, Sprint 012) greift nur bei 3-teiligen `/`-Proben. Gewünscht: Kampftechniken (`dashboard.html.j2:1354`, AT/PA-Werte statt bare Kürzel), Spontane-Modifikationen-Tabelle (`.mod-probe` `:1440`) und sichtbarer Wunden-/Zustandsabzug (z.B. `GE 13 → 11`) bei aktivem Malus. Probe-Spalte fix `150px` (`:346`) muss auf `minmax()` umgestellt werden. Selber JS-Hook wie D-025.
 
-**D-021 — Steigern: Session-Erfahrungs-Kostenmodifikator**
-Besondere/schlechte Erfahrung in einer Session senkt/erhöht Steigerungskosten einer Spalte einmalig. Heute nicht vorhanden (Kosten rein `calcApCost`/`calcEigCost` in `steigern.js`). Umfang: Session-State analog `static/session.js` (localStorage `dsa:<slug>:session`), UI-Steuerung per Tab, Anwendung in `calcApCost`/`renderRow`.
+**D-027 — Zauberspeicher-Auslöseprobe**
+Quelle: `wiki/dsa-4.1/rituale/stabzauber.md:119-125` — Aktivierungsdauer 1 Aktion, Probe MU/IN/KL, kostet keine AsP, Misslingen = Zauber verpufft, Patzer = alle gespeicherten Zauber lösen aus, +1 Erschwernis je weiterem belegten Slot. Heute nirgends im Dashboard, obwohl es die einzige real definierte Aktivierungsprobe im Regelwerk ist. Umfang: Regelzeile in der Speicher-Box (`dashboard.html.j2:1462-1473`), „Auslösen"-Button pro belegtem Slot mit `data-probe="MU/IN/KL"` + errechneter Erschwernis, Anbindung an bestehenden Würfler (`dice.js:507/520`, Selektor erweitern statt duplizieren), Erfolg/Patzer-Handling über bestehenden `zauberspeicher.js`-Entleeren-Pfad.
+
+**D-028 — Erschaffungsprobe je Stabzauber**
+`helden/illaen-baernhold/rituale.md` hat nur `| Stabzauber | Vol | Effekt |`; `wiki/dsa-4.1/rituale/stabzauber.md` führt zusätzlich Erschaffungsprobe + AsP. Spalte ergänzen (Werte aus dem Wiki, nach W-001-Klärung), `parsers/held.py:382-395` liest mit, Template `:1456` zeigt sie neben dem Vol-Badge. Reine Nachschlage-Info — ändert nichts an der (probenfreien) Aktivierung selbst.
+
+**D-029 — Aussehen vervollständigen**
+`_illaen.md:30-39` hat Größe/Statur/exakte Augenfarbe als „— (nicht festgelegt)" (Sprint-012-Präzedenzfall: keine erfundenen Werte). Gewünscht: Felder ergänzen sobald der User sie festlegt, plus Template-Anpassung (`:1677`) sodass offene Felder visuell als *offen* markiert statt wie ausgefüllter Inhalt gerendert werden. Optional Portrait-Slot.
 
 ## Done
 
