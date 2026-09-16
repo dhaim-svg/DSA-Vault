@@ -415,6 +415,8 @@ body::before{
 .slot-mods-label, .slot-erneuerung-label { color:var(--ink-mute); font-family:var(--mono); }
 .slot-entleeren-btn { margin-left:auto; font-size:10px; padding:1px 6px; background:rgba(228,95,95,.15); border:1px solid rgba(228,95,95,.3); color:rgba(228,95,95,.8); border-radius:3px; cursor:pointer; font-family:var(--mono); }
 .slot-entleeren-btn:hover { background:rgba(228,95,95,.28); }
+.slot-ausloesen-btn { font-size:10px; padding:1px 6px; background:rgba(106,90,205,.15); border:1px solid rgba(106,90,205,.35); color:var(--accent-magic); border-radius:3px; cursor:pointer; font-family:var(--mono); }
+.slot-ausloesen-btn:hover { background:rgba(106,90,205,.28); }
 .slot-befuellen-area { margin-top:3px; padding-left:22px; }
 .slot-befuellen-toggle { font-size:10px; padding:1px 7px; background:rgba(95,195,228,.1); border:1px solid rgba(95,195,228,.25); color:var(--accent-cold); border-radius:3px; cursor:pointer; font-family:var(--mono); }
 .slot-befuellen-toggle:hover { background:rgba(95,195,228,.2); }
@@ -2258,6 +2260,7 @@ body { padding-top: 46px; }
     <div class="speicher-box">
       <div class="speicher-title">Zauberspeicher-Inhalt</div>
       <div class="speicher-summary">belegt: 0 / 20 AsP</div>
+      <p class="meta" style="margin:0 0 8px;font-style:italic;color:var(--ink-dim)">Auslösung: 1 Aktion, Probe MU/IN/KL (kostet keine AsP). +1 Erschwernis je weiterem belegten Speicher. Misslingen = Zauber verpufft. Patzer = alle gespeicherten Zauber lösen aus.</p>
 
       <div class="speicher-slot leer"
            data-slot="1">

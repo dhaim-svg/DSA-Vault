@@ -68,6 +68,12 @@
     });
   }
 
+  // Exposed so dice.js can reuse this exact PATCH flow for the
+  // Zauberspeicher-Auslöseprobe result handling (success / Patzer) instead
+  // of duplicating the PATCH shape. Callers pass the real .slot-entleeren-btn
+  // element for the slot they want cleared.
+  window.Zauberspeicher = { handleEntleeren: handleEntleeren };
+
   // ---------- Befüllen toggle ----------
 
   function handleBefuellenToggle(btn) {

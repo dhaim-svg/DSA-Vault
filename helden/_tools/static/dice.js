@@ -333,6 +333,43 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
         }
       }
 
+      // Action: Zauberspeicher-Auslöseprobe result handling.
+      // Reuses window.Zauberspeicher.handleEntleeren (zauberspeicher.js) — the
+      // same PATCH flow as the manual "Entleeren" button — instead of a
+      // second PATCH call. Plain Misslingen (not Patzer) does nothing further:
+      // per the wiki source the stored spell "verpufft wirkungslos" but the
+      // slot itself isn't described as cleared by this action alone.
+      if (cfg.type === 'talent' && cfg.speicherSlot) {
+        if (res.isPatzer) {
+          var patzerBtn = document.createElement('button');
+          patzerBtn.className = 'dp-btn';
+          patzerBtn.type = 'button';
+          patzerBtn.textContent = 'Patzer — alle Speicher entleeren…';
+          patzerBtn.onclick = function () {
+            if (!confirm('Patzer! Alle gespeicherten Zauber lösen sich ebenfalls aus. Alle Slots entleeren?')) return;
+            patzerBtn.disabled = true;
+            document.querySelectorAll('.slot-entleeren-btn').forEach(function (btn) {
+              if (window.Zauberspeicher) window.Zauberspeicher.handleEntleeren(btn);
+            });
+          };
+          actionEl.appendChild(patzerBtn);
+        } else if (res.success) {
+          var slotNum = cfg.speicherSlot;
+          var ausloesenBtn = document.createElement('button');
+          ausloesenBtn.className = 'dp-btn';
+          ausloesenBtn.type = 'button';
+          ausloesenBtn.textContent = 'Zauber ausgelöst — Slot ' + slotNum + ' entleeren';
+          ausloesenBtn.onclick = function () {
+            var entleerenBtn = document.querySelector('.slot-entleeren-btn[data-slot="' + slotNum + '"]');
+            if (entleerenBtn && window.Zauberspeicher) {
+              ausloesenBtn.disabled = true;
+              window.Zauberspeicher.handleEntleeren(entleerenBtn);
+            }
+          };
+          actionEl.appendChild(ausloesenBtn);
+        }
+      }
+
     } else if (cfg.type === 'eigenschaft') {
       var roll = rolls[0];
       var res = window.Dice.calcEigProbe(cfg.wert || 0, roll, mod);
@@ -459,7 +496,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     if (!panel) return;
 
     document.getElementById('dp-title').textContent = '🎲 ' + (config.name || 'Probe');
-    document.getElementById('dp-mod').value = getWundMod();
+    document.getElementById('dp-mod').value = getWundMod() + (currentConfig.baseMod || 0);
     document.getElementById('dp-auto').classList.add('active');
     document.getElementById('dp-manual').classList.remove('active');
 
@@ -566,6 +603,21 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
           type: 'pa',
           name: 'Parade',
           atOrPa: parseInt(el.dataset.pa, 10) || 0,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // Zauberspeicher-Auslöseprobe (3W20 pure attribute probe, no TaW buffer)
+    document.querySelectorAll('.slot-ausloesen-btn[data-probe]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        window.Dice.openPanel({
+          type: 'talent',
+          name: 'Zauberspeicher auslösen (Slot ' + el.dataset.slot + ')',
+          probe: el.dataset.probe,
+          taw: 0,
+          baseMod: -parseInt(el.dataset.erschwernis, 10) || 0,
+          speicherSlot: el.dataset.slot,
           slug: window.DSA && window.DSA.slug,
         });
       });
