@@ -359,7 +359,7 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns: minmax(200px,1.7fr) 150px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  grid-template-columns: minmax(200px,1.7fr) minmax(150px,max-content) 38px 80px minmax(110px,1fr) minmax(240px,2fr);
   gap:10px;
   align-items:start;
   padding:9px 10px;
@@ -1384,47 +1384,47 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row ">
         <span class="t-name">Armbrust</span>
-        <span class="t-probe">9 / —</span>
+        <span class="t-probe">AT 9 / PA — · Stk C</span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row ">
         <span class="t-name">Dolche</span>
-        <span class="t-probe">9 / 9</span>
+        <span class="t-probe">AT 9 / PA 9 · Stk D</span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row zero">
         <span class="t-name">Hiebwaffen</span>
-        <span class="t-probe">7 / 8</span>
+        <span class="t-probe">AT 7 / PA 8 · Stk D</span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row ">
         <span class="t-name">Infanteriewaffen</span>
-        <span class="t-probe">8 / 8</span>
+        <span class="t-probe">AT 8 / PA 8 · Stk D</span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row ">
         <span class="t-name">Raufen</span>
-        <span class="t-probe">9 / 9</span>
+        <span class="t-probe">AT 9 / PA 9 · Stk C</span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row zero">
         <span class="t-name">Ringen</span>
-        <span class="t-probe">7 / 8</span>
+        <span class="t-probe">AT 7 / PA 8 · Stk D</span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row zero">
         <span class="t-name">Säbel</span>
-        <span class="t-probe">7 / 8</span>
+        <span class="t-probe">AT 7 / PA 8 · Stk D</span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row high">
         <span class="t-name">Stäbe</span>
-        <span class="t-probe">14 / 10</span>
+        <span class="t-probe">AT 14 / PA 10 · Stk D</span>
         <span class="t-zfw">9</span>
       </div>
       <div class="talent-row ">
         <span class="t-name">Wurfmesser</span>
-        <span class="t-probe">10 / —</span>
+        <span class="t-probe">AT 10 / PA — · Stk C</span>
         <span class="t-zfw">2</span>
       </div>
     </div>
@@ -1435,62 +1435,62 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row zero" data-probe="GE/KO/KK" data-taw="0" data-name="Athletik">
         <span class="t-name">Athletik</span>
-        <span class="t-probe">GE 13 / KO 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row " data-probe="MU/GE/KK" data-taw="4" data-name="Klettern">
         <span class="t-name">Klettern</span>
-        <span class="t-probe">MU 12 / GE 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row " data-probe="MU/IN/GE" data-taw="4" data-name="Körperbeherrschung">
         <span class="t-name">Körperbeherrschung</span>
-        <span class="t-probe">MU 12 / IN 15 / GE 13</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row " data-probe="CH/GE/KK" data-taw="4" data-name="Reiten">
         <span class="t-name">Reiten</span>
-        <span class="t-probe">CH 13 / GE 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row " data-probe="MU/IN/GE" data-taw="3" data-name="Schleichen">
         <span class="t-name">Schleichen</span>
-        <span class="t-probe">MU 12 / IN 15 / GE 13</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row " data-probe="GE/KO/KK" data-taw="3" data-name="Schwimmen">
         <span class="t-name">Schwimmen</span>
-        <span class="t-probe">GE 13 / KO 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row high" data-probe="MU/KO/KK" data-taw="7" data-name="Selbstbeherrschung">
         <span class="t-name">Selbstbeherrschung</span>
-        <span class="t-probe">MU 12 / KO 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">7</span>
       </div>
       <div class="talent-row " data-probe="MU/IN/GE" data-taw="1" data-name="Sich verstecken">
         <span class="t-name">Sich verstecken</span>
-        <span class="t-probe">MU 12 / IN 15 / GE 13</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row zero" data-probe="IN/CH/CH" data-taw="0" data-name="Singen">
         <span class="t-name">Singen</span>
-        <span class="t-probe">IN 15 / CH 13 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row high" data-probe="KL/IN/IN" data-taw="7" data-name="Sinnenschärfe">
         <span class="t-name">Sinnenschärfe</span>
-        <span class="t-probe">KL 14 / IN 15 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">7</span>
       </div>
       <div class="talent-row zero" data-probe="CH/GE/GE" data-taw="0" data-name="Tanzen">
         <span class="t-name">Tanzen</span>
-        <span class="t-probe">CH 13 / GE 13 / GE 13</span>
+        <span class="t-probe"><span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row " data-probe="IN/KO/KK" data-taw="1" data-name="Zechen">
         <span class="t-name">Zechen</span>
-        <span class="t-probe">IN 15 / KO 13 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">1</span>
       </div>
     </div>
@@ -1501,27 +1501,27 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Etikette">
         <span class="t-name">Etikette</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/CH" data-taw="1" data-name="Gassenwissen">
         <span class="t-name">Gassenwissen</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/CH" data-taw="2" data-name="Lehren">
         <span class="t-name">Lehren</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">2</span>
       </div>
       <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Menschenkenntnis">
         <span class="t-name">Menschenkenntnis</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row " data-probe="MU/IN/CH" data-taw="3" data-name="Überreden">
         <span class="t-name">Überreden</span>
-        <span class="t-probe">MU 12 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">3</span>
       </div>
     </div>
@@ -1532,17 +1532,17 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row zero" data-probe="KL/IN/KO" data-taw="0" data-name="Fährtensuchen">
         <span class="t-name">Fährtensuchen</span>
-        <span class="t-probe">KL 14 / IN 15 / KO 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/IN" data-taw="3" data-name="Orientierung">
         <span class="t-name">Orientierung</span>
-        <span class="t-probe">KL 14 / IN 15 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row " data-probe="IN/GE/KO" data-taw="2" data-name="Wildnisleben">
         <span class="t-name">Wildnisleben</span>
-        <span class="t-probe">IN 15 / GE 13 / KO 13</span>
+        <span class="t-probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
         <span class="t-zfw">2</span>
       </div>
     </div>
@@ -1553,67 +1553,67 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row " data-probe="KL/KL/IN" data-taw="3" data-name="Geografie">
         <span class="t-name">Geografie</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row " data-probe="KL/KL/IN" data-taw="3" data-name="Geschichtswissen">
         <span class="t-name">Geschichtswissen</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">3</span>
       </div>
       <div class="talent-row high" data-probe="KL/KL/IN" data-taw="5" data-name="Götter und Kulte">
         <span class="t-name">Götter und Kulte</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row " data-probe="KL/KL/FF" data-taw="1" data-name="Heraldik">
         <span class="t-name">Heraldik</span>
-        <span class="t-probe">KL 14 / KL 14 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row " data-probe="MU/KL/CH" data-taw="2" data-name="Kriegskunst">
         <span class="t-name">Kriegskunst</span>
-        <span class="t-probe">MU 12 / KL 14 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">2</span>
       </div>
       <div class="talent-row " data-probe="KL/KL/IN" data-taw="4" data-name="Magiekunde">
         <span class="t-name">Magiekunde</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/FF" data-taw="1" data-name="Pflanzenkunde">
         <span class="t-name">Pflanzenkunde</span>
-        <span class="t-probe">KL 14 / IN 15 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row high" data-probe="KL/KL/IN" data-taw="7" data-name="Rechnen">
         <span class="t-name">Rechnen</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">7</span>
       </div>
       <div class="talent-row " data-probe="KL/KL/IN" data-taw="4" data-name="Rechtskunde">
         <span class="t-name">Rechtskunde</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row high" data-probe="KL/IN/CH" data-taw="5" data-name="Sagen und Legenden">
         <span class="t-name">Sagen und Legenden</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/IN" data-taw="2" data-name="Schätzen">
         <span class="t-name">Schätzen</span>
-        <span class="t-probe">KL 14 / IN 15 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">2</span>
       </div>
       <div class="talent-row " data-probe="KL/KL/IN" data-taw="2" data-name="Sternkunde">
         <span class="t-name">Sternkunde</span>
-        <span class="t-probe">KL 14 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">2</span>
       </div>
       <div class="talent-row " data-probe="MU/KL/IN" data-taw="2" data-name="Tierkunde">
         <span class="t-name">Tierkunde</span>
-        <span class="t-probe">MU 12 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">2</span>
       </div>
     </div>
@@ -1661,52 +1661,52 @@ body { padding-top: 46px; }
       </h4>
       <div class="talent-row " data-probe="MU/KL/FF" data-taw="2" data-name="Alchimie">
         <span class="t-name">Alchimie</span>
-        <span class="t-probe">MU 12 / KL 14 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">2</span>
       </div>
       <div class="talent-row " data-probe="KL/IN/CH" data-taw="1" data-name="Handel">
         <span class="t-name">Handel</span>
-        <span class="t-probe">KL 14 / IN 15 / CH 13</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row " data-probe="IN/CH/FF" data-taw="1" data-name="Hauswirtschaft">
         <span class="t-name">Hauswirtschaft</span>
-        <span class="t-probe">IN 15 / CH 13 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">1</span>
       </div>
       <div class="talent-row high" data-probe="MU/KL/IN" data-taw="5" data-name="Heilkunde: Gift">
         <span class="t-name">Heilkunde: Gift</span>
-        <span class="t-probe">MU 12 / KL 14 / IN 15</span>
+        <span class="t-probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row " data-probe="KL/CH/FF" data-taw="4" data-name="Heilkunde: Wunden">
         <span class="t-name">Heilkunde: Wunden</span>
-        <span class="t-probe">KL 14 / CH 13 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">4</span>
       </div>
       <div class="talent-row zero" data-probe="KL/FF/KK" data-taw="0" data-name="Holzbearbeitung">
         <span class="t-name">Holzbearbeitung</span>
-        <span class="t-probe">KL 14 / FF 12 / KK 11</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row zero" data-probe="KL/IN/FF" data-taw="0" data-name="Kochen">
         <span class="t-name">Kochen</span>
-        <span class="t-probe">KL 14 / IN 15 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row zero" data-probe="KL/FF/FF" data-taw="0" data-name="Lederarbeiten">
         <span class="t-name">Lederarbeiten</span>
-        <span class="t-probe">KL 14 / FF 12 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">0</span>
       </div>
       <div class="talent-row high" data-probe="KL/IN/FF" data-taw="5" data-name="Malen/Zeichnen">
         <span class="t-name">Malen/Zeichnen</span>
-        <span class="t-probe">KL 14 / IN 15 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">5</span>
       </div>
       <div class="talent-row high" data-probe="KL/FF/FF" data-taw="7" data-name="Schneidern">
         <span class="t-name">Schneidern</span>
-        <span class="t-probe">KL 14 / FF 12 / FF 12</span>
+        <span class="t-probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
         <span class="t-zfw">7</span>
       </div>
     </div>
@@ -1753,7 +1753,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/abvenenum.md">Abvenenum reine Speise</a>      <span class="submeta">Objk · C/C</span>
     </span>
-    <span class="probe">KL 14 / KL 14 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">15 A</span>
     <span class="kosten">4 AsP/Mahlzeit</span>
@@ -1768,7 +1768,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/accuratum.md">Accuratum Zaubernadel</a>      <span class="submeta">Objk · C/C</span>
     </span>
-    <span class="probe">KL 14 / CH 13 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">40 A</span>
     <span class="kosten">4 AsP/Stein (mind. 7)</span>
@@ -1783,7 +1783,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/analys.md">Analys Arkanstruktur</a>      <span class="submeta">Hell, Meta · D/D</span>
     </span>
-    <span class="probe">KL 14 / KL 14 / IN 15</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
     <span class="zfw-num">4</span>
     <span class="zd">mind. 1 SR</span>
     <span class="kosten">6 AsP + 3/½h</span>
@@ -1794,7 +1794,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/armatrutz.md">Armatrutz</a>      <span class="submeta">Eign, Elem(Erz) · B/A</span>
     </span>
-    <span class="probe">IN 15 / GE 13 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">10</span>
     <span class="zd">3 A</span>
     <span class="kosten">mind. 4 AsP (RS²−ZfP*/2)</span>
@@ -1809,7 +1809,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/attributo.md">Attributo</a><span class="haus">×</span>      <span class="submeta">Eign · B/A+</span>
     </span>
-    <span class="probe">KL 14 / CH 13 / **</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / **</span>
     <span class="zfw-num">10</span>
     <span class="zd">30 A</span>
     <span class="kosten">7 AsP</span>
@@ -1824,7 +1824,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/balsam-salabunde.md">Balsam Salabunde</a><span class="haus">×</span>      <span class="submeta">Form, Heil · C/B</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / CH 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
     <span class="zfw-num">9</span>
     <span class="zd">5–30 A</span>
     <span class="kosten">1 AsP/LeP (mind. 5)</span>
@@ -1839,7 +1839,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blick-aufs-wesen.md">Blick aufs Wesen</a>      <span class="submeta">Hell · C/C</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / CH 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
     <span class="zfw-num">4</span>
     <span class="zd">30 A</span>
     <span class="kosten">6 AsP</span>
@@ -1854,7 +1854,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blitz-dich-find.md">Blitz dich find</a><span class="haus">×</span>      <span class="submeta">Einfl · B/A</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / GE 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
     <span class="zfw-num">13</span>
     <span class="zd">1 A</span>
     <span class="kosten">4 AsP</span>
@@ -1869,7 +1869,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/custodosigil.md">Custodosigil Diebesbann</a>      <span class="submeta">Elem(Feu), Meta, Objk · C/C</span>
     </span>
-    <span class="probe">KL 14 / FF 12 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">2</span>
     <span class="zd">~1 h</span>
     <span class="kosten">1 AsP/Stein (mind. 5)</span>
@@ -1884,7 +1884,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/duplicatus.md">Duplicatus Doppelbild</a>      <span class="submeta">Illu · C/C</span>
     </span>
-    <span class="probe">KL 14 / CH 13 / GE 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span></span>
     <span class="zfw-num">5</span>
     <span class="zd">5 A</span>
     <span class="kosten">6 AsP + 3/weiterer</span>
@@ -1899,7 +1899,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/flim-flam.md">Flim Flam Funkel</a>      <span class="submeta">Umwt · A/A</span>
     </span>
-    <span class="probe">KL 14 / KL 14 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">10</span>
     <span class="zd">2 A</span>
     <span class="kosten">1 AsP/SR</span>
@@ -1914,7 +1914,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fortifex.md">Fortifex arkane Wand</a>      <span class="submeta">Elem(Erz), Umwt · D/D</span>
     </span>
-    <span class="probe">IN 15 / KO 13 / KK 11</span>
+    <span class="probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span> / <span class="pv" data-attr="KK" data-base="11">KK 11</span></span>
     <span class="zfw-num">8</span>
     <span class="zd">10 A</span>
     <span class="kosten">11 AsP</span>
@@ -1929,7 +1929,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fulminictus.md">Fulminictus Donnerkeil</a><span class="haus">×</span>      <span class="submeta">Krft, Scha · C/A</span>
     </span>
-    <span class="probe">IN 15 / GE 13 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="GE" data-base="13">GE 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">10</span>
     <span class="zd">2 A</span>
     <span class="kosten">1 AsP/SP</span>
@@ -1944,7 +1944,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/gardianum.md">Gardianum Zauberschild</a><span class="haus">×</span>      <span class="submeta">Anti, Krft, Meta · D/C</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">8</span>
     <span class="zd">2 A</span>
     <span class="kosten">mind. 3 AsP</span>
@@ -1959,7 +1959,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/horriphobus-schreckgestalt.md">Horriphobus Schreckgestalt</a><span class="haus">×</span>      <span class="submeta">Einfl · C/B</span>
     </span>
-    <span class="probe">MU 12 / IN 15 / CH 13</span>
+    <span class="probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">3 A</span>
     <span class="kosten">7 AsP</span>
@@ -1970,7 +1970,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md">Ignifaxius Flammenstrahl</a><span class="haus">×</span>      <span class="submeta">Elem(Feu), Scha · C/A</span>
     </span>
-    <span class="probe">KL 14 / FF 12 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">10</span>
     <span class="zd">4 A</span>
     <span class="kosten">ZfW Würfel × 1W6 AsP</span>
@@ -1985,7 +1985,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignisphaero-feuerball.md">Ignisphaero Feuerball</a>      <span class="submeta">Elem(Feu), Scha, Tele · D/C</span>
     </span>
-    <span class="probe">MU 12 / IN 15 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">7 A</span>
     <span class="kosten">21 AsP + 1W6 LeP</span>
@@ -2000,7 +2000,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/impersona-maskenbild.md">Impersona Maskenbild</a>      <span class="submeta">Illu · D/D</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">5</span>
     <span class="zd">1 SR</span>
     <span class="kosten">9 AsP + 3/h</span>
@@ -2015,7 +2015,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/manifesto-element.md">Manifesto Element</a>      <span class="submeta">Elem · A/A</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / CH 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">10 A</span>
     <span class="kosten">3 AsP</span>
@@ -2030,7 +2030,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/odem-arcanum.md">Odem Arcanum</a>      <span class="submeta">Hell, Krft · A/A</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / IN 15</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span></span>
     <span class="zfw-num">6</span>
     <span class="zd">4 A</span>
     <span class="kosten">4 AsP</span>
@@ -2045,7 +2045,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/pectetondo-zauberhaar.md">Pectetondo Zauberhaar</a>      <span class="submeta">Form · B/B</span>
     </span>
-    <span class="probe">KL 14 / CH 13 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">7</span>
     <span class="zd">6 A</span>
     <span class="kosten">4 AsP + 2/Spann</span>
@@ -2060,7 +2060,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/psychostabilis.md">Psychostabilis</a>      <span class="submeta">Anti, Eign · C/B</span>
     </span>
-    <span class="probe">MU 12 / KL 14 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="MU" data-base="12">MU 12</span> / <span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">4</span>
     <span class="zd">5 A</span>
     <span class="kosten">8 AsP + 1/SR</span>
@@ -2075,7 +2075,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sapefacta-zauberschwamm.md">Sapefacta Zauberschwamm</a>      <span class="submeta">Elem(Luf), Elem(Was), Tele · C/C</span>
     </span>
-    <span class="probe">KL 14 / CH 13 / FF 12</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="FF" data-base="12">FF 12</span></span>
     <span class="zfw-num">8</span>
     <span class="zd">50 A</span>
     <span class="kosten">5 AsP</span>
@@ -2090,7 +2090,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sensibar-empathicus.md">Sensibar Empathicus</a>      <span class="submeta">Hell · C/C</span>
     </span>
-    <span class="probe">KL 14 / IN 15 / CH 13</span>
+    <span class="probe"><span class="pv" data-attr="KL" data-base="14">KL 14</span> / <span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span></span>
     <span class="zfw-num">5</span>
     <span class="zd">10 A</span>
     <span class="kosten">3 AsP/10 A</span>
@@ -2105,7 +2105,7 @@ body { padding-top: 46px; }
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/unitatio-geistesbund.md">Unitatio Geistesbund</a>      <span class="submeta">Krft, Vers · B/B</span>
     </span>
-    <span class="probe">IN 15 / CH 13 / KO 13</span>
+    <span class="probe"><span class="pv" data-attr="IN" data-base="15">IN 15</span> / <span class="pv" data-attr="CH" data-base="13">CH 13</span> / <span class="pv" data-attr="KO" data-base="13">KO 13</span></span>
     <span class="zfw-num">3</span>
     <span class="zd">30 A</span>
     <span class="kosten">1 AsP/Person</span>

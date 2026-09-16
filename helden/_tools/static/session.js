@@ -103,14 +103,13 @@ function initSession() {
   }
 
   // ── Eigenschafts-Leiste mod badge (Talente/Zauber tabs, D-025/D-026) ──
-  // Signals THAT a malus is active (wounds + Zustand-chips combined); does
-  // not compute per-attribute effective values (separate task).
   // Note: the bar macro is rendered once per tab (Talente + Zauber), so the
   // hook is a class (not an id) — both instances are updated in lockstep.
-  function updateEigLeisteBadge() {
-    const badges = document.querySelectorAll('.eig-leiste-mods');
-    if (!badges.length) return;
 
+  // Combined wound+Zustand effects (active mali), shared by the badge text
+  // (updateEigLeisteBadge) and the per-attribute effective-value overlay
+  // (applyWundModsToProben) — single source of truth for the total penalty.
+  function computeActiveEffects() {
     const effects = [];
     const wundenAnchor = document.querySelector('[data-wunden]');
     const wunden = wundenAnchor ? parseInt(wundenAnchor.dataset.wunden, 10) || 0 : 0;
@@ -120,15 +119,39 @@ function initSession() {
     ZUSTAENDE.forEach(z => {
       if (active.has(z.key)) effects.push({ label: z.label, penalty: -z.mod });
     });
+    return effects;
+  }
 
-    let text = '';
-    if (effects.length === 1) {
-      text = '−' + effects[0].penalty + ' ' + effects[0].label;
-    } else if (effects.length > 1) {
-      const total = effects.reduce((sum, e) => sum + e.penalty, 0);
-      text = '−' + total + ' (' + effects.length + ' Effekte)';
+  function updateEigLeisteBadge() {
+    const effects = computeActiveEffects();
+
+    const badges = document.querySelectorAll('.eig-leiste-mods');
+    if (badges.length) {
+      let text = '';
+      if (effects.length === 1) {
+        text = '−' + effects[0].penalty + ' ' + effects[0].label;
+      } else if (effects.length > 1) {
+        const total = effects.reduce((sum, e) => sum + e.penalty, 0);
+        text = '−' + total + ' (' + effects.length + ' Effekte)';
+      }
+      badges.forEach(badge => { badge.textContent = text; });
     }
-    badges.forEach(badge => { badge.textContent = text; });
+
+    applyWundModsToProben(effects);
+  }
+
+  // Annotates every rendered attribute value in probe_eig's output
+  // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
+  // effective value when a wound/Zustand malus is active, e.g. "GE 13→11".
+  // Reverts to just the base value once the penalty clears back to zero.
+  function applyWundModsToProben(effects) {
+    const total = effects.reduce((sum, e) => sum + e.penalty, 0);
+    document.querySelectorAll('[data-attr]').forEach(el => {
+      const abbr = el.dataset.attr;
+      const base = parseInt(el.dataset.base, 10);
+      if (isNaN(base)) return;
+      el.textContent = total > 0 ? (abbr + ' ' + base + '→' + (base - total)) : (abbr + ' ' + base);
+    });
   }
 
   function toggleZustand(key) {

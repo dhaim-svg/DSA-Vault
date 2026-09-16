@@ -359,7 +359,7 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns: minmax(200px,1.7fr) 150px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  grid-template-columns: minmax(200px,1.7fr) minmax(150px,max-content) 38px 80px minmax(110px,1fr) minmax(240px,2fr);
   gap:10px;
   align-items:start;
   padding:9px 10px;
@@ -1136,7 +1136,7 @@ body { padding-top: 46px; }
     {%- for abbr in probe.split('/') -%}
       {%- set a = abbr | trim -%}
       {%- if not loop.first %} / {% endif -%}
-      {%- if a == '**' %}**{%- elif eig.get(a) %}{{ a }} {{ eig[a].aktuell }}{%- else %}{{ a }}{%- endif -%}
+      {%- if a == '**' %}**{%- elif eig.get(a) %}<span class="pv" data-attr="{{ a }}" data-base="{{ eig[a].aktuell }}">{{ a }} {{ eig[a].aktuell }}</span>{%- else %}{{ a }}{%- endif -%}
     {%- endfor -%}
   {%- else -%}
     {{ probe | e }}
@@ -1389,7 +1389,7 @@ body { padding-top: 46px; }
       <div class="talent-row {{ cls }}"{% if not is_kampf and '/' in (row.probe or '') %} data-probe="{{ row.probe }}" data-taw="{{ row.taw }}" data-name="{{ row.name }}"{% endif %}>
         <span class="t-name">{{ row.name }}</span>
         <span class="t-probe">
-          {%- if is_kampf %}{{ row.at }} / {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}
+          {%- if is_kampf %}AT {{ row.at }} / PA {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}{% if row.stk %} · Stk {{ row.stk }}{% endif %}
           {%- else %}{{ probe_eig(row.probe, held.eigenschaften) }}
           {%- endif -%}
         </span>
