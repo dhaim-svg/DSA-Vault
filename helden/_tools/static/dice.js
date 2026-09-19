@@ -177,8 +177,24 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   var isManual = false;
 
   // ------------------------------------------------------------------
+  // Wound reduction of one Eigenschaft VALUE (negative number or 0). WdS S. 57: a wound
+  // lowers the attribute GE itself, so the lower value applies in every probe that uses
+  // GE (Talente/Zauber) — same as the "GE 13→9" overlay. Wounds only, never the Zustand
+  // chips (those act via the panel modifier dp-mod and would count twice). Without
+  // session.js (file://) the same wound rule is read from [data-wunden].
+  // ------------------------------------------------------------------
+  function wundAttrMod(abbr) {
+    if (window.DSASession && window.DSASession.attrMod) return window.DSASession.attrMod(abbr);
+    if (!/^(MU|KL|IN|CH|FF|GE|KO|KK)$/.test(abbr)) return 0;
+    var el = document.querySelector('[data-wunden]');
+    var w = el ? parseInt(el.dataset.wunden, 10) || 0 : 0;
+    return window.DSAWundregeln.wundMod(w, abbr);
+  }
+
+  // ------------------------------------------------------------------
   // Parse probe string "MU/GE/KK" → [eig1value, eig2value, eig3value]
-  // eig may be null for "**" slots or missing entries in window.DSA.eig.
+  // (wound-reduced, see wundAttrMod). eig may be null for "**" slots or
+  // missing entries in window.DSA.eig.
   // Returns null if not a 3-eigenschaft formula.
   // ------------------------------------------------------------------
   function parseProbe(probeStr) {
@@ -189,7 +205,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       abbr = abbr.trim().toUpperCase();
       if (abbr === '**') return null;
       var v = window.DSA && window.DSA.eig && window.DSA.eig[abbr];
-      return (v !== undefined) ? v : null;
+      if (v === undefined || v === null) return null;
+      return v + wundAttrMod(abbr);
     });
   }
 

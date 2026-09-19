@@ -123,7 +123,7 @@ def test_session_exposes_scoped_queries():
     src = SESSION_JS.read_text(encoding='utf-8')
     m = re.search(r'window\.DSASession\s*=\s*\{([^}]*)\}', src)
     assert m
-    for name in ('computeActiveEffects', 'probeMod', 'statMod'):
+    for name in ('computeActiveEffects', 'probeMod', 'statMod', 'attrMod'):
         assert name in m.group(1)
 
 
@@ -234,3 +234,119 @@ def test_session_has_no_stale_verify_rules_comment():
     src = SESSION_JS.read_text(encoding='utf-8')
     assert not re.search(r'verify exact|TODO|FIXME', src, re.I)
     assert 'Hausregel' in src.split('function initSession')[1].split('const ZUSTAENDE')[0]
+
+
+# -- Final-Review: GE-Abzug der Wunden auch in Talent-/Zauberproben (dice.js parseProbe) --
+# Regel (WdS S. 57): eine Wunde senkt die Eigenschaft GE -> der niedrigere Wert gilt in JEDER Probe mit GE.
+# parseProbe wendet daher nur den Wund-Abzug pro Eigenschaft an; Hausregel-Chips wirken weiter nur ueber dp-mod.
+
+_PARSE_RUNNER = """
+const fs = require('fs'), vm = require('vm');
+const ST = process.argv[1];
+const spec = JSON.parse(process.argv[2]);
+const fns = process.argv[3];
+const store = {};
+if (spec.zustaende.length) store['dsa:illaen-baernhold:session'] = JSON.stringify({ zustaende: spec.zustaende });
+const anchor = { dataset: { wunden: String(spec.wunden) }, textContent: '', insertAdjacentElement() {} };
+const noop = { dataset: {}, textContent: '', innerHTML: '', addEventListener() {}, querySelectorAll() { return []; }, insertAdjacentElement() {} };
+const document = {
+  readyState: 'complete',
+  querySelector: (sel) => (sel === '[data-wunden]' ? anchor : null),
+  querySelectorAll: () => [],
+  getElementById: (id) => (id === 'wunden-widget' ? null : noop),
+  createElement: () => noop,
+  addEventListener() {},
+};
+const window = { DSA: { eig: spec.eig } };
+const ctx = {
+  window, document, console, confirm: () => true, fetch: () => Promise.resolve({}),
+  location: { protocol: spec.proto },
+  localStorage: { getItem: (k) => store[k] || null, setItem() {}, removeItem() {} },
+};
+vm.createContext(ctx);
+for (const f of ['wundregeln.js', 'session.js']) vm.runInContext(fs.readFileSync(ST + f, 'utf8'), ctx);
+const api = vm.runInContext('(function(){' + fns + '; return { parseProbe: parseProbe };})()', ctx);
+const S = window.DSASession;
+process.stdout.write(JSON.stringify({
+  probes: spec.probes.map((p) => api.parseProbe(p)),
+  session: !!S,
+  attr: S ? spec.attrs.map((a) => S.attrMod(a)) : null,
+}));
+"""
+
+_EIG = {'MU': 12, 'KL': 13, 'IN': 14, 'CH': 11, 'FF': 10, 'GE': 13, 'KO': 12, 'KK': 15}
+_ALL_PROBES = ['MU/KL/GE', 'IN/CH/FF', 'KO/KK/GE', 'MU/**/GE', 'KL/IN/CH', 'KK/KO/FF']
+
+
+def _parse_probe(proto, wunden, zustaende=(), probes=_ALL_PROBES, attrs=()):
+    src = DICE_JS.read_text(encoding='utf-8')
+    fns = _function_source(src, 'parseProbe') + '\n' + _function_source(src, 'wundAttrMod')
+    spec = {'proto': proto, 'wunden': wunden, 'zustaende': list(zustaende), 'eig': _EIG,
+            'probes': list(probes), 'attrs': list(attrs)}
+    proc = subprocess.run(
+        ['node', '-e', _PARSE_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec), fns],
+        capture_output=True, text=True, encoding='utf-8', timeout=30,
+    )
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+def _function_source(src, name):
+    m = re.search(r'function\s+' + name + r'\s*\(', src)
+    assert m, f'{name} fehlt'
+    _params, body = _function_body(src, name)
+    return src[m.start():src.index(body, m.start()) + len(body) + 1]
+
+
+_EXPECT_2_WUNDEN = [[12, 13, 9], [14, 11, 10], [12, 15, 9], [12, None, 9], [13, 14, 11], [15, 12, 10]]
+_EXPECT_UNVERAENDERT = [[12, 13, 13], [14, 11, 10], [12, 15, 13], [12, None, 13], [13, 14, 11], [15, 12, 10]]
+
+
+@needs_node
+@pytest.mark.parametrize('proto', ['http:', 'file:'])
+def test_parse_probe_reduces_only_ge_by_wunden(proto):
+    assert _parse_probe(proto, 2)['probes'] == _EXPECT_2_WUNDEN
+
+
+@needs_node
+@pytest.mark.parametrize('proto', ['http:', 'file:'])
+def test_parse_probe_unchanged_without_wunden(proto):
+    assert _parse_probe(proto, 0)['probes'] == _EXPECT_UNVERAENDERT
+
+
+@needs_node
+def test_parse_probe_ignores_hausregel_chips_but_keeps_wound_reduction():
+    # Chips wirken nur ueber dp-mod (sonst doppelt gezaehlt) -> Attributwerte bleiben unberuehrt.
+    chips = ['schmerz', 'furcht', 'betaeubt', 'verwirrt', 'erschoepft']
+    out = _parse_probe('http:', 0, chips)
+    assert out['session'] is True
+    assert out['probes'] == _EXPECT_UNVERAENDERT
+    assert _parse_probe('http:', 2, chips)['probes'] == _EXPECT_2_WUNDEN
+
+
+@needs_node
+def test_parse_probe_file_fallback_matches_session_branch():
+    for wunden in (0, 1, 2, 5):
+        served = _parse_probe('http:', wunden)
+        offline = _parse_probe('file:', wunden)
+        assert served['session'] is True and offline['session'] is False
+        assert served['probes'] == offline['probes']
+
+
+@needs_node
+def test_session_attr_mod_is_wounds_only_and_attribute_scoped():
+    abbrs = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK', 'AT', 'PA', 'FK', 'INI', 'GS', 'talent']
+    wunden = _parse_probe('http:', 2, ['schmerz', 'betaeubt'], probes=[], attrs=abbrs)['attr']
+    assert wunden == [0, 0, 0, 0, 0, -4, 0, 0, 0, 0, 0, 0, 0, 0]
+    chips_only = _parse_probe('http:', 0, ['schmerz', 'betaeubt'], probes=[], attrs=abbrs)['attr']
+    assert chips_only == [0] * len(abbrs)
+
+
+def test_parse_probe_is_only_used_by_talent_and_zauber_probes():
+    # 'eigenschaft' (Einzel-GE-Probe) bekommt den Wundabzug schon ueber getWundMod -> darf parseProbe nie durchlaufen.
+    src = DICE_JS.read_text(encoding='utf-8')
+    calls = [m.start() for m in re.finditer(r'parseProbe\(', src)]
+    assert len(calls) == 2, 'Definition + genau ein Aufruf'
+    render_talent = src.index("if (cfg.type === 'talent' || cfg.type === 'zauber') {", src.index('function render('))
+    render_eig = src.index("} else if (cfg.type === 'eigenschaft') {", render_talent)
+    assert render_talent < calls[1] < render_eig

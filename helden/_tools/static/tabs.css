@@ -207,8 +207,9 @@
   overflow-wrap: anywhere;
   margin-bottom: 4px;
 }
-/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) gibt es nichts zu erklaeren. */
-#zustand-chips:empty + .zustand-legend { display: none; }
+/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) entfaellt nur der Chip-Satz;
+   der Wund-Satz ist dort der einzige Seitenhinweis auf die geltende Regel (dice.js-Fallback). */
+#zustand-chips:empty + .zustand-legend .zustand-legend-chips { display: none; }
 @media (max-width: 900px) {
   .vitals-sticky {
     position: sticky;

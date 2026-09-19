@@ -634,11 +634,29 @@ def test_render_kampf_tab_has_one_zustand_legend_below_chips(live_html):
     assert 'kein fester Probenmalus' in text
 
 
-def test_zustand_legend_hidden_without_chips_and_in_print():
-    # Static-Render (file://): session.js rendert die Chips nicht -> Legende ohne Bezug; Druck blendet die Chips aus -> Legende auch.
+def test_render_zustand_legend_wound_sentence_stays_outside_the_hideable_chips_span(live_html):
+    # Ohne Chips (Static-Render) verschwindet nur der Chip-Satz; der Wund-Satz ist der einzige Seitenhinweis auf die Regel.
+    legend = re.search(r'<div class="zustand-legend">(.*?)</div>', _kampf_tab(live_html), re.S).group(1)
+    spans = re.findall(r'<span class="zustand-legend-chips">(.*?)</span>', legend, re.S)
+    assert len(spans) == 1
+    assert 'Hausregel' in spans[0] and 'kein fester Probenmalus' in spans[0]
+    outside = legend.replace(spans[0], '')
+    assert 'WdS S. 57' in outside and 'Wunden wirken' in outside
+    assert 'WdS S. 57' not in spans[0]
+    assert '<a href=' in outside and 'Details' in outside
+
+
+def test_zustand_legend_chip_sentence_hidden_without_chips_wound_sentence_kept_and_print_hides_all():
+    # Static-Render (file://): session.js rendert die Chips nicht -> nur der Chip-Satz ist ohne Bezug; die Legende
+    # selbst bleibt (Wund-Regel). Druck blendet Chips UND Legende komplett aus.
     css = css_bundle()
-    assert re.search(r'#zustand-chips:empty\s*\+\s*\.zustand-legend\s*\{[^}]*display:\s*none', css)
-    assert re.search(r'@media print\s*\{\s*\.vital-btn[^}]*#zustand-chips[^}]*\.zustand-legend[^}]*display:\s*none', css)
+    rules = _css_rules(css)
+    chips_span = '#zustand-chips:empty + .zustand-legend .zustand-legend-chips'
+    assert any(re.search(r'display\s*:\s*none', d) for d in _decls(rules, chips_span))
+    assert not any(re.search(r'display\s*:\s*none', d) for d in _decls(rules, '#zustand-chips:empty + .zustand-legend'))
+    print_rules = _css_rules(''.join(_media_blocks(css, r'@media\s+print')))
+    for sel in ('#zustand-chips', '.zustand-legend'):
+        assert any(re.search(r'display\s*:\s*none', d) for d in _decls(print_rules, sel)), f'{sel} fehlt in der Druck-Ausblendung'
 
 
 def test_render_zustand_legend_links_to_wiki_article_without_double_md(live_html):

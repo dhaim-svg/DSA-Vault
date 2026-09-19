@@ -164,10 +164,23 @@
       }, 0);
     }
 
+    // Summe <= 0 für den WERT einer Eigenschaft (MU KL IN CH FF GE KO KK): nur Wunden (bei GE),
+    // nie Zustände — die wirken über den Panel-Modifikator und würden hier doppelt zählen.
+    // dice.js parseProbe: die Wunde senkt die GE selbst, also gilt der niedrigere Wert in jeder Probe.
+    const ATTR_ZIELE = new Set(['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK']);
+    function attrMod(abbr, effects) {
+      if (!ATTR_ZIELE.has(abbr)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        return sum + (!e.alle && e.mods && e.mods[abbr] ? e.mods[abbr] : 0);
+      }, 0);
+    }
+
     // Exposed so dice.js's getWundMod(cfg) can pre-fill the roll panel's modifier with the
     // same scoped values shown by the badge/overlays — wundregeln.js and session.js load
     // before dice.js (JS_FILES order).
-    window.DSASession = { computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod };
+    window.DSASession = {
+      computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod, attrMod: attrMod,
+    };
 
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
