@@ -168,7 +168,7 @@ def test_build_context_without_chronik_file_has_empty_chronik(tmp_path, monkeypa
     assert ctx['chronik'] == {'spielabende': [], 'meta': {}}
     assert ctx['chronik_bild_prefix'] == '/p/'
     assert ctx['register'] == {'nscs': [], 'orte': []}
-    assert ctx['zauber_artikel'] == {}
+    assert ctx['wiki_artikel'] == {}
 
 
 def test_build_context_has_register_from_live_vault():
@@ -178,9 +178,9 @@ def test_build_context_has_register_from_live_vault():
     assert ctx['register']['orte']
 
 
-def test_build_context_has_zauber_artikel_from_live_vault():
+def test_build_context_has_wiki_artikel_from_live_vault():
     ctx = build_context('illaen-baernhold')
-    artikel = ctx['zauber_artikel']
+    artikel = ctx['wiki_artikel']
     assert isinstance(artikel, dict)
     assert artikel
     zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
@@ -191,7 +191,7 @@ def test_build_context_has_zauber_artikel_from_live_vault():
         assert art['html'].strip(), pfad
 
 
-def test_build_context_zauber_artikel_skips_spells_without_article(tmp_path, monkeypatch):
+def test_build_context_wiki_artikel_skips_spells_without_article(tmp_path, monkeypatch):
     artikel_dir = tmp_path / 'wiki' / 'dsa-4.1' / 'zauber'
     artikel_dir.mkdir(parents=True)
     (artikel_dir / 'da.md').write_text('---\nname: DA\n---\n# DA\n\n## Wirkung\n\nText.\n', encoding='utf-8')
@@ -203,8 +203,8 @@ def test_build_context_zauber_artikel_skips_spells_without_article(tmp_path, mon
     ]})
     monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
     ctx = build_context('x', tmp_path)
-    assert list(ctx['zauber_artikel']) == ['wiki/dsa-4.1/zauber/da']
-    assert ctx['zauber_artikel']['wiki/dsa-4.1/zauber/da']['titel'] == 'DA'
+    assert list(ctx['wiki_artikel']) == ['wiki/dsa-4.1/zauber/da']
+    assert ctx['wiki_artikel']['wiki/dsa-4.1/zauber/da']['titel'] == 'DA'
 
 
 BILD = 'drachenchronik-daten/pergament-abschrift.png'
@@ -307,9 +307,9 @@ def _first_wiki_path(ctx):
     return next(z['wiki_path'] for z in ctx['held']['zauber'] if z.get('wiki_path'))
 
 
-def test_render_zauber_artikel_details_one_per_spell_with_article(live_html):
+def test_render_wiki_artikel_details_one_per_spell_with_article(live_html):
     ctx = build_context('illaen-baernhold')
-    erwartet = sum(1 for z in ctx['held']['zauber'] if z.get('wiki_path') in ctx['zauber_artikel'])
+    erwartet = sum(1 for z in ctx['held']['zauber'] if z.get('wiki_path') in ctx['wiki_artikel'])
     assert erwartet
     assert live_html.count('class="artikel-details"') == erwartet
     parents = _artikel_details_parents(_spell_list_fragment(live_html))
@@ -318,22 +318,22 @@ def test_render_zauber_artikel_details_one_per_spell_with_article(live_html):
     assert all(p == (('div', 'spell'), ('div', True)) for p in parents)
 
 
-def test_render_zauber_artikel_empty_or_missing_has_no_details_but_keeps_name_links():
+def test_render_wiki_artikel_empty_or_missing_has_no_details_but_keeps_name_links():
     ctx = build_context('illaen-baernhold')
-    ctx['zauber_artikel'] = {}
+    ctx['wiki_artikel'] = {}
     html = render_dashboard(ctx)
     assert html.count('class="artikel-details"') == 0
     assert 'class="nlink"' in html
-    del ctx['zauber_artikel']
+    del ctx['wiki_artikel']
     html = render_dashboard(ctx)
     assert html.count('class="artikel-details"') == 0
     assert 'class="nlink"' in html
 
 
-def test_render_zauber_artikel_escapes_text_fields_but_not_html():
+def test_render_wiki_artikel_escapes_text_fields_but_not_html():
     ctx = build_context('illaen-baernhold')
     pfad = _first_wiki_path(ctx)
-    ctx['zauber_artikel'] = {pfad: {
+    ctx['wiki_artikel'] = {pfad: {
         'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [{'label': 'L<u>', 'wert': 'W<s>'}], 'html': '<p>ok</p>',
     }}
     html = render_dashboard(ctx)
@@ -346,7 +346,7 @@ def test_render_zauber_artikel_escapes_text_fields_but_not_html():
     assert '<div class="artikel-body"><p>ok</p></div>' in block
 
 
-def test_render_zauber_artikel_has_single_obsidian_link_without_nlink(live_html):
+def test_render_wiki_artikel_has_single_obsidian_link_without_nlink(live_html):
     block = re.search(r'<details class="artikel-details">.*?</details>', live_html, re.S).group(0)
     kopf = re.search(r'<div class="artikel-kopf">.*?</div>', block, re.S).group(0)
     assert kopf.count('href="obsidian://') == 1

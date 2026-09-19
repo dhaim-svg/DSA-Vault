@@ -7,7 +7,7 @@ from parsers.held import load_held
 from parsers.chronik import load_chronik
 from parsers.kampagne import load_kampagne
 from parsers.register import build_register
-from parsers.wikiartikel import load_zauber_artikel
+from parsers.wikiartikel import load_wiki_artikel
 
 TOOLS_DIR = Path(__file__).parent
 VAULT_ROOT = TOOLS_DIR.parent.parent
@@ -90,7 +90,7 @@ def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
         'held': held,
         'kampagne': kampagne,
         'register': build_register(kampagne.get('sessions', [])),
-        'zauber_artikel': load_zauber_artikel(vault_root, zauber_pfade, link_fn=obsidian_uri),
+        'wiki_artikel': load_wiki_artikel(vault_root, zauber_pfade, link_fn=obsidian_uri),
         'chronik': load_chronik(vault_root),
         'chronik_bild_prefix': chronik_bild_prefix,
         'inline_js': inline_js,

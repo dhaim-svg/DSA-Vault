@@ -1,4 +1,5 @@
 <div class="tab-content" id="tab-zauber">
+{% from 'partials/_artikel.j2' import artikel_details %}
 {{ eig_leiste(held.eigenschaften, held.basiswerte) }}
 <!-- ============================================================
      SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
@@ -37,21 +38,9 @@
       </details>
       {% endif %}
     </span>
-    {% set art = (zauber_artikel | default({})).get(z.wiki_path) if z.wiki_path else none %}
+    {% set art = (wiki_artikel | default({})).get(z.wiki_path) if z.wiki_path else none %}
     {% if art %}
-    <details class="artikel-details">
-      <summary class="artikel-toggle">▸ Artikel</summary>
-      <div class="artikel-panel">
-        <div class="artikel-kopf">
-          <span class="artikel-titel">{{ art.titel | e }}</span>
-          {% if art.quelle %}<span class="artikel-quelle">{{ art.quelle | e }}</span>{% endif %}
-          <a class="artikel-obsidian" href="{{ url }}">↗ Obsidian</a>
-        </div>
-        {% if art.meta %}<div class="artikel-meta">{% for m in art.meta %}<span><b>{{ m.label | e }}</b> {{ m.wert | e }}</span>{% endfor %}</div>{% endif %}
-        {# roh ausgeben: parsers/wikiartikel.py rendert mit mistune escape=True, art.html ist bereits sicher #}
-        <div class="artikel-body">{{ art.html }}</div>
-      </div>
-    </details>
+{{ artikel_details(art, url) }}
     {% endif %}
   </div>
   {% endfor %}

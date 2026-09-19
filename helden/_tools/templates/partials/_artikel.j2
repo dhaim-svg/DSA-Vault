@@ -1,0 +1,16 @@
+{#- Wiki-Artikelvorschau (Makro, kein Tab-Partial: nicht in dashboard.html.j2 includen). Macros sehen den Template-Kontext nicht, nur art (Dict aus load_wiki_artikel) und url (Obsidian-URL). -#}
+{% macro artikel_details(art, url) %}
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">{{ art.titel | e }}</span>
+          {% if art.quelle %}<span class="artikel-quelle">{{ art.quelle | e }}</span>{% endif %}
+          <a class="artikel-obsidian" href="{{ url }}">↗ Obsidian</a>
+        </div>
+        {% if art.meta %}<div class="artikel-meta">{% for m in art.meta %}<span><b>{{ m.label | e }}</b> {{ m.wert | e }}</span>{% endfor %}</div>{% endif %}
+        {# roh ausgeben: parsers/wikiartikel.py rendert mit mistune escape=True, art.html ist bereits sicher #}
+        <div class="artikel-body">{{ art.html }}</div>
+      </div>
+    </details>
+{%- endmacro %}

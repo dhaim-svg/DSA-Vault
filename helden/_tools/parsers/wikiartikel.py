@@ -1,4 +1,4 @@
-"""Wiki spell articles rendered to safe HTML for the Zauber tab (read at render time)."""
+"""Wiki articles/sections rendered to safe HTML for the Zauber tab (read at render time)."""
 import logging
 import re
 from pathlib import Path, PureWindowsPath
@@ -125,8 +125,8 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     }
 
 
-def load_zauber_artikel(vault_root: Path, wiki_paths: Iterable[str],
-                        link_fn: Callable[[str], str]) -> dict[str, dict]:
+def load_wiki_artikel(vault_root: Path, wiki_paths: Iterable[str],
+                      link_fn: Callable[[str], str]) -> dict[str, dict]:
     """Map each wiki_path (unchanged) to {'titel','quelle','meta','html'}; unreadable/missing paths get no entry.
 
     Text fields are raw (the template escapes them); only 'html' is already HTML.

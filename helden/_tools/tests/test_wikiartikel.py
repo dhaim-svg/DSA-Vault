@@ -8,7 +8,7 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from parsers.wikiartikel import load_zauber_artikel
+from parsers.wikiartikel import load_wiki_artikel
 from rendering import obsidian_uri
 
 ZAUBER = 'wiki/dsa-4.1/zauber'
@@ -55,7 +55,7 @@ def _link(path: str) -> str:
 
 
 def _load(vault, paths, link_fn=_link):
-    return load_zauber_artikel(vault, paths, link_fn)
+    return load_wiki_artikel(vault, paths, link_fn)
 
 
 @pytest.fixture
