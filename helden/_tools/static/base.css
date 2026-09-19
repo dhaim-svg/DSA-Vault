@@ -416,8 +416,8 @@ body::before{
 .spell .artikel-details{ grid-column:1 / -1; min-width:0; }
 /* D-050: dieselbe Vorschau in der SF-Zeile (Grid 14px Symbol | 1fr Text): letztes Kind des li, in der Textspalte;
    der Zeilenabstand (gap 10px) schrumpft nur bei Vorschau auf 4px, damit sie an der Beschreibung haengt. */
-.sf-list li .artikel-details{ grid-column:2; min-width:0; }
-.sf-list li:has(> .artikel-details){ row-gap:4px; }
+.sf-list > li > .artikel-details{ grid-column:2; min-width:0; }
+.sf-list > li:has(> .artikel-details){ row-gap:4px; }
 .artikel-details summary.artikel-toggle{
   list-style:none; font-family:var(--mono); font-size:10px; padding:2px 0;
   color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
@@ -617,11 +617,12 @@ body::before{
 
 /* ---- SF List ---- */
 .sf-list{ list-style:none; padding:0; margin:0; }
-.sf-list li{
+/* Kind-Selektor: die Zeilenregeln duerfen nicht die <li> der Aufzaehlungen im Artikel (.artikel-body li) treffen */
+.sf-list > li{
   padding:9px 0; display:grid; grid-template-columns:14px 1fr;
   gap:10px; border-bottom:1px dotted var(--rule); font-size:13px; align-items:start;
 }
-.sf-list li:last-child{ border-bottom:0; }
+.sf-list > li:last-child{ border-bottom:0; }
 .sf-list li .ico{ color:var(--accent-magic); text-shadow:0 0 6px rgba(106,90,205,.6); font-family:var(--mono); padding-top:2px; }
 .sf-list.general li .ico{ color:var(--accent-gold); text-shadow:0 0 6px rgba(212,168,75,.5); }
 .sf-list li .sf-name{

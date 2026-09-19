@@ -501,19 +501,36 @@ def test_render_sf_artikel_escapes_text_fields_but_not_html():
 
 
 def test_css_sf_artikel_details_sit_in_the_text_column_of_the_row():
-    base = ' '.join(_decls(_css_rules(_strip_print_blocks(css_bundle())), '.sf-list li .artikel-details'))
+    base = ' '.join(_decls(_css_rules(_strip_print_blocks(css_bundle())), '.sf-list > li > .artikel-details'))
     assert re.search(r'grid-column\s*:\s*2\b', base)
     assert re.search(r'min-width\s*:\s*0', base)
     # Abstand zur Beschreibung: nur Zeilen MIT Vorschau rücken auf 4px (kein Negativrand, der an gap:10px koppelt)
     rows = _css_rules(_strip_print_blocks(css_bundle()))
-    assert any(re.search(r'row-gap\s*:\s*4px', d) for d in _decls(rows, '.sf-list li:has(> .artikel-details)'))
+    assert any(re.search(r'row-gap\s*:\s*4px', d) for d in _decls(rows, '.sf-list > li:has(> .artikel-details)'))
     assert 'margin-top:-6px' not in base.replace(' ', '')
 
 
 def test_css_print_sf_row_with_open_article_may_break_across_columns():
-    # .sf-list li{break-inside:avoid} zwaenge einen langen offenen Artikel sonst in eine Spalte
+    # .sf-list > li{break-inside:avoid} zwaenge einen langen offenen Artikel sonst in eine Spalte
     prints = ''.join(_media_blocks(css_bundle(), r'@media\s+print'))
-    assert re.search(r'\.sf-list\s+li\s*:has\(\s*\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
+    assert re.search(r'\.sf-list\s*>\s*li\s*:has\(\s*\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
+
+
+# Nachfahren-li direkt unter .sf-list: '.sf-list li', '.sf-list.general li', '.sf-list li:last-child', '.sf-list li:has(...)'
+SF_DESCENDANT_LI_RE = re.compile(r'\.sf-list(?:\.[\w-]+)*\s+li(?::[\w-]+(?:\([^()]*\))?)*$')
+
+
+def test_css_sf_row_rules_only_hit_direct_li_children():
+    # D-050: `.sf-list li{display:grid;grid-template-columns:14px 1fr;…}` traf auch die <li> der Aufzaehlungen IM Artikel
+    # (.artikel-body li) und setzte deren Text in die 14-px-Spalte (~2 Zeichen je Zeile; Druck: break-inside/padding
+    # ebenso). Zeilenregeln gehoeren auf `.sf-list > li` — auch im Druck-Block (css_bundle() enthaelt beide).
+    rules = _css_rules(css_bundle())
+    bad = sorted({sel for sel, _ in rules if SF_DESCENDANT_LI_RE.search(sel)})
+    assert not bad, f'Nachfahren-li unter .sf-list (trifft auch Artikel-Listen): {bad}'
+    direct = [sel for sel, _ in rules if re.match(r'\.sf-list\s*>\s*li\b', sel)]
+    assert len(direct) >= 6, direct  # nicht vakuoes: Basis- und Druckregeln muessen als Kind-Selektoren vorhanden sein
+    assert any('has(' in sel and 'open' in sel for sel in direct)  # Druckregel offener Artikel
+    assert any(sel.endswith(':last-child') for sel in direct)
 
 
 def test_dice_js_click_guard_ignores_clicks_inside_details():
