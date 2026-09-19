@@ -499,3 +499,34 @@ def test_static_hinweis_banner_only_in_static_render(static_js_html):
     assert 'nicht gespeichert' in static_js_html
     assert 'id="static-hinweis"' not in server._render_dashboard('illaen-baernhold')
     assert 'id="static-hinweis"' not in render_dashboard(build_context('illaen-baernhold'))
+
+
+def _kampf_tab(html):
+    start = html.index('id="tab-kampf"')
+    end = html.index('class="tab-content"', start + 1)
+    return html[start:end]
+
+
+def test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats(live_html):
+    kampf = _kampf_tab(live_html)
+    stats = re.findall(r'data-wund-stat="(\w+)"', kampf)
+    # Vitalwerte: INI, GS; Kampfwerte: AT, PA, FK; Waffenkarte: AT, PA
+    assert sorted(stats) == sorted(['INI', 'GS', 'AT', 'PA', 'FK', 'AT', 'PA'])
+    assert len(re.findall(r'data-wund-base="', kampf)) == len(stats)
+
+
+def test_render_kampf_tab_wund_stat_hooks_skip_mr_so_and_weapon_ini(live_html):
+    kampf = _kampf_tab(live_html)
+    for abbr in ('MR', 'SO'):
+        assert f'data-wund-stat="{abbr}"' not in kampf
+    # jede Zelle mit dem Hook traegt einen der fuenf Basiswert-Schluessel; Waffen-INI/BF/DK/TP nicht
+    for cell in re.findall(r'<div[^>]*>\s*<span class="k">(?:MR|SO|DK|TP|BF)</span>.*?</div>', kampf, re.S):
+        assert 'data-wund-stat' not in cell
+    weapon_ini = re.search(r'<span class="k">INI</span><span class="v"[^>]*>', kampf)
+    assert weapon_ini and 'data-wund-stat' not in weapon_ini.group(0)
+
+
+def test_render_kampf_tab_wund_hooks_keep_click_handlers_on_base_values(live_html):
+    kampf = _kampf_tab(live_html)
+    assert re.search(r'<div class="minor" data-at="\d+">', kampf)
+    assert re.search(r'<div class="minor" data-pa="\d+">', kampf)

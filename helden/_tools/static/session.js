@@ -24,15 +24,15 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    // DSA 4.1 Wundregeln: simplified penalty overlay.
-    // Wundschwelle = ceil(KO/2). Each wound = -2 cumulative on all checks.
-    // TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds) before shipping.
-    function computeWundPenalty(wunden) {
-      if (wunden <= 0) return 0;
-      return wunden * 2;
-    }
+    // Wundregel (WdS S. 57): wundregeln.js (DSAWundregeln) ist die einzige Quelle —
+    // pro Wunde AT/PA/FK/INI/GE -2, GS -1, sonst nichts.
+    const Wund = window.DSAWundregeln;
 
     // ── Wunden widget ──────────────────────────────────────────────────
+    function wundGeltungLabel(wunden) {
+      return wunden > 0 ? '(' + Wund.geltungText(wunden) + ')' : '';
+    }
+
     function renderWundenWidget() {
       if (document.getElementById('wunden-widget')) return;
       const anchor = document.querySelector('[data-wunden]');
@@ -48,7 +48,7 @@
         '<span id="wunden-count" style="font-weight:700;font-size:1.2rem">' + currentWunden + '</span>' +
         '<button id="wunden-plus" type="button" aria-label="Wunde erleiden">+</button>' +
         '<span id="wunden-penalty" style="opacity:0.7;font-size:0.9rem">' +
-          (currentWunden > 0 ? '(−' + computeWundPenalty(currentWunden) + ' auf Proben)' : '') +
+          wundGeltungLabel(currentWunden) +
         '</span>';
       anchor.insertAdjacentElement('afterend', widget);
 
@@ -64,7 +64,7 @@
 
       const next = Math.max(0, (parseInt(countEl.textContent, 10) || 0) + delta);
       countEl.textContent = next;
-      penaltyEl.textContent = next > 0 ? '(−' + computeWundPenalty(next) + ' auf Proben)' : '';
+      penaltyEl.textContent = wundGeltungLabel(next);
       anchor.dataset.wunden = next;
       updateEigLeisteBadge();
 
@@ -107,56 +107,97 @@
     // Note: the bar macro is rendered once per tab (Talente + Zauber), so the
     // hook is a class (not an id) — both instances are updated in lockstep.
 
-    // Combined wound+Zustand effects (active mali), shared by the badge text
-    // (updateEigLeisteBadge) and the per-attribute effective-value overlay
-    // (applyWundModsToProben) — single source of truth for the total penalty.
+    // Active mali (Wunden + Zustand-Chips), the single source of truth for the badge text,
+    // the probe overlay (applyWundModsToProben), the base-value overlay
+    // (applyWundModsToStats) and dice.js's panel modifier (probeMod).
+    //
+    // Effect shape — the "Geltungsbereich" is one of two fields:
+    //   { label, mods: { ZIEL: <=0, ... }, wunden }  Wunden: nur die genannten Ziele
+    //        (AT/PA/FK/INI/GE/GS, aus DSAWundregeln.wundMod). Wirkt auf Proben (AT, PA, GE)
+    //        UND Basiswert-Anzeigen (AT/PA/FK/INI/GS).
+    //   { label, alle: true, mod: <=0 }               Zustand: wirkt auf jede Probe, nie auf
+    //        Basiswert-Anzeigen und nie auf Schadenswürfe.
     function computeActiveEffects() {
       const effects = [];
       const wundenAnchor = document.querySelector('[data-wunden]');
       const wunden = wundenAnchor ? parseInt(wundenAnchor.dataset.wunden, 10) || 0 : 0;
-      if (wunden > 0) effects.push({ label: 'Wunden', penalty: computeWundPenalty(wunden) });
+      if (wunden > 0) {
+        const mods = {};
+        Object.keys(Wund.JE_WUNDE).forEach(ziel => { mods[ziel] = Wund.wundMod(wunden, ziel); });
+        effects.push({ label: 'Wunden', wunden: wunden, mods: mods });
+      }
 
       const active = new Set((loadState().zustaende) || []);
       ZUSTAENDE.forEach(z => {
-        if (active.has(z.key)) effects.push({ label: z.label, penalty: -z.mod });
+        if (active.has(z.key)) effects.push({ label: z.label, alle: true, mod: z.mod });
       });
       return effects;
     }
 
-    // Exposed so dice.js's getWundMod() can pre-fill the roll panel's modifier
-    // with the same total (wounds + Zustände) shown by the badge/overlay above
-    // — session.js loads before dice.js in dashboard.html.j2.
-    window.DSASession = { computeActiveEffects: computeActiveEffects };
+    // Ziele einer Probe (Würfelpanel / Eigenschaftswert-Overlay) bzw. einer Basiswert-Anzeige.
+    const PROBE_ZIELE = new Set(['AT', 'PA', 'MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK', 'talent', 'zauber']);
+    const STAT_ZIELE = new Set(['AT', 'PA', 'FK', 'INI', 'GS']);
+
+    // Summe <= 0 für eine PROBE auf `ziel`: Wunden nur, wo DSAWundregeln das Ziel kennt
+    // (AT, PA, GE), Zustände (alle) für jedes Probenziel. Unbekanntes Ziel → 0.
+    function probeMod(ziel, effects) {
+      if (!PROBE_ZIELE.has(ziel)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        if (e.alle) return sum + e.mod;
+        return sum + (e.mods && e.mods[ziel] ? e.mods[ziel] : 0);
+      }, 0);
+    }
+
+    // Summe <= 0 für eine BASISWERT-ANZEIGE (AT/PA/FK/INI/GS): nur Wunden, nie Zustände.
+    function statMod(stat, effects) {
+      if (!STAT_ZIELE.has(stat)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        return sum + (!e.alle && e.mods && e.mods[stat] ? e.mods[stat] : 0);
+      }, 0);
+    }
+
+    // Exposed so dice.js's getWundMod(cfg) can pre-fill the roll panel's modifier with the
+    // same scoped values shown by the badge/overlays — wundregeln.js and session.js load
+    // before dice.js (JS_FILES order).
+    window.DSASession = { computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod };
 
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
 
-      const badges = document.querySelectorAll('.eig-leiste-mods');
-      if (badges.length) {
-        let text = '';
-        if (effects.length === 1) {
-          text = '−' + effects[0].penalty + ' ' + effects[0].label;
-        } else if (effects.length > 1) {
-          const total = effects.reduce((sum, e) => sum + e.penalty, 0);
-          text = '−' + total + ' (' + effects.length + ' Effekte)';
-        }
-        badges.forEach(badge => { badge.textContent = text; });
-      }
+      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles.
+      // e.g. "Wunden ×2: GE −4 · Schmerz −2"; leer ohne aktive Effekte.
+      const text = effects.map(e => e.alle
+        ? e.label + ' −' + Math.abs(e.mod)
+        : e.label + ' ×' + e.wunden + ': GE −' + Math.abs(e.mods.GE)
+      ).join(' · ');
+      document.querySelectorAll('.eig-leiste-mods').forEach(badge => { badge.textContent = text; });
 
       applyWundModsToProben(effects);
+      applyWundModsToStats(effects);
     }
 
     // Annotates every rendered attribute value in probe_eig's output
     // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
-    // effective value when a wound/Zustand malus is active, e.g. "GE 13→11".
-    // Reverts to just the base value once the penalty clears back to zero.
+    // effective value when a malus applies to that attribute, e.g. "GE 13→11".
+    // Wunden treffen nur die GE; reverts to the base value once the malus clears.
     function applyWundModsToProben(effects) {
-      const total = effects.reduce((sum, e) => sum + e.penalty, 0);
       document.querySelectorAll('[data-attr]').forEach(el => {
         const abbr = el.dataset.attr;
         const base = parseInt(el.dataset.base, 10);
         if (isNaN(base)) return;
-        el.textContent = total > 0 ? (abbr + ' ' + base + '→' + (base - total)) : (abbr + ' ' + base);
+        const mod = probeMod(abbr, effects);
+        el.textContent = mod !== 0 ? (abbr + ' ' + base + '→' + (base + mod)) : (abbr + ' ' + base);
+      });
+    }
+
+    // Basiswert-Anzeigen im Kampf-Tab (data-wund-stat + data-wund-base): "14→10" bei
+    // Wundabzug (statMod), sonst nur der Basiswert. Nicht numerische Basis ("—") bleibt unberührt.
+    function applyWundModsToStats(effects) {
+      document.querySelectorAll('[data-wund-stat]').forEach(el => {
+        if (!/^-?\d+$/.test((el.dataset.wundBase || '').trim())) return;
+        const base = parseInt(el.dataset.wundBase, 10);
+        const mod = statMod(el.dataset.wundStat, effects);
+        el.textContent = mod !== 0 ? (base + '→' + (base + mod)) : String(base);
       });
     }
 

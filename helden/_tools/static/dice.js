@@ -194,22 +194,29 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   // ------------------------------------------------------------------
-  // Get current Wunden+Zustände penalty as a negative modifier (e.g. -2 for
-  // 1 wound). Delegates to session.js's computeActiveEffects() — the same
-  // source of truth the Eigenschafts-Leiste badge and probe overlay use —
-  // so a toggled Zustand chip (Schmerz, Furcht, ...) reaches the dice panel
-  // too, not just wounds. Falls back to wounds-only when session.js hasn't
-  // run (e.g. opened as file://).
+  // Wound/Zustand modifier for a probe, as a negative number or 0 (dp-mod adds
+  // baseMod on top). Scoped by probe type (WdS S. 57 — see wundregeln.js):
+  //   at -> 'AT', pa -> 'PA', eigenschaft -> cfg.abbr, talent -> 'talent',
+  //   zauber -> 'zauber'; schaden and anything unknown -> 0 (Wunden senken keine TP).
+  // Delegates to session.js's probeMod() (wounds + Zustand chips). Without
+  // session.js (file://) only the wound rule applies, read from [data-wunden].
   // ------------------------------------------------------------------
-  function getWundMod() {
-    if (window.DSASession && window.DSASession.computeActiveEffects) {
-      var effects = window.DSASession.computeActiveEffects();
-      var total = effects.reduce(function (sum, e) { return sum + e.penalty; }, 0);
-      return -total;
+  function getWundMod(cfg) {
+    var ziel;
+    switch (cfg && cfg.type) {
+      case 'at': ziel = 'AT'; break;
+      case 'pa': ziel = 'PA'; break;
+      case 'eigenschaft': ziel = cfg.abbr; break;
+      case 'talent': ziel = 'talent'; break;
+      case 'zauber': ziel = 'zauber'; break;
+      default: return 0;
+    }
+    if (window.DSASession && window.DSASession.probeMod) {
+      return window.DSASession.probeMod(ziel);
     }
     var el = document.querySelector('[data-wunden]');
-    var w = el ? parseInt(el.dataset.wunden, 10) : 0;
-    return w > 0 ? -(w * 2) : 0;
+    var w = el ? parseInt(el.dataset.wunden, 10) || 0 : 0;
+    return window.DSAWundregeln.wundMod(w, ziel);
   }
 
   // ------------------------------------------------------------------
@@ -529,7 +536,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     if (!panel) return;
 
     document.getElementById('dp-title').textContent = '🎲 ' + (config.name || 'Probe');
-    document.getElementById('dp-mod').value = getWundMod() + (currentConfig.baseMod || 0);
+    document.getElementById('dp-mod').value = getWundMod(config) + (currentConfig.baseMod || 0);
     document.getElementById('dp-auto').classList.add('active');
     document.getElementById('dp-manual').classList.remove('active');
 

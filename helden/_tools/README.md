@@ -100,7 +100,7 @@ Kaskaden-relevant, und jede neue `static/*.css` muss dort eingetragen werden
 liefert die `static/*.js` als je ein eigener `<script>`-Block (`build_context(…,
 inline_js=True)`); der Server-Modus verlinkt sie weiter als `/static/*.js`. Die
 Reihenfolge von `JS_FILES` in `rendering.py` ist Ladeabhängigkeit (`util.js`
-zuerst, `session.js` vor `dice.js`), und jede neue `static/*.js` muss dort
+zuerst, `wundregeln.js` und `session.js` vor `dice.js`), und jede neue `static/*.js` muss dort
 eingetragen werden (ein Test erzwingt das; `</script` in einer JS-Datei ist
 verboten).
 
