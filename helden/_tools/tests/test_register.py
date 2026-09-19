@@ -1,11 +1,18 @@
 """Tests for build_register — deduplicated NSC/Orte register from session sections."""
+import json
+import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
+
+import pytest
 
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 from parsers.register import build_register, fold
+from rendering import STATIC_DIR
 
 SEKTION = 'Neue NSCs / Orte'
 
@@ -227,15 +234,6 @@ def test_orte_parsed_like_nscs():
 
 
 # -- D-045: Filter-Kopfzeile fuer den Druck (static/register.js) -------------
-import json
-import re
-import shutil
-import subprocess
-
-import pytest
-
-from rendering import STATIC_DIR
-
 REGISTER_JS = STATIC_DIR / 'register.js'
 needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
 
@@ -334,4 +332,4 @@ def test_register_js_druckfilter_uses_textcontent_not_innerhtml():
     src = REGISTER_JS.read_text(encoding='utf-8')
     assert 'innerHTML' not in src
     assert re.search(r"querySelector\('\.register-druckfilter'\)", src)
-    assert re.search(r'druck\w*\.textContent\s*=', src)
+    assert re.search(r'druckfilter\.textContent\s*=', src)

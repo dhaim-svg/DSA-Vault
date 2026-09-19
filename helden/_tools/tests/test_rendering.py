@@ -671,6 +671,7 @@ def test_render_zustand_legend_says_chips_change_only_the_roll_not_displayed_val
     chips_span = re.search(r'<span class="zustand-legend-chips">(.*?)</span>', legend, re.S).group(1)
     assert 'nur die Probe' in chips_span and 'Würfelpanel' in chips_span
     assert re.search(r'nicht die angezeigten\s+Attribut- und Basiswerte', chips_span)
+    assert chips_span.endswith(' '), 'Leerzeichen trennt Chip- und Wund-Satz, wenn die Chips sichtbar sind'
     # Der Wund-Satz (regelkonformes Overlay) bleibt ausserhalb des ausblendbaren Chip-Satzes und ohne fuehrendes Leerzeichen.
     outside = legend.replace(chips_span, '')
     assert 'nicht die angezeigten' not in outside
@@ -909,7 +910,7 @@ def test_dice_js_publishes_open_panel_height_as_css_variable():
     # geschlossen (.hidden bleibt nur per transform aus dem Bild) => 0px, sonst gemessene Hoehe
     assert "classList.contains('hidden')" in body and "'0px'" in body and 'offsetHeight' in body
     # bei jedem Oeffnen/Schliessen und bei Hoehenaenderung (Modus-/Ergebnis-Umschaltung) neu setzen
-    assert 'ResizeObserver' in js
+    assert re.search(r'new ResizeObserver\(syncPanelReserve\)\.observe\(panel\)', js)
     assert re.search(r"panel\.classList\.remove\('hidden'\);\s*syncPanelReserve\(\)", js)
     assert re.search(r"panel\.classList\.add\('hidden'\);\s*syncPanelReserve\(\)", js)
 
@@ -932,7 +933,8 @@ def test_steigern_js_scroll_region_only_on_real_overflow():
     for attr in ('tabindex', 'role', 'aria-label'):
         assert re.search(r"setAttribute\('%s'" % attr, body) and re.search(r"removeAttribute\('%s'\)" % attr, body), attr
     # Neubewertung bei Groessenaenderung (Tab-Wechsel display:none -> sichtbar, Resize)
-    assert 'ResizeObserver' in js and re.search(r"addEventListener\('resize'", js)
+    watch = _js_function(js, 'watchScrollOverflow')
+    assert 'ResizeObserver' in watch and re.search(r"addEventListener\('resize'", watch)
     assert re.search(r'syncScrollOverflow\(wrap,\s*scrollHint,\s*title\)', section)
 
 
