@@ -25,8 +25,10 @@ enthalten sind.
 1. **Test-Suite** ausführen:
    ```bash
    cd helden/_tools && python -m pytest tests/ -v 2>&1 | tail -20
+   cd helden/_tools && python -m pytest tests/ -q -W error 2>&1 | tail -3
    ```
-   Ergebnis (Anzahl bestanden / Anzahl gesamt) notieren — geht ins Handoff.
+   Beide Läufe müssen grün sein (der zweite deckt Warnungen als Fehler ab — Standard seit
+   Sprint 019). Ergebnis (Anzahl bestanden / Anzahl gesamt) notieren — geht ins Handoff.
 
 2. **Static-Render** prüfen — `render-held.py` braucht den Helden-Slug als Pflichtargument
    (Ordnername unter `helden/`, ohne `_tools`; aktuell nur `illaen-baernhold`), sonst bricht
