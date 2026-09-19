@@ -182,9 +182,7 @@ def test_build_context_has_zauber_artikel_from_live_vault():
     assert artikel
     zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
     assert set(artikel) <= zauber_pfade
-    # every spell whose wiki file exists gets an entry, even with unquoted ': ' in its frontmatter
-    mit_datei = {p for p in zauber_pfade if p and (VAULT_ROOT / (p.partition('#')[0] + '.md')).is_file()}
-    assert set(artikel) == mit_datei
+    # completeness (incl. unquoted ': ' frontmatter) is pinned by the synthetic loader tests, not by the live vault
     for pfad, art in artikel.items():
         assert set(art) == {'titel', 'quelle', 'meta', 'html'}, pfad
         assert art['html'].strip(), pfad

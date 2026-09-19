@@ -284,6 +284,22 @@ def test_missing_file_is_skipped_silently(vault, caplog):
     assert caplog.records == []
 
 
+def test_render_failure_skips_only_that_article(vault, caplog):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    _write(vault, f'{ZAUBER}/kaputt', '---\nname: KAPUTT\n---\n# KAPUTT\n\n[[wiki/dsa-4.1/zauber/kaputt|x]]\n')
+
+    def link(path):
+        if path.endswith('kaputt'):
+            raise RuntimeError('link_fn kaputt')
+        return _link(path)
+
+    with caplog.at_level(logging.WARNING):
+        res = _load(vault, [f'{ZAUBER}/kaputt', f'{ZAUBER}/adlerauge'], link)
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+    assert [r.levelno for r in caplog.records] == [logging.WARNING]
+    assert 'kaputt' in caplog.records[0].getMessage()
+
+
 @pytest.mark.parametrize('path', ['', None])
 def test_empty_or_none_path_is_skipped(vault, path):
     assert _load(vault, [path]) == {}

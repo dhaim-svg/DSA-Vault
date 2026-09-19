@@ -134,12 +134,17 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
         log.warning('Wiki-Artikel %s nicht lesbar: %s', wiki_path, _short(exc))
         return None
     titel, body = _split_title(body)
+    try:
+        html = _MARKDOWN(_link_wikilinks(body, link_fn))
+    except Exception as exc:  # one broken article must not take the whole dashboard down
+        log.warning('Wiki-Artikel %s nicht renderbar: %s', wiki_path, _short(exc))
+        return None
     return {
         'titel': _text(titel) or _fallback_title(fm, wiki_path),
         'quelle': _quelle(fm),
         'meta': [{'label': label, 'wert': _text(fm.get(key))}
                  for key, label in META_FIELDS if _text(fm.get(key))],
-        'html': _MARKDOWN(_link_wikilinks(body, link_fn)),
+        'html': html,
     }
 
 
