@@ -3,7 +3,9 @@ import re
 import yaml
 from pathlib import Path
 
-WIKILINK_RE = re.compile(r'\[\[([^\]|\\]+)(?:[\\]?\|([^\]]+))?\]\]')
+# A single ']' is allowed inside the path (anchors like '#Merkmalskenntnis [einzelnes Merkmal]'),
+# as long as it is not followed by a second ']' — that pair closes the link.
+WIKILINK_RE = re.compile(r'\[\[((?:[^\]|\\]|\](?!\]))+)(?:[\\]?\|([^\]]+))?\]\]')
 
 EIGENSCHAFT_MAP = {
     'Mut': 'MU', 'Klugheit': 'KL', 'Intuition': 'IN', 'Charisma': 'CH',
