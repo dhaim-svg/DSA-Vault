@@ -45,7 +45,7 @@ def test_css_bundle_is_env_global():
 
 TEMPLATES_DIR = TOOLS_DIR / 'templates'
 PARTIALS_DIR = TEMPLATES_DIR / 'partials'
-TAB_PARTIALS = ['kampf', 'talente', 'zauber', 'steigern', 'inventar', 'profil', 'journal', 'sprachen']
+TAB_PARTIALS = ['kampf', 'talente', 'zauber', 'steigern', 'inventar', 'profil', 'chronik', 'sprachen']
 
 
 def _dashboard_source():
@@ -84,6 +84,15 @@ def test_each_partial_starts_with_its_own_tab_container():
         first_line = next(line for line in text.splitlines() if line.strip())
         assert first_line.lstrip().startswith('<'), f'{name}.j2 beginnt nicht mit einem Tag'
         assert f'id="tab-{name}"' in first_line, f'{name}.j2 beginnt mit fremdem Tab-Container'
+
+
+def test_journal_partial_is_sub_partial_of_chronik():
+    journal = (PARTIALS_DIR / 'journal.j2').read_text(encoding='utf-8')
+    assert not journal.lstrip().startswith('<div class="tab-content"')
+    assert 'id="tab-journal"' not in journal
+    chronik = (PARTIALS_DIR / 'chronik.j2').read_text(encoding='utf-8')
+    assert chronik.count("{% include 'partials/journal.j2' %}") == 1
+    assert "{% include 'partials/journal.j2' %}" not in _dashboard_source()
 
 
 def test_missing_css_file_fails_loudly(monkeypatch):
@@ -146,3 +155,29 @@ def test_build_context_without_chronik_file_has_empty_chronik(tmp_path, monkeypa
     ctx = build_context('x', tmp_path, chronik_bild_prefix='/p/')
     assert ctx['chronik'] == {'spielabende': [], 'meta': {}}
     assert ctx['chronik_bild_prefix'] == '/p/'
+
+
+BILD = 'drachenchronik-daten/pergament-abschrift.png'
+
+
+def test_render_chronik_tab_static(live_html):
+    ctx = build_context('illaen-baernhold')
+    assert live_html.count('id="tab-chronik"') == 1
+    assert 'id="tab-journal"' not in live_html
+    assert live_html.count('data-tab="chronik"') == 1
+    assert 'data-tab="journal"' not in live_html
+    assert len(re.findall(r'class="card chronik-abend"', live_html)) == len(ctx['chronik']['spielabende'])
+    assert '../abenteuer/drachenchronik/' + BILD in live_html
+    assert '/chronik-bild/' not in live_html
+
+
+def test_render_chronik_tab_server():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    html = server._render_dashboard('illaen-baernhold')
+    ctx = build_context('illaen-baernhold')
+    assert html.count('id="tab-chronik"') == 1
+    assert 'id="tab-journal"' not in html
+    assert len(re.findall(r'class="card chronik-abend"', html)) == len(ctx['chronik']['spielabende'])
+    assert '/chronik-bild/' + BILD in html
+    assert '<script src="/static/chronik.js"></script>' in html

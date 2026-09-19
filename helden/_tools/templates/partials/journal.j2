@@ -1,7 +1,3 @@
-<div class="tab-content" id="tab-journal">
-
-<div class="sec-head"><h2>📓 Kampagnen-Journal</h2><span class="rule"></span></div>
-
 {% if kampagne.sessions %}
   {% for s in kampagne.sessions %}
   <section class="card journal-session" data-session-nr="{{ s.nr }}">
@@ -59,6 +55,3 @@
     <p style="color:var(--ink-dim);text-align:center;padding:2rem 0;">Noch keine Sessions gespielt.</p>
   </section>
 {% endif %}
-
-</div><!-- end tab-journal -->
-

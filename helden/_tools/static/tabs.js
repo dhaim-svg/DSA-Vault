@@ -21,6 +21,8 @@
     });
     var saved;
     try { saved = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
-    switchTab(saved || DEFAULT_TAB);
+    if (saved === 'journal') saved = 'chronik';
+    if (!saved || !document.getElementById('tab-' + saved)) saved = DEFAULT_TAB;
+    switchTab(saved);
   });
 }());

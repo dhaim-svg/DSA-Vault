@@ -18,7 +18,7 @@ CHRONIK_BILD_PREFIX_SERVER = '/chronik-bild/'
 CHRONIK_BILD_PREFIX_STATIC = '../abenteuer/drachenchronik/'
 
 # Bundle order is load-bearing: CSS cascade depends on it.
-CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css']
+CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css', 'chronik.css']
 
 
 def obsidian_uri(wiki_path: str, vault_name: str = 'DSA-Vault') -> str:

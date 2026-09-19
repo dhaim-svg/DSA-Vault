@@ -1,0 +1,53 @@
+<div class="tab-content" id="tab-chronik">
+
+<div class="sec-head"><h2>📜 Chronik</h2><span class="rule"></span></div>
+
+<div class="chronik-switch" role="tablist" aria-label="Chronik-Ansicht">
+  <button type="button" class="chronik-switch-btn chronik-switch-btn--active" data-view="roh" role="tab" aria-selected="true" aria-controls="chronik-view-roh">Roh <span class="chronik-switch-count">{{ chronik.spielabende | length }}</span></button>
+  <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">{{ kampagne.sessions | length }}</span></button>
+</div>
+
+<div class="chronik-view chronik-view--active" id="chronik-view-roh" data-view="roh" role="tabpanel">
+{% if chronik.spielabende %}
+  {% for abend in chronik.spielabende | reverse %}
+  {% set ig_daten = abend.ig_tage | map(attribute='ig_datum') | select | list %}
+  <details class="card chronik-abend"{% if loop.first %} open{% endif %}>
+    <summary>
+      <span class="chronik-sum-datum">{{ abend.datum | e }}</span>
+      <span class="chronik-sum-meta">{{ abend.ig_tage | length }} IG-Tag{{ '' if (abend.ig_tage | length) == 1 else 'e' }}{% if ig_daten %} &middot; {{ ig_daten[0] | e }}{% if ig_daten | length > 1 %} &ndash; {{ ig_daten[-1] | e }}{% endif %}{% endif %}</span>
+    </summary>
+    {% for tag in abend.ig_tage %}
+    <div class="chronik-igtag">
+      {% if tag.ig_datum %}
+      <h4 class="chronik-igtag-datum">{{ tag.ig_datum | e }}</h4>
+      {% endif %}
+      {% for b in tag.bloecke %}
+      {% if b.typ == 'szene' %}
+      <h5 class="chronik-szene">{{ b.text | e }}</h5>
+      {% elif b.typ == 'text' %}
+      <p class="chronik-text">{{ b.text | e }}</p>
+      {% elif b.typ == 'bullet' %}
+      <div class="chronik-bullet" style="--tiefe: {{ b.tiefe | int }}">{{ b.text | e }}</div>
+      {% elif b.typ == 'bild' %}
+      <figure class="chronik-bild"><img src="{{ (chronik_bild_prefix ~ (b.src | urlencode)) | e }}" alt="Chronik-Abbildung" loading="lazy"></figure>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </details>
+  {% endfor %}
+  {% for heading, text in chronik.meta.items() %}
+  {% if text and (text | trim) %}
+  <section class="card chronik-meta"><h3 class="card-title">{{ heading | e }}</h3><div class="chronik-meta-text">{{ text | e }}</div></section>
+  {% endif %}
+  {% endfor %}
+{% else %}
+  <section class="card"><p style="color:var(--ink-dim);text-align:center;padding:2rem 0;">Noch keine Chronik importiert &mdash; <code>python helden/_tools/chronik_import.py</code> ausführen.</p></section>
+{% endif %}
+</div>
+
+<div class="chronik-view" id="chronik-view-kompiliert" data-view="kompiliert" role="tabpanel">
+{% include 'partials/journal.j2' %}
+</div>
+
+</div><!-- end tab-chronik -->
