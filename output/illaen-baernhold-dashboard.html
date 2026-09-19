@@ -381,8 +381,17 @@ body::before{
   padding:9px 10px;
   border-bottom:1px solid rgba(95,195,228,.06);
 }
-.spell:last-child{ border-bottom:0; }
 .spell:hover{ background:rgba(95,195,228,.04); }
+.spell.spell-head{ cursor:pointer; }
+.spell-toolbar{ display:flex; justify-content:flex-end; margin-bottom:6px; }
+.spell-sort-btn{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink-mute);
+  background:transparent; border:1px solid var(--rule); border-radius:3px;
+  padding:4px 10px; cursor:pointer;
+}
+.spell-sort-btn:hover{ color:var(--accent-cold); border-color:var(--accent-cold); }
+.spell-sort-btn:focus-visible{ outline:2px solid var(--accent-cold); outline-offset:2px; }
+.spell-sort-btn:not([data-sort-state="none"]){ color:var(--accent-cold); border-color:var(--accent-cold); }
 .spell .name{ font-family:var(--subhead); font-size:14px; color:var(--ink); }
 .spell .name .nlink{ color:var(--ink); text-decoration:none; border-bottom:1px dotted rgba(95,195,228,.25); }
 .spell .name .nlink:hover{ color:var(--accent-cold); border-bottom-color:var(--accent-cold); }
@@ -401,13 +410,57 @@ body::before{
 .spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
 .spell .wirkung-cell { padding-top:2px; }
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
+/* Artikelvorschau (D-018): letztes Kind der .spell-Zeile, ueber die volle Zeilenbreite */
+.spell .artikel-details{ grid-column:1 / -1; min-width:0; }
+.artikel-details summary.artikel-toggle{
+  list-style:none; font-family:var(--mono); font-size:10px; padding:2px 0;
+  color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
+}
+.artikel-details summary.artikel-toggle::-webkit-details-marker{ display:none; }
+.artikel-details summary.artikel-toggle::marker{ display:none; }
+.artikel-details summary.artikel-toggle:hover, .artikel-details[open] summary.artikel-toggle{ color:var(--accent-cold); }
+.artikel-details summary.artikel-toggle:focus-visible{ outline:2px solid var(--accent-cold); outline-offset:2px; }
+.artikel-panel{
+  margin-top:6px; padding:10px 12px; cursor:auto; min-width:0;
+  background:var(--bg-inset); border:1px solid var(--rule); border-left:2px solid var(--accent-cold);
+  color:var(--ink); overflow-wrap:anywhere;
+}
+.artikel-kopf{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; }
+.artikel-titel{ font-family:var(--subhead); font-size:14px; color:var(--ink); }
+.artikel-quelle{ font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--ink-mute); }
+.artikel-obsidian{ margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--accent-cold); text-decoration:none; white-space:nowrap; }
+.artikel-obsidian:hover{ text-decoration:underline; }
+.artikel-meta{
+  display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:6px;
+  font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.03em; line-height:1.5;
+}
+.artikel-meta b{ color:var(--accent-gold); font-weight:600; }
+.artikel-body{ margin-top:8px; font-family:var(--body); font-size:12px; line-height:1.55; color:var(--ink); min-width:0; }
+.artikel-body > :first-child{ margin-top:0; }
+.artikel-body > :last-child{ margin-bottom:0; }
+.artikel-body h1, .artikel-body h2, .artikel-body h3{ margin:12px 0 4px; line-height:1.3; font-weight:600; }
+.artikel-body h1{ font-family:var(--display); font-size:13px; color:var(--ink); }
+.artikel-body h2{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-cold); }
+.artikel-body h3{ font-family:var(--subhead); font-size:12px; color:var(--ink); }
+.artikel-body p{ margin:0 0 6px; }
+.artikel-body ul, .artikel-body ol{ margin:0 0 6px; padding-left:18px; }
+.artikel-body li{ margin:0 0 2px; }
+.artikel-body blockquote{ margin:0 0 6px; padding:2px 10px; border-left:2px solid var(--rule); color:var(--ink-mute); }
+.artikel-body strong{ color:var(--ink); font-weight:700; }
+.artikel-body em{ font-style:italic; }
+.artikel-body a{ color:var(--accent-cold); }
+.artikel-body code{ font-family:var(--mono); font-size:11px; color:var(--ink-probe); }
+.artikel-body table{ display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:0 0 6px; font-size:11px; }
+.artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; }
+.artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
 /* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
    (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
    umbrechende Zeile, Wirkung volle Breite. */
 @media screen and (max-width:1070px){
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }
-  .spell .name, .spell .wirkung-cell{ flex:1 1 100%; min-width:0; }
+  .spell-sort-btn{ min-height:44px; }
+  .spell .name, .spell .wirkung-cell, .spell .artikel-details{ flex:1 1 100%; min-width:0; }
   .spell .zfw-num{ min-width:0; }
   .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }
   .spell .zd::before{ content:"ZD "; color:var(--ink-mute); }
@@ -796,6 +849,8 @@ body::before{
   .card,.weapon-card,.vn-grp,.speicher-box,.feed li,.istat{ break-inside:avoid; }
   .card-title,.sec-head,.vn-grp h4{ break-after:avoid; }
   .spell{ break-inside:avoid; }
+  /* Zeile mit aufgeklapptem Artikel darf umbrechen; ohne :has()-Support bleibt es bei avoid */
+  .spell:has(.artikel-details[open]){ break-inside:auto; }
   .story p{ orphans:3; widows:3; }
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
@@ -811,6 +866,11 @@ body::before{
   .weapon-grid > div{ background:transparent !important; border-color:var(--paper-ink) !important; }
   .weapon-grid .k,.weapon-grid .v{ color:var(--paper-ink) !important; }
   .sf-list li .ico{ color:var(--paper-ink) !important; text-shadow:none !important; }
+  /* --- Artikelvorschau (D-018): geschlossene <details> drucken nichts, offene hell auf Papier --- */
+  .artikel-panel{ background:transparent !important; border-color:var(--paper-rule) !important; }
+  .artikel-toggle,.artikel-titel,.artikel-quelle,.artikel-meta,.artikel-meta b,
+  .artikel-body,.artikel-body *{ color:var(--paper-ink) !important; }
+  .artikel-obsidian{ display:none !important; }
   .campaign{ background:transparent !important; border:1px solid var(--paper-ink) !important; }
   .campaign h3,.status,.status .dot-s,.c-meta b,.c-meta{ color:var(--paper-ink) !important; }
   .status .dot-s{ background:var(--paper-ink) !important; box-shadow:none !important; animation:none; }
@@ -1099,6 +1159,7 @@ body { padding-top: 46px; }
   body { padding-top: 0 !important; }
   .inv-stepper, .inv-add-form { display: none !important; }
   .journal-actions { display: none !important; }
+  .spell-toolbar { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
@@ -1894,11 +1955,13 @@ body { padding-top: 46px; }
      ============================================================ -->
 <div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
 <section class="card">
+  <div class="spell-toolbar"><button type="button" class="spell-sort-btn" data-spell-sort data-sort-state="none" aria-label="Zauber sortieren, aktuell: Standard. Klicken für absteigend.">Sortierung: Standard</button></div>
 
-  <div class="spell spell-head" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
+  <div class="spell spell-head" title="Nach ZfW sortieren" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
     <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
+  <div class="spell-list" data-spell-list>
   <div class="spell" data-probe="KL/KL/FF" data-zfw="7" data-name="Abvenenum reine Speise" data-kosten="4 AsP/Mahlzeit">
     <span class="name">
 <a class="nlink" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/abvenenum.md">Abvenenum reine Speise</a>      <span class="submeta">Objk · C/C</span>
@@ -1913,6 +1976,30 @@ body { padding-top: 46px; }
         <span class="mods-list">Schutz vor Übelkeit, Schutz vor Vergiftung</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ABVENENUM (REINE SPEISE)</span>
+<span class="artikel-quelle">LC S. 11</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/abvenenum.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/KL/FF (+Mod.)</span><span><b>Kosten</b> 4 AsP pro Mahlzeit für bis zu 10 Personen (Ach: 3 AsP)</span><span><b>Zauberdauer</b> mindestens 15 Aktionen</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Reinigt Nahrung und Getränke von allen Giften und Krankheitskeimen; verdorbene Speisen werden wieder genießbar. Die Probe ist um die doppelte Giftstufe/Krankheitsstufe erschwert; stark verdorbene Nahrung kann zusätzlich +2 bis +12 bedeuten.</p>
+<p>Wirkt nur auf Nahrung (kein Gift auf Klingen oder in Phiolen). Elfische Repräsentation wandelt sogar Wein in Traubensaft um; Achaz-Form lässt manche für Menschen giftige Speisen unverändert.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Schutz vor Übelkeit</strong> (+5): Nahrung wird in einen harmlosen Zustand versetzt, der an sich keine Gefahr darstellt (z. B. Meerwasser → Trinkwasser)</li>
+<li><strong>Schutz vor Vergiftung</strong> (+5): Nahrung bleibt ZfP* Stunden vor Vergiftung geschützt; Probenaufschlag in Höhe der höchsten zu schützenden Giftstufe; entgiftet bereits vergiftete Speisen</li>
+<li>Eingeschränkte Varianten (bestimmte Giftgruppen oder einzelne Gifte) bekannt</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: schlagartige Fäulnis und Verschimmelung von Lebensmitteln</li>
+<li>Antimagie: in OBJEKT-ENTZAUBERN-Zone nur erschwert; wegen augenblicklicher Wirkungsdauer nicht rückgängig zu machen</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/CH/FF" data-zfw="7" data-name="Accuratum Zaubernadel" data-kosten="4 AsP/Stein (mind. 7)">
     <span class="name">
@@ -1928,6 +2015,30 @@ body { padding-top: 46px; }
         <span class="mods-list">Nadel des Wanderers, Haltbarkeit, Webstuhl, Sackleinen und Spinnenseide</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ACCURATUM (ZAUBERNADEL)</span>
+<span class="artikel-quelle">LC S. 12</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/accuratum.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/CH/FF (+Mod.)</span><span><b>Kosten</b> 4 AsP pro Stein Gewicht (mind. 7 AsP)</span><span><b>Zauberdauer</b> 40 Aktionen</span><span><b>Wirkungsdauer</b> bis zur nächsten Wintersonnenwende</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Verändert Farbe und Schnitt (nicht die Stoffart) eines Kleidungsstücks nach Wunsch der Zaubernden. Die Hälfte der TaP* einer gedanklich ausgeführten Schneidern-Probe erleichtert die Zauberprobe. ZfP* gibt die handwerkliche Qualität an (Werte über 10 = Meisterarbeit). Stoff aus dem Nichts erschaffen ist nicht möglich.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Nadel des Wanderers</strong> (+3): repariert eingerissene oder verschlissene Stellen eines bestehenden ACCURATUM für 3 AsP</li>
+<li><strong>Haltbarkeit</strong> (+3): 7 AsP pro Stein → Verwandlung dauerhaft (Wirkungsdauer: augenblicklich); nicht mit Sackleinen/Spinnenseide kombinierbar</li>
+<li><strong>Webstuhl</strong> (+7, ab ZfW 11): Kleidungsstück aus Garn herstellen (ca. 1 Stunde Arbeit)</li>
+<li><strong>Sackleinen und Spinnenseide</strong> (+7 ±7 für Ähnlichkeit; ab ZfW 14; nur Mag): Stoffart in andere verwandeln (kein Fell/Leder); nicht mit Haltbarkeit kombinierbar</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt ACCURATUM auf oder zerfasert normales Kleidungsstück in Fetzen</li>
+<li>Antimagie: in OBJEKT-ENTZAUBERN-Zone nur erschwert; kann damit beendet werden (gilt nicht für Haltbarkeit-Variante)</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/KL/IN" data-zfw="4" data-name="Analys Arkanstruktur" data-kosten="6 AsP + 3/½h">
     <span class="name">
@@ -1939,6 +2050,53 @@ body { padding-top: 46px; }
     <span class="kosten">6 AsP + 3/½h</span>
     <span class="wirkung-cell">
 <span class="wirkung">Zeigt Zaubermatrix von Artefakt oder Wesen</span>    </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ANALYS (ARCANSTRUKTUR)</span>
+<span class="artikel-quelle">LC S. 22</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/analys.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/KL/IN (+Mod.)</span><span><b>Kosten</b> 6 AsP + 3 AsP pro angefangener halber Stunde</span><span><b>Zauberdauer</b> mind. 1 SR</span><span><b>Wirkungsdauer</b> identisch mit Zauberdauer (keine anderen Aktionen während Analyse)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Lässt die Magierin die Zaubermatrix eines Artefakts, magischen Wesens oder wirkenden Zaubers sehen. Kein göttliches/karmales Wirken erkennbar. Je mehr ZfP* übrig bleiben, desto mehr Details:</p>
+<table>
+<thead>
+<tr>
+  <th>ZfP*</th>
+  <th>Erkennbares</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>Merkmale + Repräsentation; Klasse des Wesens (Elementar, Fee, Geist, Chimäre, Untoter, Dämon)</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>Einzelheiten des Zaubermodus (z. B. „noch 3 Stunden&quot;); nähere Klassifikation des Wesens; Erkennen ob Zauberwirker verkleidet ist</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td>Versteckte Zaubereien und Varianten; Fähigkeiten ausloten</td>
+</tr>
+<tr>
+  <td>8+</td>
+  <td>Signatur erkennen (Erschaffer, Akademiestil; benötigt auch SF)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Erschwernisse:</strong> Fremde Repräsentation +2 bis +7; willentlich verborgene Zauberei +ZfP* des Tarnzaubers; Reststrahlung nicht mehr vorhandener Zauber mind. +7; Artefakte/Elixiere nach gesonderter Tabelle (→ WdZ S. 51f.).</p>
+<p><strong>Verlängerung:</strong> Pro weiterer halber Stunde neue Probe; ZfP* addieren; Selbstbeherrschungs-Probe nötig (Erschwernis +1 pro abgelaufener ½ Stunde). ODEM-Vorbereitung: halbe ZfP* helfen bei Probenerschwernis.</p>
+<h2>Varianten</h2>
+<p>Keine expliziten Varianten (nur Modifikationen Zauberdauer, Kosten, Reichweite).</p>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: keine Wirkung</li>
+<li>Antimagie: HELLSICHT TRÜBEN und SCHLEIER DER UNWISSENHEIT erschweren die Analyse</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="IN/GE/KO" data-zfw="10" data-name="Armatrutz" data-kosten="mind. 4 AsP (RS²−ZfP*/2)">
     <span class="name">
@@ -1954,6 +2112,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Körperschild, Kraft des Fakirs</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ARMATRUTZ</span>
+<span class="artikel-quelle">LC S. 28</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/armatrutz.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> IN/GE/KO</span><span><b>Kosten</b> (Zusatz-RS)² − ZfP*/2 AsP (mind. 4 AsP)</span><span><b>Zauberdauer</b> 3 Aktionen</span><span><b>Wirkungsdauer</b> max. 1 SR (A)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Verleiht der Zaubernden eine zusätzliche „stählerne Haut&quot; als Rüstungsschutz. Max. ZfW/2 Zusatz-RS. Keine Behinderung durch die magische Rüstung. Wirkt wie stoffliche Rüstung gegen materielle Angriffe (einschließlich Dämon- und Elementar-AT mit materieller Komponente), aber <strong>nicht</strong> gegen Zauber ohne materielle Schadens-Komponente (z. B. FULMINICTUS). Hält auch Tierbisse ab, die SP statt TP anrichten.</p>
+<p><strong>Kostenformel:</strong> Lorindel (RS 3 → RS 7): 4² − 5/2 = 16 − 2,5 ≈ 13 AsP.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Körperschild</strong> (+4): nur einzelne Trefferzonen — Brust/Rücken/Bauch: halbe Kosten; Kopf/Arme/Beine: Viertel-Kosten (mind. 3 AsP je)</li>
+<li><strong>Kraft des Fakirs</strong> (+3, ab ZfW 7): Resistenz gegen Schäden ≤ 1 SP; Kosten 1 AsP/SR; Wirkungsdauer max. ZfP* SR (A)</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt wirkenden ARMATRUTZ auf</li>
+<li>Antimagie: EIGENSCHAFT WIEDERHERSTELLEN und ERZBANN können beenden; in entsprechenden Zonen nur erschwert</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/CH/**" data-zfw="10" data-name="Attributo" data-kosten="7 AsP">
     <span class="name">
@@ -1969,6 +2150,37 @@ body { padding-top: 46px; }
         <span class="mods-list">Schnellsteigerung</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ATTRIBUTO</span>
+<span class="artikel-quelle">LC S. 30</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/attributo.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/CH/[gesteigerte Eigenschaft]</span><span><b>Kosten</b> 7 AsP (Sch: 5 AsP)</span><span><b>Zauberdauer</b> 30 Aktionen</span><span><b>Wirkungsdauer</b> 1 Stunde</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Hebt eine Eigenschaft des Verzauberten um ZfP*/3 Punkte für 1 Stunde. Berührungsort hängt von der Eigenschaft ab (Oberarme für KK, Schläfen für KL usw.). LE/AU/AE werden durch Grundwerte nicht neu berechnet; AT/PA und andere Basiswerte können abweichen. <strong>Scharlatanisch:</strong> Reichweite selbst, Zielobjekt nur freiwillig.</p>
+<p>Eigenschaft-Sonderregeln:</p>
+<ul>
+<li><strong>MU:</strong> auch auf Tiere (+3 Erschwernis)</li>
+<li><strong>KL:</strong> auch auf Vertraute, Reit-/Haustiere und Pflanzen (+3–5 für Tiere, +7 für Pflanzen; keine Sprache)</li>
+<li><strong>IN (Tiere):</strong> verbessert Wahrnehmung/Aufmerksamkeit (+3)</li>
+<li><strong>CH:</strong> nur kulturschaffende Wesen</li>
+<li><strong>FF:</strong> nur Wesen mit Greifhand</li>
+<li><strong>GE (Vierbeiner/Schlangen):</strong> +3; Vögel/Sechsbeiner/Flieger: +5; Achtbeiner/fliegende Sechsbeiner: +7</li>
+<li><strong>KO/KK:</strong> Kosten an Körpermasse anpassen (z. B. Pferd: mind. 40 AsP)</li>
+</ul>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Schnellsteigerung</strong> (+3, ab ZfW 11; Mag/Elf/Sat/Dru): ZfP* Bonus für ZfW KR; Kosten 11 AsP; Zauberdauer 5 Aktionen</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Eigenschaft des Opfers sinkt um den entsprechenden Betrag</li>
+<li>Antimagie: in EIGENSCHAFT-WIEDERHERSTELLEN-Zone nur erschwert; von diesem Zauber beendet</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/CH" data-zfw="9" data-name="Balsam Salabunde" data-kosten="1 AsP/LeP (mind. 5)">
     <span class="name">
@@ -1984,6 +2196,33 @@ body { padding-top: 46px; }
         <span class="mods-list">Lebenskraft stärken, Sofortige Regeneration</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">BALSAM SALABUNDE</span>
+<span class="artikel-quelle">LC S. 37</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/balsam-salabunde.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/CH</span><span><b>Kosten</b> 1 AsP pro LeP (mind. 5 AsP); max. ZfW × 2 LeP</span><span><b>Zauberdauer</b> mind. 5 Aktionen bis 1 SR</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Heilt Wunden und innere Verletzungen: Pro AsP 1 LeP zurück (max. ZfW × 2 LeP). Auch Selbstheilung möglich (Zuschläge für Wunden/niedrige LE beachten). Stoppt Krankheit/Gift nicht.</p>
+<ul>
+<li><strong>Wunden heilen:</strong> Probe um doppelte Wundanzahl erschwert; je 7 zurückgegebene LeP = 1 Wunde vollständig geheilt.</li>
+<li><strong>Verstümmelungen:</strong> bis zu ZfW Stunden nach Verletzung; bis +15 Probe, evtl. pAsP.</li>
+<li><strong>Rettung vom Tode:</strong> Schwerstverwundete (0 bis –KO LeP); mind. 10 AsP; 2 AsP pro LeP unter 0; 1 pAsP pro 10 angefangene LeP unter 0.</li>
+</ul>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Lebenskraft stärken</strong> (+5; ab ZfW 11): je 3 AsP → +1 LeP über Grundwert (max. ZfW LeP); nach ZfP* Stunden Abbau.</li>
+<li><strong>Sofortige Regeneration</strong> (+15; ab ZfW 18): 35 AsP, 12 Aktionen; 1W6 LeP/KR für ZfP* × 10 KR.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: schleichender Schadenszauber — pro eingesetztem AsP 1 LeP Verlust.</li>
+<li>Antimagie: HEILKRAFT BANNEN und VERWANDLUNG BEENDEN während des Wirkens; in entsprechenden Zonen nur erschwert.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/CH" data-zfw="4" data-name="Blick aufs Wesen" data-kosten="6 AsP">
     <span class="name">
@@ -1999,6 +2238,53 @@ body { padding-top: 46px; }
         <span class="mods-list">Leuchtende Persönlichkeit</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">BLICK AUFS WESEN</span>
+<span class="artikel-quelle">LC S. 45</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blick-aufs-wesen.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/CH</span><span><b>Kosten</b> 6 AsP</span><span><b>Zauberdauer</b> 30 Aktionen</span><span><b>Wirkungsdauer</b> entspricht der Zauberdauer</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Grobe Einschätzung der Fähigkeiten und Fertigkeiten eines Gegenübers. Keine Werte, nur Einschätzungen — abhängig von Fachkenntnissen des Elfen selbst. Informationsmenge nach ZfP*:</p>
+<table>
+<thead>
+<tr>
+  <th>ZfP*</th>
+  <th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>Intelligenz, Gelehrtheit, körperliche Verfassung, handwerkl. Geschick, Kampfkraft, Zaubermacht (unfähig / durchschn. / fähig / sehr fähig)</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>Konkretere Angaben; bes. auffällige Werte angedeutet</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td>SE-Ausprägung; Merkmalskenntnis bei Zauberkundigen</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td>Bestes Talent, Kampfstil (trickreich/brutal); Seelentier erahnbar</td>
+</tr>
+</tbody>
+</table>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Leuchtende Persönlichkeit</strong> (+7; ab ZfW 11): aus Gruppe (max. ZfW Personen) denjenigen ermitteln, der in bestimmtem Bereich hervorsticht; Probe +höchste MR.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Elf offenbart eigene Fähigkeiten.</li>
+<li>Antimagie: in HELLSICHT-TRÜBEN-Zone nur erschwert; davon unterbrochen.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/GE" data-zfw="13" data-name="Blitz dich find" data-kosten="4 AsP">
     <span class="name">
@@ -2014,6 +2300,36 @@ body { padding-top: 46px; }
         <span class="mods-list">Mehrere Wesen</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">BLITZ DICH FIND</span>
+<span class="artikel-quelle">LC S. 49</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/blitz-dich-find.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/GE</span><span><b>Kosten</b> 4 AsP (Sch: 3 AsP)</span><span><b>Zauberdauer</b> 1 Aktion</span><span><b>Wirkungsdauer</b> ZfW/2 Aktionen</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erzeugt im Geist des Opfers einen grellen Lichtblitz → blendet und desorientiert für ZfW/2 Aktionen. Anschließend vollständig wiederhergestellt.</p>
+<p>Auswirkungen während der Wirkungsdauer:</p>
+<ul>
+<li>Talent-/Zauberproben und Fernkampf jeweils +ZfP* erschwert</li>
+<li>AT und PA je –ZfP* (ungerade: erst AT)</li>
+<li>INI –ZfW</li>
+<li>Aktion „Orientieren&quot; nicht möglich</li>
+</ul>
+<p>SF Blindkampf: Kampfabzüge halbiert. SF Konzentrationsstärke: Zauberprobenabzüge halbiert.</p>
+<p>Immun: Dämonen, Geister, Untote, Golems, Elementarwesen. Für Tiere abhängig vom Gesichtssinn-Anteil.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Mehrere Wesen:</strong> 3 AsP pro Person.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt Blitz-Wirkung auf.</li>
+<li>Antimagie: EINFLUSS BANNEN beendet Zauber; in entsprechender Zone nur erschwert.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/FF/FF" data-zfw="2" data-name="Custodosigil Diebesbann" data-kosten="1 AsP/Stein (mind. 5)">
     <span class="name">
@@ -2029,6 +2345,31 @@ body { padding-top: 46px; }
         <span class="mods-list">Personalisierung, Permanenz</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">CUSTODOSIGIL (DIEBESBANN)</span>
+<span class="artikel-quelle">LC S. 62</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/custodosigil.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/FF/FF</span><span><b>Kosten</b> 1 AsP pro Stein Gewicht des Behälters, mind. 5 AsP bis max. 30 AsP (Truhe)</span><span><b>Zauberdauer</b> ~1 Stunde</span><span><b>Wirkungsdauer</b> bis zur nächsten Wintersonnenwende</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Sichert Behältnisse (Briefe, Phiolen, Kassetten, max. Truhen) vor unbefugtem Öffnen. Bei Entladung: gesamter Inhalt verbrennt unwiederbringlich.</p>
+<p>Öffnungserschwernis: ZfP* auf Kraftprobe, ZfP* × 2 auf Talent-/Zauberproben.</p>
+<p>Unbefugtes Öffnen: Schlösser Knacken, Gewalt, FORAMEN o.ä. → Probe auf erschwerten Wert. Bei Misslingen → CUSTODOSIGIL entlädt sich.</p>
+<p>Kann als Falle mit brennbarer Füllung verwendet werden.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Personalisierung</strong> (+1/Person): benannte Personen dürfen gefahrlos öffnen.</li>
+<li><strong>Permanenz</strong> (+7; ab ZfW 14): Kosten × 1,5; 1 AsP permanent.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt bestehenden CUSTODOSIGIL auf (mehr ZfP* als ursprünglich nötig).</li>
+<li>Antimagie: OBJEKT ENTZAUBERN (mehr ZfP* nötig); in OBJEKT-ENTZAUBERN-, METAMAGIE-NEUTRALISIEREN- oder FEUERBANN-Zone nur erschwert.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/CH/GE" data-zfw="5" data-name="Duplicatus Doppelbild" data-kosten="6 AsP + 3/weiterer">
     <span class="name">
@@ -2044,6 +2385,40 @@ body { padding-top: 46px; }
         <span class="mods-list">Objektverdopplung, Spiegelkabinett</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">DUPLICATUS (DOPPELBILD)</span>
+<span class="artikel-quelle">LC S. 70</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/duplicatus.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/CH/GE (+2 pro zusätzlichem Doppelgänger)</span><span><b>Kosten</b> 6 AsP für den ersten, 3 AsP für jeden weiteren Doppelgänger</span><span><b>Zauberdauer</b> 5 Aktionen</span><span><b>Wirkungsdauer</b> maximal ZfP* × 2 KR (A)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erschafft für sich oder einen Gefährten optische Doppelgänger, die sich synchron bewegen. Gegner können kaum feststellen, wer der echte Zaubernde ist.</p>
+<p>Anzahl Doppelgänger nach ZfW: ab ZfW 7 = 2, ab ZfW 11 = 3, ab ZfW 15 = 4, ab ZfW 18 = 5.</p>
+<p>Trefferwahrscheinlichkeit bei unpariertem Angriff:</p>
+<ul>
+<li>1 Doppelgänger: 50 % (1–3 auf 1W6)</li>
+<li>2 Doppelgänger: 33 % (1–2 auf 1W6)</li>
+<li>3: 25 % (1–5 auf 1W20)</li>
+<li>4: 20 % (1–4 auf 1W20)</li>
+<li>5: 17 % (1 auf 1W6)</li>
+</ul>
+<p>Gegner: Parieren des Zauberers um (Anzahl Doppelgänger) erschwert. Auf engstem Raum (Ecke): doppelte Trefferwahrscheinlichkeit.</p>
+<p>Nicht wirkend gegen Kämpfer, die sich nicht optisch orientieren (Blindkampf, geschlossene Augen, viele Dämonen/Untote).</p>
+<p>Realitätsdichte: ZfP*/2 + 7 Punkte. Illusion zu erkennen hilft im Kampf nicht.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Objektverdopplung</strong> (+3): auch auf Gegenstände anwendbar.</li>
+<li><strong>Spiegelkabinett</strong> (+7): ZfW/2 stumme Doppelgänger in 7-Schritt-Radius; 15 AsP; nur auf Zaubernden; Wirkungsdauer ZfP*/2 SR (A).</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt einen wirkenden DUPLICATUS auf.</li>
+<li>Antimagie: in ILLUSION AUFLÖSEN-Zone nur erschwert und damit beendbar.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/KL/FF" data-zfw="10" data-name="Flim Flam Funkel" data-kosten="1 AsP/SR">
     <span class="name">
@@ -2059,6 +2434,66 @@ body { padding-top: 46px; }
         <span class="mods-list">Andere Farbe, Pulsierendes Licht, Lichtkegel, Variable Helligkeit, Bewegliche Lichtkugel, Irrwisch, Lichtblitz, Leuchtturm, Immerlicht</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">FLIM FLAM (FUNKEL)</span>
+<span class="artikel-quelle">LC S. 86</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/flim-flam.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/KL/FF</span><span><b>Kosten</b> 1 AsP pro SR (Sch: 1 AsP/SR); +1 AsP/SR je Helligkeitsstufe erhöhen</span><span><b>Zauberdauer</b> 2 Aktionen</span><span><b>Wirkungsdauer</b> nach AsP-Aufwand (Wirkungsdauer vorher festlegen); (A)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erzeugt eine bläulich-weiß strahlende, stationäre Lichtkugel. Maximale Leuchtkraft nach ZfP*:</p>
+<table>
+<thead>
+<tr>
+  <th>ZfP*</th>
+  <th>Helligkeit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>Glühwürmchen</td>
+</tr>
+<tr>
+  <td>2–3</td>
+  <td>Kerze</td>
+</tr>
+<tr>
+  <td>4–6</td>
+  <td>Fackel</td>
+</tr>
+<tr>
+  <td>7–9</td>
+  <td>Lagerfeuer</td>
+</tr>
+<tr>
+  <td>ab 15</td>
+  <td>sonnenhell</td>
+</tr>
+</tbody>
+</table>
+<p>Leuchtradius: ZfP* Schritt (Helligkeit nimmt nach außen ab). Kaltes Licht, keine Verbrennungen. Zone verbleibt an Ort und Stelle (auch wenn Zauberer sich entfernt). Kann verhüllt werden.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Andere Farbe</strong> (+2): rot, violett, gelb, orange, blau, grün; nur sichtbare Farben.</li>
+<li><strong>Pulsierendes Licht</strong> (+2): regelmäßig heller und dunkler.</li>
+<li><strong>Lichtkegel</strong> (+3; nur gildenmagisch + Ach): Licht wie Strahler in 45°-Kegel lenken.</li>
+<li><strong>Variable Helligkeit</strong> (+3): Helligkeit bis zum Maximum abdunkeln; Aufhellen kostet 1 AsP.</li>
+<li><strong>Bewegliche Lichtkugel</strong> (+3): schwebt in unmittelbarer Nähe des Zaubernden (A).</li>
+<li><strong>Irrwisch</strong> (+5; nicht Geo/Hex): bis ZfW×2 Schritt entfernt schicken und fernlenken (A).</li>
+<li><strong>Lichtblitz</strong> (+7; nicht echsisch/druidisch): einmalig 4 AsP → heller Blitz, blendet Wesen &lt;7 Schritt für ZfP* Aktionen (AT/PA je –ZfP<em>/2, FK/Talent/Zauberproben um ZfP</em> erschwert, INI –ZfP*).</li>
+<li><strong>Leuchtturm</strong> (+7; nur gildenmagisch): pulsierende Kugel Helligkeit ≥10, steigt ZfW×10 Schritt hoch, 1 SR Dauer; 5 AsP.</li>
+<li><strong>Immerlicht</strong> (+9; nur elfisch + Ach): 1 pAsP → leuchtet dauerhaft; jährlich W20, bei 20: –1 Helligkeitsstufe; nicht mit anderen Varianten kombinierbar.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: schwarze Kugel, macht Umgebung näher der Kugel dunkler (keine vollständige Dunkelheit).</li>
+<li>Antimagie: in VERÄNDERUNG AUFHEBEN-Zone nur erschwert und damit beendbar.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="IN/KO/KK" data-zfw="8" data-name="Fortifex arkane Wand" data-kosten="11 AsP">
     <span class="name">
@@ -2074,6 +2509,30 @@ body { padding-top: 46px; }
         <span class="mods-list">Bewegliche Wand, Schimmernder Schild, Schwebende Wand</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">FORTIFEX (ARKANE WAND)</span>
+<span class="artikel-quelle">LC S. 89</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fortifex.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> IN/KO/KK</span><span><b>Kosten</b> 11 AsP</span><span><b>Zauberdauer</b> 10 Aktionen</span><span><b>Wirkungsdauer</b> ZfP* × 10 KR</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erzeugt eine undurchdringliche, transparente Wand (max. 2×2 Schritt), fix an einem Objekt im Blickfeld der Zauberin. Ist kein messerscharfer Schneidgegenstand: wirft Reiter aus dem Sattel, köpft sie aber nicht.</p>
+<p>Undurchdringlich für physische Materie und Projektile. Schützt nicht gegen: Zauber (auch elementare wie IGNIFAXIUS), halbmaterielle Wesen (Geister, nicht manifeste Dämonen), Hitze, Kälte, Licht.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Bewegliche Wand</strong> (+7): bewegt sich mit der Zauberin im festgelegten Abstand; Barriere hat gleiche KK wie die Zauberin.</li>
+<li><strong>Schimmernder Schild</strong> (+7; ab ZfW 11): Rundschild vor dem Schildarm (WM 0/+3, INI 0); 7 AsP.</li>
+<li><strong>Schwebende Wand</strong> (+10; ab ZfW 14): unabhängig beweglich mit max. ZfP* Schritt/Sekunde; auch waagerecht als Plattform → max. (2×MU+CH) Stein heben oder doppeltes Gewicht schieben.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt wirkenden FORTIFEX auf.</li>
+<li>Antimagie: VERÄNDERUNG AUFHEBEN oder ERZBANN können aufheben bzw. in Zone das Wirken erschweren.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="IN/GE/KO" data-zfw="10" data-name="Fulminictus Donnerkeil" data-kosten="1 AsP/SP">
     <span class="name">
@@ -2089,6 +2548,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Welle des Schmerzes, Welle der Reinigung</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">FULMINICTUS (DONNERKEIL)</span>
+<span class="artikel-quelle">LC S. 90</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/fulminictus.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> IN/GE/KO</span><span><b>Kosten</b> 1 AsP pro zugefügtem Schadenspunkt; max. aktuelle AsP des Zaubernden</span><span><b>Zauberdauer</b> 2 Aktionen</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Unsichtbare Welle magischen Schadens, die jede gewöhnliche Rüstung durchdringt. Schaden: 2W6 + ZfP* SP, direkt von der LeP abgezogen. Erzeugt keine regeltechnischen Wunden (kein Heilkunde Wunden nötig). Weder RS noch ARMATRUTZ helfen.</p>
+<p>Klassische Formel für den letzten Ausweg — kaum Vorbereitung oder Konzentration nötig.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Welle des Schmerzes</strong> (+3; ab ZfW 7): ungezielter Schadensstrahl in alle Richtungen, 3 Schritt Radius; je 3 AsP → 1W6 SP(A) bei allen umstehenden Lebewesen.</li>
+<li><strong>Welle der Reinigung</strong> (+3; ab ZfW 7; nur gildenmagisch): tödlich für Wesen mit nur 1 LeP oder weniger (Ungeziefer), 3 Schritt Radius; 1W6+2 AsP.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: teurer Fernheilzauber — gibt der Zielperson sofort 2W6+ZfP* LeP zurück; letzter Rettungsanker vor dem Tod.</li>
+<li>Antimagie: GARDIANUM und INVERCANO schützen; in SCHADENSZAUBER BANNEN-Zone nur erschwert; einige Dämonen können ihre MR als Schutz nutzen.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/KO" data-zfw="8" data-name="Gardianum Zauberschild" data-kosten="mind. 3 AsP">
     <span class="name">
@@ -2104,6 +2586,33 @@ body { padding-top: 46px; }
         <span class="mods-list">Schild gegen Dämonen, Schild gegen Zauber, Persönlicher Schild</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">GARDIANUM (ZAUBERSCHILD)</span>
+<span class="artikel-quelle">LC S. 91</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/gardianum.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/KO</span><span><b>Kosten</b> nach Wahl, mindestens 3 AsP</span><span><b>Zauberdauer</b> 2 Aktionen</span><span><b>Wirkungsdauer</b> bis aufgewendete AsP aufgezehrt sind, maximal 1 Spielrunde</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Unsichtbare Schutzkuppel (Halbkugel, 3 Schritt Radius). Schild ist &quot;orientiert&quot; — Zauber aus der Kuppel heraus möglich, nicht aber Angriffe von innen gegen den Magier.</p>
+<p>Absorbiert direkte magische Schäden (Schaden-Merkmal-Zauber, Schaden durch Dämonen/Elementare/Geister, IGNISPHAERO-Flammenwolke, Flammenschwert-Angriffe) in Höhe von eingesetzten AsP + doppelten ZfP*. Danach löst sich der Schild auf.</p>
+<p>Schützt <strong>nicht</strong> gegen: magisch erhöhte Waffenschäden, Waffen aus magischen Materialien, physische Attacken magischer Wesen (Drache, Einhorn), Verwandlung/Beherrschung (Grundvariante).</p>
+<p>Schild bewegt sich mit dem Magier.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Schild gegen Dämonen</strong> (+3; ab ZfW 7): verhindert, dass Dämonen die Kuppel durchdringen oder sich darin aufhalten; kein AsP-Verbrauch für dämonische Bewegung; je gezielter dämonischer Angriff: 1 Schildpunkt / 7 TP.</li>
+<li><strong>Schild gegen Zauber</strong> (+3; ab ZfW 7): wehrt Verwandlungen und Beherrschungen (Eigenschaften, Einfluss, Form, Herrschaft) ab; jeder abgeblockte AsP reduziert Schildstärke; Rest kommt geschwächt durch.</li>
+<li><strong>Persönlicher Schild</strong> (+5; ab ZfW 11): eng anliegende &quot;zweite Haut&quot; statt Kuppel; Schutzwert = 3×ZfP* + eingesetzte AsP.</li>
+</ul>
+<p>Die drei Varianten können miteinander kombiniert werden (je +2 Aktionen Zauberdauer je Variante).</p>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: keine Wirkung (Schutzkuppel gegen ausbrechende Energie wäre eine Große Modifikation).</li>
+<li>Antimagie: PROTECTIONIS-geschützter Zauber durchdringt den GARDIANUM, wenn (PROTECTIONIS-AsP + ZfP<em>) &gt; ZfP</em> des GARDIANUM.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="MU/IN/CH" data-zfw="7" data-name="Horriphobus Schreckgestalt" data-kosten="7 AsP">
     <span class="name">
@@ -2115,6 +2624,31 @@ body { padding-top: 46px; }
     <span class="kosten">7 AsP</span>
     <span class="wirkung-cell">
 <span class="wirkung">Erscheint dem Opfer als bedrohliche Schreckgestalt</span>    </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">HORRIPHOBUS SCHRECKGESTALT</span>
+<span class="artikel-quelle">LC S. 120</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/horriphobus-schreckgestalt.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> MU/IN/CH (+MR)</span><span><b>Kosten</b> 7 AsP (borbaradianische Variante: 2W6 AsP oder Hälfte als LeP)</span><span><b>Zauberdauer</b> 3 Aktionen</span><span><b>Wirkungsdauer</b> ZfP*/2 SR</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Der Magier erscheint seinem Opfer als bedrohliche Gestalt. MR des Opfers wird um die Hälfte der stärksten vorhandenen Angst-Schlechten-Eigenschaft reduziert. Reaktion nach ZfP*:</p>
+<ul>
+<li>**1 ZfP***: Respekt, vorsichtige Annäherung; AT gegen den Zaubernden erst nach MU-Probe (–ZfP*).</li>
+<li>**4 ZfP***: Furcht, Rückzug; AT/PA/INI-Basis je –1W6 bei missglungener MU-Probe.</li>
+<li>**7 ZfP***: Angst, Flucht oder Zusammenkauern; MU-Probe (–ZfP*), bei Misslingen –1W6 auf MU/KL/CH/FF/AT/PA/FK/INI-Basis (baut fern vom Zaubernden mit 1 Punkt/SR ab).</li>
+<li>**10+ ZfP***: Heillose Panik und Flucht; MU-Probe + Abzüge wie bei 7 ZfP*.</li>
+</ul>
+<p>Wirkt gegen alle denkenden Lebewesen und einige Geisterwesen (Meisterentscheid). Schleimgetier, Insekten, Elementare, Untote und Dämonen unbeeindruckt.</p>
+<p>Mehrere Opfer-Variante: 6 AsP pro Opfer.</p>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Opfer verliebt sich in den Zauberer für die Wirkungsdauer.</li>
+<li>Antimagie: in EINFLUSS BANNEN-Zone erschwert, gezielt beendet; ÄNGSTE LINDERN kann Wirkung aufheben oder abschwächen.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/FF/KO" data-zfw="10" data-name="Ignifaxius Flammenstrahl" data-kosten="ZfW Würfel × 1W6 AsP">
     <span class="name">
@@ -2130,6 +2664,33 @@ body { padding-top: 46px; }
         <span class="mods-list">Kegel, Enger Strahl, Mehrere Ziele, Doppelschuss</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">IGNIFAXIUS FLAMMENSTRAHL</span>
+<span class="artikel-quelle">LC S. 121</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignifaxius-flammenstrahl.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/FF/KO</span><span><b>Kosten</b> Anzahl der erwürfelten TP in AsP (max. ZfW Würfel, jeder Würfel = 1W6 TP)</span><span><b>Zauberdauer</b> 4 Aktionen</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Aus den Fingern des Zaubernden schießt eine Feuerlanze. Vor der Probe muss die Würfelanzahl angesagt werden (max. ZfW). Alle Würfelpunkte summieren sich zu TP. Übersteigen die erwürfelten TP die AsP, misslingt der Zauber (ab ZfW 11 optional: verbraucht nur verfügbare AsP).</p>
+<p>RS mindert die TP; für je 10 TP verliert die Rüstung 1 RS-Punkt (nicht bei natürlicher/magischer Rüstung). Ausweichen mit +5 Erschwernis möglich; pro Punkt besser ausgewichen kann ein Schadenswürfel abgezogen werden.</p>
+<p>Elementarer Sekundärschaden (Feuer): RS sinkt je 10 TP um 1; brennbare Materialien entzünden sich.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Kegel</strong> (+2; ab ZfW 11): 2 Schritt Basisbreite; 1W6–1 TP pro Würfel, aber je 5 TP senkt RS um 1.</li>
+<li><strong>Enger Strahl</strong> (+3; ab ZfW 11): Fingerbreiter Flammenstrahl; keine Rüstungsschaden, aber pro KO/2–2 SP eine Wunde; zufällige Trefferzone.</li>
+<li><strong>Mehrere Ziele</strong> (+5; ab ZfW 7): TP gleichmäßig auf bis zu 5 Opfer verteilen.</li>
+<li><strong>Doppelschuss</strong> (+5; ab ZfW 11): Zwei Zauber gleichzeitig auf ein Ziel; je max. ZfW–5 Würfel.</li>
+<li><strong>Elementare Varianten</strong> (FRIGIFAXIUS, ARCHOFAXIUS, ORCANOFAXIUS, AQUAFAXIUS, HUMOFAXIUS): separate Zauber, sehr seltene Repräsentationen.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: wird zu AQUAFAXIUS (gleiche Schadenswirkung, Wasser-Sekundäreffekte).</li>
+<li>Antimagie: nicht in SCHADENSZAUBER BANNEN- oder FEUERBANN-Zone; GARDIANUM fängt auf; INVERCANO reflektiert; LEIB DES FEUERS reduziert Schaden.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="MU/IN/KO" data-zfw="7" data-name="Ignisphaero Feuerball" data-kosten="21 AsP + 1W6 LeP">
     <span class="name">
@@ -2145,6 +2706,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Komplexe Bewegung</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">IGNISPHAERO FEUERBALL</span>
+<span class="artikel-quelle">LC S. 123</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/ignisphaero-feuerball.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> MU/IN/KO</span><span><b>Kosten</b> 21 AsP plus 1W6 LeP plus 1 Punkt Erschöpfung</span><span><b>Zauberdauer</b> 7 Aktionen</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Aus den Händen der Magierin steigt eine Feuerkugel (max. GS 15), die beliebig dirigiert und zur Explosion gebracht werden kann. Bei Konzentrationsverlust oder Sichtverlust explodiert sie sofort.</p>
+<p>Schaden am Zentrum: 5W6+ZfP*/2 TP; pro Schritt Entfernung sinkt Schaden um 1 + niedrigster Würfel. RS der Opfer wird abgezogen. Bei mehr als 10 erlittenen TP: RS-Verlust wie IGNIFAXIUS. Brennbare Objekte entzünden sich.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Komplexe Bewegung</strong> (+3): Kugel führt ZfW Aktionen eine festgelegte Bewegung aus, explodiert am Ende.</li>
+<li><strong>Elementare Varianten</strong> (FRIGOSPHAERO, ORCANOSPHAERO …): separate Zauber mit Sekundäreffekten des jeweiligen Elements.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: platzende Wasserkugel mit Wasser-Sekundäreffekten.</li>
+<li>Antimagie: FEUERBANN-, SCHADENSZAUBER BANNEN- oder BEWEGUNG STÖREN-Zone erschwert das Wirken; GARDIANUM oder INVERCANO halten die Kugel auf und lassen sie dort detonieren.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/FF" data-zfw="5" data-name="Impersona Maskenbild" data-kosten="9 AsP + 3/h">
     <span class="name">
@@ -2160,6 +2744,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Karikatur, Mal tarnen</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">IMPERSONA MASKENBILD</span>
+<span class="artikel-quelle">LC S. 128</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/impersona-maskenbild.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/FF</span><span><b>Kosten</b> 9 AsP plus 3 AsP pro Stunde</span><span><b>Zauberdauer</b> 1 Spielrunde</span><span><b>Wirkungsdauer</b> je nach AsP-Aufwand (A)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Legt eine bewegte Illusion über das Gesicht einer Person, sodass sie einer anderen gleicht. Wirkt nur auf Gesichtszüge und Haupthaar, nicht auf Mimik, Aussprache, Größe oder Körperbau. Bekanntes Gesicht: bis zu 7 Punkte Erschwernis je nach Bekanntheit. Vollkommen neues Gesicht: erste Probe +7 erschwert, dann stufenweise weniger.</p>
+<p>Realitätsdichte: ZfP*/2 +7. Bei Misslingen entsteht eine Karikatur; bei Patzer ein so grässliches Antlitz, dass der Zauberer die Öffentlichkeit meiden sollte.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Karikatur</strong> (ab ZfW 7; nur scharlatan.): Besonderheiten stark übertrieben; sofort als Karikatur erkennbar; 7 AsP, 1 Stunde.</li>
+<li><strong>Mal tarnen</strong> (+3; ab ZfW 7): Illusion über Gliedmaße/Rumpf statt Gesicht; kann Tätowierungen, Luloa-Malerei oder Brandnarben verbergen; wirkt gegen Dämonenmale/Stigmata (zusätzlich erschwert); 7 AsP + 1 AsP/Std.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt einen wirkenden IMPERSONA auf.</li>
+<li>Antimagie: in ILLUSION AUFLÖSEN-Zone nur erschwert; gezielter Einsatz beendet den Zauber.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/CH" data-zfw="7" data-name="Manifesto Element" data-kosten="3 AsP">
     <span class="name">
@@ -2175,6 +2782,28 @@ body { padding-top: 46px; }
         <span class="mods-list">Demanifesto, Wirkungsdauer</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">MANIFESTO ELEMENT</span>
+<span class="artikel-quelle">LC S. 172</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/manifesto-element.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/CH (+Mod.)</span><span><b>Kosten</b> 3 AsP</span><span><b>Zauberdauer</b> 10 Aktionen</span><span><b>Wirkungsdauer</b> flüchtige: 1 Minute; bleibende: ZfP* SR</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erzeugt kleine elementare Manifestationen (Funken, Wassertropfen, Windstoß, Erdklumpen). Flüchtige Effekte halten 1 Minute, bleibende Formen halten ZfP* SR.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Demanifesto</strong> (+3): Löst kleine elementare Manifestationen auf.</li>
+<li><strong>Wirkungsdauer</strong> (+5): Effekt hält bis Sonnenaufgang; 4 AsP Kosten.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Elementare Manifestation entsteht unkontrolliert.</li>
+<li>Antimagie: Standard.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/IN" data-zfw="6" data-name="Odem Arcanum" data-kosten="4 AsP">
     <span class="name">
@@ -2190,6 +2819,36 @@ body { padding-top: 46px; }
         <span class="mods-list">Sichtbereich, Umgebung</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">ODEM ARCANUM</span>
+<span class="artikel-quelle">LC S. 197</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/odem-arcanum.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/IN (+Mod.)</span><span><b>Kosten</b> 4 AsP (Sch: 3 AsP)</span><span><b>Zauberdauer</b> 4 Aktionen</span><span><b>Wirkungsdauer</b> 2 Kampfrunden</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erkennt Zauberei als rötlichen Schimmer um das Ziel. Detailgrad nach ZfP*:</p>
+<ul>
+<li>**0–2 ZfP***: nur Aussage ob Magie vorhanden.</li>
+<li>**3 ZfP***: Intensität (kaum / wenig / viel / sehr viel).</li>
+<li>**7 ZfP***: grobes Bild (Konzentration der Kraft, ob durch LE oder Dämonen verunreinigt).</li>
+<li>**12+ ZfP***: feinstrukturiertes Bild, Fließrichtung erkennbar; Magiekunde-Probe erleichtert.</li>
+</ul>
+<p>Erkennt nicht: Art der Kraft (Repr., Merkmale), göttliches Wirken, Karmaenergie. Zu starke Quellen erscheinen als hellrotes Gleißen oder Teclador-Effekt (Blendung, KL-Minderung).</p>
+<p><strong>Probenmodifikatoren (Tabelle S. 198):</strong> −1 pro gebundenem pAsP; +ZfP* für SCHLEIER/HELLSICHT TRÜBEN; Zeit seit dem Zauber (+4/+6/+8/+10/+12/+14/+16/+18 für SR/Std./Tag/Woche/Monat/Jahr/Jahrzehnt/Jahrhundert); Wesen +5 bis −7 je nach Stärke.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Sichtbereich</strong> (+2): Kegelförmiger Bereich statt Einzelziel.</li>
+<li><strong>Umgebung</strong> (+7): Wie Sichtbereich, Wirkungsdauer ZfP* KR; Kopf kann bewegt werden.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: nicht möglich.</li>
+<li>Antimagie: Zone des HELLSICHT TRÜBEN erschwert; gezielter Einsatz kann ODEM abbrechen.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/CH/FF" data-zfw="7" data-name="Pectetondo Zauberhaar" data-kosten="4 AsP + 2/Spann">
     <span class="name">
@@ -2205,6 +2864,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Farbtopf, Ohne Kamm, Winterpelz und Katzenfell</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">PECTETONDO ZAUBERHAAR</span>
+<span class="artikel-quelle">LC S. 203</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/pectetondo-zauberhaar.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/CH/FF</span><span><b>Kosten</b> 4 AsP (Sch: 3 AsP) + 2 AsP pro Spann Verlängerung</span><span><b>Zauberdauer</b> 6 Aktionen</span><span><b>Wirkungsdauer</b> max. ZfP* Tage</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Verändert Haupthaar und/oder Bart nach Belieben — von einfachem Richten bis zur purpurfarbenen hüftlangen Mähne. Haar wächst während Wirkungsdauer nicht weiter. Verwandlung von „astralaktivem Haar&quot; (Vorteil Zauberhaar / Nachteil Körpergebundene Kraft) um 7 Punkte erschwert.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Farbtopf</strong> (+3; Basiskosten 6 AsP): unnatürliche Farben wie purpurn oder grasgrün.</li>
+<li><strong>Ohne Kamm</strong> (+3; 2 AsP): bereits geformte, aber zerzauste Frisur wieder richten.</li>
+<li><strong>Winterpelz und Katzenfell</strong> (+5; ab ZfW 7; +2 AsP Basiskosten): gesamtes Körperhaar verändern.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: hebt die Verwandlung auf.</li>
+<li>Antimagie: in Zone des VERWANDLUNG BEENDEN nur erschwert; wird damit aufgehoben.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="MU/KL/KO" data-zfw="4" data-name="Psychostabilis" data-kosten="8 AsP + 1/SR">
     <span class="name">
@@ -2220,6 +2902,30 @@ body { padding-top: 46px; }
         <span class="mods-list">Zielobjekt Einzelwesen, Selbstanwendung, Kleine Stabilisierung, Gegenzauber</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">PSYCHOSTABILIS</span>
+<span class="artikel-quelle">LC S. 214</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/psychostabilis.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> MU/KL/KO</span><span><b>Kosten</b> 8 AsP + 1 AsP/SR</span><span><b>Zauberdauer</b> 5 Aktionen</span><span><b>Wirkungsdauer</b> nach AsP-Einsatz (vorher festlegen)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erhöht die MR um ZfP* Punkte. Gegen Zauber mit den Merkmalen Einfluss, Hellsicht, Herrschaft und Verständigung zusätzlich +2 MR je Merkmal.</p>
+<h2>Varianten</h2>
+<ul>
+<li><strong>Zielobjekt Einzelwesen</strong> (+3; ab ZfW 7): auch MR von Tieren (Vertraute, Reittiere) erhöhbar.</li>
+<li><strong>Selbstanwendung</strong> (+3; ab ZfW 7; Sch: Basis-Variante ohne Erschwernis): eigene MR steigern.</li>
+<li><strong>Kleine Stabilisierung</strong> (ab ZfW 10; 7 AsP/Std.): MR +ZfP*/2 für Stunden.</li>
+<li><strong>Gegenzauber</strong> (+MR des Nutzers; ab ZfW 10): auf Opfer eines wirkenden Einfluss/Herrschafts-Zaubers sprechen; reduziert dessen ZfP* um ZfP* des PSYCHOSTABILIS (evtl. bis Wirkungslosigkeit). Nach Ablauf: volle Wirkung setzt wieder ein.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: MR −ZfP* des Verzauberten.</li>
+<li>Antimagie: kann mit EIGENSCHAFT WIEDERHERSTELLEN beendet werden; PROTECTIONIS-gesicherte Zauber ignorieren die erhöhte MR.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/CH/FF" data-zfw="8" data-name="Sapefacta Zauberschwamm" data-kosten="5 AsP">
     <span class="name">
@@ -2235,6 +2941,29 @@ body { padding-top: 46px; }
         <span class="mods-list">Stiefelputzer, Läusekamm</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">SAPEFACTA ZAUBERSCHWAMM</span>
+<span class="artikel-quelle">LC S. 223</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sapefacta-zauberschwamm.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/CH/FF</span><span><b>Kosten</b> 5 AsP (Teilreinigung: 2 AsP)</span><span><b>Zauberdauer</b> 50 Aktionen</span><span><b>Wirkungsdauer</b> augenblicklich</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Reinigt Zauberer und Kleidung von jeder Verschmutzung nichtmagischen Ursprungs (Straßenstaub, getrocknetes Blut). Ausgenommen: dauerhafte chemische Veränderungen (Färbung, Tätowierungen). Reinigung von ACCURATUM-Kleidung: +3 Probe. Qualität der Reinigung entspricht ZfP* (10 = fürstlich sauber).</p>
+<h2>Varianten</h2>
+<ul>
+<li>Stiefelputzer (+3): Nur Teile der Kleidung reinigen; 2 AsP.</li>
+<li>Läusekamm (+7): Wirkt gezielt gegen Kleintiere in Kleidung/Haar; befreit gänzlich von Schädlingen.</li>
+<li>Modifikationen: Zauberdauer, Reichweite.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Verzauberter Gegenstand/Person zieht allen Schmutz der Umgebung an.</li>
+<li>Antimagie: In Zone des BEWEGUNGEN STÖREN oder passenden ELEMENTARBANNS nur erschwert.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="KL/IN/CH" data-zfw="5" data-name="Sensibar Empathicus" data-kosten="3 AsP/10 A">
     <span class="name">
@@ -2250,6 +2979,30 @@ body { padding-top: 46px; }
         <span class="mods-list">Massensinn, Tierempathie, Artefaktempathie</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">SENSIBAR EMPATHICUS</span>
+<span class="artikel-quelle">LC S. 239</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/sensibar-empathicus.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> KL/IN/CH (+MR)</span><span><b>Kosten</b> 3 AsP pro 10 Aktionen (Sch: 2 AsP pro 10 Aktionen)</span><span><b>Zauberdauer</b> 10 Aktionen</span><span><b>Wirkungsdauer</b> nach AsP-Aufwand (A)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<p>Erkennt Gefühle und Stimmungen des Gegenübers: Grundstimmung (leicht), Gefühle gegenüber dem Zauberer (etwas schwerer), unterschwellige Gefühle (schwerer), Gefühle gegenüber anderen Personen/Konzepten (am schwersten). Kein echtes Gedankenlesen; nicht gegen nicht-fühlende Wesen (Untote, Dämonen). Versucht Beobachteter seine Gefühle zu unterdrücken: Selbstbeherrschungs-Probe + ZfP*.</p>
+<h2>Varianten</h2>
+<ul>
+<li>Massensinn (+3 + höchste MR): Vorherrschende Stimmung einer Gruppe (max. ZfW×5 Personen) bestimmen.</li>
+<li>Tierempathie (+3; nur Elf/Geo/Hex): Gefühlsleben von Tieren erfassen (keine Verständigung; dafür TIERGEDANKEN).</li>
+<li>Artefaktempathie (+5; nicht Elf/Dru/Sch): Stimmungslage einer Artefaktseele bestimmen.</li>
+<li>Modifikationen: Zauberdauer, Erzwingen, Kosten, Reichweite, Wirkungsdauer.</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Gefühle des Zaubernden werden dem Gegenüber offenbar (Probe gegen MR bei unwilligem Gegenüber).</li>
+<li>Antimagie: In Zone des HELLSICHT TRÜBEN erschwert; kann gezielt beendet werden.</li>
+</ul>
+</div>
+      </div>
+    </details>
   </div>
   <div class="spell" data-probe="IN/CH/KO" data-zfw="3" data-name="Unitatio Geistesbund" data-kosten="1 AsP/Person">
     <span class="name">
@@ -2265,6 +3018,37 @@ body { padding-top: 46px; }
         <span class="mods-list">Wechselnder Bundführer</span>
       </details>
     </span>
+    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">UNITATIO GEISTESBUND</span>
+<span class="artikel-quelle">LC S. 264</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/zauber/unitatio-geistesbund.md">↗ Obsidian</a>
+        </div>
+<div class="artikel-meta"><span><b>Probe</b> IN/CH/KO</span><span><b>Kosten</b> 1 AsP pro Beteiligtem</span><span><b>Zauberdauer</b> 30 Aktionen</span><span><b>Wirkungsdauer</b> solange sich alle Beteiligten berühren (mehrere Zauber möglich)</span></div>        <div class="artikel-body"><h2>Wirkung</h2>
+<ul>
+<li>Vereinigt die Zauberkraft aller Beteiligten unter einem Bundführer; gelingt nur wenn allen die Probe gelingt</li>
+<li>Bundführer kann mit seinen ZfP* fehlende Punkte anderer im Verhältnis 1:1 ausgleichen</li>
+<li>Für jeden Beteiligten mit bestandener Probe: +1 ZfP* für den Bundführer; misslungene Proben: kein neg. Effekt (außer Bundführer selbst misslingt → gesamter Zauber gescheitert)</li>
+<li>AsP-Kosten verteilen sich gleichmäßig auf alle; Überschuss zu Lasten des Bundführers</li>
+<li>SF Zauber vereinigen: Beteiligter bringt halben ZfW/halbe ZfP* ein (max. 2× ZfW des Bundführers gesamt)</li>
+<li>Unterschiedliche Repräsentationen: +3 Erschwernis je fremdartiger Repräsentation (für alle); Bundführer +1/fremde Repräsentation; ohne SF nur 1 Punkt Beitrag + +3 Erschwernis</li>
+<li>Verbotene Pforten im UNITATIO einsetzbar (reduziert eigene ZfP*)</li>
+</ul>
+<h2>Varianten</h2>
+<ul>
+<li>Wechselnder Bundführer (+2): Verschiedene Zauber von verschiedenen Bundführern; muss bei Schließen des Bundes festgelegt werden</li>
+<li>Modifikationen: Zauberdauer, Reichweite</li>
+</ul>
+<h2>Reversalis / Antimagie</h2>
+<ul>
+<li>Reversalis: Nicht bekannt.</li>
+<li>Antimagie: VERSTÄNDIGUNG STÖREN auf ein Mitglied nimmt es aus dem Kreis; auf den Bundführer löst den UNITATIO auf. In entsprechender Zone erschwert.</li>
+</ul>
+</div>
+      </div>
+    </details>
+  </div>
   </div>
 
   <div class="legend-row">
@@ -4242,28 +5026,6 @@ Es fehlen Tabea und Peter
   </div>
 </div>
 
-<script>
-/* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
-(function(){
-  var spells = document.querySelectorAll('.spell:not(:first-child)');
-  var container = spells[0] && spells[0].parentNode;
-  var header = document.querySelector('.spell:first-child');
-  if (!container || !header) return;
-  var asc = false;
-  header.style.cursor = 'pointer';
-  header.title = 'Nach ZfW sortieren';
-  header.addEventListener('click', function(){
-    asc = !asc;
-    var arr = Array.from(spells);
-    arr.sort(function(a, b){
-      var za = parseInt(a.querySelector('.zfw-num') && a.querySelector('.zfw-num').textContent) || 0;
-      var zb = parseInt(b.querySelector('.zfw-num') && b.querySelector('.zfw-num').textContent) || 0;
-      return asc ? za - zb : zb - za;
-    });
-    arr.forEach(function(el){ container.appendChild(el); });
-  });
-})();
-</script>
 <div id="dice-panel" class="dice-panel hidden">
   <div class="dice-panel-header">
     <span id="dp-title">🎲 Probe</span>
@@ -6351,6 +7113,60 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     });
   });
 }());
+
+</script>
+<script>/* zauber-sort.js */
+/* Sortierung Zauberliste: Toolbar-Button [data-spell-sort] und Klick auf die Kopfzeile
+   durchlaufen Standard -> ZfW absteigend -> ZfW aufsteigend -> Standard. */
+(function () {
+  'use strict';
+
+  var list = document.querySelector('[data-spell-list]');
+  var btn = document.querySelector('[data-spell-sort]');
+  if (!list || !btn) return;
+
+  var rows = Array.prototype.filter.call(list.children, function (el) {
+    return el.classList.contains('spell');
+  });
+  var original = rows.slice();
+  var head = document.querySelector('.spell-head');
+
+  var STATES = ['none', 'desc', 'asc'];
+  var LABEL = { none: 'Standard', desc: 'ZfW ↓', asc: 'ZfW ↑' };
+  var ARIA_STATE = { none: 'Standard', desc: 'ZfW absteigend', asc: 'ZfW aufsteigend' };
+  var ARIA_NEXT = { none: 'absteigend', desc: 'aufsteigend', asc: 'Standardreihenfolge' };
+  var state = 'none';
+
+  function zfw(row) {
+    var cell = row.querySelector('.zfw-num');
+    return (cell && parseInt(cell.textContent, 10)) || 0;
+  }
+
+  function sorted() {
+    if (state === 'none') return original;
+    var dir = state === 'asc' ? 1 : -1;
+    return original
+      .map(function (row, i) { return { row: row, i: i, z: zfw(row) }; })
+      .sort(function (a, b) { return (a.z - b.z) * dir || a.i - b.i; })
+      .map(function (x) { return x.row; });
+  }
+
+  function render() {
+    sorted().forEach(function (row) { list.appendChild(row); });
+    btn.textContent = 'Sortierung: ' + LABEL[state];
+    btn.setAttribute('data-sort-state', state);
+    btn.setAttribute('aria-label', 'Zauber sortieren, aktuell: ' + ARIA_STATE[state] +
+      '. Klicken für ' + ARIA_NEXT[state] + '.');
+  }
+
+  function cycle() {
+    state = STATES[(STATES.indexOf(state) + 1) % STATES.length];
+    render();
+  }
+
+  btn.addEventListener('click', cycle);
+  if (head) head.addEventListener('click', cycle);
+})();
 
 </script>
 <script>/* journal.js */
