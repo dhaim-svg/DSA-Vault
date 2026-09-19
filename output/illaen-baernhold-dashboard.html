@@ -401,6 +401,18 @@ body::before{
 .spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
 .spell .wirkung-cell { padding-top:2px; }
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
+/* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
+   (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
+   umbrechende Zeile, Wirkung volle Breite. */
+@media screen and (max-width:1070px){
+  .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
+  .spell.spell-head{ display:none; }
+  .spell .name, .spell .wirkung-cell{ flex:1 1 100%; min-width:0; }
+  .spell .zfw-num{ min-width:0; }
+  .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }
+  .spell .zd::before{ content:"ZD "; color:var(--ink-mute); }
+  .spell .zd:empty, .spell .kosten:empty, .spell .wirkung-cell:empty{ display:none; }
+}
 .mods-details { margin-top:5px; }
 .mods-details summary.mods-toggle {
   list-style:none; font-family:var(--mono); font-size:9px;
@@ -467,6 +479,18 @@ body::before{
 .mod-row.header .mod-probe { text-align:center; }
 .mod-footer-link { display:block; margin-top:8px; font-family:var(--mono); font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-mute); text-align:right; text-decoration:none; }
 .mod-footer-link:hover { color:var(--accent-gold); }
+/* Schmalansicht: Spalten (130+175+80 px fest) würden die Seite aufweiten -> Name als eigene Zeile, Werte darunter */
+@media screen and (max-width:600px){
+  .mod-table { display:block; }
+  .mod-row { display:flex; flex-wrap:wrap; gap:0 14px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+  .mod-row:last-child { border-bottom:0; }
+  .mod-row > span, .mod-row:last-child > span { padding:0; border-bottom:0; text-align:left; }
+  .mod-row.header { display:none; }
+  .mod-name { flex:1 1 100%; min-width:0; }
+  .mod-zfp::before { content:"ZfP* "; color:var(--ink-mute); }
+  .mod-probe::before { content:"Probe "; }
+  .mod-zd::before { content:"ZD+ "; }
+}
 
 /* ---- Talent List ---- */
 .talent-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px 28px; }
@@ -558,6 +582,8 @@ body::before{
   border:1px solid rgba(106,90,205,.25);
 }
 .campaign .c-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:8px; }
+/* Schmalansicht: langer Status-Text neben dem Titel weitete die Karte (und damit die Seite) auf */
+@media screen and (max-width:480px){ .campaign .c-head{ flex-wrap:wrap; gap:4px 12px; } }
 .campaign h3{ font-family:var(--display); font-size:22px; margin:0; letter-spacing:.04em; color:var(--ink); }
 .status{
   display:inline-flex; align-items:center; gap:6px;
@@ -662,6 +688,13 @@ body::before{
   padding:4px 8px; border-radius:4px;
   border:1px solid #555; background:#2a2a2a;
   color:#eee; font-size:0.85rem; width:220px;
+}
+/* Schmalansicht: nowrap-Leiste (~670 px) ragte links aus dem Viewport -> umbrechen, volle Breite */
+@media screen and (max-width:480px){
+  #footer-bar{ left:8px; right:8px; bottom:8px; flex-wrap:wrap; justify-content:flex-end; }
+  #footer-bar .print-btn{ padding:8px 10px; font-size:11px; letter-spacing:.12em; }
+  #save-group{ flex:1 1 100%; }
+  .commit-input{ flex:1 1 0; min-width:0; width:auto; }
 }
 
 /* ---- Section Header ---- */
@@ -1108,6 +1141,10 @@ body { padding-top: 46px; }
 .sg-cart-status.over { color: var(--accent-blood); }
 .sg-cart-commit { margin-left: auto; padding: 6px 14px; font-size: 13px; }
 .sg-cart-commit:disabled { opacity: .4; cursor: default; }
+/* Schmalansicht: Tabelle scrollt im eigenen Container statt die Seite aufzuweiten */
+@media screen and (max-width: 600px) {
+  .steiger-table { display: block; overflow-x: auto; }
+}
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
 .inv-coin-label { font-family: var(--subhead); color: var(--ink-mute); font-size: 13px; }
@@ -1118,9 +1155,13 @@ body { padding-top: 46px; }
 .inv-coin-total { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); border-top: 1px solid var(--rule-soft); padding-top: 8px; margin-top: 2px; text-align: right; }
 .inv-weight-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); margin-top: 8px; letter-spacing: .05em; }
 .inv-add-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
-.inv-add-input { flex: 1; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
+.inv-add-input { flex: 1; min-width: 0; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
 .inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
 .inv-add-btn:hover { background: var(--bg-elev); }
+@media screen and (max-width: 480px) {
+  .inv-add-form { flex-wrap: wrap; }
+  .inv-add-input:first-child { flex-basis: 100%; }
+}
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
 /* ---- Journal tab ---- */
@@ -1186,9 +1227,31 @@ body { padding-top: 46px; }
 .chronik-meta { margin-top: var(--gap); }
 .chronik-meta-text { white-space: pre-wrap; font-family: var(--mono); font-size: 12px; color: var(--ink-mute); overflow-wrap: anywhere; }
 
+/* ---- Register view ---- */
+.register [hidden] { display: none !important; }  /* the hidden attribute must beat any display set below */
+.register-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 var(--gap); }
+.register-suche { flex: 1 1 14rem; min-width: 0; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 3px; background: var(--bg-inset); color: var(--ink); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; }
+.register-suche::placeholder { color: var(--ink-dim); }
+.register-suche:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: -1px; }
+.register-zaehler { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-mute); }
+.register-gruppe { margin-bottom: var(--gap); }
+.register-count { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .12em; color: var(--ink-mute); }
+.register-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: 10px; }
+.register-eintrag { min-width: 0; padding: 10px 12px; border: 1px solid var(--rule); border-radius: var(--r-card); background: rgba(11,17,22,.35); overflow-wrap: anywhere; }
+.register-name { margin: 0 0 2px; font-family: var(--subhead); font-size: 16px; font-weight: 600; color: var(--ink); }
+.register-unsicher { margin-left: 4px; font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--accent-gold); cursor: help; }
+.register-qualifier { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-mute); }
+.register-sessions { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 6px; }
+.register-chip { padding: 1px 6px; border: 1px solid var(--rule-soft); border-radius: 3px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--accent-cold); }
+.register-erwaehnungen { margin: 0; padding: 0; list-style: none; font-family: var(--body); font-size: 14px; color: var(--ink); }
+.register-erwaehnungen li { margin: 0 0 3px; }
+.register-nr { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--accent-cold); }
+.register-leer,
+.register-empty { margin: 0; padding: 2rem 0; text-align: center; color: var(--ink-dim); }
+
 @media (max-width: 480px) {
   .chronik-switch { display: flex; }
-  .chronik-switch-btn { flex: 1; padding: 8px 10px; }
+  .chronik-switch-btn { flex: 1 1 auto; min-width: 0; padding: 8px 6px; }
   .chronik-sum-datum { font-size: 15px; }
 }
 
@@ -1200,6 +1263,12 @@ body { padding-top: 46px; }
   .chronik-sum-datum, .chronik-sum-meta, .chronik-szene, .chronik-text, .chronik-bullet, .chronik-meta-text { color: var(--paper-ink); }
   .chronik-igtag-datum { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
   .chronik-bild img { border-color: var(--paper-rule); max-height: 60mm; width: auto; }
+  /* Register: only when it is the active view (the rule above forces roh/kompiliert visible), no search UI */
+  .chronik-view[data-view="register"]:not(.chronik-view--active) { display: none !important; }
+  .register-tools { display: none !important; }
+  .register-eintrag { break-inside: avoid; background: transparent; border-color: var(--paper-rule); }
+  .register-name, .register-erwaehnungen, .register-qualifier, .register-count, .register-nr, .register-unsicher { color: var(--paper-ink); }
+  .register-chip { color: var(--paper-ink); border-color: var(--paper-rule); }
   .chronik-abend { break-inside: auto; }
   .chronik-igtag-datum, .chronik-szene { break-inside: avoid; }
   .chronik-igtag-datum, .chronik-szene { break-after: avoid; }
@@ -1826,7 +1895,7 @@ body { padding-top: 46px; }
 <div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
 <section class="card">
 
-  <div class="spell" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
+  <div class="spell spell-head" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
     <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
@@ -2876,6 +2945,7 @@ body { padding-top: 46px; }
 <div class="chronik-switch" role="tablist" aria-label="Chronik-Ansicht">
   <button type="button" class="chronik-switch-btn chronik-switch-btn--active" data-view="roh" role="tab" aria-selected="true" aria-controls="chronik-view-roh">Roh <span class="chronik-switch-count">4</span></button>
   <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">4</span></button>
+  <button type="button" class="chronik-switch-btn" data-view="register" role="tab" aria-selected="false" aria-controls="chronik-view-register">Register <span class="chronik-switch-count">55</span></button>
 </div>
 
 <div class="chronik-view chronik-view--active" id="chronik-view-roh" data-view="roh" role="tabpanel">
@@ -3046,10 +3116,10 @@ body { padding-top: 46px; }
   <details class="card chronik-abend">
     <summary>
       <span class="chronik-sum-datum">04.06.2026</span>
-      <span class="chronik-sum-meta">3 IG-Tage &middot; 17. Phex &ndash; 18. Phex</span>
+      <span class="chronik-sum-meta">3 IG-Tage &middot; 13. Phex (Start) &ndash; 18. Phex</span>
     </summary>
     <div class="chronik-igtag">
-      <p class="chronik-text">Datum: 13. Phex -&gt; Start</p>
+      <h4 class="chronik-igtag-datum">13. Phex (Start)</h4>
       <div class="chronik-bullet" style="--tiefe: 0">3 Tage in Punin, Vormittag Sightseeing, Nachmittag im Hesinde Tempel</div>
       <div class="chronik-bullet" style="--tiefe: 0">Am Abend des 3. Tages als wir zurück kamen haben wir unsere Zimmer verwüstet vorgefunden</div>
       <div class="chronik-bullet" style="--tiefe: 1">Anscheinend wurden sie durchsucht</div>
@@ -3565,6 +3635,530 @@ Es fehlen Tabea und Peter
     </details>
 
   </section>
+</div>
+
+<div class="chronik-view" id="chronik-view-register" data-view="register" role="tabpanel">
+<div class="register">
+  <div class="register-tools">
+    <input type="search" class="register-suche" placeholder="NSC oder Ort suchen &hellip;" aria-label="Register durchsuchen" autocomplete="off">
+    <span class="register-zaehler" aria-live="polite"></span>
+  </div>
+  <section class="card register-gruppe" data-gruppe="nsc">
+    <h3 class="card-title">NSCs <span class="register-count">24</span></h3>
+    <div class="register-liste">
+      <article class="register-eintrag" data-such="baronins tochter wird von der gruppe geholt und uber die lage aufgeklart; spricht mit muchacho (ob identisch mit gerone von berg, der tochter des reichsmarschalls, nennt die chronik nicht)">
+        <h4 class="register-name">Baronins Tochter <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> wird von der Gruppe geholt und über die Lage aufgeklärt; spricht mit Muchacho (ob identisch mit Gerone von Berg, der Tochter des Reichsmarschalls, nennt die Chronik nicht)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="brandstifter nachahmer gibt sich als elfeneck aus (auf einem schimmel, kleidung farblich nicht zu almada passend); haut ab, wird von thomas zuruckgebracht und abgegeben; name in der chronik nicht genannt">
+        <h4 class="register-name">Brandstifter</h4>
+        <p class="register-qualifier">Nachahmer</p>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> gibt sich als Elfeneck aus (auf einem Schimmel, Kleidung farblich nicht zu Almada passend); haut ab, wird von Thomas zurückgebracht und abgegeben; Name in der Chronik nicht genannt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="brigaja kind, 11 jahre, vermutlich novadisch; bietet an, das schlachtfeld zu zeigen; touristenfuhrung in der nacht">
+        <h4 class="register-name">Brigaja</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Kind, 11 Jahre, vermutlich novadisch; bietet an, das Schlachtfeld zu zeigen; Touristenführung in der Nacht</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="elfeneck der almadanische held (sitzt normalerweise auf einem fuchs); der brandstifter gibt sich als er aus">
+        <h4 class="register-name">Elfeneck</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> der Almadanische Held (sitzt normalerweise auf einem Fuchs); der Brandstifter gibt sich als er aus</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="ferra gabronde obristin der garnison auf der anderen seite der brigella (baronie sudpforte)">
+        <h4 class="register-name">Ferra Gabronde</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Obristin der Garnison auf der anderen Seite der Brigella (Baronie Südpforte)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="gefangener novadi name in der chronik nicht genannt; „sie sind aus amhallah“">
+        <h4 class="register-name">Gefangener</h4>
+        <p class="register-qualifier">Novadi</p>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> Name in der Chronik nicht genannt; „Sie sind aus Amhallah“</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="gerone von berg tochter des reichsmarschalls, 24 jahre; begrusst die gruppe in brig-lo; ahnin: leonore von berg">
+        <h4 class="register-name">Gerone von Berg</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Tochter des Reichsmarschalls, 24 Jahre; begrüßt die Gruppe in Brig-Lo; Ahnin: Leonore von Berg</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="junge erwachsene / verschworer in einer hutte im wald gefunden und zuruckgefuhrt">
+        <h4 class="register-name">Junge Erwachsene / Verschwörer</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> in einer Hütte im Wald gefunden und zurückgeführt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="kanzai hat nachtwachendienst am schlachtfeld">
+        <h4 class="register-name">Kanzai</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> hat Nachtwachendienst am Schlachtfeld</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="leonore von berg ahnin von gerone; grabanlage (mausoleum: marmor, grosses bronzenes tor); „das einzige opfer der damonen, bevor die gotter eingegriffen haben“ (bezug des „sie“ in der chronik nicht eindeutig (?))">
+        <h4 class="register-name">Leonore von Berg</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Ahnin von Gerone; Grabanlage (Mausoleum: Marmor, großes bronzenes Tor); „das einzige Opfer der Dämonen, bevor die Götter eingegriffen haben“ (Bezug des „Sie“ in der Chronik nicht eindeutig (?))</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="mag. mantagor verbindung (soz 10), saurologe in punin">
+        <h4 class="register-name">Mag. Mantagor</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Verbindung (SOZ 10), Saurologe in Punin</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="magister punin akademie, ubersetzung name in der chronik nicht genannt; bei seiner wohnung wurde eingebrochen, er konnte fliehen">
+        <h4 class="register-name">Magister</h4>
+        <p class="register-qualifier">Punin Akademie, Übersetzung</p>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Name in der Chronik nicht genannt; bei seiner Wohnung wurde eingebrochen, er konnte fliehen</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="meisterin der papiermuhle name in der chronik nicht genannt; wurde zum papyrus befragt">
+        <h4 class="register-name">Meisterin der Papiermühle</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Name in der Chronik nicht genannt; wurde zum Papyrus befragt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="mittelsmann besitzer des teehauses der koramsbestie (?); name in der chronik nicht genannt">
+        <h4 class="register-name">Mittelsmann</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> Besitzer des Teehauses der Koramsbestie (?); Name in der Chronik nicht genannt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="muchacho erzahlt, dass die novadis ein versteck im wald haben; echter name: alvadez, sohn des wirtshauses">
+        <h4 class="register-name">Muchacho</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> erzählt, dass die Novadis ein Versteck im Wald haben; echter Name: Alvadez, Sohn des Wirtshauses</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="nasira durch sie wurde erkannt, dass es ein adlerschwinge (?) war; konnte zuruck verwandeln (rolle in der chronik nicht genannt)">
+        <h4 class="register-name">Nasira <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> durch sie wurde erkannt, dass es ein Adlerschwinge (?) war; konnte zurück verwandeln (Rolle in der Chronik nicht genannt)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="novadis laut muchacho ein versteck im wald; liefen in der nacht am schlachtfeld umher; ca. 10-20">
+        <h4 class="register-name">Novadis</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> laut Muchacho ein Versteck im Wald; liefen in der Nacht am Schlachtfeld umher; ca. 10-20</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="parinor aldebruch „der werte“; bekam bei der nachfrage der gruppe bei den draconitern eine information bzw. prophezeiung zu pydracors (?) wiederkehr (3. weltenbrand)">
+        <h4 class="register-name">Parinor Aldebruch <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> „der werte“; bekam bei der Nachfrage der Gruppe bei den Draconitern eine Information bzw. Prophezeiung zu Pydracors (?) Wiederkehr (3. Weltenbrand)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="reichskanzler schickt einen boten: die gruppe soll zu ihm kommen, wenn sie die informationen hat (cumrat (?), kaiserliche pfalz)">
+        <h4 class="register-name">Reichskanzler</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> schickt einen Boten: die Gruppe soll zu ihm kommen, wenn sie die Informationen hat (Cumrat (?), kaiserliche Pfalz)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="reichsmarschall auch „reichserzmarshall“ (?) anrede „eure excellenz“; name in der chronik nicht genannt; besprechung mit der konigin im heraldiksaal">
+        <h4 class="register-name">Reichsmarschall <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <p class="register-qualifier">auch „Reichserzmarshall“ (?)</p>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Anrede „Eure Excellenz“; Name in der Chronik nicht genannt; Besprechung mit der Königin im Heraldiksaal</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="reto mann von wirtin; wurde novadis (?) vor 4 jahren verschleppt">
+        <h4 class="register-name">Reto</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Mann von Wirtin; wurde Novadis (?) vor 4 Jahren verschleppt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="richesa bolongaro draconiterin, 2 verschiedene augenfarben; kam erst kurz vor der gruppe zum draconiter orden und ist jetzt verschwunden">
+        <h4 class="register-name">Richesa Bolongaro</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Draconiterin, 2 verschiedene Augenfarben; kam erst kurz vor der Gruppe zum Draconiter Orden und ist jetzt verschwunden</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="rohaya konigin; anrede „eure konigliche hoheit“ / „eure allerdurchlauchteste hoheit“; praios-gottesdienst gemeinsam mit der gruppe">
+        <h4 class="register-name">Rohaya</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Königin; Anrede „Eure königliche Hoheit“ / „Eure allerdurchlauchteste Hoheit“; Praios-Gottesdienst gemeinsam mit der Gruppe</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="rosskopp rondrageweihter; ein kleiner junge bei der unterkunft richtet aus, er soll zur wachstube kommen (ob nsc oder gruppenmitglied, nennt die chronik nicht)">
+        <h4 class="register-name">Rosskopp <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Rondrageweihter; ein kleiner Junge bei der Unterkunft richtet aus, er soll zur Wachstube kommen (ob NSC oder Gruppenmitglied, nennt die Chronik nicht)</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+  <section class="card register-gruppe" data-gruppe="ort">
+    <h3 class="card-title">Orte <span class="register-count">31</span></h3>
+    <div class="register-liste">
+      <article class="register-eintrag" data-such="12-eckiger raum statuen und ein sarkophag in der mitte; kampf mit 4 novadis; am hinteren ende ein 2x2m schrager schacht">
+        <h4 class="register-name">12-eckiger Raum</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> Statuen und ein Sarkophag in der Mitte; Kampf mit 4 Novadis; am hinteren Ende ein 2x2m schräger Schacht</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="amhallah herkunft der novadis laut gefangenem; ziel der weiterreise">
+        <h4 class="register-name">Amhallah</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> Herkunft der Novadis laut Gefangenem; Ziel der Weiterreise</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="bactrinn ubernachtung am 21. phex">
+        <h4 class="register-name">Bactrinn</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Übernachtung am 21. Phex</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="brigella fluss; auf der anderen seite liegt die garnison">
+        <h4 class="register-name">Brigella</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Fluss; auf der anderen Seite liegt die Garnison</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="briglo austragungsort der 2. damonenkriege; 4 gotter hatten sich manifestiert">
+        <h4 class="register-name">Briglo</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Austragungsort der 2. Dämonenkriege; 4 Götter hatten sich manifestiert</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="cumrat kaiserliche pfalz; dorthin soll die gruppe zum reichskanzler kommen">
+        <h4 class="register-name">Cumrat <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> kaiserliche Pfalz; dorthin soll die Gruppe zum Reichskanzler kommen</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="garnison auf der anderen seite der brigella; obristin ferra gabronde">
+        <h4 class="register-name">Garnison</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> auf der anderen Seite der Brigella; Obristin Ferra Gabronde</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="gruft beim hain; ein licht leuchtet dort auf">
+        <h4 class="register-name">Gruft</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> beim Hain; ein Licht leuchtet dort auf</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="heraldiksaal treffen mit der konigin und dem reichserzmarshall (?)">
+        <h4 class="register-name">Heraldiksaal</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> Treffen mit der Königin und dem Reichserzmarshall (?)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="hesindetempel wissensaufbau (punin, yaquir, briglo, khom, wuste)">
+        <h4 class="register-name">Hesindetempel</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Wissensaufbau (Punin, Yaquir, Briglo, Khom, Wüste)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="kaverne fundort der leiche ahnlich wie in then (?); ca. 80m durchmesser; sockel abgegriffen, aber nicht abgeschliffen; elementarzeichen, am meisten humus „wie die anderen“; davor liegt eine leiche mit dolch in der brust">
+        <h4 class="register-name">Kaverne</h4>
+        <p class="register-qualifier">Fundort der Leiche</p>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> ähnlich wie in Then (?); ca. 80m Durchmesser; Sockel abgegriffen, aber nicht abgeschliffen; Elementarzeichen, am meisten Humus</li>
+          <li><span class="register-nr">S4</span> „wie die anderen“; davor liegt eine Leiche mit Dolch in der Brust</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="khom kartenmaterial sudlich des yaquir">
+        <h4 class="register-name">Khom</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Kartenmaterial südlich des Yaquir</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="lichtung im wald die spur verliert sich hier; klauenabdrucke">
+        <h4 class="register-name">Lichtung im Wald</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> die Spur verliert sich hier; Klauenabdrücke</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="mausoleum am fuss des hugels, nicht kaputt; grabanlage von leonore von berg; „frische“ fackelspuren">
+        <h4 class="register-name">Mausoleum</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> am Fuß des Hügels, nicht kaputt; Grabanlage von Leonore von Berg; „frische“ Fackelspuren</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="mhanadi delta herkunft des papyrus (ca. 3000 jahre alt)">
+        <h4 class="register-name">Mhanadi Delta</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Herkunft des Papyrus (ca. 3000 Jahre alt)</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="novadi lager zunachst „novadi dorf“ (?) ca. 2h entfernt in einem wald; ca. 20 personen, 1 ca. 60m2 zelt, keine kisten und pferde">
+        <h4 class="register-name">Novadi Lager <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <p class="register-qualifier">zunächst „Novadi Dorf“ (?)</p>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> ca. 2h entfernt in einem Wald; ca. 20 Personen, 1 ca. 60m² Zelt, keine Kisten und Pferde</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="omlad die zuruckeroberte stadt; ubernachtung am 20. phex; beim anlegen werden ~3 kisten ausgeladen">
+        <h4 class="register-name">Omlad</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> die zurückeroberte Stadt; Übernachtung am 20. Phex; beim Anlegen werden ~3 Kisten ausgeladen</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="papiermuhle meisterin zum papyrus befragt">
+        <h4 class="register-name">Papiermühle</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Meisterin zum Papyrus befragt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="punin 3 tage aufenthalt: vormittag sightseeing, nachmittag hesindetempel">
+        <h4 class="register-name">Punin</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> 3 Tage Aufenthalt: Vormittag Sightseeing, Nachmittag Hesindetempel</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="punin akademie aufruhr am 15. phex (leichenfund); bucherdurchsicht und ubersetzung">
+        <h4 class="register-name">Punin Akademie</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Aufruhr am 15. Phex (Leichenfund); Bücherdurchsicht und Übersetzung</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="rashtullatempel steht bei der ruckkehr am 23. phex in flammen">
+        <h4 class="register-name">Rashtullatempel</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> steht bei der Rückkehr am 23. Phex in Flammen</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="schacht 2x2m, schrag in die erde, unnaturlich, wie hineingeschnitten">
+        <h4 class="register-name">Schacht</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> 2x2m, schräg in die Erde, unnatürlich, wie hineingeschnitten</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="schlachtfeld im norden von brig-lo; hier kommen am morgen und dann am tag (?) die geister; graue felder, wo alles tot ist">
+        <h4 class="register-name">Schlachtfeld</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> im Norden von Brig-Lo; hier kommen am Morgen und dann am Tag (?) die Geister; graue Felder, wo alles tot ist</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="sehenswertes in punin schweigeplatz, kaffeehaus, rahjatempel, weinviertel, jarmarktsviertel, zhaori (?), theaterbesuch">
+        <h4 class="register-name">Sehenswertes in Punin</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Schweigeplatz, Kaffeehaus, Rahjatempel, Weinviertel, Jarmarktsviertel, Zhaori (?), Theaterbesuch</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="sudpforte baronie, in der die garnison liegt">
+        <h4 class="register-name">Südpforte</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Baronie, in der die Garnison liegt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="teehaus der koramsbestie besitzer ist der mittelsmann">
+        <h4 class="register-name">Teehaus der Koramsbestie <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S4</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S4</span> Besitzer ist der Mittelsmann</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="tempel der 4 in sichtweite am hugel; lob der 4 gotter, die die schlacht gerettet haben (praios, rondra, efferd, ingerimm); nach 400 jahren von einer praios-geweihten geschliffen">
+        <h4 class="register-name">Tempel der 4</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> in Sichtweite am Hügel; Lob der 4 Götter, die die Schlacht gerettet haben (Praios, Rondra, Efferd, Ingerimm); nach 400 Jahren von einer Praios-Geweihten geschliffen</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="tsa-schrein und tsa-hain novadis wurden zuletzt in der nahe gesehen (hain ca. 150m); der schrein wurde von 2 kollegen (?) umgeschmissen und wieder aufgestellt">
+        <h4 class="register-name">Tsa-Schrein und Tsa-Hain</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> Novadis wurden zuletzt in der Nähe gesehen (Hain ca. 150m); der Schrein wurde von 2 Kollegen (?) umgeschmissen und wieder aufgestellt</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="tumpel von ihm trinkt keiner">
+        <h4 class="register-name">Tümpel</h4>
+        <div class="register-sessions">
+          <span class="register-chip">S3</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S3</span> von ihm trinkt keiner</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="winberger kurz davor standen weinberge und felder am nordlichen flussufer in brand">
+        <h4 class="register-name">Winberger <span class="register-unsicher" title="unsichere Lesart">(?)</span></h4>
+        <div class="register-sessions">
+          <span class="register-chip">S2</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S2</span> kurz davor standen Weinberge und Felder am nördlichen Flussufer in Brand</li>
+        </ul>
+      </article>
+      <article class="register-eintrag" data-such="yaquir fluss dorfer und stadte rund um den yaquir bis briglo; kartenmaterial">
+        <h4 class="register-name">Yaquir</h4>
+        <p class="register-qualifier">Fluss</p>
+        <div class="register-sessions">
+          <span class="register-chip">S1</span>
+        </div>
+        <ul class="register-erwaehnungen">
+          <li><span class="register-nr">S1</span> Dörfer und Städte rund um den Yaquir bis Briglo; Kartenmaterial</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+  <p class="register-leer" hidden>Keine Treffer.</p>
+</div>
 </div>
 
 </div><!-- end tab-chronik -->
@@ -5837,13 +6431,13 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
 </script>
 <script>/* chronik.js */
-/* chronik.js — Roh/Kompiliert view switcher for the Chronik tab */
+/* chronik.js — Roh/Kompiliert/Register view switcher for the Chronik tab */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'dsa-chronik-view';
   var DEFAULT_VIEW = 'roh';
-  var VIEWS = ['roh', 'kompiliert'];
+  var VIEWS = ['roh', 'kompiliert', 'register'];
 
   function switchView(view) {
     document.querySelectorAll('.chronik-view').forEach(function (el) {
@@ -5881,6 +6475,60 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       delete d.dataset.wasOpen;
     });
   });
+}());
+
+</script>
+<script>/* register.js */
+/* register.js — client-side search for the Register view of the Chronik tab (no backend: works under file://) */
+(function () {
+  'use strict';
+
+  // Must fold exactly like fold() in parsers/register.py (casefold + NFKD, combining marks dropped),
+  // otherwise "müller" would not be found in the pre-folded data-such attribute.
+  function fold(s) {
+    return String(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
+  }
+
+  function init() {
+    var input = document.querySelector('.register-suche');
+    if (!input) { return; }  // empty register: nothing to search
+    var counter = document.querySelector('.register-zaehler');
+    var empty = document.querySelector('.register-leer');
+    var groups = document.querySelectorAll('.register-gruppe');
+
+    function apply() {
+      var tokens = fold(input.value).split(/\s+/).filter(Boolean);
+      var active = tokens.length > 0;
+      var total = 0;
+      groups.forEach(function (group) {
+        var entries = group.querySelectorAll('.register-eintrag');
+        var visible = 0;
+        entries.forEach(function (entry) {
+          var such = entry.dataset.such || '';
+          var match = tokens.every(function (t) { return such.indexOf(t) !== -1; });
+          entry.hidden = !match;
+          if (match) { visible++; }
+        });
+        group.hidden = visible === 0;
+        var count = group.querySelector('.register-count');
+        if (count) { count.textContent = active ? visible + '/' + entries.length : String(entries.length); }
+        total += visible;
+      });
+      if (counter) { counter.textContent = active ? total + ' Treffer' : ''; }
+      if (empty) { empty.hidden = !(active && total === 0); }
+    }
+
+    input.addEventListener('input', apply);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        input.value = '';
+        apply();
+      }
+    });
+    apply();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
 }());
 
 </script>
