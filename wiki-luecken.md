@@ -186,3 +186,13 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 - **Vorschlag:** Ortsartikel Amhallah anlegen und die Novadis als Volk (Stämme, Lager, Gebräuche) ergänzen. Quellbuch nicht geprüft.
 
 ---
+
+---
+
+## 2026-09-19 — Dashboard Sprint 018 (ausgelöst durch D-018 Artikelvorschau im Zauber-Tab)
+
+### L22: Zauberartikel — Frontmatter-YAML bei 103 von 268 Artikeln ungültig
+
+- **Wiki-Dateien:** `wiki/dsa-4.1/zauber/*.md` (Beispiel `abvenenum.md`, Zeile 9: `kosten: 4 AsP pro Mahlzeit für bis zu 10 Personen (Ach: 3 AsP)`)
+- **Befund:** Werte in `kosten:`, `zauberdauer:` (u. a. `probe:`) enthalten ein unquotiertes `: ` (Repräsentations-Zusätze wie `(Ach: 3 AsP)`, `(Sch: 5 AsP)`). `yaml.safe_load` bricht mit „mapping values are not allowed here" ab — 103 der 268 Zauberartikel sind betroffen (Stichprobe per `parsers.held.parse_frontmatter` am 19.09.2026: 165 ok / 103 fehlerhaft). Folgen: Obsidian-Properties/Dataview lesen diese Artikel nicht, maschinelles Auslesen scheitert; das Dashboard umgeht es seit Sprint 018 mit einem zeilenweisen Fallback-Parser (`parsers/wikiartikel.py`).
+- **Vorschlag:** Betroffene Werte in Anführungszeichen setzen (`kosten: "4 AsP … (Ach: 3 AsP)"`) — per Skript prüfbar (`yaml.safe_load` über alle Artikel; Ziel 0 Fehler) und mit Diff-Stichprobe umsetzen. Danach den Fallback-Parser im Dashboard entfernen. Ggf. Extraktions-Konvention in `raw/pdf-extracted/EXTRACTION-PLAN.md` ergänzen („Frontmatter-Werte mit `:` immer quoten").

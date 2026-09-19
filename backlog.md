@@ -13,9 +13,11 @@ _(keine)_
 
 ## Backlog
 
-_(keine)_
+| ID    | Kat.  | Titel                                                                                                   | Effort |
+|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
+| B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen | M |
 
-*Session 2026-05-16: Alle Backlog-Items abgearbeitet.*
+*Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
 ---
 
