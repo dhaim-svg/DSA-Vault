@@ -378,124 +378,13 @@ def test_symlinked_directory_escape_is_skipped(vault):
 
 # --- Unreadable / broken files -------------------------------------------
 
-# Real pattern from the wiki: unquoted ': ' in a value makes PyYAML fail.
-UNQUOTED_COLON = """---
-typ: zauber
-name: ATTRIBUTO
-alternativname: 'ATTRIBUTUS'
-probe: KL/IN/CH
-komplexität: D
-merkmale:
-  - Eigenschaften
-  - Beschwörung: X
-kosten: 4 AsP (Ach: 3 AsP)
-zauberdauer: 2 Aktionen (Sch: 5 AsP)
-wirkungsdauer: flüchtige: 1 Minute; bleibende: ZfP* SR
-repräsentationen:
-  Mag: 6
-  Ach: 3
-quelle: "LC"
-seite: 15
----
-
-# ATTRIBUTO (ATTRIBUTUS)
-
-> **Quelle:** LC S. 15
-
-## Wirkung
-
-Erhöht **eine** Eigenschaft, siehe [[wiki/dsa-4.1/zauber/y|Y]].
-"""
-
-
-def test_unquoted_colon_frontmatter_uses_fallback_parser(vault, caplog):
-    import yaml
-    with pytest.raises(yaml.YAMLError):
-        yaml.safe_load(UNQUOTED_COLON.split('---', 2)[1])  # guards the premise of this test
-    _write(vault, f'{ZAUBER}/attributo', UNQUOTED_COLON)
-    with caplog.at_level(logging.DEBUG):
-        art = _load(vault, [f'{ZAUBER}/attributo'])[f'{ZAUBER}/attributo']
-    assert art['quelle'] == 'LC S. 15'
-    assert art['meta'] == [
-        {'label': 'Probe', 'wert': 'KL/IN/CH'},
-        {'label': 'Kosten', 'wert': '4 AsP (Ach: 3 AsP)'},
-        {'label': 'Zauberdauer', 'wert': '2 Aktionen (Sch: 5 AsP)'},
-        {'label': 'Wirkungsdauer', 'wert': 'flüchtige: 1 Minute; bleibende: ZfP* SR'},
-    ]
-    assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
-    assert any(r.levelno == logging.DEBUG for r in caplog.records)
-
-
-def test_fallback_body_is_processed_like_the_normal_path(vault):
-    _write(vault, f'{ZAUBER}/attributo', UNQUOTED_COLON)
-    art = _load(vault, [f'{ZAUBER}/attributo'], _link)[f'{ZAUBER}/attributo']
-    assert art['titel'] == 'ATTRIBUTO (ATTRIBUTUS)'
-    assert '<h2>Wirkung</h2>' in art['html']
-    assert '<strong>eine</strong>' in art['html']
-    assert f'<a href="test-link://{ZAUBER}/y">Y</a>' in art['html']
-    assert '<h1' not in art['html']
-    assert 'Quelle' not in art['html']
-    assert 'name:' not in art['html']
-
-
-def test_fallback_title_from_name_and_alternativname_without_h1(vault):
-    _write(vault, f'{ZAUBER}/x', '---\nname: X\nalternativname: "Y"\nkosten: 1 AsP (Ach: 2)\n---\n\nText.\n')
-    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['titel'] == 'X (Y)'
-
-
-def test_fallback_strips_matching_quotes_only(vault):
-    _write(vault, f'{ZAUBER}/x',
-           '---\nname: X\nprobe: "KL/IN/FF"\nkosten: \'2 AsP\'\nzauberdauer: "1 Aktion\nwirkungsdauer: a: b\n---\n# X\n')
-    meta = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['meta']
-    assert meta == [
-        {'label': 'Probe', 'wert': 'KL/IN/FF'},
-        {'label': 'Kosten', 'wert': '2 AsP'},
-        {'label': 'Zauberdauer', 'wert': '"1 Aktion'},
-        {'label': 'Wirkungsdauer', 'wert': 'a: b'},
-    ]
-
-
-def test_fallback_value_with_several_colons_splits_at_first(vault):
-    _write(vault, f'{ZAUBER}/x', '---\nname: X\nkosten: a: b: c\n---\n# X\n')
-    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['meta'] == [{'label': 'Kosten', 'wert': 'a: b: c'}]
-
-
-def test_fallback_ignores_indented_list_and_map_lines(vault):
-    _write(vault, f'{ZAUBER}/x',
-           '---\nname: X\nmerkmale:\n  - Objekt\nrepräsentationen:\n  probe: falsch\n  Mag: 6\n'
-           '- kosten: falsch\nkosten: 2 AsP (Sch: 1)\n---\n# X\n')
-    art = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']
-    assert art['meta'] == [{'label': 'Kosten', 'wert': '2 AsP (Sch: 1)'}]
-
-
-def test_fallback_without_source_gives_empty_quelle(vault):
-    _write(vault, f'{ZAUBER}/x', '---\nname: X\nkosten: 1 AsP (Ach: 2)\n---\n# X\n')
-    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == ''
-
-
-def test_broken_yaml_others_still_load_without_warnings(vault, caplog):
-    _write(vault, f'{ZAUBER}/kaputt', '---\nname: [unclosed\nprobe: : :\n---\n# Kaputt\n')
-    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
-    with caplog.at_level(logging.WARNING):
-        res = _load(vault, [f'{ZAUBER}/kaputt', f'{ZAUBER}/adlerauge'])
-    assert list(res) == [f'{ZAUBER}/kaputt', f'{ZAUBER}/adlerauge']
-    assert res[f'{ZAUBER}/kaputt']['titel'] == 'Kaputt'
-    assert caplog.records == []
-
-
-def test_non_mapping_frontmatter_uses_fallback(vault):
-    _write(vault, f'{ZAUBER}/liste', '---\n- a\n- b\n---\n# Liste\n\nText.\n')
-    art = _load(vault, [f'{ZAUBER}/liste'])[f'{ZAUBER}/liste']
-    assert art['titel'] == 'Liste'
-    assert art['meta'] == []
-    assert '<p>Text.</p>' in art['html']
-
-
 @pytest.mark.parametrize('text', [
     '---\nname: X\nkosten: 1 AsP (Ach: 2)\n# X\n\nText.\n',
     '---\nname: X\nprobe: KL/IN/FF\n# X\n\nText.\n',
+    '---\nname: X\nkosten: 1 AsP (Ach: 2)\n---\n# X\n\nText.\n',  # closed, but unquoted ': ' is invalid YAML
+    '---\n- a\n- b\n---\n# X\n\nText.\n',  # valid YAML, but not a mapping
 ])
-def test_unclosed_frontmatter_warns_and_is_skipped(vault, caplog, text):
+def test_unreadable_frontmatter_warns_and_is_skipped(vault, caplog, text):
     _write(vault, f'{ZAUBER}/offen', text)
     _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
     with caplog.at_level(logging.WARNING):
@@ -504,6 +393,15 @@ def test_unclosed_frontmatter_warns_and_is_skipped(vault, caplog, text):
     warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
     assert len(warnings) == 1
     assert f'{ZAUBER}/offen' in warnings[0].getMessage()
+
+
+def test_invalid_yaml_warning_carries_the_yaml_diagnosis(vault, caplog):
+    _write(vault, f'{ZAUBER}/kaputt', '---\nname: X\nkosten: 1 AsP (Ach: 2)\n---\n# X\n')
+    with caplog.at_level(logging.WARNING):
+        assert _load(vault, [f'{ZAUBER}/kaputt']) == {}
+    message = caplog.records[0].getMessage()
+    assert 'mapping values are not allowed here' in message
+    assert 'Zeile' in message
 
 
 def test_non_utf8_file_warns_and_is_skipped(vault, caplog):

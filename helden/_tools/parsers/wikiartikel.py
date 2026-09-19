@@ -19,8 +19,6 @@ META_FIELDS = [('probe', 'Probe'), ('kosten', 'Kosten'),
 
 _H1_RE = re.compile(r'^#[ \t]+(?P<titel>.+?)(?:[ \t]+#+)?[ \t]*$', re.M)
 _QUELLE_LINE_RE = re.compile(r'\s*>\s*\*\*Quelle')
-# Top-level 'key: value' lines only; indented list/map lines and '- item' lines never match.
-_FALLBACK_KEY_RE = re.compile(r'^([^\s:#-][^:]*):\s*(.*)$')
 
 # escape=True is mandatory: templates run with autoescape=False, so raw wiki HTML must not pass through.
 _MARKDOWN = mistune.create_markdown(escape=True, plugins=['table'])
@@ -96,41 +94,20 @@ def _short(exc: Exception) -> str:
     return f'{detail} (Zeile {mark.line + 1})' if mark else detail
 
 
-def _fallback_frontmatter(text: str) -> tuple[dict, str]:
-    """Lenient frontmatter reader for YAML that PyYAML rejects (unquoted ': ' in values).
-
-    Reads top-level 'key: value' lines as strings, splitting at the first colon.
-    """
-    _, block, body = text.split('---', 2)
-    fm = {}
-    for line in block.splitlines():
-        m = _FALLBACK_KEY_RE.match(line)
-        if not m:
-            continue
-        value = m.group(2).strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in '"\'':
-            value = value[1:-1]
-        fm[m.group(1).strip()] = value
-    return fm, body
-
-
-def _read_article(file: Path, wiki_path: str) -> tuple[dict, str]:
+def _read_article(file: Path) -> tuple[dict, str]:
     text = file.read_text(encoding='utf-8')
     if text.startswith('---') and len(text.split('---', 2)) < 3:
         raise ValueError('frontmatter is not closed')
-    try:
-        fm, body = parse_frontmatter(text)
-        if isinstance(fm, dict):
-            return fm, body
-    except yaml.YAMLError as exc:
-        log.debug('Wiki-Artikel %s: YAML-Fallback (%s)', wiki_path, _short(exc))
-    return _fallback_frontmatter(text)
+    fm, body = parse_frontmatter(text)
+    if not isinstance(fm, dict):
+        raise ValueError('frontmatter is not a mapping')
+    return fm, body
 
 
 def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict | None:
     try:
-        fm, body = _read_article(file, wiki_path)
-    except (OSError, UnicodeDecodeError, ValueError) as exc:
+        fm, body = _read_article(file)
+    except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
         log.warning('Wiki-Artikel %s nicht lesbar: %s', wiki_path, _short(exc))
         return None
     titel, body = _split_title(body)
