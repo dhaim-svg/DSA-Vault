@@ -11,7 +11,8 @@ DSA_MONATE = [
     'Firun', 'Tsa', 'Phex', 'Peraine', 'Ingerimm', 'Rahja',
 ]
 IG_DATUM_RE = re.compile(
-    r'^\d{1,2}\.\s+(?:' + '|'.join(DSA_MONATE) + r')$|^Namenlosigkeit$'
+    r'^\d{1,2}\.\s+(?:' + '|'.join(DSA_MONATE) + r')$'
+    r'|^\d\.\s+Namenloser Tag$'
 )
 
 BOLD_LINE_RE = re.compile(r'^\*\*([^*]+)\*\*$')

@@ -193,6 +193,53 @@ def test_plain_text_becomes_text_block(tmp_path):
 
 
 # ---------------------------------------------------------------------------
+# Test 10: bare month name without a day number is a Szenen-Marker, not
+# an IG-Datum boundary (the disambiguation case the brief specifically
+# called out)
+# ---------------------------------------------------------------------------
+
+def test_bare_month_without_day_is_szene_not_ig_datum(tmp_path):
+    content = (
+        '## 01.01.2026\n'
+        '**18. Phex**\n'
+        '- Ein Eintrag\n'
+        '**Phex**\n'
+        '- Noch ein Eintrag\n'
+    )
+    _write_chronik(tmp_path, content)
+
+    result = load_chronik(tmp_path)
+    ig_tage = result['spielabende'][0]['ig_tage']
+
+    # "**Phex**" alone has no day number, so it must NOT start a second
+    # ig_tage entry — it's a Szenen-Marker within the same IG-Tag.
+    assert len(ig_tage) == 1
+    typen = [b['typ'] for b in ig_tage[0]['bloecke']]
+    assert typen == ['bullet', 'szene', 'bullet']
+
+
+# ---------------------------------------------------------------------------
+# Test 11: "N. Namenloser Tag" (the real DSA 4.1 naming convention for the
+# five intercalary days, per wiki/dsa-4.1/goetter/religiöse-feste.md) is
+# recognized as an IG-Datum boundary
+# ---------------------------------------------------------------------------
+
+def test_namenloser_tag_is_ig_datum(tmp_path):
+    content = (
+        '## 01.01.2026\n'
+        '**1. Namenloser Tag**\n'
+        '- Ein besonderer Tag\n'
+    )
+    _write_chronik(tmp_path, content)
+
+    result = load_chronik(tmp_path)
+    ig_tage = result['spielabende'][0]['ig_tage']
+
+    assert len(ig_tage) == 1
+    assert ig_tage[0]['ig_datum'] == '1. Namenloser Tag'
+
+
+# ---------------------------------------------------------------------------
 # Test 9: multiple spielabende preserve document order (not sorted)
 # ---------------------------------------------------------------------------
 
