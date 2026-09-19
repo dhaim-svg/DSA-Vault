@@ -61,7 +61,7 @@ Kurzüberblick — Details: [[../kampf/_kampf]]
 - AT gelingt + PA des Gegners misslingt → Treffer → Trefferpunkte (TP) werden gewürfelt.
 - TP − Rüstungsschutz (RS) = Schadenspunkte (SP) → von LE abziehen.
 - Initiative (INI) bestimmt die Reihenfolge; eine Kampfrunde enthält je 1 AT + 1 PA.
-- Wunden entstehen bei besonders heftigen Treffern (SP ≥ Wundschwelle).
+- Wunden entstehen bei besonders heftigen Treffern (SP > Wundschwelle).
 
 ## Key Takeaways
 

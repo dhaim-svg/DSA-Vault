@@ -16,7 +16,7 @@ Das Regelwerk kennt **keine allgemeine Liste von „Zuständen" mit festen Probe
 - **Kein Probenmalus:** Wunden geben **keinen** pauschalen Abzug auf Talent-, Zauber- oder Eigenschaftsproben. Betroffen sind nur die genannten Basiswerte (AT/PA/FK/INI/GS) und die Eigenschaft GE.
   - *Ableitung (kein eigener Regeltext):* Da GE als Eigenschaftswert um 2 je Wunde sinkt, gilt der niedrigere Wert in jeder Probe, die GE als Eigenschaft nutzt. Das ist ein Effekt über den Eigenschaftswert, kein „−2 auf alles".
 - **Wundschwellen** (Wunde bei *mehr* SP als die Schwelle, üblicherweise KO/2; 2 bzw. 3 Wunden bei > KO bzw. > 1,5 × KO) und Modifikatoren (Eisern, Glasknochen, Gezielter Stich, waffenlos): siehe [[kampfregeln]].
-- **Trefferzonensystem (optional, WdS S. 108):** ersetzt die obigen Werte durch zonenabhängige Abzüge (z. B. Kopf: MU/KL/IN und INI-Basis −2 je Wunde; Arm: AT/PA/KK/FF −2; Bein: AT/PA/GE/INI-Basis −2 und GS −1). Details: [[kampfregeln]].
+- **Trefferzonensystem (optional, WdS S. 107):** ersetzt die obigen Werte durch zonenabhängige Abzüge (z. B. Kopf: MU/KL/IN und INI-Basis −2, INI −2W6 je Wunde; Arm: AT/PA/KK/FF −2; Bein: AT/PA/GE/INI-Basis −2 und GS −1). Details: [[kampfregeln]].
 
 ### Wunden ignorieren (optional, WdS S. 82)
 
@@ -37,7 +37,7 @@ Das Regelwerk kennt **keine allgemeine Liste von „Zuständen" mit festen Probe
 | **Furcht** | andere Mechanik | Angst = Schlechte Eigenschaft (Startwert 5–12): Talentproben unter ihrem Einfluss um den Wert erschwert, Eigenschaftsproben um den halben Wert — *oder* Probe auf die Eigenschaft; Gift Angstgift: Furcht vor dem ersten erblickten Wesen (7 SR), abgeschwächt „leichte Furcht" (alle Ängste +2, MU −2) | WdH S. 268; WdS S. 148 | −2 |
 | **Betäubung** | andere Mechanik | Nur als Manöver: Betäubungsschlag verursacht TP(A); übersteigt der AU-Verlust die Wundschwelle → KO-Probe, sonst 1W6 SR bewusstlos; AU-Verlust > KO → automatisch bewusstlos | WdS S. 61, 86 | −4 |
 | **Verwirrung** | nicht belegt | Kein Zustand. Nur Spezialfälle: Überraschung im Kampf („herrscht erst einmal Verwirrung"), Patzer-Folge „Desorientierung" | WdS S. 78, 85 | −2 |
-| **Erschöpfung** | andere Mechanik (optional, Ressource) | Punkte bis KO ohne Folgen; darüber „Überanstrengung": +1 BE je Punkt, eff. KO gesenkt, KO-Proben +1 je Punkt, je 2 Punkte Wundschwelle −1, bei KO Punkten Zusammenbruch | WdS S. 139 | −2 |
+| **Erschöpfung** | andere Mechanik (optional, Ressource) | Punkte bis KO ohne Folgen; darüber „Überanstrengung": +1 BE je Punkt, eff. KO gesenkt, KO-Proben +1 je Punkt, je 2 Punkte Wundschwelle −1, bei Überanstrengung = KO Zusammenbruch | WdS S. 139 | −2 |
 | **Niedrige LE** | Probenmalus (optional) | LE < ½ Grund-LE: Eigenschaftsproben (inkl. AT/PA) +1, Talent-/Zauberproben +3; < ⅓: +2/+6; < ¼: +3/+9; GS −1/−2/−3 (min. 1) | WdS S. 57 | — |
 | **Niedrige AU** | Probenmalus (optional) | AU < ⅓: Eigenschaftsproben +1, Talent-/Zauberproben +3; < ¼: +2/+6; AU 0: kampfunfähig; kumulativ mit dem LE-Malus | WdS S. 83 | — |
 
