@@ -5,15 +5,15 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck — **Entscheidung 19.09.2026: nur aktive Ansicht drucken, aktiver Filter als Druck-Kopfzeile benannt** | S | in-progress | 020 |
+| D-047 | Touch-Ziele & Mobile-Restposten bei 400 px: Inventar-Eingaben/„+ Hinzufügen" 30 px, Zustands-Chips 25 px, `.codex`-Padding bei offenem Würfelpanel, Scroll-Hinweis nur bei Überlauf | S | in-progress | 020 |
+| D-048 | Zustands-Chips: Overlay und Panel-Vorbelegung vereinheitlichen — **Entscheidung 19.09.2026: nur Panel-Vorbelegung (Overlay für Chips entfällt), Chip-Werte bleiben Hausregel** | S | in-progress | 020 |
 
 ## Backlog
 
-| EPIC | Title | Effort | State | Quelle |
-|------|-------|--------|-------|--------|
-| D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
-| D-047 | Touch-Ziele & Mobile-Restposten bei 400 px: Inventar-Eingaben/„+ Hinzufügen" 30 px, Zustands-Chips 25 px, `.codex`-Padding bei offenem Würfelpanel, Scroll-Hinweis nur bei Überlauf | S | ready | Browser-Check D-044, 19.09.2026 |
-| D-048 | Zustands-Chips: Overlay und Panel-Vorbelegung vereinheitlichen (doppelte Darstellung) + Chip-Werte gegen die Regelbasis (`zustaende.md`) entscheiden — **User-Entscheidung nötig** | S | ready | Gesamt-Review D-041, 19.09.2026 |
+_(keine — Dashboard-Backlog leer; offen bleibt B-013 im Vault-`backlog.md`)_
 
 ### Gestrichen
 
