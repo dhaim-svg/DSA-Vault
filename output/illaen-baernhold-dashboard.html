@@ -257,6 +257,18 @@ body::before{
 }
 .banner-meta strong{ color:var(--ink); font-weight:700; font-family:var(--subhead); }
 .banner-meta .sep{ color:var(--ink-dim); }
+/* Schmalansicht (D-044): 3-Spalten-Grid (Wappen + Titel + Stats) sprengte bei 400 px die Bannerbreite und .banner
+   (overflow:hidden) schnitt "BAERNHOLD" ab -> einspaltig gestapelt, h1 skaliert mit dem Viewport.
+   Rechnung bei 400 px: Innenbreite 400 - 2*28 (.codex) - 2 (Rahmen) - 2*16 (Padding) = 310 px; h1 = 8,5 vw = 34 px;
+   BAERNHOLD ~ 9 * 0,83 em * 34 px = 254 px -> ~56 px Reserve (bei 320 px: 230 px Innenbreite, 27 px Schrift, ~203 px). */
+@media screen and (max-width:600px){
+  .banner{ padding:24px 16px 20px; }
+  .banner-inner{ grid-template-columns:minmax(0,1fr); gap:14px; justify-items:center; text-align:center; }
+  .crest{ width:56px; height:56px; }
+  .title-block h1{ font-size:clamp(26px,8.5vw,44px); overflow-wrap:anywhere; }
+  .identity-stats{ flex-wrap:wrap; justify-content:center; gap:8px; }
+  .istat{ min-width:64px; padding:6px 10px; }
+}
 
 /* ---- Static-render hint (only emitted with inline_js; hidden in print via .screen-only) ---- */
 .static-hinweis{
@@ -375,7 +387,7 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns: minmax(200px,1.7fr) 240px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  grid-template-columns: minmax(160px,1.7fr) 240px 38px 80px minmax(90px,1fr) minmax(200px,2fr);
   gap:10px;
   align-items:start;
   padding:9px 10px;
@@ -453,13 +465,15 @@ body::before{
 .artikel-body table{ display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:0 0 6px; font-size:11px; }
 .artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; overflow-wrap:normal; } /* inherited "anywhere" would shrink columns to 1 char; the table scrolls instead */
 .artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
-/* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
-   (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
-   umbrechende Zeile, Wirkung volle Breite. */
+/* Das 6-Spalten-Grid braucht gerechnet 878 px Zeilenbreite (Spaltenminima 160+240+38+80+90+200 = 808, 5 Gaps à 10,
+   20 px Padding); bei 1071 px Viewport ist die Zeile ~934 px breit (Sprint-018-Messung; konservativ inkl. Padding verglichen), Reserve also mind. ~56 px.
+   Der Breakpoint bleibt bei 1070 px (Reserve statt Kante, Seitenrand der Karte) — darunter Kompaktlayout:
+   Name volle Breite, Probe/ZfW/ZD/Kosten als umbrechende Zeile, Wirkung volle Breite. */
 @media screen and (max-width:1070px){
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }
   .spell-sort-btn{ min-height:44px; }
+  summary.artikel-toggle{ display:flex; align-items:center; min-height:44px; }
   .spell .name, .spell .wirkung-cell, .spell .artikel-details{ flex:1 1 100%; min-width:0; }
   .spell .zfw-num{ min-width:0; }
   .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }
@@ -742,12 +756,14 @@ body::before{
   border:1px solid #555; background:#2a2a2a;
   color:#eee; font-size:0.85rem; width:220px;
 }
-/* Schmalansicht: nowrap-Leiste (~670 px) ragte links aus dem Viewport -> umbrechen, volle Breite */
+/* Schmalansicht: nowrap-Leiste (~670 px) ragte links aus dem Viewport -> umbrechen, volle Breite.
+   D-044: schwebend verdeckte sie ~82 px Viewport und die Buttons schrumpften auf ~33 px -> statisch am Seitenende, Touch-Ziele >= 44 px. */
 @media screen and (max-width:480px){
-  #footer-bar{ left:8px; right:8px; bottom:8px; flex-wrap:wrap; justify-content:flex-end; }
-  #footer-bar .print-btn{ padding:8px 10px; font-size:11px; letter-spacing:.12em; }
+  .codex{ padding-bottom:36px; } /* die 120 px Reserve galten der schwebenden Leiste */
+  #footer-bar{ position:static; margin:16px 8px; flex-wrap:wrap; justify-content:flex-end; }
+  #footer-bar .print-btn{ padding:8px 10px; font-size:11px; letter-spacing:.12em; min-height:44px; }
   #save-group{ flex:1 1 100%; }
-  .commit-input{ flex:1 1 0; min-width:0; width:auto; }
+  #footer-bar .commit-input{ flex:1 1 0; min-width:0; width:auto; min-height:44px; }
 }
 
 /* ---- Section Header ---- */
@@ -792,7 +808,7 @@ body::before{
   .card::before,.banner::before{ display:none !important; }
   .card-title,.sec-head h2,.talent-grp h4,.vn-grp h4,.crest svg,
   .istat .lbl,.minor .k,.hex .abbr,.talent-row .t-probe,
-  .spell .merk,.spell .probe,.feed li .when,.c-meta{
+  .spell .submeta,.spell .probe,.feed li .when,.c-meta{
     color:var(--paper-ink) !important; text-shadow:none !important;
   }
   .card-title::before{ border-color:var(--paper-ink); box-shadow:none; }
@@ -855,10 +871,15 @@ body::before{
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
   .talent-row .t-name,.talent-row .t-zfw,
-  .spell .name,.spell .merk,.spell .probe,
+  .spell .name,.spell .submeta,.spell .probe,
   .vn-list li b,.vn-list li small,
   .sf-list li .sf-name,.sf-list li .sf-desc,
   .inv-list li,.inv-list li .qty{ color:var(--paper-ink) !important; }
+  /* Zauberliste (D-046): eigene Bildschirm-color-Regeln (hell auf Papier, Kontrast ~1,1:1) fallen sonst durch;
+     das !important auf .spell .name vererbt sich nicht auf den Namenslink */
+  .spell .name .nlink,.spell .name .haus,.zfw-num,
+  .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
+  .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }
@@ -967,6 +988,19 @@ body::before{
   background: var(--accent, #8b7355);
   color: var(--bg, #fdf6e3);
 }
+/* Hausregel-Chips (D-041c): gestrichelter Rand; aktiv (Füllung = Randfarbe) zeigt ein
+   gestrichelter Außenrand die Kennzeichnung weiter an. */
+.zustand-chip.hausregel { border-style: dashed; }
+.zustand-chip.hausregel.active { outline: 1.5px dashed var(--accent, #8b7355); outline-offset: 2px; }
+.zustand-legend {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-mute);
+  overflow-wrap: anywhere;
+  margin-bottom: 4px;
+}
+/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) gibt es nichts zu erklaeren. */
+#zustand-chips:empty + .zustand-legend { display: none; }
 @media (max-width: 900px) {
   .vitals-sticky {
     position: sticky;
@@ -984,7 +1018,7 @@ body::before{
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
   .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
-  .wunden-counter, #zustand-chips { display: none !important; }
+  .wunden-counter, #zustand-chips, .zustand-legend { display: none !important; }
   /* #commit-msg hidden via #footer-bar.screen-only */
   .vital-max { font-weight: 700; }
   .vital-stepper { display: none !important; }
@@ -1203,9 +1237,13 @@ body { padding-top: 46px; }
 .sg-cart-status.over { color: var(--accent-blood); }
 .sg-cart-commit { margin-left: auto; padding: 6px 14px; font-size: 13px; }
 .sg-cart-commit:disabled { opacity: .4; cursor: default; }
-/* Schmalansicht: Tabelle scrollt im eigenen Container statt die Seite aufzuweiten */
+/* Schmalansicht: Tabelle scrollt im eigenen Wrapper statt die Seite aufzuweiten (D-044: Wrapper-div, damit die Tabelle
+   display:table und ihre Semantik behaelt; der Wrapper ist per Tastatur fokussier- und scrollbar). */
+.steiger-scroll { overflow-x: auto; }
+.steiger-scroll:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: 2px; }
+.sg-scroll-hint { display: none; margin: 0 0 4px; font-size: 11px; line-height: 1.4; color: var(--ink-mute); }
 @media screen and (max-width: 600px) {
-  .steiger-table { display: block; overflow-x: auto; }
+  .sg-scroll-hint { display: block; }
 }
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
@@ -1218,11 +1256,12 @@ body { padding-top: 46px; }
 .inv-weight-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); margin-top: 8px; letter-spacing: .05em; }
 .inv-add-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
 .inv-add-input { flex: 1; min-width: 0; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
+.inv-add-input--anzahl { max-width: 80px; }
 .inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
 .inv-add-btn:hover { background: var(--bg-elev); }
 @media screen and (max-width: 480px) {
   .inv-add-form { flex-wrap: wrap; }
-  .inv-add-input:first-child { flex-basis: 100%; }
+  .inv-add-input--name { flex-basis: 100%; }
 }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
@@ -1465,10 +1504,11 @@ body { padding-top: 46px; }
     </div>
     <div data-wunden="0"></div>
     <div id="zustand-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px"></div>
+    <div class="zustand-legend">Zustände = Hausregel-Schalter (im Regelwerk kein fester Probenmalus). Wunden wirken regelkonform: AT/PA/FK/INI/GE −2, GS −1 je Wunde (WdS S. 57). <a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md">Details →</a></div>
     <div class="minor-stats">
       <div class="minor"><span class="v">5</span><span class="k">MR</span></div>
-      <div class="minor"><span class="v">10</span><span class="k">INI</span></div>
-      <div class="minor"><span class="v">8</span><span class="k">GS</span></div>
+      <div class="minor"><span class="v" data-wund-stat="INI" data-wund-base="10">10</span><span class="k">INI</span></div>
+      <div class="minor"><span class="v" data-wund-stat="GS" data-wund-base="8">8</span><span class="k">GS</span></div>
       <div class="minor"><span class="v">8</span><span class="k">SO</span></div>
     </div>
   </section>
@@ -1476,9 +1516,9 @@ body { padding-top: 46px; }
   <section class="card">
     <h3 class="card-title">Kampfwerte <span class="meta">Basis</span></h3>
     <div class="minor-stats" style="margin-top:0;border-top:0;padding-top:0;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="minor" data-at="7"><span class="v" style="color:var(--accent-gold)">7</span><span class="k">AT-Basis</span></div>
-      <div class="minor" data-pa="8"><span class="v" style="color:var(--accent-gold)">8</span><span class="k">PA-Basis</span></div>
-      <div class="minor"><span class="v" style="color:var(--accent-gold)">8</span><span class="k">FK-Basis</span></div>
+      <div class="minor" data-at="7"><span class="v" style="color:var(--accent-gold)" data-wund-stat="AT" data-wund-base="7">7</span><span class="k">AT-Basis</span></div>
+      <div class="minor" data-pa="8"><span class="v" style="color:var(--accent-gold)" data-wund-stat="PA" data-wund-base="8">8</span><span class="k">PA-Basis</span></div>
+      <div class="minor"><span class="v" style="color:var(--accent-gold)" data-wund-stat="FK" data-wund-base="8">8</span><span class="k">FK-Basis</span></div>
     </div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--rule)">
       <div class="weapon-card">
@@ -1486,8 +1526,8 @@ body { padding-top: 46px; }
         <div class="weapon-grid">
           <div><span class="k">DK</span><span class="v">N S</span></div>
           <div data-tp="1W+1"><span class="k">TP</span><span class="v">1W+1</span></div>
-          <div><span class="k">AT</span><span class="v">13</span></div>
-          <div><span class="k">PA</span><span class="v">9</span></div>
+          <div><span class="k">AT</span><span class="v" data-wund-stat="AT" data-wund-base="13">13</span></div>
+          <div><span class="k">PA</span><span class="v" data-wund-stat="PA" data-wund-base="9">9</span></div>
           <div><span class="k">INI</span><span class="v">0</span></div>
           <div><span class="k">BF</span><span class="v">−9</span></div>
         </div>
@@ -3437,8 +3477,8 @@ body { padding-top: 46px; }
   </ul>
   <div class="inv-weight-note">Teilgewicht (nur Inventar-Abschnitt): 90 Unzen — Reiseausrüstung ohne Gewichtsangabe</div>
   <div class="inv-add-form">
-    <input class="inv-add-input" id="inv-add-name"  type="text" placeholder="Gegenstand" />
-    <input class="inv-add-input" id="inv-add-anzahl" type="text" placeholder="Anzahl" style="max-width:80px" />
+    <input class="inv-add-input inv-add-input--name" id="inv-add-name"  type="text" placeholder="Gegenstand" />
+    <input class="inv-add-input inv-add-input--anzahl" id="inv-add-anzahl" type="text" placeholder="Anzahl" />
     <button class="inv-add-btn" id="inv-add-submit" type="button">+ Hinzufügen</button>
   </div>
 </section>
@@ -5237,6 +5277,45 @@ function initDashboard() {
 }
 
 </script>
+<script>/* wundregeln.js */
+/**
+ * wundregeln.js — DSA 4.1 Wundregel (WdS S. 57), einzige Quelle der Regel.
+ *
+ * Pro Wunde sinken AT-, PA-, FK- und INI-Basiswert sowie die GE um je 2 Punkte, die GS um 1.
+ * Wunden sind kumulativ. Nichts anderes wird gesenkt: Talent-, Zauber- und sonstige
+ * Eigenschaftsproben (außer GE) sowie Schadenswürfe bekommen keinen Wundabzug.
+ *
+ * Rein (kein DOM, kein Storage) — wird von session.js UND dice.js benutzt, auch unter
+ * file://, wo session.js nichts initialisiert. Muss daher vor beiden geladen werden.
+ */
+(function () {
+  // Abzug je Wunde (WdS S. 57). Reihenfolge = Reihenfolge im Geltungsbereich-Text.
+  var JE_WUNDE = { AT: -2, PA: -2, FK: -2, INI: -2, GE: -2, GS: -1 };
+
+  // Zahl <= 0: Gesamtabzug von `wunden` Wunden auf `ziel`; 0 bei unbekanntem Ziel (kein -0).
+  function wundMod(wunden, ziel) {
+    if (!(wunden > 0) || !Object.prototype.hasOwnProperty.call(JE_WUNDE, ziel)) return 0;
+    return wunden * JE_WUNDE[ziel];
+  }
+
+  // Kurzer Geltungsbereich fuer Widget/Badge, z. B. "AT/PA/FK/INI/GE −4, GS −2"; '' ohne Wunden.
+  function geltungText(wunden) {
+    if (!(wunden > 0)) return '';
+    var gruppen = [];   // [{ abzug, ziele: [...] }] — Ziele mit gleichem Abzug zusammengefasst
+    Object.keys(JE_WUNDE).forEach(function (ziel) {
+      var abzug = wundMod(wunden, ziel);
+      var g = gruppen.find(function (x) { return x.abzug === abzug; });
+      if (g) g.ziele.push(ziel); else gruppen.push({ abzug: abzug, ziele: [ziel] });
+    });
+    return gruppen.map(function (g) {
+      return g.ziele.join('/') + ' −' + Math.abs(g.abzug);
+    }).join(', ');
+  }
+
+  window.DSAWundregeln = { JE_WUNDE: JE_WUNDE, wundMod: wundMod, geltungText: geltungText };
+})();
+
+</script>
 <script>/* session.js */
 /**
  * session.js — Tier-B transient state (Zustände, temp mods) in localStorage.
@@ -5264,15 +5343,16 @@ function initDashboard() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    // DSA 4.1 Wundregeln: simplified penalty overlay.
-    // Wundschwelle = ceil(KO/2). Each wound = -2 cumulative on all checks.
-    // TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds) before shipping.
-    function computeWundPenalty(wunden) {
-      if (wunden <= 0) return 0;
-      return wunden * 2;
-    }
+    // Wunden: WdS S. 57 → wundregeln.js (DSAWundregeln) ist die einzige Quelle —
+    // pro Wunde AT/PA/FK/INI/GE -2, GS -1, sonst nichts.
+    // Zustände: Hausregel (kein fester Probenmalus im Regelwerk, s. wiki/dsa-4.1/grundregeln/zustaende.md).
+    const Wund = window.DSAWundregeln;
 
     // ── Wunden widget ──────────────────────────────────────────────────
+    function wundGeltungLabel(wunden) {
+      return wunden > 0 ? '(' + Wund.geltungText(wunden) + ')' : '';
+    }
+
     function renderWundenWidget() {
       if (document.getElementById('wunden-widget')) return;
       const anchor = document.querySelector('[data-wunden]');
@@ -5288,7 +5368,7 @@ function initDashboard() {
         '<span id="wunden-count" style="font-weight:700;font-size:1.2rem">' + currentWunden + '</span>' +
         '<button id="wunden-plus" type="button" aria-label="Wunde erleiden">+</button>' +
         '<span id="wunden-penalty" style="opacity:0.7;font-size:0.9rem">' +
-          (currentWunden > 0 ? '(−' + computeWundPenalty(currentWunden) + ' auf Proben)' : '') +
+          wundGeltungLabel(currentWunden) +
         '</span>';
       anchor.insertAdjacentElement('afterend', widget);
 
@@ -5304,7 +5384,7 @@ function initDashboard() {
 
       const next = Math.max(0, (parseInt(countEl.textContent, 10) || 0) + delta);
       countEl.textContent = next;
-      penaltyEl.textContent = next > 0 ? '(−' + computeWundPenalty(next) + ' auf Proben)' : '';
+      penaltyEl.textContent = wundGeltungLabel(next);
       anchor.dataset.wunden = next;
       updateEigLeisteBadge();
 
@@ -5319,12 +5399,18 @@ function initDashboard() {
     }
 
     // ── Zustände chips (transient localStorage only) ───────────────────
+    // hausregel/regel: Kennzeichnung im Tooltip + Badge (Wert und Wirkung unverändert).
     const ZUSTAENDE = [
-      { key: 'schmerz',    label: 'Schmerz',   mod: -2 },
-      { key: 'furcht',     label: 'Furcht',     mod: -2 },
-      { key: 'betaeubt',   label: 'Betäubt',    mod: -4 },
-      { key: 'verwirrt',   label: 'Verwirrt',   mod: -2 },
-      { key: 'erschoepft', label: 'Erschöpft',  mod: -2 },
+      { key: 'schmerz',    label: 'Schmerz',   mod: -2, hausregel: true,
+        regel: 'Regelwerk: nur optionale SB-Probe nach Wunde (WdS S. 82)' },
+      { key: 'furcht',     label: 'Furcht',     mod: -2, hausregel: true,
+        regel: 'Regelwerk: nur Ängste als Schlechte Eigenschaft (WdH S. 268)' },
+      { key: 'betaeubt',   label: 'Betäubt',    mod: -4, hausregel: true,
+        regel: 'Regelwerk: nur Betäubungsschlag/Bewusstlosigkeit (WdS S. 61, 86)' },
+      { key: 'verwirrt',   label: 'Verwirrt',   mod: -2, hausregel: true,
+        regel: 'Regelwerk: kein Zustand (nicht belegt)' },
+      { key: 'erschoepft', label: 'Erschöpft',  mod: -2, hausregel: true,
+        regel: 'Regelwerk: Überanstrengung wirkt über BE/KO/Wundschwelle (WdS S. 139)' },
     ];
 
     function renderZustandChips() {
@@ -5332,9 +5418,10 @@ function initDashboard() {
       if (!container) return;
       const active = new Set((loadState().zustaende) || []);
       container.innerHTML = ZUSTAENDE.map(z =>
-        '<button class="zustand-chip' + (active.has(z.key) ? ' active' : '') + '" ' +
+        '<button class="zustand-chip' + (z.hausregel ? ' hausregel' : '') +
+        (active.has(z.key) ? ' active' : '') + '" ' +
         'data-key="' + z.key + '" type="button" ' +
-        'title="' + z.label + ': ' + z.mod + ' auf Proben">' +
+        'title="' + z.label + ': −' + Math.abs(z.mod) + ' auf Proben (Hausregel) — ' + z.regel + '">' +
         z.label + '</button>'
       ).join('');
       container.querySelectorAll('.zustand-chip').forEach(btn => {
@@ -5347,56 +5434,97 @@ function initDashboard() {
     // Note: the bar macro is rendered once per tab (Talente + Zauber), so the
     // hook is a class (not an id) — both instances are updated in lockstep.
 
-    // Combined wound+Zustand effects (active mali), shared by the badge text
-    // (updateEigLeisteBadge) and the per-attribute effective-value overlay
-    // (applyWundModsToProben) — single source of truth for the total penalty.
+    // Active mali (Wunden + Zustand-Chips), the single source of truth for the badge text,
+    // the probe overlay (applyWundModsToProben), the base-value overlay
+    // (applyWundModsToStats) and dice.js's panel modifier (probeMod).
+    //
+    // Effect shape — the "Geltungsbereich" is one of two fields:
+    //   { label, mods: { ZIEL: <=0, ... }, wunden }  Wunden: nur die genannten Ziele
+    //        (AT/PA/FK/INI/GE/GS, aus DSAWundregeln.wundMod). Wirkt auf Proben (AT, PA, GE)
+    //        UND Basiswert-Anzeigen (AT/PA/FK/INI/GS).
+    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt auf jede Probe,
+    //        nie auf Basiswert-Anzeigen und nie auf Schadenswürfe.
     function computeActiveEffects() {
       const effects = [];
       const wundenAnchor = document.querySelector('[data-wunden]');
       const wunden = wundenAnchor ? parseInt(wundenAnchor.dataset.wunden, 10) || 0 : 0;
-      if (wunden > 0) effects.push({ label: 'Wunden', penalty: computeWundPenalty(wunden) });
+      if (wunden > 0) {
+        const mods = {};
+        Object.keys(Wund.JE_WUNDE).forEach(ziel => { mods[ziel] = Wund.wundMod(wunden, ziel); });
+        effects.push({ label: 'Wunden', wunden: wunden, mods: mods });
+      }
 
       const active = new Set((loadState().zustaende) || []);
       ZUSTAENDE.forEach(z => {
-        if (active.has(z.key)) effects.push({ label: z.label, penalty: -z.mod });
+        if (active.has(z.key)) effects.push({ label: z.label, alle: true, mod: z.mod, hausregel: true });
       });
       return effects;
     }
 
-    // Exposed so dice.js's getWundMod() can pre-fill the roll panel's modifier
-    // with the same total (wounds + Zustände) shown by the badge/overlay above
-    // — session.js loads before dice.js in dashboard.html.j2.
-    window.DSASession = { computeActiveEffects: computeActiveEffects };
+    // Ziele einer Probe (Würfelpanel / Eigenschaftswert-Overlay) bzw. einer Basiswert-Anzeige.
+    const PROBE_ZIELE = new Set(['AT', 'PA', 'MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK', 'talent', 'zauber']);
+    const STAT_ZIELE = new Set(['AT', 'PA', 'FK', 'INI', 'GS']);
+
+    // Summe <= 0 für eine PROBE auf `ziel`: Wunden nur, wo DSAWundregeln das Ziel kennt
+    // (AT, PA, GE), Zustände (alle) für jedes Probenziel. Unbekanntes Ziel → 0.
+    function probeMod(ziel, effects) {
+      if (!PROBE_ZIELE.has(ziel)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        if (e.alle) return sum + e.mod;
+        return sum + (e.mods && e.mods[ziel] ? e.mods[ziel] : 0);
+      }, 0);
+    }
+
+    // Summe <= 0 für eine BASISWERT-ANZEIGE (AT/PA/FK/INI/GS): nur Wunden, nie Zustände.
+    function statMod(stat, effects) {
+      if (!STAT_ZIELE.has(stat)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        return sum + (!e.alle && e.mods && e.mods[stat] ? e.mods[stat] : 0);
+      }, 0);
+    }
+
+    // Exposed so dice.js's getWundMod(cfg) can pre-fill the roll panel's modifier with the
+    // same scoped values shown by the badge/overlays — wundregeln.js and session.js load
+    // before dice.js (JS_FILES order).
+    window.DSASession = { computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod };
 
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
 
-      const badges = document.querySelectorAll('.eig-leiste-mods');
-      if (badges.length) {
-        let text = '';
-        if (effects.length === 1) {
-          text = '−' + effects[0].penalty + ' ' + effects[0].label;
-        } else if (effects.length > 1) {
-          const total = effects.reduce((sum, e) => sum + e.penalty, 0);
-          text = '−' + total + ' (' + effects.length + ' Effekte)';
-        }
-        badges.forEach(badge => { badge.textContent = text; });
-      }
+      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles.
+      // e.g. "Wunden ×2: GE −4 · Schmerz −2 (Hausregel)"; leer ohne aktive Effekte.
+      const text = effects.map(e => e.alle
+        ? e.label + ' −' + Math.abs(e.mod) + (e.hausregel ? ' (Hausregel)' : '')
+        : e.label + ' ×' + e.wunden + ': GE −' + Math.abs(e.mods.GE)
+      ).join(' · ');
+      document.querySelectorAll('.eig-leiste-mods').forEach(badge => { badge.textContent = text; });
 
       applyWundModsToProben(effects);
+      applyWundModsToStats(effects);
     }
 
     // Annotates every rendered attribute value in probe_eig's output
     // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
-    // effective value when a wound/Zustand malus is active, e.g. "GE 13→11".
-    // Reverts to just the base value once the penalty clears back to zero.
+    // effective value when a malus applies to that attribute, e.g. "GE 13→11".
+    // Wunden treffen nur die GE; reverts to the base value once the malus clears.
     function applyWundModsToProben(effects) {
-      const total = effects.reduce((sum, e) => sum + e.penalty, 0);
       document.querySelectorAll('[data-attr]').forEach(el => {
         const abbr = el.dataset.attr;
         const base = parseInt(el.dataset.base, 10);
         if (isNaN(base)) return;
-        el.textContent = total > 0 ? (abbr + ' ' + base + '→' + (base - total)) : (abbr + ' ' + base);
+        const mod = probeMod(abbr, effects);
+        el.textContent = mod !== 0 ? (abbr + ' ' + base + '→' + (base + mod)) : (abbr + ' ' + base);
+      });
+    }
+
+    // Basiswert-Anzeigen im Kampf-Tab (data-wund-stat + data-wund-base): "14→10" bei
+    // Wundabzug (statMod), sonst nur der Basiswert. Nicht numerische Basis ("—") bleibt unberührt.
+    function applyWundModsToStats(effects) {
+      document.querySelectorAll('[data-wund-stat]').forEach(el => {
+        if (!/^-?\d+$/.test((el.dataset.wundBase || '').trim())) return;
+        const base = parseInt(el.dataset.wundBase, 10);
+        const mod = statMod(el.dataset.wundStat, effects);
+        el.textContent = mod !== 0 ? (base + '→' + (base + mod)) : String(base);
       });
     }
 
@@ -5630,22 +5758,29 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   // ------------------------------------------------------------------
-  // Get current Wunden+Zustände penalty as a negative modifier (e.g. -2 for
-  // 1 wound). Delegates to session.js's computeActiveEffects() — the same
-  // source of truth the Eigenschafts-Leiste badge and probe overlay use —
-  // so a toggled Zustand chip (Schmerz, Furcht, ...) reaches the dice panel
-  // too, not just wounds. Falls back to wounds-only when session.js hasn't
-  // run (e.g. opened as file://).
+  // Wound/Zustand modifier for a probe, as a negative number or 0 (dp-mod adds
+  // baseMod on top). Scoped by probe type (WdS S. 57 — see wundregeln.js):
+  //   at -> 'AT', pa -> 'PA', eigenschaft -> cfg.abbr, talent -> 'talent',
+  //   zauber -> 'zauber'; schaden and anything unknown -> 0 (Wunden senken keine TP).
+  // Delegates to session.js's probeMod() (wounds + Zustand chips). Without
+  // session.js (file://) only the wound rule applies, read from [data-wunden].
   // ------------------------------------------------------------------
-  function getWundMod() {
-    if (window.DSASession && window.DSASession.computeActiveEffects) {
-      var effects = window.DSASession.computeActiveEffects();
-      var total = effects.reduce(function (sum, e) { return sum + e.penalty; }, 0);
-      return -total;
+  function getWundMod(cfg) {
+    var ziel;
+    switch (cfg && cfg.type) {
+      case 'at': ziel = 'AT'; break;
+      case 'pa': ziel = 'PA'; break;
+      case 'eigenschaft': ziel = cfg.abbr; break;
+      case 'talent': ziel = 'talent'; break;
+      case 'zauber': ziel = 'zauber'; break;
+      default: return 0;
+    }
+    if (window.DSASession && window.DSASession.probeMod) {
+      return window.DSASession.probeMod(ziel);
     }
     var el = document.querySelector('[data-wunden]');
-    var w = el ? parseInt(el.dataset.wunden, 10) : 0;
-    return w > 0 ? -(w * 2) : 0;
+    var w = el ? parseInt(el.dataset.wunden, 10) || 0 : 0;
+    return window.DSAWundregeln.wundMod(w, ziel);
   }
 
   // ------------------------------------------------------------------
@@ -5965,7 +6100,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     if (!panel) return;
 
     document.getElementById('dp-title').textContent = '🎲 ' + (config.name || 'Probe');
-    document.getElementById('dp-mod').value = getWundMod() + (currentConfig.baseMod || 0);
+    document.getElementById('dp-mod').value = getWundMod(config) + (currentConfig.baseMod || 0);
     document.getElementById('dp-auto').classList.add('active');
     document.getElementById('dp-manual').classList.remove('active');
 
@@ -6631,6 +6766,20 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       h.textContent = title;
       list.appendChild(h);
 
+      /* Schmalansicht (D-044): sichtbarer Scroll-Hinweis (nur <= 600 px per CSS) + fokussierbarer Scroll-Wrapper.
+         role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+      var scrollHint = document.createElement('p');
+      scrollHint.className = 'sg-scroll-hint';
+      scrollHint.setAttribute('aria-hidden', 'true');
+      scrollHint.textContent = '← Tabelle seitlich scrollen: Kosten, Aktion, „auswählen“ →';
+      list.appendChild(scrollHint);
+
+      var wrap = document.createElement('div');
+      wrap.className = 'steiger-scroll';
+      wrap.setAttribute('tabindex', '0');
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', title);
+
       var table = document.createElement('table');
       table.className = 'steiger-table';
 
@@ -6650,7 +6799,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       });
       table.appendChild(tbody);
 
-      list.appendChild(table);
+      wrap.appendChild(table);
+      list.appendChild(wrap);
     }
 
     /* Eigenschaften */
