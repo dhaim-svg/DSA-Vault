@@ -705,6 +705,8 @@ def test_css_footer_bar_static_and_touch_sized_at_480px():
     bar = ' '.join(_decls(rules, '#footer-bar'))
     assert re.search(r'position\s*:\s*static', bar)
     assert not re.search(r'(?<![-\w])(?:left|right|bottom)\s*:', bar)
+    # statische Leiste braucht die 120 px Reserve der schwebenden nicht mehr (sonst ~136 px Leerraum davor)
+    assert re.search(r'padding-bottom\s*:\s*36px', ' '.join(_decls(rules, '.codex')))
     for sel in ('#footer-bar .print-btn', '#footer-bar .commit-input'):
         assert any(re.search(r'min-height\s*:\s*44px', d) for d in _decls(rules, sel)), sel
     # Desktop-Regel unveraendert (schwebend unten rechts)

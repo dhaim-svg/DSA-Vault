@@ -749,6 +749,7 @@ body::before{
 /* Schmalansicht: nowrap-Leiste (~670 px) ragte links aus dem Viewport -> umbrechen, volle Breite.
    D-044: schwebend verdeckte sie ~82 px Viewport und die Buttons schrumpften auf ~33 px -> statisch am Seitenende, Touch-Ziele >= 44 px. */
 @media screen and (max-width:480px){
+  .codex{ padding-bottom:36px; } /* die 120 px Reserve galten der schwebenden Leiste */
   #footer-bar{ position:static; margin:16px 8px; flex-wrap:wrap; justify-content:flex-end; }
   #footer-bar .print-btn{ padding:8px 10px; font-size:11px; letter-spacing:.12em; min-height:44px; }
   #save-group{ flex:1 1 100%; }
