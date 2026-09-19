@@ -5,15 +5,13 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-037 | dashboard.html.j2 in Partials + eigenes CSS zerlegen | L | in-progress | 015 |
-| D-032 | Chronik-Tab (read-only Viewer des letzten Imports; Roh/Kompiliert-Unteransichten) | M | in-progress | 015 |
+_(keine)_
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
+| D-038 | Bug: `session.js` läuft nie (`const IS_SERVED` doppelt deklariert in app.js + session.js) — Zustände-Chips, Wunden-Overlay, Zustand-aware Wurf-Modifikator wirkungslos | S | ready | Browser-Smoke Sprint 015, 19.09.2026 |
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
 | D-035 | /session-compile Kommando (ruft Import D-030 zuerst) + Aufräumen (User-Freigabe nötig) | M | ready | Chronik-Modus-Plan 16.09.2026 |
 | D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | ready | Chronik-Modus-Plan 16.09.2026 |
@@ -30,10 +28,7 @@ Details siehe Beschreibung unten (D-033/D-034 wurden nicht einfach vergessen —
 ### Beschreibungen
 
 **D-018 — Zauber: Inline-Vorschau**
-Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`dashboard.html.j2:1311-1506`); Klick-Guard in `static/dice.js:520-532` beachten. Seit Sprint 012 günstiger: `popover` + CSS Anchor Positioning sind seit Firefox 147 (Jan. 2026) Baseline — spart die JS-Positionierung; `@position-try` (Flip bei Overflow) braucht noch einen sinnvollen Fallback (Safari 18.4+).
-
-**D-032 — Chronik-Tab (read-only Viewer)** *(Umfang reduziert 19.09.2026 — Junction-Ansatz für D-030 verworfen, Drive bleibt Quelle, s. Sprint-014-Handoff für Details)*
-*(Umfang geändert 19.09.2026, Sprint-015-Planung: Journal-Tab wird nicht ersetzt, sondern in den Chronik-Tab eingezogen.)* Ein 📜-Chronik-Tab mit zwei Unteransichten: **Roh** (zuletzt importierter Stand von `chronik.md`, D-030-Import, kein Live-Sync) und **Kompiliert** (bisherige Journal-Markup wortwörtlich, inkl. `Verlauf`-Write-back; `static/journal.js` unverändert — füllt sich mit D-035). Roh-Ansicht **rein lesend**, kein „Neuer Spielabend"-Button und kein Zurückschreiben (jeder nächste Import würde eigene Einträge überschreiben). Timeline-Render: IG-Tage als Gruppen, Szenen-Marker als Zwischenüberschriften, Bilder inline (Flask-Route `/chronik-bild/<name>`, im Static-Render relativer Pfad). Ältere Abende eingeklappt (`<details>`). Meta-Sektionen als eigene Karten. Hygiene-Auflage: Tab in `templates/partials/chronik.j2`, CSS in `static/chronik.css` (zur Render-Zeit eingebettet, s. D-037 / Sprint-015-Plan). Zusätzlich: Parser-Fix „Bullet mit Bild UND Text" + geteilte Pfad-Konstante `chronik_import.py` ↔ `parsers/chronik.py`. Braucht D-030 + D-031 (beide done); Reihenfolge im Sprint: nach D-037.
+Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`templates/partials/zauber.j2`, seit Sprint 015); Klick-Guard in `static/dice.js:520-532` beachten. Seit Sprint 012 günstiger: `popover` + CSS Anchor Positioning sind seit Firefox 147 (Jan. 2026) Baseline — spart die JS-Positionierung; `@position-try` (Flip bei Overflow) braucht noch einen sinnvollen Fallback (Safari 18.4+).
 
 **D-033 / D-034 — Quick-Capture & Ereignis-Auto-Log — *entfallen 19.09.2026***
 Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im Vault voraus. Da Drive Quelle bleibt (D-030-Fallback, Junction-Ansatz gescheitert), gibt es keinen Live-Schreibpfad mehr, in den das Dashboard schreiben könnte, ohne beim nächsten Import überschrieben zu werden. Ersatzlos gestrichen — der User schreibt weiterhin direkt in Google Drive, keine Dashboard-Interaktion während des Spiels vorgesehen.
@@ -44,13 +39,15 @@ Neues Kommando `.claude/commands/session-compile.md`. Ruft zuerst den Import (D-
 **D-036 — NSC-/Orts-Register**
 Aus den per D-035 kompilierten Sessions extrahiert (`nsc.md`, `orte.md`), plus Suche im Chronik-Tab. Mehrwert gegenüber flacher MD-Datei — die Chronik nennt allein in vier Spielabenden ~15 NSCs und ~8 Orte. Braucht D-035.
 
-**D-037 — Template-Zerlegung**
-`dashboard.html.j2` vollständig in Partials + ausgelagertes CSS zerlegen (Technik-Schuld-Aufräumen, kein User-Feature). Sinnvoll bevor D-032 (Chronik-Tab) den Umfang weiter erhöht, aber kein Blocker.
+**D-038 — Bug: `session.js` wird nie ausgeführt**
+`static/app.js:7` und `static/session.js:9` deklarieren beide top-level `const IS_SERVED`. Klassische Skripte teilen sich den globalen Lexical-Scope → `session.js` bricht beim Parsen mit `SyntaxError: Identifier 'IS_SERVED' has already been declared` ab, `window.DSASession` bleibt `undefined`. Folge: Zustände-Chips, Wunden-Overlay **und** der Zustand-aware Wurf-Modifikator (Sprint 013, `dice.js:205` liest `window.DSASession && …` still-defensiv) wirken im Browser nicht — die Python-Tests zur Würfelmathe laufen trotzdem grün, weil sie die Logik isoliert prüfen. Verifiziert 19.09.2026 per Headless-Chrome-Smoke (`typeof window.DSASession === 'undefined'`, 7 Konsolenfehler über den Lauf). Vorhanden seit der Einführung beider Dateien (Mai 2026); Sprint 015 hat sie nicht berührt. Fix-Skizze: doppelte Deklaration in `session.js` entfernen (oder das Skript in eine IIFE kapseln — `commit.js`/`journal.js` machen es vor). **Vorsicht:** damit wachen bisher tote Codepfade auf (Chips/Wunden-PATCH/Roll-Modifikator) — danach gezielt im Browser gegenprüfen, mit Chrome-Konsole offen; ggf. weitere latente Fehler.
 
 ## Done
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-037 | dashboard.html.j2 in Partials + eigenes CSS zerlegen (CSS → static/*.css, zur Render-Zeit eingebettet; 8 Tab-Partials; geteilter Render-Kontext) | L | 015 |
+| D-032 | Chronik-Tab (📜, Roh/Kompiliert-Umschalter, read-only Roh-Ansicht, /chronik-bild-Route, Parser-Fix Bild+Text) | M | 015 |
 | D-031 | parsers/chronik.py (Spielabend/IG-Tag/Szenen-Parser, verifiziert gegen echte Chronik) | M | 014 |
 | D-030 | Chronik-Import-Skript (Drive → Vault, einseitig — Junction-Ansatz verworfen, s. Sprint-014-Handoff) | S | 014 |
 | D-029 | Aussehen vervollständigen (Gewicht-Feld, offene Felder visuell markiert, Portrait-Plumbing) | S | 013 |

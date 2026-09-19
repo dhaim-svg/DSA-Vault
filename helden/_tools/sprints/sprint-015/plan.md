@@ -15,12 +15,12 @@ Sprint; D-032 (T4/T5) rutscht dann nach 016 — Entscheidung beim Wrap, nicht vo
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-037 + D-032 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-015/plan.md |
-| T1 | **D-037a** CSS aus `<style>` in `static/*.css` auslagern + Render-Zeit-Bundling in `rendering.py` | ⬜ todo | rendering.py, templates/dashboard.html.j2, static/{base,tabs,journal,sprachen}.css (neu), tests/test_rendering.py (neu) |
-| T2 | **D-037b** Tab-Bodies in `templates/partials/<tab>.j2` zerlegen | ⬜ todo | templates/dashboard.html.j2, templates/partials/*.j2 (8 neu) |
-| T3 | **D-037c** Render-Kontext konsolidieren (`kampagne_slug`-Divergenz) — klein, Controller inline | ⬜ todo | render-held.py, server.py |
-| T4 | **D-032a** Chronik-Kontext + Bild-Auslieferung + Parser-Härtung + geteilte Pfad-Konstante | ⬜ todo | render-held.py, server.py, parsers/chronik.py, chronik_import.py, tests/test_chronik.py |
-| T5 | **D-032b** Chronik-Tab: Partial + `static/chronik.css` + Roh/Kompiliert-Umschalter | ⬜ todo | templates/partials/chronik.j2 (neu), static/chronik.css (neu), static/chronik.js (neu), templates/dashboard.html.j2 |
-| T6 | Verifikation + `/sprint-wrap` | ⬜ todo | — |
+| T1 | **D-037a** CSS aus `<style>` in `static/*.css` auslagern + Render-Zeit-Bundling in `rendering.py` | ✅ done | rendering.py, templates/dashboard.html.j2, static/{base,tabs,journal,sprachen}.css (neu), tests/test_rendering.py (neu) |
+| T2 | **D-037b** Tab-Bodies in `templates/partials/<tab>.j2` zerlegen | ✅ done | templates/dashboard.html.j2, templates/partials/*.j2 (8 neu) |
+| T3 | **D-037c** Render-Kontext konsolidieren (`kampagne_slug`-Divergenz) — klein, Controller inline | ✅ done | render-held.py, server.py |
+| T4 | **D-032a** Chronik-Kontext + Bild-Auslieferung + Parser-Härtung + geteilte Pfad-Konstante | ✅ done | render-held.py, server.py, parsers/chronik.py, chronik_import.py, tests/test_chronik.py |
+| T5 | **D-032b** Chronik-Tab: Partial + `static/chronik.css` + Roh/Kompiliert-Umschalter | ✅ done | templates/partials/chronik.j2 (neu), static/chronik.css (neu), static/chronik.js (neu), templates/dashboard.html.j2 |
+| T6 | Verifikation + `/sprint-wrap` | ✅ done | — |
 
 ## Key Design Decisions
 
@@ -34,7 +34,8 @@ Sprint; D-032 (T4/T5) rutscht dann nach 016 — Entscheidung beim Wrap, nicht vo
    `<style>`-Inhalt vor/nach Auslagerung per Diff belegt identisch (abgesehen von Datei-Grenzen-Whitespace).
 3. **Partials pro Tab** `templates/partials/{kampf,talente,zauber,steigern,inventar,profil,journal,sprachen}.j2`
    via `{% include %}`. Reines Verschieben, keine Umformulierung.
-4. **Chronik-Bilder:** neue Route `/chronik-bild/<path:name>` (`send_from_directory`, Traversal-Guard);
+4. **Chronik-Bilder:** neue Route `/chronik-bild/<path:name>` (`send_from_directory`, gewurzelt im Bilder-Ordner
+   selbst — `safe_join` normalisiert sonst `x/../y.png` aus dem Ordner heraus; nur png/jpg/jpeg/gif/webp, kein svg);
    Kontext-Feld `chronik_bild_prefix` (Server: `/chronik-bild/`, Static-Render:
    `../abenteuer/drachenchronik/`).
 5. **Ein 📜-Chronik-Tab, zwei Unteransichten:** *Roh* (geparste `chronik.md`, read-only, ältere Abende in
@@ -45,8 +46,9 @@ Sprint; D-032 (T4/T5) rutscht dann nach 016 — Entscheidung beim Wrap, nicht vo
 6. **Parser-Härtung:** Bullet mit Bild UND Text (Text geht verloren) → fixen. Leerer IG-Tag → nur
    dokumentieren (Design-Frage). Geteilte Pfad-Konstante `chronik_import.py` ↔ `parsers/chronik.py` → in T4
    einführen (Handoff nennt genau diesen Zeitpunkt).
-7. **⚠ `autoescape=False`** (`rendering.py:40`): jedes Chronik-Feld im Template braucht explizit `| e`.
-   Ausnahme: `<img src>` (Pfad, über Route validiert).
+7. **⚠ `autoescape=False`** (`rendering.py`): jedes Chronik-Feld im Template braucht explizit `| e` —
+   *ohne Ausnahme*: auch der `<img src>` (ursprünglich als Ausnahme geplant; im Sprint per Ruling geändert:
+   `urlencode` auf den `src`, Prefix davor, dann `| e`).
 8. **Prozess:** Subagent-Driven Development + zwei-stufige Review (spec + quality). Triviale Reviewer-Funde
    (< 10 Zeilen) inline. Nach jedem Implementierer `git status`/`git show` prüfen. Sprint-Pfade explizit
    `sprint-015`-qualifiziert übergeben (sdd-workspace-Kollision, alle Pläne heißen `plan.md`).
