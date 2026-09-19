@@ -22,7 +22,7 @@
           {% endfor %}
         </div>
         {% endif %}
-        {% if e.erwaehnungen | selectattr('text') | list %}
+        {% if e.erwaehnungen | map(attribute='text') | map('trim') | select | list %}
         <ul class="register-erwaehnungen">
           {% for er in e.erwaehnungen if er.text and (er.text | trim) %}
           <li>{% if er.nr %}<span class="register-nr">S{{ er.nr | e }}</span> {% endif %}{{ er.text | e }}</li>

@@ -5,7 +5,7 @@
   // Must fold exactly like fold() in parsers/register.py (casefold + NFKD, combining marks dropped),
   // otherwise "müller" would not be found in the pre-folded data-such attribute.
   function fold(s) {
-    return String(s).toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/ß/g, 'ss');
+    return String(s).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
   }
 
   function init() {
