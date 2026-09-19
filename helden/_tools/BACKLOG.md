@@ -5,17 +5,15 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Quelle |
-|------|-------|--------|-------|--------|
-| D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | in-progress | Browser-Check D-038, 19.09.2026 |
-| D-046 | Zauberliste: Bestandsränder — Druck-Kontrast (Name-Link, ZfW, ZD, Kosten hell auf Papier) + Grid-Überstand bei 1071–~1130 px | S | in-progress | Browser-Check D-018, 19.09.2026 |
-| D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | in-progress | Browser-Check D-040, 19.09.2026 |
+_(keine)_
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
 | D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
+| D-047 | Touch-Ziele & Mobile-Restposten bei 400 px: Inventar-Eingaben/„+ Hinzufügen" 30 px, Zustands-Chips 25 px, `.codex`-Padding bei offenem Würfelpanel, Scroll-Hinweis nur bei Überlauf | S | ready | Browser-Check D-044, 19.09.2026 |
+| D-048 | Zustands-Chips: Overlay und Panel-Vorbelegung vereinheitlichen (doppelte Darstellung) + Chip-Werte gegen die Regelbasis (`zustaende.md`) entscheiden — **User-Entscheidung nötig** | S | ready | Gesamt-Review D-041, 19.09.2026 |
 
 ### Gestrichen
 
@@ -31,22 +29,22 @@ Details siehe Beschreibung unten (D-033/D-034 wurden nicht einfach vergessen —
 **D-033 / D-034 — Quick-Capture & Ereignis-Auto-Log — *entfallen 19.09.2026***
 Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im Vault voraus. Da Drive Quelle bleibt (D-030-Fallback, Junction-Ansatz gescheitert), gibt es keinen Live-Schreibpfad mehr, in den das Dashboard schreiben könnte, ohne beim nächsten Import überschrieben zu werden. Ersatzlos gestrichen — der User schreibt weiterhin direkt in Google Drive, keine Dashboard-Interaktion während des Spiels vorgesehen.
 
-**D-041 — Wundregel-/Zustände-Audit**
-`static/session.js:29` trägt seit Mai 2026 ein `TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds)`. Aktuell: −2 je Wunde (`computeWundPenalty`), Zustands-Mali fest (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2), und das Overlay zieht pauschal von **allen** `[data-attr]`-Werten ab (203 Stück, auch dort, wo die Regel es nicht verlangt). Nichts davon ist gegen DSA 4.1 geprüft — erst mit D-038 (Sprint 016) läuft der Code überhaupt im Browser. Umfang: Wundregeln/Zustände im Wiki nachlesen (`wiki/dsa-4.1/grundregeln/`), Abweichungen auflisten, Werte/Geltungsbereich korrigieren, Python-Würfelmathe und JS-Spiegel (`dice.js`) angleichen, ggf. `wiki-luecken.md`-Eintrag.
-
-**D-044 — Mobile/Touch-Feinschliff**
-Beim Browser-Check zu D-040 (Sprint 017) offen geblieben: (1) Banner-Titel „ILLAEN BAERNHOLD" ist bei 400 px rechts abgeschnitten; (2) Footer-Leiste (`#footer-bar`, `position:fixed`) hat ~33-px-Buttons (< 44 px Touch-Ziel) und verdeckt ~82 px Viewport — Alternative `position:static` unter 480 px; (3) Steigern-Tabelle scrollt ≤ 600 px im Container ohne `tabindex="0"` (per Tastatur nicht scrollbar), und der „auswählen"-Hinweis ist erst nach dem Scrollen sichtbar; (4) `.inv-add-input:first-child` hängt an der DOM-Reihenfolge — besser eine Klasse. (5) Zauber-Tab: Summary „▸ Artikel" der Artikelvorschau (Sprint 018) hat im Kompaktlayout nur ≈ 18 px Tap-Höhe (< 44 px), Sortier-Button hat bereits 44 px. Messmethode wie in D-040: `scrollWidth`/Rects bei verifiziertem `innerWidth === 400` (Playwright im served-Modus).
-
 **D-045 — Chronik-Druck**
 Der Print-Block in `static/chronik.css` druckt Roh und Kompiliert immer (`.chronik-view{display:block !important}`), das Register nur wenn es aktiv ist. Ein aktiver Register-Filter bleibt im Druck bestehen (`entry.hidden`), während Suchfeld und Umschalter ausgeblendet sind — der Ausdruck zeigt still eine Teilmenge. Zu klären: nur die aktive Ansicht drucken oder alle drei; Filter bei `beforeprint` zurücksetzen (analog zum `<details>`-Handling in `chronik.js`).
 
-**D-046 — Zauberliste: Bestandsränder**
-Beim Browser-Check zu D-018 (Sprint 018) gefunden, beide **vor** Sprint 018 vorhanden: (1) Druck: `.spell .nlink` und `.zfw-num` berechnen sich im Print-Block auf `--ink` (rgb 232,220,195) auf Papier rgb(236,228,208) — Kontrast ≈ 1,1:1; `.zd` (rgb 95,107,122) und `.kosten`/`.wirkung` (rgb 154,166,180) ebenfalls zu hell. `tabs.css`-Print-Block überschreibt nur `.spell .merk, .spell .probe`. (2) Bei exakt 1071 px (Desktop-Grid) ragt die letzte Zelle geschlossener Zeilen — und die Artikelvorschau (`grid-column:1/-1`) — 14 px aus der `.spell`-Box (feste Spaltenbreiten 958 px > 934 px Inhaltsbreite), bleibt aber in der Karte; 1072–1130 px nicht durchgemessen. Fix-Skizze: Print-Farben ergänzen; Breakpoint neu messen (Rect-Vergleich, nicht `scrollWidth`) oder Spalten als `minmax`.
+**D-047 — Touch-Ziele & Mobile-Restposten bei 400 px**
+Beim Browser-Check zu D-044 (Sprint 019) gemessen, aber nicht Teil von D-044: (1) Inventar-Formular `.inv-add-input--name` / `--anzahl` und „+ Hinzufügen" je **30 px** hoch (< 44 px); (2) Zustands-Chips `.zustand-chip` **25 px** hoch; (3) `.codex{padding-bottom:36px}` (≤ 480 px, seit D-044 statischer Footer): das fixe Würfelpanel (`.dice-panel`, `position:fixed; bottom:0`, ≈ 150 px) kann bei geöffnetem Panel die letzten Inhaltszeilen verdecken — bei 400 px mit offenem Panel ungemessen (vorher 120 px Reserve); (4) Steigern: der Scroll-Hinweis `.sg-scroll-hint` erscheint ≤ 600 px auch, wenn die Tabelle passt, und je Abschnitt einmal; jede Tabelle bringt einen zusätzlichen Tab-Stop — Hinweis/`tabindex` nur bei echtem Überlauf (`scrollWidth > clientWidth`); (5) `.zfw-num` im Print-Block ist unscoped (`.spell .zfw-num` wäre konsistent zu den Geschwister-Selektoren, dann `PRINT_SPELL_SELECTORS` in `test_rendering.py` anpassen). Messmethode wie D-040/D-044: Rect-Vergleich bei verifiziertem `innerWidth === 400`, Static-Render über `http.server` (nur lesend).
+
+**D-048 — Zustands-Chips: doppelte Darstellung + Regelbasis**
+Aus der Gesamt-Review zu D-041 (Sprint 019), vorbestehend: Bei aktivem Chip zeigt das Overlay **alle** `[data-attr]`-Werte reduziert (`MU 12→10`, 203 Spans) **und** das Würfelpanel füllt `dp-mod` mit dem Chip-Wert vor — gewürfelt wird korrekt, wer von Hand würfelt, kann den Chip aber doppelt anrechnen. Zu entscheiden (User): nur eine Darstellung (Overlay **oder** Panel) bzw. Overlay klar als „Hausregel-Erschwernis" kennzeichnen; außerdem, ob die frei erfundenen Chip-Werte (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2) durch die belegten Mechaniken ersetzt werden sollen — optionale LE-Probenmali (WdS S. 57: < ½ +1/+3, < ⅓ +2/+6, < ¼ +3/+9), optionale AU-Mali (WdS S. 83), optionale Schmerz-Probe (WdS S. 82), Ängste als Schlechte Eigenschaft (WdH S. 268). Regelbasis: `wiki/dsa-4.1/grundregeln/zustaende.md`, `wiki-luecken.md` L23.
 
 ## Done
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-046 | Zauberliste: Druck-Kontrast (Name-Link, ZfW, ZD, Kosten, Wirkung, Submeta, Kopfzeile, Modifikations-Details) 1,1:1 → 14,62:1 gemessen; Grid-Minima gesenkt (Summe 978 → 878 px), Überstand 0 px bei 1071/1100/1130/1280; toter `.merk`-Selektor entfernt | S | 019 |
+| D-044 | Mobile/Touch: Banner ≤ 600 px einspaltig (Titel `clamp`), Footer ≤ 480 px statisch + 44 px, Steigern-Scrollbereich als `div.steiger-scroll` (fokussierbar, `role=region`, Scroll-Hinweis), Inventar-Modifier-Klassen, Artikel-Summary 44 px im Kompaktlayout | S | 019 |
+| D-041 | Wund-/Zustände-Audit: Wund-Malus regelkonform (WdS S. 57: AT/PA/FK/INI/GE −2, GS −1 je Wunde; TP/Talent/Zauber unberührt) über neue `static/wundregeln.js` + `DSASession.{probeMod,statMod,attrMod}`, GE-Abzug pro Attribut auch in Talent-/Zauberproben, Basiswert-Overlay im Kampf-Tab; Zustands-Chips als Hausregel gekennzeichnet + Legende; Wiki-Artikel `grundregeln/zustaende.md`, `wiki-luecken.md` L23; erste JS-Verhaltenstests (`test_wundregeln.py`, node) | M | 019 |
 | D-043 | Zauber: ZfW-Sortierung im Kompaktlayout erreichbar — Toolbar-Button (Standard → ZfW ↓ → ↑, Tastatur/ARIA, ≥ 44 px), `static/zauber-sort.js` statt Inline-Skript, Zeilen-Wrapper `[data-spell-list]` (Legende bleibt hinter der Liste) | S | 018 |
 | D-018 | Zauber: Artikelvorschau als `<details>` in der Zauberzeile — 25 Artikel zur Render-Zeit eingebettet (`parsers/wikiartikel.py`, mistune `escape=True`, Wikilinks → `obsidian://`), Fallback-Parser für 103/268 Artikel mit ungültigem Frontmatter-YAML; Static-Render 379 → 434 KB | L | 018 |
 | D-042 | Chronik-Parser erkennt `Datum: 13. Phex -> Start` als IG-Datum (`13. Phex (Start)`), 5 Tests | S | 017 |
