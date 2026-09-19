@@ -5,12 +5,12 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-038+D-035 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-016/plan.md |
-| T1 | **D-038** Fix: `session.js` in IIFE kapseln (Muster: `commit.js`/`journal.js`), `window.DSASession` bleibt einziger Export. Regressionstest, der alle `static/*.js` auf kollidierende Top-Level-`const`/`let`/`function`-Namen prüft (muss vor dem Fix rot sein) | ⬜ todo | static/session.js, tests/test_static_js.py (neu) |
-| T2 | **D-038** Browser-Gegenprüfung der aufgeweckten Pfade mit offener Konsole: Zustände-Chips (toggeln, localStorage-Persistenz), Wunden-Widget (+/−, PATCH nach `_illaen.md`, Wert nach Reload), Eigenschafts-Leisten-Badge, `data-attr`-Overlay (`GE 13→11`), Wurf-Panel-Vorbelegung via `getWundMod()`. Gefundene Folgefehler direkt fixen | ⬜ todo | static/session.js, static/dice.js, ggf. templates/partials/kampf.j2 |
-| T3 | **D-035a** `/session-compile`-Kommando: ruft `chronik_import.py`, listet unkompilierte Spielabende, erzeugt Session-Datei nach `_abenteuer.md`-Konvention, verlinkt ins Wiki, aktualisiert `_drachenchronik.md`, trägt Funde in `wiki-luecken.md` ein. Roh-`chronik.md` bleibt unangetastet | ⬜ todo | .claude/commands/session-compile.md (neu) |
-| T4 | **D-035b** Kommando für alle 4 Spielabende ausführen (04.06. / 27.06. / 18.07. / 22.08.2026) → 4 Session-Dateien. Jede Datei vor dem Commit dem User zeigen | ⬜ todo | abenteuer/drachenchronik/2026-*-session-0N.md (neu, User-Domäne) |
-| T5 | **D-035c** Aufräumen: Platzhalter `2025-10-04-session-01.md` löschen, `_drachenchronik.md` (Status, Sessions-Tabelle, Kurz-Synopse, Offene Fäden) und `abenteuer/_abenteuer.md` (Sessions-Zähler) auf echten Stand | ⬜ todo | abenteuer/drachenchronik/_drachenchronik.md, abenteuer/_abenteuer.md, Platzhalter-Datei |
-| T6 | Verifikation (Testsuite, Static-Render, Browser-Smoke inkl. Kompiliert-Ansicht) + Final-Review + `/sprint-wrap` | ⬜ todo | — |
+| T1 | **D-038** Fix: `session.js` in IIFE kapseln (Muster: `commit.js`/`journal.js`), `window.DSASession` bleibt einziger Export. Regressionstest, der alle `static/*.js` auf kollidierende Top-Level-`const`/`let`/`function`-Namen prüft (muss vor dem Fix rot sein) | ✅ done | static/session.js, tests/test_static_js.py (neu) |
+| T2 | **D-038** Browser-Gegenprüfung der aufgeweckten Pfade mit offener Konsole: Zustände-Chips (toggeln, localStorage-Persistenz), Wunden-Widget (+/−, PATCH nach `_illaen.md`, Wert nach Reload), Eigenschafts-Leisten-Badge, `data-attr`-Overlay (`GE 13→11`), Wurf-Panel-Vorbelegung via `getWundMod()`. Gefundene Folgefehler direkt fixen | ✅ done | static/session.js, static/dice.js, ggf. templates/partials/kampf.j2 |
+| T3 | **D-035a** `/session-compile`-Kommando: ruft `chronik_import.py`, listet unkompilierte Spielabende, erzeugt Session-Datei nach `_abenteuer.md`-Konvention, verlinkt ins Wiki, aktualisiert `_drachenchronik.md`, trägt Funde in `wiki-luecken.md` ein. Roh-`chronik.md` bleibt unangetastet | ✅ done | .claude/commands/session-compile.md (neu) |
+| T4 | **D-035b** Kommando für alle 4 Spielabende ausführen (04.06. / 27.06. / 18.07. / 22.08.2026) → 4 Session-Dateien. Jede Datei vor dem Commit dem User zeigen | ✅ done | abenteuer/drachenchronik/2026-*-session-0N.md (neu, User-Domäne) |
+| T5 | **D-035c** Aufräumen: Platzhalter `2025-10-04-session-01.md` löschen, `_drachenchronik.md` (Status, Sessions-Tabelle, Kurz-Synopse, Offene Fäden) und `abenteuer/_abenteuer.md` (Sessions-Zähler) auf echten Stand | ✅ done | abenteuer/drachenchronik/_drachenchronik.md, abenteuer/_abenteuer.md, Platzhalter-Datei |
+| T6 | Verifikation (Testsuite, Static-Render, Browser-Smoke inkl. Kompiliert-Ansicht) + Final-Review + `/sprint-wrap` | ✅ done | — |
 
 ## Key Design Decisions
 
@@ -29,3 +29,7 @@
 - **D-018 (Zauber-Inline-Vorschau, L)** — eigener Sprint.
 - **Wundregel-/Zustände-Audit gegen das Wiki** — `session.js:28` trägt ein offenes `TODO: verify exact rules`, Zustände-Mali (−2/−4) nie gegen DSA 4.1 geprüft. Regelarbeit, kein Bugfix → eigenes EPIC.
 - Chronik-Meta-Markdown-Rendering, `chronik_import.py`-Härtung sowie die zurückgestellten Minors aus Sprint 015 — unverändert offen.
+
+## Stand am Sprint-Ende
+
+- T4/T5-Ergebnisse (4 Session-Dateien, `_drachenchronik.md`, `_abenteuer.md`, `wiki-luecken.md` L17–L21, gelöschter Platzhalter) + regenerierter Static-Render liegen **uncommittet** im Arbeitsbaum — Commit erst nach User-Sichtung (`abenteuer/` ist User-Domäne).
