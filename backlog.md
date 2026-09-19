@@ -17,7 +17,7 @@ _(keine)_
 |-------|-------|---------------------------------------------------------------------------------------------------------|--------|
 | B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen | M |
 | B-015 | tooling | Test-Helfer deduplizieren (Final-Review Sprint 020): `needs_node` (test_register/test_rendering/test_wundregeln), `_js_function` == `_function_body`, drei fast identische node-Fake-DOM-Runner → gemeinsames `helden/_tools/tests/jsfixtures.py` | S |
-| B-016 | tooling | Repo-Hygiene (Final-Review Sprint 020, Sprint-019-Erbe): `.playwright-mcp/` in `.gitignore`; `.gitattributes` mit `* text=auto` (gemischte LF/CRLF-Working-Copies, `core.autocrlf=true`); Entscheidung über `.claude/settings.json` (untracked) — **User-Entscheidung** | S |
+| B-016 | tooling | Repo-Hygiene (Final-Review Sprint 020, Sprint-019-Erbe): nur noch `.gitattributes` mit `* text=auto` offen (gemischte LF/CRLF-Working-Copies, `core.autocrlf=true`; ohne `--renormalize`, danach `git status` prüfen). Erledigt 2026-09-19: `.playwright-mcp/` in `.gitignore`, `.claude/settings.json` versioniert, `.obsidian/workspace.json` untracked + ignoriert | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
