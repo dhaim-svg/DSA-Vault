@@ -15,7 +15,7 @@
 
   var STATES = ['none', 'desc', 'asc'];
   var LABEL = { none: 'Standard', desc: 'ZfW ↓', asc: 'ZfW ↑' };
-  var ARIA_STATE = { none: 'Standard', desc: 'ZfW absteigend', asc: 'ZfW aufsteigend' };
+  var ARIA_STATE = { none: 'Standardreihenfolge', desc: 'ZfW absteigend', asc: 'ZfW aufsteigend' };
   var ARIA_NEXT = { none: 'absteigend', desc: 'aufsteigend', asc: 'Standardreihenfolge' };
   var state = 'none';
 
@@ -37,7 +37,8 @@
     sorted().forEach(function (row) { list.appendChild(row); });
     btn.textContent = 'Sortierung: ' + LABEL[state];
     btn.setAttribute('data-sort-state', state);
-    btn.setAttribute('aria-label', 'Zauber sortieren, aktuell: ' + ARIA_STATE[state] +
+    // accessible name starts with the visible text (WCAG 2.5.3 Label in Name)
+    btn.setAttribute('aria-label', btn.textContent + '. Aktuell: ' + ARIA_STATE[state] +
       '. Klicken für ' + ARIA_NEXT[state] + '.');
   }
 

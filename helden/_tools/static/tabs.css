@@ -95,6 +95,7 @@
   .artikel-toggle,.artikel-titel,.artikel-quelle,.artikel-meta,.artikel-meta b,
   .artikel-body,.artikel-body *{ color:var(--paper-ink) !important; }
   .artikel-obsidian{ display:none !important; }
+  .artikel-details:not([open]){ display:none !important; }
   .campaign{ background:transparent !important; border:1px solid var(--paper-ink) !important; }
   .campaign h3,.status,.status .dot-s,.c-meta b,.c-meta{ color:var(--paper-ink) !important; }
   .status .dot-s{ background:var(--paper-ink) !important; box-shadow:none !important; animation:none; }

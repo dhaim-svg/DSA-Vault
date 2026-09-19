@@ -383,6 +383,15 @@ def test_css_artikel_details_rules_desktop_compact_and_print():
     prints = ''.join(_media_blocks(css, r'@media\s+print'))
     assert re.search(r'\.artikel-panel\s*\{[^}]*background\s*:\s*transparent', prints)
     assert re.search(r'\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
+    assert re.search(r'\.artikel-details:not\(\[open\]\)\s*\{[^}]*display\s*:\s*none', prints)
+
+
+def test_zauber_sort_button_accessible_name_contains_visible_label(live_html):
+    m = re.search(r'<button[^>]*data-spell-sort[^>]*aria-label="([^"]*)"[^>]*>([^<]*)</button>', live_html)
+    assert m
+    assert m.group(1).startswith(m.group(2))
+    js = (Path(rendering.STATIC_DIR) / 'zauber-sort.js').read_text(encoding='utf-8')
+    assert "setAttribute('aria-label', btn.textContent" in js
 
 
 def test_render_has_no_inline_spell_sort_block(live_html, static_js_html):

@@ -871,6 +871,7 @@ body::before{
   .artikel-toggle,.artikel-titel,.artikel-quelle,.artikel-meta,.artikel-meta b,
   .artikel-body,.artikel-body *{ color:var(--paper-ink) !important; }
   .artikel-obsidian{ display:none !important; }
+  .artikel-details:not([open]){ display:none !important; }
   .campaign{ background:transparent !important; border:1px solid var(--paper-ink) !important; }
   .campaign h3,.status,.status .dot-s,.c-meta b,.c-meta{ color:var(--paper-ink) !important; }
   .status .dot-s{ background:var(--paper-ink) !important; box-shadow:none !important; animation:none; }
@@ -1955,7 +1956,7 @@ body { padding-top: 46px; }
      ============================================================ -->
 <div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
 <section class="card">
-  <div class="spell-toolbar"><button type="button" class="spell-sort-btn" data-spell-sort data-sort-state="none" aria-label="Zauber sortieren, aktuell: Standard. Klicken für absteigend.">Sortierung: Standard</button></div>
+  <div class="spell-toolbar"><button type="button" class="spell-sort-btn" data-spell-sort data-sort-state="none" aria-label="Sortierung: Standard. Aktuell: Standardreihenfolge. Klicken für absteigend.">Sortierung: Standard</button></div>
 
   <div class="spell spell-head" title="Nach ZfW sortieren" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
     <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
@@ -7133,7 +7134,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
   var STATES = ['none', 'desc', 'asc'];
   var LABEL = { none: 'Standard', desc: 'ZfW ↓', asc: 'ZfW ↑' };
-  var ARIA_STATE = { none: 'Standard', desc: 'ZfW absteigend', asc: 'ZfW aufsteigend' };
+  var ARIA_STATE = { none: 'Standardreihenfolge', desc: 'ZfW absteigend', asc: 'ZfW aufsteigend' };
   var ARIA_NEXT = { none: 'absteigend', desc: 'aufsteigend', asc: 'Standardreihenfolge' };
   var state = 'none';
 
@@ -7155,7 +7156,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     sorted().forEach(function (row) { list.appendChild(row); });
     btn.textContent = 'Sortierung: ' + LABEL[state];
     btn.setAttribute('data-sort-state', state);
-    btn.setAttribute('aria-label', 'Zauber sortieren, aktuell: ' + ARIA_STATE[state] +
+    // accessible name starts with the visible text (WCAG 2.5.3 Label in Name)
+    btn.setAttribute('aria-label', btn.textContent + '. Aktuell: ' + ARIA_STATE[state] +
       '. Klicken für ' + ARIA_NEXT[state] + '.');
   }
 
