@@ -199,6 +199,70 @@ def test_render_zauber_header_row_has_spell_head_class(live_html):
     assert re.search(r'\.spell\.spell-head\s*\{[^}]*display:\s*none', css_bundle())
 
 
+def _strip_print_blocks(css):
+    """CSS ohne @media-print-Bloecke (Klammer-Zaehlung, damit verschachtelte Regeln nicht brechen)."""
+    out, i = [], 0
+    for m in re.finditer(r'@media\s+print\s*\{', css):
+        if m.start() < i:
+            continue
+        out.append(css[i:m.start()])
+        depth, j = 1, m.end()
+        while depth and j < len(css):
+            depth += {'{': 1, '}': -1}.get(css[j], 0)
+            j += 1
+        i = j
+    out.append(css[i:])
+    return ''.join(out)
+
+
+def test_render_zauber_sort_toolbar_and_list_wrapper(live_html):
+    # D-043: Toolbar-Button -> Kopfzeile -> Listen-Wrapper -> Legende; Sortier-JS verschiebt nur Zeilen im Wrapper.
+    assert live_html.count('data-spell-list') == 1
+    assert live_html.count('data-spell-sort') == 1
+    assert '<button type="button" class="spell-sort-btn" data-spell-sort' in live_html
+    toolbar = live_html.index('data-spell-sort')
+    head = live_html.index('class="spell spell-head"')
+    wrapper = live_html.index('data-spell-list')
+    legend = live_html.index('class="legend-row"')
+    assert toolbar < head < wrapper < legend
+
+
+def test_render_zauber_rows_all_inside_list_wrapper(live_html):
+    n = len(build_context('illaen-baernhold')['held']['zauber'])
+    start = live_html.index('data-spell-list')
+    inside = live_html[start:live_html.index('class="legend-row"')]
+    assert len(re.findall(r'<div class="spell"[ >]', inside)) == n
+    assert len(re.findall(r'<div class="spell"[ >]', live_html)) == n
+    assert 'spell-head' not in inside
+
+
+def test_render_has_no_inline_spell_sort_block(live_html, static_js_html):
+    for html in (live_html, static_js_html, server._render_dashboard('illaen-baernhold')):
+        assert 'Sortierung Zauber-Tabelle' not in html
+        assert '.spell:first-child' not in html
+
+
+def test_static_render_inlines_zauber_sort_js_once(static_js_html):
+    assert static_js_html.count('<script>/* zauber-sort.js */') == 1
+    assert static_js_html.count("querySelector('[data-spell-list]')") == 1
+
+
+def test_zauber_sort_js_follows_zauberspeicher_js():
+    assert JS_FILES.index('zauber-sort.js') == JS_FILES.index('zauberspeicher.js') + 1
+
+
+def test_spell_toolbar_css_stays_visible_in_compact_layout():
+    css = css_bundle()
+    assert '.spell-toolbar' in css and '.spell-sort-btn' in css
+    # ausserhalb der Druckregel darf nichts die Toolbar ausblenden (auch nicht der 1070-px-Block)
+    screen = _strip_print_blocks(css)
+    assert not re.search(r'\.spell-(?:toolbar|sort-btn)[^{}]*\{[^}]*display:\s*none', screen)
+    assert re.search(r'@media print\s*\{[^@]*\.spell-toolbar\s*\{[^}]*display:\s*none', css)
+    # Touch-Ziel im Kompaktlayout
+    m = re.search(r'@media screen and \(max-width:1070px\)\{(.*?)\n\}', css, re.S)
+    assert m and re.search(r'\.spell-sort-btn\{[^}]*min-height:\s*44px', m.group(1))
+
+
 def test_render_chronik_tab_server():
     if not LIVE_HELD.exists():
         pytest.skip('Live-Vault ohne helden/illaen-baernhold')

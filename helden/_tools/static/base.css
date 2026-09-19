@@ -371,8 +371,17 @@ body::before{
   padding:9px 10px;
   border-bottom:1px solid rgba(95,195,228,.06);
 }
-.spell:last-child{ border-bottom:0; }
 .spell:hover{ background:rgba(95,195,228,.04); }
+.spell.spell-head{ cursor:pointer; }
+.spell-toolbar{ display:flex; justify-content:flex-end; margin-bottom:6px; }
+.spell-sort-btn{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink-mute);
+  background:transparent; border:1px solid var(--rule); border-radius:3px;
+  padding:4px 10px; cursor:pointer;
+}
+.spell-sort-btn:hover{ color:var(--accent-cold); border-color:var(--accent-cold); }
+.spell-sort-btn:focus-visible{ outline:2px solid var(--accent-cold); outline-offset:2px; }
+.spell-sort-btn:not([data-sort-state="none"]){ color:var(--accent-cold); border-color:var(--accent-cold); }
 .spell .name{ font-family:var(--subhead); font-size:14px; color:var(--ink); }
 .spell .name .nlink{ color:var(--ink); text-decoration:none; border-bottom:1px dotted rgba(95,195,228,.25); }
 .spell .name .nlink:hover{ color:var(--accent-cold); border-bottom-color:var(--accent-cold); }
@@ -397,6 +406,7 @@ body::before{
 @media screen and (max-width:1070px){
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }
+  .spell-sort-btn{ min-height:44px; }
   .spell .name, .spell .wirkung-cell{ flex:1 1 100%; min-width:0; }
   .spell .zfw-num{ min-width:0; }
   .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }

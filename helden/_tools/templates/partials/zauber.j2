@@ -5,11 +5,13 @@
      ============================================================ -->
 <div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
 <section class="card">
+  <div class="spell-toolbar"><button type="button" class="spell-sort-btn" data-spell-sort data-sort-state="none" aria-label="Zauber sortieren, aktuell: Standard. Klicken für absteigend.">Sortierung: Standard</button></div>
 
-  <div class="spell spell-head" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
+  <div class="spell spell-head" title="Nach ZfW sortieren" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
     <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
   </div>
 
+  <div class="spell-list" data-spell-list>
   {% for z in held.zauber %}
   {% set url = z.wiki_path | obsidian if z.wiki_path else '' %}
   {% set mods_raw = (z.mods or '').strip() %}
@@ -37,6 +39,7 @@
     </span>
   </div>
   {% endfor %}
+  </div>
 
   <div class="legend-row">
     <span><b>Anti</b> Anti-Magie</span>

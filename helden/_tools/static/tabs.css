@@ -376,6 +376,7 @@ body { padding-top: 46px; }
   body { padding-top: 0 !important; }
   .inv-stepper, .inv-add-form { display: none !important; }
   .journal-actions { display: none !important; }
+  .spell-toolbar { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;

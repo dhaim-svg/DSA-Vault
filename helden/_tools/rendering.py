@@ -24,7 +24,7 @@ CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css', 'chronik.css
 # Order = load dependency: util.js first (app.js/commit.js use dsaShowIndicator), session.js before dice.js.
 # Every new static/*.js must be listed here (a test enforces it).
 JS_FILES = ['util.js', 'app.js', 'session.js', 'dice.js', 'tabs.js', 'steigern.js',
-            'inventar.js', 'zauberspeicher.js', 'journal.js', 'chronik.js', 'register.js', 'commit.js']
+            'inventar.js', 'zauberspeicher.js', 'zauber-sort.js', 'journal.js', 'chronik.js', 'register.js', 'commit.js']
 
 
 def obsidian_uri(wiki_path: str, vault_name: str = 'DSA-Vault') -> str:

@@ -152,28 +152,6 @@
   </div>
 </div>
 
-<script>
-/* Sortierung Zauber-Tabelle: Click auf ZfW-Header */
-(function(){
-  var spells = document.querySelectorAll('.spell:not(:first-child)');
-  var container = spells[0] && spells[0].parentNode;
-  var header = document.querySelector('.spell:first-child');
-  if (!container || !header) return;
-  var asc = false;
-  header.style.cursor = 'pointer';
-  header.title = 'Nach ZfW sortieren';
-  header.addEventListener('click', function(){
-    asc = !asc;
-    var arr = Array.from(spells);
-    arr.sort(function(a, b){
-      var za = parseInt(a.querySelector('.zfw-num') && a.querySelector('.zfw-num').textContent) || 0;
-      var zb = parseInt(b.querySelector('.zfw-num') && b.querySelector('.zfw-num').textContent) || 0;
-      return asc ? za - zb : zb - za;
-    });
-    arr.forEach(function(el){ container.appendChild(el); });
-  });
-})();
-</script>
 <div id="dice-panel" class="dice-panel hidden">
   <div class="dice-panel-header">
     <span id="dp-title">🎲 Probe</span>
