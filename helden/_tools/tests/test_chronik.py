@@ -1,7 +1,6 @@
 """Tests for load_chronik — Drachenchronik markdown parsing (synthetic fixtures only)."""
 import sys
 from pathlib import Path
-import pytest
 
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
@@ -74,7 +73,7 @@ def test_szenen_marker_not_confused_with_ig_datum(tmp_path):
     content = (
         '## 01.01.2026\n'
         '**18. Phex**\n'
-        '*Suche nach Nachtwache*\n'
+        '*Testszene Eins*\n'
         '- Ein Detail\n'
         '**Ein weiterer Marker**\n'
         '- Noch ein Detail\n'
@@ -88,7 +87,7 @@ def test_szenen_marker_not_confused_with_ig_datum(tmp_path):
     bloecke = ig_tage[0]['bloecke']
     typen = [b['typ'] for b in bloecke]
     assert typen == ['szene', 'bullet', 'szene', 'bullet']
-    assert bloecke[0]['text'] == 'Suche nach Nachtwache'
+    assert bloecke[0]['text'] == 'Testszene Eins'
     assert bloecke[2]['text'] == 'Ein weiterer Marker'
 
 
@@ -130,7 +129,10 @@ def test_img_tag_becomes_bild_block(tmp_path):
 
     assert len(bloecke) == 1
     assert bloecke[0]['typ'] == 'bild'
-    assert bloecke[0]['src'] == 'testordner\\testbild.png'
+    # Windows-style backslash from the source chronicle must be normalized
+    # to a forward slash — a raw backslash is not a valid URL separator and
+    # a future <img src> render would 404 on it.
+    assert bloecke[0]['src'] == 'testordner/testbild.png'
 
 
 # ---------------------------------------------------------------------------

@@ -51,7 +51,12 @@ def _parse_spielabend_body(body: str) -> list[dict]:
 
         img_m = IMG_RE.search(stripped)
         if img_m:
-            current['bloecke'].append({'typ': 'bild', 'src': img_m.group(1)})
+            # Source chronicle uses Windows-style paths ("dir\bild.png"); a
+            # backslash is not a valid URL path separator, so <img src>
+            # emitted by a future renderer would 404. Normalize now, at the
+            # parsing boundary, rather than pushing this onto every consumer.
+            src = img_m.group(1).replace('\\', '/')
+            current['bloecke'].append({'typ': 'bild', 'src': src})
             continue
 
         bullet_m = BULLET_RE.match(raw_line)
