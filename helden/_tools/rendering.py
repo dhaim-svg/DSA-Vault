@@ -5,6 +5,10 @@ import jinja2
 
 TOOLS_DIR = Path(__file__).parent
 TEMPLATES_DIR = TOOLS_DIR / 'templates'
+STATIC_DIR = TOOLS_DIR / 'static'
+
+# Bundle order is load-bearing: CSS cascade depends on it.
+CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css']
 
 
 def obsidian_uri(wiki_path: str, vault_name: str = 'DSA-Vault') -> str:
@@ -35,6 +39,10 @@ def format_ap(n: int) -> str:
     return s
 
 
+def css_bundle() -> str:
+    return ''.join((STATIC_DIR / name).read_text(encoding='utf-8') for name in CSS_FILES)
+
+
 def make_env() -> jinja2.Environment:
     loader = jinja2.FileSystemLoader(str(TEMPLATES_DIR))
     env = jinja2.Environment(loader=loader, autoescape=False,
@@ -42,4 +50,5 @@ def make_env() -> jinja2.Environment:
     env.filters['roman'] = roman
     env.filters['format_ap'] = format_ap
     env.filters['obsidian'] = obsidian_uri
+    env.globals['css_bundle'] = css_bundle
     return env

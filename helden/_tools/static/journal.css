@@ -1,0 +1,13 @@
+/* ---- Journal tab ---- */
+.journal-session { margin-bottom: var(--gap); }
+.journal-session-header { font-family: var(--display); font-size: 14px; color: var(--gold); letter-spacing: .06em; margin: 0 0 12px; }
+.journal-section { margin-bottom: 12px; }
+.journal-section h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); margin: 0 0 4px; }
+.journal-section summary { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); cursor: pointer; }
+.journal-readonly { font-size: 13px; color: var(--ink-dim); white-space: pre-wrap; margin: 0; }
+.journal-verlauf { width: 100%; box-sizing: border-box; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-family: var(--mono); font-size: 12px; padding: 6px 8px; resize: vertical; }
+.journal-actions { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.journal-save-btn { padding: 4px 12px; border: 1px solid var(--accent-cold); border-radius: 3px; background: rgba(95,195,228,.12); color: var(--accent-cold); font-family: var(--mono); font-size: 11px; cursor: pointer; }
+.journal-save-btn:hover { background: rgba(95,195,228,.25); }
+.journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
+.journal-save-ok { font-size: 11px; color: var(--accent-aup); }

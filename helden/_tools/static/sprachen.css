@@ -1,0 +1,12 @@
+/* ---- Sprachen-Tab ---- */
+.lang-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lang-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-mute); font-weight: 600; padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; }
+.lang-table th:last-child, .lang-table td:last-child { text-align: right; }
+.lang-table td { padding: 5px 8px; border-bottom: 1px solid var(--rule); color: var(--ink); vertical-align: middle; }
+.lang-table tr:last-child td { border-bottom: none; }
+.lang-table .l-name { color: var(--ink); }
+.lang-table .l-kompl { color: var(--ink-mute); font-family: var(--mono); font-size: 12px; text-align: right; }
+.lang-table .l-taw { font-family: var(--mono); font-size: 13px; font-weight: 700; }
+.lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
+.lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+.lang-section-head--first { margin-top: 0; }
