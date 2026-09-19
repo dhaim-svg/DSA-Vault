@@ -730,8 +730,9 @@ body::before{
   box-shadow:0 0 0 1px rgba(0,0,0,.5),0 12px 28px -8px rgba(0,0,0,.7),0 0 50px -6px rgba(95,195,228,.7);
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
+/* D-049: das offene Wuerfelpanel (fixed, z-index 200) verdeckte die Leiste -> sie steigt um die von dice.js gepflegte Panelhoehe. */
 #footer-bar{
-  position:fixed; bottom:28px; right:28px;
+  position:fixed; bottom:calc(28px + var(--dice-panel-h, 0px)); right:28px;
   display:flex; gap:8px; align-items:center;
   z-index:100;
 }

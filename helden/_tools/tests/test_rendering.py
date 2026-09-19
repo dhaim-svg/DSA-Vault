@@ -746,8 +746,11 @@ def test_css_footer_bar_static_and_touch_sized_at_480px():
     assert re.search(r'padding-bottom\s*:\s*36px', ' '.join(_decls(rules, '.codex')))
     for sel in ('#footer-bar .print-btn', '#footer-bar .commit-input'):
         assert any(re.search(r'min-height\s*:\s*44px', d) for d in _decls(rules, sel)), sel
-    # Desktop-Regel unveraendert (schwebend unten rechts)
-    assert re.search(r'#footer-bar\s*\{\s*position\s*:\s*fixed;\s*bottom\s*:\s*28px;\s*right\s*:\s*28px;', css)
+    # Desktop: schwebend unten rechts, hebt sich um die Panelhoehe (D-049)
+    assert re.search(
+        r'#footer-bar\s*\{\s*position\s*:\s*fixed;\s*bottom\s*:\s*calc\(\s*28px\s*\+\s*var\(\s*--dice-panel-h\s*,\s*0px\s*\)\s*\)\s*;\s*right\s*:\s*28px;',
+        css,
+    )
 
 
 def _steigern_js():
@@ -900,7 +903,21 @@ def test_css_body_reserves_dice_panel_height_at_480px():
         re.search(r'padding-bottom\s*:\s*var\(\s*--dice-panel-h\s*(?:,\s*0(?:px)?\s*)?\)', d)
         for d in _decls(_screen_rules(css, 480), 'body')
     )
-    assert not any('--dice-panel-h' in d for _, d in _toplevel_rules(css)), 'Reserve nur im schmalen Block'
+    # Top-Level nutzt nur die Footer-Leiste die Variable (D-049); die body-Reserve bleibt exklusiv im schmalen Block
+    assert {s for s, d in _toplevel_rules(css) if '--dice-panel-h' in d} == {'#footer-bar'}
+
+
+def test_css_footer_bar_rises_above_open_dice_panel_on_desktop():
+    # D-049: das offene Panel (fixed, z-index 200) verdeckte die Leiste (fixed, z-index 100; ~277 px bei 1280 px).
+    # Ursache festhalten: solange das Panel darueber liegt, muss die Leiste um --dice-panel-h steigen.
+    top = _toplevel_rules(css_bundle())
+    bar = ' '.join(_decls(top, '#footer-bar'))
+    panel = ' '.join(_decls(top, '.dice-panel'))
+    assert re.search(r'(?<![-\w])bottom\s*:\s*calc\(\s*28px\s*\+\s*var\(\s*--dice-panel-h\s*,\s*0px\s*\)\s*\)', bar)
+    assert re.search(r'position\s*:\s*fixed', panel)
+    z_panel = int(re.search(r'z-index\s*:\s*(\d+)', panel).group(1))
+    z_bar = int(re.search(r'z-index\s*:\s*(\d+)', bar).group(1))
+    assert z_panel > z_bar, 'Panel liegt ueber der Leiste -> Leiste muss um die Panelhoehe steigen'
 
 
 def test_dice_js_publishes_open_panel_height_as_css_variable():

@@ -545,7 +545,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   // D-047: das Panel ist position:fixed (Hoehe variiert mit Modus/Ergebnis) -> die offene Hoehe steht als --dice-panel-h auf <html>;
-  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben.
+  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben
+  // (D-049: ausserhalb davon, am Desktop, nutzt #footer-bar sie als bottom-Versatz).
   function syncPanelReserve() {
     if (!panel) return;
     var open = !panel.classList.contains('hidden');
