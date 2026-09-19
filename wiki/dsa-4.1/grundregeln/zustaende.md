@@ -1,6 +1,6 @@
 # Zustände und Wunden
 
-> **Quelle:** Wege des Schwertes (WdS) · S. 57 (Wunden, niedrige LE), S. 82 (Wunden ignorieren, Schmerz), S. 83 (niedrige AU), S. 139 (Erschöpfung), S. 61 (Betäubungsschlag), S. 21 (Selbstbeherrschung) · Wege der Helden (WdH) · S. 268 (Schlechte Eigenschaften)
+> **Quelle:** Wege des Schwertes (WdS) · S. 57 (Wunden, niedrige LE), S. 82 (Wunden ignorieren, Schmerz), S. 83 (niedrige AU), S. 139 (Erschöpfung), S. 61 (Betäubungsschlag), S. 21 (Selbstbeherrschung), S. 78 und 85–86 (Überraschung, Patzer-Folge, Bewusstlosigkeit), S. 107 (Trefferzonen), S. 148 (Angstgift) · Wege der Helden (WdH) · S. 268 (Schlechte Eigenschaften)
 >
 > **Recherche-Stand:** Regelbücher WdS, WdH und WdE (Wege des Entdeckers) durchsucht (Sprint 019, 19.09.2026). Andere Bände (z. B. Wege der Zauberei, Zoo-Botanica) wurden **nicht** geprüft.
 
