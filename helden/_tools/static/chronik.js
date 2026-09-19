@@ -26,4 +26,20 @@
     try { saved = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
     switchView(VIEWS.indexOf(saved) !== -1 ? saved : DEFAULT_VIEW);
   });
+
+  // Chrome does not print the body of a closed <details>; open them for printing.
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('details.chronik-abend').forEach(function (d) {
+      if (d.dataset.wasOpen === undefined) { d.dataset.wasOpen = d.open ? '1' : ''; }
+      d.open = true;
+    });
+  });
+
+  window.addEventListener('afterprint', function () {
+    document.querySelectorAll('details.chronik-abend').forEach(function (d) {
+      if (d.dataset.wasOpen === undefined) { return; }
+      d.open = (d.dataset.wasOpen === '1');
+      delete d.dataset.wasOpen;
+    });
+  });
 }());
