@@ -140,6 +140,24 @@ def test_newer_image_replaces_older_target(tmp_path):
     assert (target_img_dir / 'screenshot.png').read_bytes() == b'v2'
 
 
+def test_os_metadata_files_are_never_copied(tmp_path):
+    source_md, source_img_dir, target_md, target_img_dir = _paths(tmp_path)
+    source_md.parent.mkdir(parents=True)
+    source_md.write_text('Zeile 1\n', encoding='utf-8')
+    source_img_dir.mkdir(parents=True)
+    (source_img_dir / 'screenshot.png').write_bytes(b'fake-png-bytes')
+    (source_img_dir / 'desktop.ini').write_text('[.ShellClassInfo]\n', encoding='utf-8')
+    (source_img_dir / 'Thumbs.db').write_bytes(b'junk')
+    (source_img_dir / '.DS_Store').write_bytes(b'junk')
+
+    result = import_chronik(source_md, source_img_dir, target_md, target_img_dir)
+
+    assert result['copied_images'] == ['screenshot.png']
+    assert not (target_img_dir / 'desktop.ini').exists()
+    assert not (target_img_dir / 'Thumbs.db').exists()
+    assert not (target_img_dir / '.DS_Store').exists()
+
+
 def test_no_image_dir_is_not_an_error(tmp_path):
     source_md, source_img_dir, target_md, target_img_dir = _paths(tmp_path)
     source_md.parent.mkdir(parents=True)

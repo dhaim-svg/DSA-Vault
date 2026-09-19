@@ -21,6 +21,11 @@ TARGET_DIR = VAULT_ROOT / 'abenteuer' / 'drachenchronik'
 TARGET_MD = TARGET_DIR / 'chronik.md'
 TARGET_IMG_DIR = TARGET_DIR / 'drachenchronik-daten'
 
+# OS-generated metadata files that sometimes sit next to synced images
+# (Windows/Google Drive folder customization, macOS Finder state) — never
+# campaign content, never worth importing.
+IGNORED_IMAGE_NAMES = {'desktop.ini', 'thumbs.db', '.ds_store'}
+
 
 def import_chronik(source_md=SOURCE_MD, source_img_dir=SOURCE_IMG_DIR,
                     target_md=TARGET_MD, target_img_dir=TARGET_IMG_DIR) -> dict:
@@ -62,6 +67,8 @@ def import_chronik(source_md=SOURCE_MD, source_img_dir=SOURCE_IMG_DIR,
         target_img_dir.mkdir(parents=True, exist_ok=True)
         for src_file in source_img_dir.iterdir():
             if not src_file.is_file():
+                continue
+            if src_file.name.lower() in IGNORED_IMAGE_NAMES:
                 continue
             dest_file = target_img_dir / src_file.name
             if dest_file.exists() and dest_file.stat().st_mtime >= src_file.stat().st_mtime:
