@@ -22,8 +22,7 @@ ausdrücklich „stoppen" steht. Unsicheres wird markiert und im Report gemeldet
 - `helden/` **nie ändern**.
 - In `abenteuer/` **nur** schreiben: (1) die neuen Session-Dateien, (2) die zwei beschriebenen Stellen
   in `abenteuer/drachenchronik/_drachenchronik.md` (Schritt 4) — plus den Import-Lauf aus Schritt 1.
-- **Nichts löschen** — auch nicht den Platzhalter `2025-10-04-session-01.md` (er zählt zu keinem
-  Abend; das Aufräumen ist ein einmaliger Schritt außerhalb dieses Kommandos und braucht User-Freigabe).
+- **Nichts löschen** — Aufräumen ist ein Schritt außerhalb dieses Kommandos und braucht User-Freigabe.
 - **Keine Git-Commits.** Commit erst nach Sichtung durch den User (`abenteuer/` ist User-Domäne).
 - Außerhalb der Session-Dateien und `_drachenchronik.md` nur `wiki-luecken.md` (Schritt 5) ergänzen.
 
@@ -176,8 +175,7 @@ weglassen, nichts umsortieren.
 **Neue NSCs / Orte** — Bullets `- **Name** — Rolle/Beschreibung (nur was die Chronik sagt)`.
 Getrennt in `### NSCs` und `### Orte` (leere Untergruppe weglassen; ist beides leer: nur `—`). „Neu" = in
 diesem Abend erstmals vorkommend: vorher die `## Neue NSCs / Orte`-Sektionen bereits vorhandener früherer
-Session-Dateien (`abenteuer/drachenchronik/*-session-*.md` mit früherem `datum` — der Platzhalter
-`2025-10-04-session-01.md` zählt nicht mit) lesen und Bekannte nicht erneut als neu listen (neue Information
+Session-Dateien (`abenteuer/drachenchronik/*-session-*.md` mit früherem `datum`) lesen und Bekannte nicht erneut als neu listen (neue Information
 zu einem Bekannten gehört in den Verlauf; Schreibvarianten desselben Namens gelten als bekannt, Abweichung
 mit `(?)` vermerken). Die Roh-Schreibweise der Namen übernehmen. **NSC** = vom Spielleiter geführte Figur
 (auch unbenannte Rollen: „Name nicht genannt"); **Mitspieler-Figuren und die Gruppe selbst** nicht listen.
