@@ -17,9 +17,11 @@ ausdrücklich „stoppen" steht. Unsicheres wird markiert und im Report gemeldet
 ## Grenzen (gelten für jeden Schritt)
 
 - `abenteuer/drachenchronik/chronik.md` **nie ändern** (auch nicht Formatierung/Tippfehler).
+  **Einzige Ausnahme:** der Import-Lauf aus Schritt 1 (überschreibt `chronik.md` und kopiert Bilder nach
+  `abenteuer/drachenchronik/drachenchronik-daten/`) — von Hand nie.
 - `helden/` **nie ändern**.
 - In `abenteuer/` **nur** schreiben: (1) die neuen Session-Dateien, (2) die zwei beschriebenen Stellen
-  in `abenteuer/drachenchronik/_drachenchronik.md` (Schritt 4).
+  in `abenteuer/drachenchronik/_drachenchronik.md` (Schritt 4) — plus den Import-Lauf aus Schritt 1.
 - **Nichts löschen** — auch nicht den Platzhalter `2025-10-04-session-01.md` (er zählt zu keinem
   Abend; das Aufräumen ist ein einmaliger Schritt außerhalb dieses Kommandos und braucht User-Freigabe).
 - **Keine Git-Commits.** Commit erst nach Sichtung durch den User (`abenteuer/` ist User-Domäne).
@@ -148,9 +150,13 @@ Blockquote-, `---`- oder `→`-Zeile davor).
 **Verlauf** — verdichtete, aber vollständige Wiedergabe der Ereignisse in Quellreihenfolge; kein Ereignis
 weglassen, nichts umsortieren.
 - **IG-Tag-Gliederung:** Eine Zeile, die *ausschließlich* ein Ingame-Datum ist (`Datum: 13. Phex -> Start`,
-  `**17. Phex**`, ebenso `Namenloser Tag`-Formen), beginnt einen IG-Tag → `### <IG-Datum wörtlich>`
-  (Zusatz wie `-> Start` als `(Start)` anhängen). Kommt dasselbe IG-Datum später erneut als eigene Zeile vor,
-  eigene `###` mit Zusatz `(Fortsetzung)` — nicht zusammenführen. Steht Text **vor** dem ersten Datums-Marker
+  `**17. Phex**`), beginnt einen IG-Tag → `### <IG-Datum wörtlich>`
+  (Zusatz wie `-> Start` als `(Start)` anhängen). Steht direkt unter dem Marker eine einzelne Klartextzeile
+  ohne Bullet (z. B. `Basiliskentag`), als Zusatz an die Überschrift hängen: `### 18. Phex (Basiliskentag)`.
+  Kommt dasselbe IG-Datum **innerhalb desselben Abends** später erneut als eigene Zeile vor, eigene `###` mit
+  Zusatz `(Fortsetzung)` — nicht zusammenführen. Ein Datum, das schon im **Vorabend** vorkam (Tag über zwei
+  Spielabende), bekommt **kein** `(Fortsetzung)` und keinen Verweis — jeder Abend wird für sich gegliedert.
+  Steht Text **vor** dem ersten Datums-Marker
   oder hat der Abend **gar keinen** Marker: `### IG-Datum nicht genannt` als erste Überschrift; **kein Datum
   ableiten oder aus dem Vorabend fortschreiben**.
 - Fett/kursiv gesetzte Zeilen, die *nicht* ausschließlich ein IG-Datum sind (`**Wissensaufbau im Hesindetempel**`,
