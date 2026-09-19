@@ -162,7 +162,9 @@ weglassen, nichts umsortieren.
 - Fett/kursiv gesetzte Zeilen, die *nicht* ausschließlich ein IG-Datum sind (`**Wissensaufbau im Hesindetempel**`,
   `**Punin Akademie am 15. Phex**`, `*Zurück im Dorf*`, `Sightseeing in Punin`), sind Szenen-Titel → als eigene
   Zeile `**Titel**` innerhalb des laufenden IG-Tags übernehmen, darunter die zugehörigen Bullets. Nicht in
-  IG-Tage umwandeln, auch wenn ein Datum im Titel vorkommt.
+  IG-Tage umwandeln, auch wenn ein Datum im Titel vorkommt. Eine **kursive** Einzelzeile direkt unter einem
+  Marker oder Titel (`*Brig-Lo*`, `*Von Ludi am Schiff erzählt*`) ist ebenfalls ein Szenen-Titel bzw. Untertitel
+  (eigene `**…**`-Zeile), **kein** Zusatz an die `###`-Überschrift — Zusatz nur bei *Klartext* ohne Formatierung.
 - Unterpunkte der Quelle bleiben als eingerückte Bullets erhalten (Verdichten ja, Struktur verflachen nein).
 - **Reines Markdown, keine HTML-Tags** (der Chronik-Tab schreibt `Verlauf` per Write-back zurück).
   Bilder (`<img src="…">`) nicht einbetten, stattdessen eine Zeile `(Bild: <dateiname> — siehe Roh-Chronik)`
@@ -174,9 +176,12 @@ weglassen, nichts umsortieren.
 **Neue NSCs / Orte** — Bullets `- **Name** — Rolle/Beschreibung (nur was die Chronik sagt)`.
 Getrennt in `### NSCs` und `### Orte` (leere Untergruppe weglassen; ist beides leer: nur `—`). „Neu" = in
 diesem Abend erstmals vorkommend: vorher die `## Neue NSCs / Orte`-Sektionen bereits vorhandener früherer
-Session-Dateien (`abenteuer/drachenchronik/*-session-*.md` mit früherem `datum`) lesen und Bekannte nicht
-erneut als neu listen (neue Information zu einem Bekannten gehört in den Verlauf). Die Roh-Schreibweise der
-Namen übernehmen.
+Session-Dateien (`abenteuer/drachenchronik/*-session-*.md` mit früherem `datum` — der Platzhalter
+`2025-10-04-session-01.md` zählt nicht mit) lesen und Bekannte nicht erneut als neu listen (neue Information
+zu einem Bekannten gehört in den Verlauf; Schreibvarianten desselben Namens gelten als bekannt, Abweichung
+mit `(?)` vermerken). Die Roh-Schreibweise der Namen übernehmen. **NSC** = vom Spielleiter geführte Figur
+(auch unbenannte Rollen: „Name nicht genannt"); **Mitspieler-Figuren und die Gruppe selbst** nicht listen.
+Bei unklarer Rolle: listen und `(?)` setzen.
 
 **Offene Fäden / Cliffhanger** — Bullets nur für Dinge, die die Chronik selbst als offen ausweist
 (ungeklärte Fragen, ausdrückliche Entscheidungen/Pläne/Ideen für später, Abbruch mitten in einer Szene);
@@ -220,7 +225,9 @@ eine Zeile, aufsteigend nach `#`:
 **(b) `## Offene Fäden`:** die Punkte aus dem Abschnitt „Offene Fäden / Cliffhanger" der neuen Session als
 Bullets `- <Text> *(Session NN)*` ergänzen. Bestehende Einträge nicht löschen/ändern; inhaltlich schon
 vorhandene nicht doppelt anlegen. Den Platzhalter `*(Leer — wächst pro Session.)*` entfernen, sobald echte
-Einträge stehen. Stand die Session-Sektion auf `—`: nichts ergänzen.
+Einträge stehen. Stand die Session-Sektion auf `—`: nichts ergänzen. Fäden früherer Abende, die der neue
+Abend erkennbar erledigt oder fortsetzt, **nicht selbst abhaken** — im Abschluss-Report als „Kandidaten zum
+Abhaken" nennen; der User entscheidet.
 
 ---
 
@@ -230,7 +237,8 @@ Begriffe/Regeln aus dem Abend, die für das Spiel relevant sind und zu denen im 
 (per Glob/Grep geprüft — dieselben Prüfungen wie bei den Links; z. B. Orte, Kulturen, Regelmechaniken),
 kommen in `wiki-luecken.md` (Vault-Root). Format der Datei: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 
-1. Kopf und letzte Abschnitte lesen; höchste bisherige `L<Zahl>` bestimmen: `grep -oE "^### L[0-9]+" wiki-luecken.md`.
+1. Kopf und letzte Abschnitte lesen; höchste bisherige `L<Zahl>` bestimmen: `grep -oE "^### L[0-9]+" wiki-luecken.md | tr -d '#L ' | sort -n | tail -1` (Nummern stehen nicht in Dateireihenfolge —
+nie einfach die letzte Fundstelle nehmen).
 2. Neuen Abschnitt **am Ende** anhängen (heutiges Datum: `date +%F`):
 
 ```markdown
