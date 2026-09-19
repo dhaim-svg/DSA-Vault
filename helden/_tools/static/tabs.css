@@ -88,6 +88,10 @@
   .spell .name .nlink,.spell .name .haus,.zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
   .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
+  /* Kopfzeile (Inline-color ink-mute, 1,95:1) und Modifikations-Details (ink-dim, 4,28:1) — im Druck ist das Desktop-Grid aktiv,
+     das Kompaktlayout gilt nur @media screen; Inline-Styles schlaegt nur !important. */
+  .spell.spell-head,.spell.spell-head *,
+  .mods-details summary.mods-toggle,.mods-details .mods-list{ color:var(--paper-ink) !important; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }

@@ -400,6 +400,8 @@ def _css_rules(css):
 PRINT_SPELL_SELECTORS = (
     '.spell .name .nlink', '.spell .name .nlink::after', '.spell .name .haus', '.zfw-num',
     '.spell .zd', '.spell .kosten', '.spell .wirkung', '.spell .submeta',
+    # Browser-Messung Sprint 019: Kopfzeile (Inline-color) 1,95:1, Modifikations-Details 4,28:1 im Druck
+    '.spell.spell-head', '.spell.spell-head *', '.mods-details summary.mods-toggle', '.mods-details .mods-list',
 )
 
 
