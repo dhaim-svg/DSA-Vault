@@ -14,16 +14,21 @@ VAULT_ROOT = TOOLS_DIR.parent.parent
 STATIC_DIR = TOOLS_DIR / 'static'
 sys.path.insert(0, str(TOOLS_DIR))
 
-from flask import Flask, jsonify, request
+from flask import Flask, abort, jsonify, request, send_from_directory
 from parsers.held import load_held
 from parsers.kampagne import load_kampagne
-from rendering import build_context, render_dashboard   # shared with render-held.py
+from chronik_paths import CHRONIK_IMG_DIRNAME, chronik_dir
+from rendering import CHRONIK_BILD_PREFIX_SERVER, build_context, render_dashboard   # shared with render-held.py
 from writers.held_writer import patch, etag_for, mtime_map
 from git_ops import commit_helden
 
+# No .svg: SVG can carry script. abenteuer/drachenchronik/ also holds private markdown.
+CHRONIK_BILD_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp'}
+
 
 def _render_dashboard(slug: str) -> str:
-    return render_dashboard(build_context(slug, VAULT_ROOT))
+    return render_dashboard(build_context(
+        slug, VAULT_ROOT, chronik_bild_prefix=CHRONIK_BILD_PREFIX_SERVER))
 
 
 def create_app(slug: str) -> Flask:
@@ -40,6 +45,17 @@ def create_app(slug: str) -> Flask:
     @app.route('/held/<path:s>')
     def held_page(s):
         return _render_dashboard(s)
+
+    @app.route('/chronik-bild/<path:name>')
+    def chronik_bild(name):
+        prefix = CHRONIK_IMG_DIRNAME + '/'
+        if not name.startswith(prefix):
+            abort(404)
+        if Path(name).suffix.lower() not in CHRONIK_BILD_EXTENSIONS:
+            abort(404)
+        # Root at the image folder itself: safe_join then rejects any '..' escape,
+        # even one that would normalize out of it (drachenchronik-daten/../x.png).
+        return send_from_directory(chronik_dir(VAULT_ROOT) / CHRONIK_IMG_DIRNAME, name[len(prefix):])
 
     # ------------------------------------------------------------------ #
     # API: read

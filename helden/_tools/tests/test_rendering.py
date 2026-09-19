@@ -6,7 +6,14 @@ from pathlib import Path
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from rendering import CSS_FILES, STATIC_DIR, css_bundle, make_env
+import pytest
+
+import rendering
+import server
+from rendering import (
+    CHRONIK_BILD_PREFIX_SERVER, CHRONIK_BILD_PREFIX_STATIC, CSS_FILES, STATIC_DIR, VAULT_ROOT,
+    build_context, css_bundle, make_env, render_dashboard,
+)
 
 
 def test_css_files_exist_and_nonempty():
@@ -34,6 +41,7 @@ def test_css_files_have_no_duplicates():
 
 def test_css_bundle_is_env_global():
     assert make_env().globals['css_bundle'] is css_bundle
+
 
 TEMPLATES_DIR = TOOLS_DIR / 'templates'
 PARTIALS_DIR = TEMPLATES_DIR / 'partials'
@@ -67,4 +75,74 @@ def test_every_include_target_exists():
 
 
 def test_no_tab_block_left_in_dashboard():
-    assert 'class="tab-content" id="tab-' not in _dashboard_source()
+    assert not re.search(r'''id=["']tab-''', _dashboard_source())
+
+
+def test_each_partial_starts_with_its_own_tab_container():
+    for name in TAB_PARTIALS:
+        text = (PARTIALS_DIR / f'{name}.j2').read_text(encoding='utf-8')
+        first_line = next(line for line in text.splitlines() if line.strip())
+        assert first_line.lstrip().startswith('<'), f'{name}.j2 beginnt nicht mit einem Tag'
+        assert f'id="tab-{name}"' in first_line, f'{name}.j2 beginnt mit fremdem Tab-Container'
+
+
+def test_missing_css_file_fails_loudly(monkeypatch):
+    monkeypatch.setattr(rendering, 'CSS_FILES', ['gibt-es-nicht.css'])
+    with pytest.raises(FileNotFoundError):
+        css_bundle()
+
+
+LIVE_HELD = VAULT_ROOT / 'helden' / 'illaen-baernhold'
+
+
+@pytest.fixture(scope='module')
+def live_html():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    return render_dashboard(build_context('illaen-baernhold'))
+
+
+def test_render_has_single_style_tag_and_single_css_bundle(live_html):
+    assert len(re.findall(r'<style\b', live_html)) == 1
+    assert live_html.count(css_bundle()) == 1
+
+
+def test_render_has_each_tab_container_exactly_once(live_html):
+    for name in TAB_PARTIALS:
+        assert live_html.count(f'id="tab-{name}"') == 1, f'tab-{name}'
+
+
+def test_render_hoists_resource_values_into_js(live_html):
+    assert re.search(r'LE: \{ current: \d+', live_html)
+
+
+def test_build_context_exposes_kampagne_slug_and_chronik():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    ctx = build_context('illaen-baernhold')
+    assert ctx['kampagne_slug'] == 'drachenchronik'
+    assert 'chronik' in ctx
+    assert ctx['chronik_bild_prefix'] == CHRONIK_BILD_PREFIX_STATIC
+
+
+def test_server_render_passes_kampagne_slug_to_js():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    assert 'kampagne_slug: "drachenchronik"' in server._render_dashboard('illaen-baernhold')
+
+
+def test_server_context_uses_server_bild_prefix(monkeypatch):
+    captured = {}
+    monkeypatch.setattr(server, 'build_context',
+                        lambda slug, vault_root, **kw: captured.update(kw) or {})
+    monkeypatch.setattr(server, 'render_dashboard', lambda ctx: '')
+    server._render_dashboard('illaen-baernhold')
+    assert captured == {'chronik_bild_prefix': CHRONIK_BILD_PREFIX_SERVER}
+
+
+def test_build_context_without_chronik_file_has_empty_chronik(tmp_path, monkeypatch):
+    monkeypatch.setattr(rendering, 'load_held', lambda root, slug: {})
+    monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
+    ctx = build_context('x', tmp_path, chronik_bild_prefix='/p/')
+    assert ctx['chronik'] == {'spielabende': [], 'meta': {}}
+    assert ctx['chronik_bild_prefix'] == '/p/'

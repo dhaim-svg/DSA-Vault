@@ -4,6 +4,7 @@ from urllib.parse import quote
 import jinja2
 
 from parsers.held import load_held
+from parsers.chronik import load_chronik
 from parsers.kampagne import load_kampagne
 
 TOOLS_DIR = Path(__file__).parent
@@ -11,6 +12,10 @@ VAULT_ROOT = TOOLS_DIR.parent.parent
 TEMPLATES_DIR = TOOLS_DIR / 'templates'
 STATIC_DIR = TOOLS_DIR / 'static'
 KAMPAGNE_SLUG = 'drachenchronik'
+
+# Prefix + chronik bild.src (which starts with 'drachenchronik-daten/') gives the <img> URL.
+CHRONIK_BILD_PREFIX_SERVER = '/chronik-bild/'
+CHRONIK_BILD_PREFIX_STATIC = '../abenteuer/drachenchronik/'
 
 # Bundle order is load-bearing: CSS cascade depends on it.
 CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css']
@@ -59,11 +64,14 @@ def make_env() -> jinja2.Environment:
     return env
 
 
-def build_context(slug: str, vault_root: Path = VAULT_ROOT) -> dict:
+def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
+                  chronik_bild_prefix: str = CHRONIK_BILD_PREFIX_STATIC) -> dict:
     """Template context shared by the live server and the static render."""
     return {
         'held': load_held(vault_root, slug),
         'kampagne': load_kampagne(vault_root, KAMPAGNE_SLUG),
+        'chronik': load_chronik(vault_root),
+        'chronik_bild_prefix': chronik_bild_prefix,
         'slug': slug,
         'kampagne_slug': KAMPAGNE_SLUG,
     }
