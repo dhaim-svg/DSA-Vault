@@ -4,6 +4,7 @@
     <input type="search" class="register-suche" placeholder="NSC oder Ort suchen &hellip;" aria-label="Register durchsuchen" autocomplete="off">
     <span class="register-zaehler" aria-live="polite"></span>
   </div>
+  <p class="register-druckfilter" hidden></p>
   {% for gruppe, titel, eintraege in [('nsc', 'NSCs', register.nscs), ('ort', 'Orte', register.orte)] %}
   {% if eintraege %}
   <section class="card register-gruppe" data-gruppe="{{ gruppe }}">

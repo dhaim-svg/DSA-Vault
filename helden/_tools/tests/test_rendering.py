@@ -800,3 +800,42 @@ def test_css_artikel_toggle_is_touch_sized_only_in_compact_layout():
     )
     base = ' '.join(_decls(_css_rules(_strip_print_blocks(css)), '.artikel-details summary.artikel-toggle'))
     assert 'min-height' not in base
+
+
+# -- D-045: Chronik-Druck — nur aktive Ansicht + Filter-Kopfzeile ------------
+
+def _print_rules():
+    return _css_rules(''.join(_media_blocks(css_bundle(), r'@media\s+print')))
+
+
+def test_css_print_chronik_prints_only_active_view():
+    # D-045: die Druckregel .chronik-view{display:block!important} erzwang Roh + Kompiliert immer gemeinsam.
+    prints = _print_rules()
+    active = [d for s, d in prints if s == '.chronik-view--active']
+    assert any(re.search(r'display\s*:\s*block\s*!important', d) for d in active)
+    assert not [s for s, _ in prints if s == '.chronik-view'], 'nacktes .chronik-view im Druck-Block'
+    assert not [s for s, _ in prints if ':not(.chronik-view--active)' in s], 'Register-Sonderregel muss entfallen'
+    # nicht aktive Ansichten bleiben ueber die Bildschirm-Basisregel ausgeblendet (kein Druck-Override darauf)
+    screen = _css_rules(_strip_print_blocks(css_bundle()))
+    assert any(re.search(r'display\s*:\s*none', d) for s, d in screen if s == '.chronik-view')
+
+
+def test_css_register_druckfilter_only_visible_in_print_when_not_hidden():
+    screen = _css_rules(_strip_print_blocks(css_bundle()))
+    base = [d for s, d in screen if s == '.register-druckfilter']
+    assert any(re.search(r'display\s*:\s*none', d) for d in base), 'am Bildschirm immer unsichtbar'
+    print_rules = [(s, d) for s, d in _print_rules() if s.startswith('.register-druckfilter')]
+    shown = [s for s, d in print_rules if re.search(r'display\s*:\s*block\s*!important', d)]
+    assert shown == ['.register-druckfilter:not([hidden])']
+    # keine andere Druckregel darf display setzen (wuerde [hidden] uebersteuern)
+    assert all(s in shown or 'display' not in d for s, d in print_rules)
+
+
+def test_render_register_druckfilter_is_hidden_and_outside_register_tools(live_html):
+    assert live_html.count('class="register-druckfilter"') == 1
+    tag = re.search(r'<p class="register-druckfilter"[^>]*></p>', live_html)
+    assert tag and re.search(r'(?<![-\w])hidden(?![-\w])', tag.group(0)), 'Kopfzeile muss initial hidden sein'
+    tools = re.search(r'<div class="register-tools">.*?</div>', live_html, re.S).group(0)
+    assert 'register-druckfilter' not in tools, 'register-tools wird im Druck ausgeblendet'
+    view = live_html.index('id="chronik-view-register"')
+    assert view < tag.start() < live_html.index('<section class="card register-gruppe"', view)

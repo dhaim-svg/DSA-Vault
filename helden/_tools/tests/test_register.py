@@ -224,3 +224,114 @@ def test_orte_parsed_like_nscs():
     names = {e['name']: e for e in reg['orte']}
     assert names['Yaquir']['qualifier'] == 'Fluss'
     assert names['Cumrat']['unsicher'] is True
+
+
+# -- D-045: Filter-Kopfzeile fuer den Druck (static/register.js) -------------
+import json
+import re
+import shutil
+import subprocess
+
+import pytest
+
+from rendering import STATIC_DIR
+
+REGISTER_JS = STATIC_DIR / 'register.js'
+needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
+
+# Minimales Fake-DOM: 2 Gruppen, 3 Eintraege (such: alrik held / borbarad / cumrat stadt); innerHTML wirft.
+_NODE_RUNNER = """
+const fs = require('fs'), vm = require('vm');
+const steps = JSON.parse(process.argv[2]);
+const noDruck = process.argv[3] === 'nodruck';
+function el(extra) {
+  const e = { hidden: false, textContent: '', dataset: {} };
+  Object.defineProperty(e, 'innerHTML', { get() { return ''; }, set() { throw new Error('innerHTML verboten'); } });
+  return Object.assign(e, extra || {});
+}
+function entry(such) { return el({ dataset: { such } }); }
+function group(entries) {
+  const count = el();
+  return { hidden: false, querySelectorAll: () => entries, querySelector: () => count };
+}
+const input = { value: '', l: {}, addEventListener(t, f) { (this.l[t] = this.l[t] || []).push(f); } };
+const counter = el(), empty = el(), druck = el(), dom = {};
+druck.hidden = false;  // Startzustand bewusst 'sichtbar': der Initial-apply() muss selbst verstecken
+const els = { '.register-suche': input, '.register-zaehler': counter, '.register-leer': empty,
+              '.register-druckfilter': noDruck ? null : druck };
+const groups = [group([entry('alrik held'), entry('borbarad')]), group([entry('cumrat stadt')])];
+const document = {
+  querySelector: (s) => els[s] || null,
+  querySelectorAll: (s) => (s === '.register-gruppe' ? groups : []),
+  addEventListener: (t, f) => { dom[t] = f; },
+};
+vm.runInNewContext(fs.readFileSync(process.argv[1], 'utf8'), { document });
+dom.DOMContentLoaded();
+const out = [{ hidden: druck.hidden, text: druck.textContent }];
+for (const s of steps) {
+  if (s.value !== undefined) { input.value = s.value; }
+  (input.l[s.type] || []).forEach((f) => f(s.key ? { key: s.key } : {}));
+  out.push({ hidden: druck.hidden, text: druck.textContent });
+}
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def _run_register(steps, *flags):
+    proc = subprocess.run(
+        ['node', '-e', _NODE_RUNNER, str(REGISTER_JS), json.dumps(steps), *flags],
+        capture_output=True, text=True, encoding='utf-8', timeout=30,
+    )
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+@needs_node
+def test_register_js_druckfilter_initially_hidden():
+    assert _run_register([]) == [{'hidden': True, 'text': ''}]
+
+
+@needs_node
+def test_register_js_druckfilter_shows_term_and_counts():
+    out = _run_register([{'type': 'input', 'value': 'alrik'}])
+    assert out[1] == {'hidden': False, 'text': 'Gefiltert nach: "alrik" — 1/3 Einträge'}
+
+
+@needs_node
+def test_register_js_druckfilter_trims_term_and_hides_on_blank():
+    out = _run_register([
+        {'type': 'input', 'value': '  cumrat  '},
+        {'type': 'input', 'value': '   '},
+    ])
+    assert out[1] == {'hidden': False, 'text': 'Gefiltert nach: "cumrat" — 1/3 Einträge'}
+    assert out[2] == {'hidden': True, 'text': ''}
+
+
+@needs_node
+def test_register_js_druckfilter_hides_on_escape_reset():
+    out = _run_register([
+        {'type': 'input', 'value': 'stadt'},
+        {'type': 'keydown', 'key': 'Escape'},
+    ])
+    assert out[1]['hidden'] is False
+    assert out[2] == {'hidden': True, 'text': ''}
+
+
+@needs_node
+def test_register_js_druckfilter_counts_zero_matches_and_keeps_markup_as_text():
+    term = '<img src=x onerror=alert(1)>'  # Fake-innerHTML wirft -> nur textContent erlaubt
+    out = _run_register([{'type': 'input', 'value': term}])
+    assert out[1] == {'hidden': False, 'text': f'Gefiltert nach: "{term}" — 0/3 Einträge'}
+
+
+@needs_node
+def test_register_js_works_without_druckfilter_element():
+    out = _run_register([{'type': 'input', 'value': 'alrik'}], 'nodruck')
+    assert out[1] == {'hidden': False, 'text': ''}  # Fake bleibt unberuehrt, kein Absturz
+
+
+def test_register_js_druckfilter_uses_textcontent_not_innerhtml():
+    src = REGISTER_JS.read_text(encoding='utf-8')
+    assert 'innerHTML' not in src
+    assert re.search(r"querySelector\('\.register-druckfilter'\)", src)
+    assert re.search(r'druck\w*\.textContent\s*=', src)
