@@ -202,7 +202,8 @@
   overflow-wrap: anywhere;
   margin-bottom: 4px;
 }
-@media print { .zustand-legend { color: var(--paper-ink); } }
+/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) gibt es nichts zu erklaeren. */
+#zustand-chips:empty + .zustand-legend { display: none; }
 @media (max-width: 900px) {
   .vitals-sticky {
     position: sticky;
@@ -220,7 +221,7 @@
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
   .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
-  .wunden-counter, #zustand-chips { display: none !important; }
+  .wunden-counter, #zustand-chips, .zustand-legend { display: none !important; }
   /* #commit-msg hidden via #footer-bar.screen-only */
   .vital-max { font-weight: 700; }
   .vital-stepper { display: none !important; }

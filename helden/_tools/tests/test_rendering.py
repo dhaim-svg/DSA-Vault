@@ -546,6 +546,13 @@ def test_render_kampf_tab_has_one_zustand_legend_below_chips(live_html):
     assert 'kein fester Probenmalus' in text
 
 
+def test_zustand_legend_hidden_without_chips_and_in_print():
+    # Static-Render (file://): session.js rendert die Chips nicht -> Legende ohne Bezug; Druck blendet die Chips aus -> Legende auch.
+    css = css_bundle()
+    assert re.search(r'#zustand-chips:empty\s*\+\s*\.zustand-legend\s*\{[^}]*display:\s*none', css)
+    assert re.search(r'@media print\s*\{\s*\.vital-btn[^}]*#zustand-chips[^}]*\.zustand-legend[^}]*display:\s*none', css)
+
+
 def test_render_zustand_legend_links_to_wiki_article_without_double_md(live_html):
     legend = re.search(r'<div class="zustand-legend">(.*?)</div>', _kampf_tab(live_html), re.S).group(1)
     hrefs = re.findall(r'href="([^"]+)"', legend)
