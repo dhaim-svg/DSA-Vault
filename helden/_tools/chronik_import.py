@@ -10,6 +10,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from chronik_paths import CHRONIK_IMG_DIRNAME, CHRONIK_MD_NAME, chronik_dir
+
 TOOLS_DIR = Path(__file__).parent
 VAULT_ROOT = TOOLS_DIR.parent.parent
 
@@ -17,9 +19,9 @@ DRIVE_ROOT = Path(r'C:\Users\David\Google Drive\DSA\Helden')
 SOURCE_MD = DRIVE_ROOT / 'Drachenchronik.md'
 SOURCE_IMG_DIR = DRIVE_ROOT / 'drachenchronik-daten'
 
-TARGET_DIR = VAULT_ROOT / 'abenteuer' / 'drachenchronik'
-TARGET_MD = TARGET_DIR / 'chronik.md'
-TARGET_IMG_DIR = TARGET_DIR / 'drachenchronik-daten'
+TARGET_DIR = chronik_dir(VAULT_ROOT)
+TARGET_MD = TARGET_DIR / CHRONIK_MD_NAME
+TARGET_IMG_DIR = TARGET_DIR / CHRONIK_IMG_DIRNAME
 
 # OS-generated metadata files that sometimes sit next to synced images
 # (Windows/Google Drive folder customization, macOS Finder state) — never

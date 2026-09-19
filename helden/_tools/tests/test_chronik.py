@@ -258,3 +258,65 @@ def test_spielabende_preserve_document_order(tmp_path):
     datums = [s['datum'] for s in result['spielabende']]
 
     assert datums == ['15.02.2026', '01.01.2026']
+
+
+# ---------------------------------------------------------------------------
+# <img> mixed with text: the text must survive, the image follows as its own
+# bild block (D-032a parser fix)
+# ---------------------------------------------------------------------------
+
+def _bloecke(tmp_path, body: str) -> list[dict]:
+    _write_chronik(tmp_path, '## 01.01.2026\n**18. Phex**\n' + body)
+    return load_chronik(tmp_path)['spielabende'][0]['ig_tage'][0]['bloecke']
+
+
+def test_bullet_with_text_before_img_keeps_text_then_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, '- Die Gruppe findet <img src="ordner\\a.png">\n')
+
+    assert bloecke == [
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Die Gruppe findet'},
+        {'typ': 'bild', 'src': 'ordner/a.png'},
+    ]
+
+
+def test_indented_bullet_with_text_around_img_collapses_whitespace(tmp_path):
+    bloecke = _bloecke(tmp_path, '  - Vorher   <img src="a.png">  nachher  \n')
+
+    assert bloecke == [
+        {'typ': 'bullet', 'tiefe': 1, 'text': 'Vorher nachher'},
+        {'typ': 'bild', 'src': 'a.png'},
+    ]
+
+
+def test_non_bullet_line_with_text_and_img_becomes_text_then_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, 'Ein Absatz <img src="a.png"> mit Bild\n')
+
+    assert bloecke == [
+        {'typ': 'text', 'text': 'Ein Absatz mit Bild'},
+        {'typ': 'bild', 'src': 'a.png'},
+    ]
+
+
+def test_img_only_line_with_and_without_bullet_marker_yields_single_bild(tmp_path):
+    for line in ('- <img src="a.png">\n', '<img src="a.png">\n', '  - <img src="a.png">\n'):
+        assert _bloecke(tmp_path, line) == [{'typ': 'bild', 'src': 'a.png'}]
+
+
+def test_two_imgs_in_one_line_yield_two_bild_blocks_in_order(tmp_path):
+    bloecke = _bloecke(tmp_path, '<img src="a.png"><img src="b.png">\n')
+
+    assert bloecke == [
+        {'typ': 'bild', 'src': 'a.png'},
+        {'typ': 'bild', 'src': 'b.png'},
+    ]
+
+
+def test_img_with_extra_attributes_is_removed_completely(tmp_path):
+    bloecke = _bloecke(tmp_path, '- <img src="x.png" width="200">\n')
+    assert bloecke == [{'typ': 'bild', 'src': 'x.png'}]
+
+    bloecke = _bloecke(tmp_path, '- Text <img src="x.png" width="200"> Ende\n')
+    assert bloecke == [
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Text Ende'},
+        {'typ': 'bild', 'src': 'x.png'},
+    ]

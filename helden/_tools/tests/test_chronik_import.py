@@ -13,7 +13,9 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
+import chronik_import
 from chronik_import import import_chronik
+from chronik_paths import CHRONIK_IMG_DIRNAME, CHRONIK_MD_NAME, chronik_dir
 
 
 # ---------------------------------------------------------------------------
@@ -168,3 +170,17 @@ def test_no_image_dir_is_not_an_error(tmp_path):
 
     assert result['copied_images'] == []
     assert not target_img_dir.exists()
+
+
+# ---------------------------------------------------------------------------
+# Shared path constants (importer and parser must agree on the location)
+# ---------------------------------------------------------------------------
+
+def test_import_targets_are_derived_from_shared_chronik_paths():
+    assert chronik_import.TARGET_MD == chronik_dir(chronik_import.VAULT_ROOT) / CHRONIK_MD_NAME
+    assert chronik_import.TARGET_IMG_DIR == chronik_dir(chronik_import.VAULT_ROOT) / CHRONIK_IMG_DIRNAME
+
+
+def test_chronik_dir_layout(tmp_path):
+    assert chronik_dir(tmp_path) == tmp_path / 'abenteuer' / 'drachenchronik'
+    assert (CHRONIK_MD_NAME, CHRONIK_IMG_DIRNAME) == ('chronik.md', 'drachenchronik-daten')
