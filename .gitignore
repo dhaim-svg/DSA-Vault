@@ -10,3 +10,9 @@ __pycache__/
 
 # Debug
 Screenshots/**
+
+# Obsidian UI-State (Layout-Churn, nicht versionieren)
+.obsidian/workspace.json
+
+# Playwright MCP
+.playwright-mcp/
