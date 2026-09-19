@@ -196,3 +196,14 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 - **Wiki-Dateien:** `wiki/dsa-4.1/zauber/*.md` (Beispiel `abvenenum.md`, Zeile 9: `kosten: 4 AsP pro Mahlzeit für bis zu 10 Personen (Ach: 3 AsP)`)
 - **Befund:** Werte in `kosten:`, `zauberdauer:` (u. a. `probe:`) enthalten ein unquotiertes `: ` (Repräsentations-Zusätze wie `(Ach: 3 AsP)`, `(Sch: 5 AsP)`). `yaml.safe_load` bricht mit „mapping values are not allowed here" ab — 103 der 268 Zauberartikel sind betroffen (Stichprobe per `parsers.held.parse_frontmatter` am 19.09.2026: 165 ok / 103 fehlerhaft). Folgen: Obsidian-Properties/Dataview lesen diese Artikel nicht, maschinelles Auslesen scheitert; das Dashboard umgeht es seit Sprint 018 mit einem zeilenweisen Fallback-Parser (`parsers/wikiartikel.py`).
 - **Vorschlag:** Betroffene Werte in Anführungszeichen setzen (`kosten: "4 AsP … (Ach: 3 AsP)"`) — per Skript prüfbar (`yaml.safe_load` über alle Artikel; Ziel 0 Fehler) und mit Diff-Stichprobe umsetzen. Danach den Fallback-Parser im Dashboard entfernen. Ggf. Extraktions-Konvention in `raw/pdf-extracted/EXTRACTION-PLAN.md` ergänzen („Frontmatter-Werte mit `:` immer quoten").
+
+---
+
+## 2026-09-19 — Dashboard Sprint 019 (ausgelöst durch D-041 Wund-/Zustände-Audit)
+
+### L23: Zustände Schmerz/Furcht/Betäubung/Verwirrung/Erschöpfung — nicht als Probenmalus belegt
+
+- **Wiki-Datei:** `wiki/dsa-4.1/grundregeln/zustaende.md` (neu)
+- **Befund:** Die fünf Zustands-Chips des Dashboards (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2) sind in den extrahierten Büchern WdS/WdH/WdE **nicht als Probenmalus gefunden** worden. Belegt sind nur: Wunden als Basiswert-Abzug (WdS S. 57), Schmerz-Probe nach Wunde (optional, WdS S. 82), Ängste als Schlechte Eigenschaften (WdH S. 268), Betäubungsschlag mit Bewusstlosigkeit (WdS S. 61, 86), Erschöpfung/Überanstrengung als Ressource (WdS S. 139) sowie optionale Probenmali durch niedrige LE (WdS S. 57) und AU (WdS S. 83). „Verwirrt" hat keine Regelgrundlage außer Spezialfällen (Überraschung WdS S. 78, Patzer-Desorientierung WdS S. 85). Die Chip-Werte sind demnach Hausregeln.
+- **Vorvorhandener Fehler (behoben):** `grundregeln/eigenschaften.md` schrieb „SP ≥ WS = Wunde"; WdS S. 57 sagt „mehr Schadenspunkte als die Wundschwelle" (SP > WS). Zwei Zeilen korrigiert. `grundregeln/proben.md` Z. 64 enthält dieselbe Formulierung „SP ≥ Wundschwelle" und ist noch offen.
+- **Vorschlag:** Bei Bedarf weitere Bände auf eine allgemeine Zustandsregel prüfen (z. B. Wege der Zauberei, Zoo-Botanica Aventurica). Suchmuster in WdS/WdH/WdE: Schmerz, Furcht/Ängst/Panik/Schreck, Betäub/bewusstlos, Verwirr, Erschöpf/Überanstreng, Zustände (ohne Professionen-Kapitel und Indizes).

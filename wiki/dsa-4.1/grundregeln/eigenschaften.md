@@ -72,7 +72,7 @@ Bei der Generierung: Professions-SO-Minimum + je 1 GP bis Professions-Maximum.
 | **PA-Basis** | (IN + GE + KK) / 5 | Basis aller Nahkampf-PA-Werte |
 | **FK-Basis** | (IN + FF + KK) / 5 | Basis aller Fernkampf-Werte |
 | **INI-Basis** | (MU + IN) / 2 | Aufgerundet; + SF-Boni |
-| **Wundschwelle** | KO / 2 | Aufgerundet; SP ≥ WS = Wunde |
+| **Wundschwelle** | KO / 2 | Aufgerundet; SP > WS = Wunde (mehr SP als die Schwelle; WdS S. 57) |
 
 > Alle Formeln: *Werte bis n,49 abrunden, ab n,50 aufrunden* (echt runden) — außer explizit anders angegeben.
 
@@ -86,7 +86,7 @@ Für magische Traditionen bestimmt die Leiteigenschaft die Struktur der Zauberei
 
 - Eigenschaftswerte bewegen sich für menschenähnliche Wesen üblicherweise zwischen 1 und 21 (Schwerpunkt 8–14).
 - Alle abgeleiteten Kampf- und Magie-Werte leiten sich aus Kombinationen von zwei bis drei Eigenschaften ab.
-- Wundschwelle = KO/2 (aufgerundet) — darunter liegende SP-Treffer hinterlassen keine Wunden.
+- Wundschwelle = KO/2 (aufgerundet) — Treffer mit SP bis einschließlich der Schwelle hinterlassen keine Wunden (WdS S. 57; Auswirkungen: [[zustaende]]).
 - Steigerung von Eigenschaften ist im Spiel möglich aber sehr AP-intensiv.
 
 ## Verwandte Artikel
