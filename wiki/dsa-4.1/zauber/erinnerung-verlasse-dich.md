@@ -5,11 +5,11 @@ probe: MU/IN/CH (+MR)
 komplexität: D
 merkmale:
   - Herrschaft
-kosten: 11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)
+kosten: "11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 3 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung
-wirkungsdauer: ZfP* Stunden (Bor: so viele Stunden wie AsP)
+wirkungsdauer: "ZfP* Stunden (Bor: so viele Stunden wie AsP)"
 repräsentationen:
   Bor: 4
   Mag: 3

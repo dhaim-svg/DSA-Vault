@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Umwelt
   - Antimagie
-kosten: 11 AsP (Sch: 7 AsP)
+kosten: "11 AsP (Sch: 7 AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Zone
 reichweite: ZfW Schritt Radius

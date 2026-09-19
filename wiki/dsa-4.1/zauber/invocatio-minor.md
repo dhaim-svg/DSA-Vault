@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Beschwörung
   - Dämonisch
-kosten: 11 AsP für Beschwörung (Bor: 1W20 AsP oder Hälfte als LeP); Kontrollkosten variieren je Dämon
+kosten: "11 AsP für Beschwörung (Bor: 1W20 AsP oder Hälfte als LeP); Kontrollkosten variieren je Dämon"
 zauberdauer: 5 Aktionen + 2W20 Aktionen bis Erscheinen
 zielobjekt: einzelner Dämon
 reichweite: unmittelbare Nähe des Magiers; kann sich danach beliebig entfernen

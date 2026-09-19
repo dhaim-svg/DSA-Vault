@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Beschwörung
   - Dämonisch
-kosten: 11 AsP + 1 AsP pro 10 Raumschritt Gebiet (Bor: 1W20+3 AsP/10 Rsch oder Hälfte als LeP)
+kosten: "11 AsP + 1 AsP pro 10 Raumschritt Gebiet (Bor: 1W20+3 AsP/10 Rsch oder Hälfte als LeP)"
 zauberdauer: 20 Aktionen
 zielobjekt: Zone
 reichweite: 21 Schritt (Entfernung der Zone)

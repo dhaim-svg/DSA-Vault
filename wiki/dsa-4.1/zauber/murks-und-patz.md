@@ -6,7 +6,7 @@ probe: IN/IN/FF (+Mod.)
 komplexität: C
 merkmale:
   - Einfluss
-kosten: 3 AsP pro 2 Beteiligte (mind. 17 AsP; Sch: 1 AsP/Beteiligtem, mind. 12 AsP)
+kosten: "3 AsP pro 2 Beteiligte (mind. 17 AsP; Sch: 1 AsP/Beteiligtem, mind. 12 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Kampfgeschehen
 reichweite: Kampfplatz (max. 21 Schritt Radius)

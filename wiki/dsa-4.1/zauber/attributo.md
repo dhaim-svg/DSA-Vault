@@ -5,7 +5,7 @@ probe: KL/CH/[gesteigerte Eigenschaft]
 komplexität: B
 merkmale:
   - Eigenschaften
-kosten: 7 AsP (Sch: 5 AsP)
+kosten: "7 AsP (Sch: 5 AsP)"
 zauberdauer: 30 Aktionen
 zielobjekt: Einzelperson, Einzelwesen (freiwillig)
 reichweite: Berührung

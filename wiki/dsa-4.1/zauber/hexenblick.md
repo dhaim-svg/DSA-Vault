@@ -6,7 +6,7 @@ probe: IN/IN/CH
 komplexität: B
 merkmale:
   - Verständigung
-kosten: 1 AsP für beide Beteiligten (borbaradianische Variante: 1W3 AsP für beide)
+kosten: "1 AsP für beide Beteiligten (borbaradianische Variante: 1W3 AsP für beide)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: selbst; Blick reicht 3 Schritt

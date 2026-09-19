@@ -5,7 +5,7 @@ probe: MU/KL/CH (+MR)
 komplexität: D
 merkmale:
   - Dämonisch (Mishkhara)
-kosten: Gefährlichkeitsstufe der Krankheit × 2 AsP (Bor: Stufe × 1W3 AsP oder Hälfte als LeP)
+kosten: "Gefährlichkeitsstufe der Krankheit × 2 AsP (Bor: Stufe × 1W3 AsP oder Hälfte als LeP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelperson
 reichweite: 3 Schritt

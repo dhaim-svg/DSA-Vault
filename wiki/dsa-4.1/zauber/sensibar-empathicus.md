@@ -6,7 +6,7 @@ probe: KL/IN/CH (+MR)
 komplexität: C
 merkmale:
   - Hellsicht
-kosten: 3 AsP pro 10 Aktionen (Sch: 2 AsP pro 10 Aktionen)
+kosten: "3 AsP pro 10 Aktionen (Sch: 2 AsP pro 10 Aktionen)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelperson
 reichweite: ZfW Schritt

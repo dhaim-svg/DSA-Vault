@@ -8,7 +8,7 @@ merkmale:
   - Dämonisch (Blakharaz)
   - Eigenschaften
   - Einfluss
-kosten: 1W20 AsP pro 10 KR Dauer (borbaradianische Variante: die Hälfte als LeP)
+kosten: "1W20 AsP pro 10 KR Dauer (borbaradianische Variante: die Hälfte als LeP)"
 zauberdauer: 20 Aktionen (davon 3 aufeinanderfolgende Berührungs-Aktionen)
 zielobjekt: Einzelperson
 reichweite: Berührung

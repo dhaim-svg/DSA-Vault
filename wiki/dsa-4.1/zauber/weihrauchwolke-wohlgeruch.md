@@ -6,7 +6,7 @@ probe: IN/CH/FF
 komplexität: B
 merkmale:
   - Illusion
-kosten: 6 AsP (Sch: 4 AsP)
+kosten: "6 AsP (Sch: 4 AsP)"
 zauberdauer: 5 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst, Berührung

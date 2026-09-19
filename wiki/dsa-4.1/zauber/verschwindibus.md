@@ -6,7 +6,7 @@ probe: IN/CH/GE
 komplexität: C
 merkmale:
   - Limbus
-kosten: 6 AsP pro Spielrunde (Sch: 4 AsP/SR)
+kosten: "6 AsP pro Spielrunde (Sch: 4 AsP/SR)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelobjekt
 reichweite: 15 Schritt

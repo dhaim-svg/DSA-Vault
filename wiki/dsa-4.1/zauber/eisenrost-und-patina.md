@@ -6,7 +6,7 @@ komplexität: C
 merkmale:
   - Objekt
   - Temporal
-kosten: 2 AsP + 2 AsP pro Stein Gewicht (Sch: 2 AsP + 1 AsP/Stein)
+kosten: "2 AsP + 2 AsP pro Stein Gewicht (Sch: 2 AsP + 1 AsP/Stein)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelobjekt aus unedlem Metall (Eisen, Blei, Kupfer, Messing, Bronze)
 reichweite: Berührung

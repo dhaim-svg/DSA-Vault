@@ -5,7 +5,7 @@ probe: KL/IN/CH (+MR)
 komplexität: C
 merkmale:
   - Herrschaft
-kosten: 6 AsP (Sch: 4 AsP)
+kosten: "6 AsP (Sch: 4 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: 3 Schritt

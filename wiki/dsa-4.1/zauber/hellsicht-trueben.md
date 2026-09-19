@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Antimagie
   - Hellsicht
-kosten: MR des Opfers in AsP (min. 6 AsP); Sch: 2/3 MR (min. 4 AsP)
+kosten: "MR des Opfers in AsP (min. 6 AsP); Sch: 2/3 MR (min. 4 AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelperson
 reichweite: ZfW Schritt

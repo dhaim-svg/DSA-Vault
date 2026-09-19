@@ -6,7 +6,7 @@ probe: IN/IN/FF
 komplexität: C
 merkmale:
   - Umwelt
-kosten: 17 AsP (Sch: 12 AsP)
+kosten: "17 AsP (Sch: 12 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Zone
 reichweite: 7 Schritt Radius

@@ -4,7 +4,7 @@ aspekte: [Gemeinschaftlichkeit der Zwölfe, Zwölfeinigkeit, Einheit des Pantheo
 symbol: Dodekagramm (zwölfzackiger Stern), Dodekagon
 farben: [weiß, schwarz]
 geweihte: Illumnestraner / Mantrashianer / Bündler
-kirchenstruktur: klösterlich; Matriarchin als Erzäbtissin (Titel: Illumnestra); derzeit XII
+kirchenstruktur: "klösterlich; Matriarchin als Erzäbtissin (Titel: Illumnestra); derzeit XII"
 quelle: WdG
 seite: 143
 ---

@@ -5,7 +5,7 @@ probe: IN/CH/GE
 komplexität: C
 merkmale:
   - Illusion
-kosten: 9 AsP pro SR (Sch: 6 AsP/SR)
+kosten: "9 AsP pro SR (Sch: 6 AsP/SR)"
 zauberdauer: 5 Aktionen (Konzentration während gesamter Wirkungsdauer)
 zielobjekt: Zone
 reichweite: Illusion max. ZfW × 3 Schritt entfernt

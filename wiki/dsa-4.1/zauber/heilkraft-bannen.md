@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Antimagie
   - Heilung
-kosten: 4 AsP + 1/3 der Kosten des Zielzaubers (borbaradianische Variante: 1W6 AsP + Kosten bzw. Hälfte als LeP)
+kosten: "4 AsP + 1/3 der Kosten des Zielzaubers (borbaradianische Variante: 1W6 AsP + Kosten bzw. Hälfte als LeP)"
 zauberdauer: 8 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung

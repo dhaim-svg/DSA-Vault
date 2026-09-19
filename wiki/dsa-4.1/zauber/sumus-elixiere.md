@@ -10,7 +10,7 @@ kosten: 5 AsP
 zauberdauer: 1 Spielrunde
 zielobjekt: Einzelobjekt
 reichweite: Berührung
-wirkungsdauer: ZfP* Minuten (dann verliert Pflanze ihre natürliche Kraft); bei Anwendung während dieser Zeit: permanent
+wirkungsdauer: "ZfP* Minuten (dann verliert Pflanze ihre natürliche Kraft); bei Anwendung während dieser Zeit: permanent"
 repräsentationen:
   Geo: 5
   Dru: 4

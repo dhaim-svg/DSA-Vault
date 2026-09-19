@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Beschwörung
   - Dämonisch (Thargunitoth)
-kosten: 8W6 AsP (davon 1/20 permanent; Bor-Variante: wahlweise Hälfte als LeP)
+kosten: "8W6 AsP (davon 1/20 permanent; Bor-Variante: wahlweise Hälfte als LeP)"
 zauberdauer: 1 Spielrunde
 zielobjekt: Einzelobjekt (Leiche)
 reichweite: Berührung

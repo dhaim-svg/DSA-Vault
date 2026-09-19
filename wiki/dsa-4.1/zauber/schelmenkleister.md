@@ -6,7 +6,7 @@ probe: IN/FF/GE
 komplexität: C
 merkmale:
   - Umwelt
-kosten: 3 AsP pro Schritt maximaler Ausdehnung (Sch: 2 AsP/Schritt)
+kosten: "3 AsP pro Schritt maximaler Ausdehnung (Sch: 2 AsP/Schritt)"
 zauberdauer: 5 Aktionen
 zielobjekt: Zone
 reichweite: ca. 3 Schritt (Wurfweite der Schelmin)

@@ -6,7 +6,7 @@ komplexität: C
 merkmale:
   - Einfluss
   - Iribaar (Bor)
-kosten: 7 AsP (Bor: 2W6 AsP oder Hälfte als LeP)
+kosten: "7 AsP (Bor: 2W6 AsP oder Hälfte als LeP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: 1 Schritt

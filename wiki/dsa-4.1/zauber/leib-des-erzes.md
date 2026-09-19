@@ -7,7 +7,7 @@ komplexität: E
 merkmale:
   - Form
   - Elementar (Erz)
-kosten: 12 AsP + 2 AsP pro SR (Sch: 8 AsP + 4 AsP pro 3 KR)
+kosten: "12 AsP + 2 AsP pro SR (Sch: 8 AsP + 4 AsP pro 3 KR)"
 zauberdauer: 20 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst

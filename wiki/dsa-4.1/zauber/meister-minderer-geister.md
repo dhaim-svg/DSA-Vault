@@ -6,7 +6,7 @@ probe: MU/CH/CH
 komplexität: B
 merkmale:
   - Herbeirufung
-kosten: 3 AsP pro Geist (Sch: 2 AsP)
+kosten: "3 AsP pro Geist (Sch: 2 AsP)"
 zauberdauer: 7 Aktionen
 zielobjekt: Geist
 reichweite: 1 Meile

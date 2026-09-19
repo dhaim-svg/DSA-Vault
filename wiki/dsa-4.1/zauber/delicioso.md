@@ -6,7 +6,7 @@ probe: KL/CH/FF
 komplexität: D
 merkmale:
   - Illusion
-kosten: 3 AsP pro Stein Nahrung (Sch: 2 AsP/Stein)
+kosten: "3 AsP pro Stein Nahrung (Sch: 2 AsP/Stein)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelobjekt
 reichweite: Berührung

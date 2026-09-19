@@ -6,7 +6,7 @@ probe: KL/GE/KO
 komplexität: C
 merkmale:
   - Eigenschaften
-kosten: 7 AsP (Sch: 5 AsP)
+kosten: "7 AsP (Sch: 5 AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelperson (freiwillig)
 reichweite: selbst, 7 Schritt

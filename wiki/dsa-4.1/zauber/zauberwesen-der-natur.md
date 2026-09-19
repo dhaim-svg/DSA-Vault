@@ -7,7 +7,7 @@ komplexität: B
 merkmale:
   - Herbeirufung
   - Verständigung
-kosten: 11 AsP (Sch: 7 AsP)
+kosten: "11 AsP (Sch: 7 AsP)"
 zauberdauer: 1 Spielrunde
 zielobjekt: Zone
 reichweite: ZfP* × 100 Schritt Radius um den Druiden

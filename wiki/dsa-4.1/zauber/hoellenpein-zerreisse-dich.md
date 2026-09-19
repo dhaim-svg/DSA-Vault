@@ -6,7 +6,7 @@ probe: KL/CH/KO (+MR)
 komplexität: C
 merkmale:
   - Einfluss
-kosten: 11 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)
+kosten: "11 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 2 Aktionen (eine davon Berührung)
 zielobjekt: Einzelwesen
 reichweite: Berührung

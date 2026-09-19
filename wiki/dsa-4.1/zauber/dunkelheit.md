@@ -5,7 +5,7 @@ probe: KL/KL/FF
 komplexität: C
 merkmale:
   - Umwelt
-kosten: 3 AsP pro Spielrunde (Sch: 2 AsP/SR)
+kosten: "3 AsP pro Spielrunde (Sch: 2 AsP/SR)"
 zauberdauer: 5 Aktionen
 zielobjekt: Zone
 reichweite: ZfW/2 Schritt Radius

@@ -7,10 +7,10 @@ komplexität: D
 merkmale:
   - Form
   - Elementar (Erz)
-kosten: 30 AsP (borbaradianische Variante: 3W20 AsP oder 3W20/2 LeP)
+kosten: "30 AsP (borbaradianische Variante: 3W20 AsP oder 3W20/2 LeP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelwesen
-reichweite: 3 Schritt (borbaradianische Variante: Berührung)
+reichweite: "3 Schritt (borbaradianische Variante: Berührung)"
 wirkungsdauer: ZfP* Wochen
 repräsentationen:
   Bor: 2

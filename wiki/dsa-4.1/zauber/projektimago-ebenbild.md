@@ -9,7 +9,7 @@ merkmale:
   - Verständigung
 kosten: 2 AsP/Meile Grundkosten + 1 AsP/KR Folgekosten
 zauberdauer: 10 Aktionen
-zielobjekt: projiziertes Bild (Einzelperson); für Projektion: Zone
+zielobjekt: "projiziertes Bild (Einzelperson); für Projektion: Zone"
 reichweite: max. ZfW Meilen
 wirkungsdauer: je nach AsP-Einsatz
 repräsentationen:

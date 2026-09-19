@@ -9,7 +9,7 @@ merkmale:
   - Elementar (Humus)
   - Form
 kosten: 3–200 AsP (Meisterentscheid; abhängig von Pflanzengröße und Umfang der Veränderung)
-zauberdauer: Viertelstunde bis mehrere Tage (Richtwert: 1 SR pro verbrauchtem AsP)
+zauberdauer: "Viertelstunde bis mehrere Tage (Richtwert: 1 SR pro verbrauchtem AsP)"
 zielobjekt: einzelne Pflanze
 reichweite: Berührung
 wirkungsdauer: augenblicklich (Veränderungen dauerhaft; Pflanze wächst normal weiter)

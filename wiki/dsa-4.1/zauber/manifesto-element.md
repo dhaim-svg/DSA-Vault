@@ -10,7 +10,7 @@ kosten: 3 AsP
 zauberdauer: 10 Aktionen
 zielobjekt: Ort
 reichweite: 1 Schritt
-wirkungsdauer: flüchtige: 1 Minute; bleibende: ZfP* SR
+wirkungsdauer: "flüchtige: 1 Minute; bleibende: ZfP* SR"
 repräsentationen:
   Ach: 7
   Dru: 5

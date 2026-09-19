@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Kraft
   - Verständigung
-kosten: 4 AsP (Bor: 1W6 LeP)
+kosten: "4 AsP (Bor: 1W6 LeP)"
 zauberdauer: 40 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung → beliebig

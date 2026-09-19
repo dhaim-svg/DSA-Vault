@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Hellsicht
   - Limbus
-kosten: 10 AsP (Sch: 7 AsP)
+kosten: "10 AsP (Sch: 7 AsP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst; Blick so weit ins Feenreich wie natürliche Sicht

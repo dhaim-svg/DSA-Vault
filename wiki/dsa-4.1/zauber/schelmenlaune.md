@@ -6,7 +6,7 @@ probe: MU/IN/CH (+Mod.)
 komplexität: D
 merkmale:
   - Einfluss
-kosten: 6 AsP + 2 AsP pro Betroffenem (Sch: 4 AsP + 1 AsP)
+kosten: "6 AsP + 2 AsP pro Betroffenem (Sch: 4 AsP + 1 AsP)"
 zauberdauer: 10 Aktionen
 zielobjekt: mehrere Personen
 reichweite: max. ZfW Schritt Radius

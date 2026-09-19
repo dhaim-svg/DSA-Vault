@@ -6,7 +6,7 @@ probe: IN/FF/KO
 komplexität: D
 merkmale:
   - Limbus
-kosten: 11 AsP (Sch: 7 AsP)
+kosten: "11 AsP (Sch: 7 AsP)"
 zauberdauer: 5 Aktionen
 zielobjekt: zwei Einzelobjekte (je max. ZfW Stein)
 reichweite: ZfW Schritt

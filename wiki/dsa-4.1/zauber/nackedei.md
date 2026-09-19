@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Objekt
   - Telekinese
-kosten: 9 + 1,5×RS AsP (Sch: 6 + RS AsP)
+kosten: "9 + 1,5×RS AsP (Sch: 6 + RS AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelperson
 reichweite: ZfW Schritt

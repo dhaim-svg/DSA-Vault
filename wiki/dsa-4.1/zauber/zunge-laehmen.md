@@ -6,7 +6,7 @@ probe: MU/CH/FF (+MR)
 komplexität: B
 merkmale:
   - Eigenschaften
-kosten: 6 AsP (Sch: 4 AsP)
+kosten: "6 AsP (Sch: 4 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: 7 Schritt

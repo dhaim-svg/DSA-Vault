@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Einfluss
   - Illusion
-kosten: 6 AsP (Sch: 4 AsP)
+kosten: "6 AsP (Sch: 4 AsP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst

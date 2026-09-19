@@ -7,7 +7,7 @@ komplexität: E
 merkmale:
   - Beschwörung
   - Dämonisch
-kosten: 19 AsP für Beschwörung (Bor: 2W20 AsP oder Hälfte als LeP); Kontrollkosten variieren je Dämon
+kosten: "19 AsP für Beschwörung (Bor: 2W20 AsP oder Hälfte als LeP); Kontrollkosten variieren je Dämon"
 zauberdauer: 40 Aktionen + 5W20 Aktionen bis Erscheinen
 zielobjekt: einzelner Dämon
 reichweite: Dämon erscheint im Heptagramm; kann sich beliebig weit entfernen

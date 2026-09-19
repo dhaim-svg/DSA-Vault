@@ -6,7 +6,7 @@ probe: MU/IN/CH (+MR)
 komplexität: B
 merkmale:
   - Einfluss
-kosten: 5 AsP (Sch: 3 AsP)
+kosten: "5 AsP (Sch: 3 AsP)"
 zauberdauer: 1 Aktion
 zielobjekt: einzelnes Tier
 reichweite: ZfW Schritt

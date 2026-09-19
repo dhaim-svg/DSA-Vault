@@ -8,7 +8,7 @@ merkmale:
 kosten: 4 AsP pro Illusionskomponente
 zauberdauer: 5 Aktionen pro Illusionskomponente
 zielobjekt: Zone
-reichweite: ZfW × 3 Schritt (Fernvariante: ZfW × 30 Schritt)
+reichweite: "ZfW × 3 Schritt (Fernvariante: ZfW × 30 Schritt)"
 wirkungsdauer: max. ZfP*/2 SR
 repräsentationen:
   Mag: 5

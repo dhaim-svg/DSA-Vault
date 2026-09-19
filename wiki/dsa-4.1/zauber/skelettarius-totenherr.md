@@ -6,7 +6,7 @@ probe: MU/MU/CH (+Anrufungsschwierigkeit je nach Untotem)
 komplexität: C
 merkmale:
   - Dämonisch (Thargunitoth)
-kosten: 11 AsP pro Untotem (Erweckung), dann 1–5 AsP/SR Kontrolle (Bor: 1W20 AsP Erweckung + 1W6 AsP/SR bzw. Hälfte als LeP)
+kosten: "11 AsP pro Untotem (Erweckung), dann 1–5 AsP/SR Kontrolle (Bor: 1W20 AsP Erweckung + 1W6 AsP/SR bzw. Hälfte als LeP)"
 zauberdauer: 30 Aktionen (Untote erhebt sich 30−ZfP* KR danach)
 zielobjekt: Einzelobjekt (Leichnam)
 reichweite: Berührung (bei Erweckung); danach keine Bewegungsbeschränkung

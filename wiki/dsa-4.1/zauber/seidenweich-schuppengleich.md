@@ -6,7 +6,7 @@ probe: IN/FF/FF
 komplexität: C
 merkmale:
   - Illusion
-kosten: 8 AsP (Sch: 5 AsP)
+kosten: "8 AsP (Sch: 5 AsP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelobjekt von maximal ZfW Stein Gewicht
 reichweite: Berührung

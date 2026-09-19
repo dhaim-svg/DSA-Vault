@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Eigenschaften
   - Schaden
-kosten: 3 AsP pro Stunde Wirkungsdauer (vorher festlegen) (Bor: 1W6 AsP/Stunde bzw. Hälfte als LeP)
+kosten: "3 AsP pro Stunde Wirkungsdauer (vorher festlegen) (Bor: 1W6 AsP/Stunde bzw. Hälfte als LeP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Einzelwesen
 reichweite: Berührung

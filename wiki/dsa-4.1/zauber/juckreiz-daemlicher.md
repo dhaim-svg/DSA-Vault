@@ -6,7 +6,7 @@ probe: MU/IN/CH (+MR)
 komplexität: B
 merkmale:
   - Einfluss
-kosten: 7 AsP (Sch: 4 AsP)
+kosten: "7 AsP (Sch: 4 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Zone / Einzelperson
 reichweite: ZfW Schritt Radius um den Schelm

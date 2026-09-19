@@ -6,7 +6,7 @@ probe: KL/IN/GE
 komplexität: C
 merkmale:
   - Form
-kosten: 4 AsP pro Person und SR (Sch: 3 AsP pro Person und SR)
+kosten: "4 AsP pro Person und SR (Sch: 3 AsP pro Person und SR)"
 zauberdauer: 3 Aktionen pro zu machender Person
 zielobjekt: Einzelwesen / mehrere Wesen (max. ZfW/2), freiwillig
 reichweite: selbst, Berührung

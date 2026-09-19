@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Einfluss
   - Schaden
-kosten: 13 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)
+kosten: "13 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 4 Aktionen; Berührung erfolgt in letzter Aktion (aufgeschoben)
 zielobjekt: Einzelperson
 reichweite: Berührung

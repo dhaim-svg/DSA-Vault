@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Objekt
   - Elementar (Erz)
-kosten: 2 AsP pro 10 Unzen Gewicht (Sch: 1 AsP pro 10 Unzen); max. ZfW × 10 Unzen
+kosten: "2 AsP pro 10 Unzen Gewicht (Sch: 1 AsP pro 10 Unzen); max. ZfW × 10 Unzen"
 zauberdauer: 3 Aktionen
 zielobjekt: Einzelobjekt oder dicht beieinanderliegende Objekte (z.B. Münzen in Truhe)
 reichweite: 1 Schritt

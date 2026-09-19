@@ -7,7 +7,7 @@ komplexität: E
 merkmale:
   - Beschwörung
   - Dämonisch (allgemein)
-kosten: 8W6 AsP (kleiner Golem / Kindergröße) / 12W6 AsP (Menschengröße) / 16W6 AsP (max. Trollgröße); davon jeweils 1/20 permanent (Bor: jeweils 2W6 AsP weniger; wahlweise Hälfte als LeP)
+kosten: "8W6 AsP (kleiner Golem / Kindergröße) / 12W6 AsP (Menschengröße) / 16W6 AsP (max. Trollgröße); davon jeweils 1/20 permanent (Bor: jeweils 2W6 AsP weniger; wahlweise Hälfte als LeP)"
 zauberdauer: ca. 7 Stunden
 zielobjekt: einzelner Golem
 reichweite: Berührung

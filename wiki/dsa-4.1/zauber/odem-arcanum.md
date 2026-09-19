@@ -7,7 +7,7 @@ komplexität: A
 merkmale:
   - Hellsicht
   - Kraft
-kosten: 4 AsP (Sch: 3 AsP)
+kosten: "4 AsP (Sch: 3 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelwesen, Einzelobjekt
 reichweite: ZfW Schritt

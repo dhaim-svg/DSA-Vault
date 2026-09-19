@@ -6,7 +6,7 @@ probe: KL/FF/KK
 komplexität: A
 merkmale:
   - Telekinese
-kosten: 3 AsP (Sch: 2 AsP)
+kosten: "3 AsP (Sch: 2 AsP)"
 zauberdauer: 1 Aktion
 zielobjekt: Einzelobjekt von maximal ZfW × 10 Unzen Gewicht
 reichweite: ZfW Schritt

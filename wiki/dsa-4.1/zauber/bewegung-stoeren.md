@@ -6,7 +6,7 @@ komplexität: C
 merkmale:
   - Antimagie
   - Telekinese
-kosten: 8 AsP + 1/5 der Kosten des zu brechenden Spruchs (Sch: 5 AsP + 2/15 der Kosten); perm. Aufhebung 1/10 der Kosten als pAsP (mind. 1)
+kosten: "8 AsP + 1/5 der Kosten des zu brechenden Spruchs (Sch: 5 AsP + 2/15 der Kosten); perm. Aufhebung 1/10 der Kosten als pAsP (mind. 1)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelwesen, Einzelobjekt (einzelner Bewegungszauber)
 reichweite: ZfW × 7 Schritt

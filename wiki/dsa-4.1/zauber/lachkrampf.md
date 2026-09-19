@@ -6,7 +6,7 @@ probe: CH/CH/FF (+MR)
 komplexität: C
 merkmale:
   - Einfluss
-kosten: 8 AsP (Sch: 5 AsP)
+kosten: "8 AsP (Sch: 5 AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelperson
 reichweite: 3 Schritt

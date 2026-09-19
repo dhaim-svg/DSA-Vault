@@ -6,7 +6,7 @@ probe: MU/CH/CH
 komplexität: E
 merkmale:
   - Einfluss
-kosten: 23 AsP (Bor: 2W20 AsP oder 1W20 LeP)
+kosten: "23 AsP (Bor: 2W20 AsP oder 1W20 LeP)"
 zauberdauer: 6 Aktionen
 zielobjekt: Einzelperson, freiwillig (alle in Sichtweite)
 reichweite: selbst

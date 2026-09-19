@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Herbeirufung
   - Dämonisch (Mishkhara)
-kosten: 15 AsP (Bor: 1W20 + 1W6 AsP oder Hälfte als LeP)
+kosten: "15 AsP (Bor: 1W20 + 1W6 AsP oder Hälfte als LeP)"
 zauberdauer: 20 Aktionen
 zielobjekt: Einzelwesen
 reichweite: 7 Schritt

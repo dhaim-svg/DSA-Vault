@@ -6,11 +6,11 @@ komplexität: C
 merkmale:
   - Einfluss
   - Eigenschaften
-kosten: 11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)
+kosten: "11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 3 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung
-wirkungsdauer: maximal ZfP* Stunden (Bor: so viele Stunden wie AsP)
+wirkungsdauer: "maximal ZfP* Stunden (Bor: so viele Stunden wie AsP)"
 repräsentationen:
   Bor: 6
   Mag: 2

@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Hellsicht
   - Telekinese
-kosten: 2–12 AsP je nach Schloss-Masse (Sch: 1–8 AsP)
+kosten: "2–12 AsP je nach Schloss-Masse (Sch: 1–8 AsP)"
 zauberdauer: 5 Aktionen
 zielobjekt: Einzelobjekt
 reichweite: Berührung

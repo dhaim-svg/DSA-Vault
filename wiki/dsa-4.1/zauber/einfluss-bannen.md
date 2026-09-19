@@ -6,7 +6,7 @@ komplexität: B
 merkmale:
   - Antimagie
   - Einfluss
-kosten: 5 AsP + 1/5 der Kosten des zu brechenden Spruchs (Sch: 3 AsP + 2/15 der Kosten); perm. 1/10 für perm. fixierte Sprüche (mind. 1 AsP)
+kosten: "5 AsP + 1/5 der Kosten des zu brechenden Spruchs (Sch: 3 AsP + 2/15 der Kosten); perm. 1/10 für perm. fixierte Sprüche (mind. 1 AsP)"
 zauberdauer: 40 Aktionen
 zielobjekt: Einzelwesen
 reichweite: Berührung

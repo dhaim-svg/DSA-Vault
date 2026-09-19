@@ -6,7 +6,7 @@ probe: KL/IN/GE
 komplexität: C
 merkmale:
   - Hellsicht
-kosten: 17 AsP (Sch: 12 AsP)
+kosten: "17 AsP (Sch: 12 AsP)"
 zauberdauer: 6 Spielrunden Vorbereitung
 zielobjekt: Einzelobjekt
 reichweite: selbst; Gegenstand max ZfW/2 Meilen entfernt

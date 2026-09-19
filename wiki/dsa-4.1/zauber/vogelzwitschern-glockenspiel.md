@@ -6,7 +6,7 @@ probe: MU/IN/GE
 komplexität: B
 merkmale:
   - Illusion
-kosten: 8 AsP (Sch: 5 AsP)
+kosten: "8 AsP (Sch: 5 AsP)"
 zauberdauer: 5 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst, 1 Schritt

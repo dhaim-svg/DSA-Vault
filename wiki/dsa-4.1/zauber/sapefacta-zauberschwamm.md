@@ -8,7 +8,7 @@ merkmale:
   - Telekinese
   - Elementar (Luft)
   - Elementar (Wasser)
-kosten: 5 AsP (Teilreinigung: 2 AsP)
+kosten: "5 AsP (Teilreinigung: 2 AsP)"
 zauberdauer: 50 Aktionen
 zielobjekt: Einzelobjekt, Einzelperson, freiwillig
 reichweite: selbst

@@ -6,7 +6,7 @@ probe: IN/CH/FF
 komplexität: C
 merkmale:
   - Heilung
-kosten: max. ZfW AsP; Wunden: 1 AsP/2 LeP; Krankheiten: 1 AsP/LeP; Gifte: 1 AsP/2 LeP
+kosten: "max. ZfW AsP; Wunden: 1 AsP/2 LeP; Krankheiten: 1 AsP/LeP; Gifte: 1 AsP/2 LeP"
 zauberdauer: 20 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: Berührung

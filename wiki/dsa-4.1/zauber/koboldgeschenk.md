@@ -6,7 +6,7 @@ probe: IN/CH/FF (+MR)
 komplexität: C
 merkmale:
   - Herrschaft
-kosten: 7 AsP (Sch: 4 AsP)
+kosten: "7 AsP (Sch: 4 AsP)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung; Schelmin kann sich danach beliebig entfernen

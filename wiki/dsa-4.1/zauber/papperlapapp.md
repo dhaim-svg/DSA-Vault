@@ -6,7 +6,7 @@ probe: IN/IN/FF (+MR)
 komplexität: D
 merkmale:
   - Einfluss
-kosten: 27 AsP (Sch: 18 AsP)
+kosten: "27 AsP (Sch: 18 AsP)"
 zauberdauer: 10 Aktionen
 zielobjekt: Zone
 reichweite: max. ZfW Schritt Radius

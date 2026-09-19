@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Dämonisch (allgemein)
   - Form
-kosten: 5 AsP + 1 AsP/KR (Bor: 1W6+1 AsP + 1 AsP/KR bzw. Hälfte als LeP)
+kosten: "5 AsP + 1 AsP/KR (Bor: 1W6+1 AsP + 1 AsP/KR bzw. Hälfte als LeP)"
 zauberdauer: 6 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst; Schatten max. 3 Schritt vom Magier

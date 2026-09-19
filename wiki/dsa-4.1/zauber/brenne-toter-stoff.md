@@ -6,11 +6,11 @@ komplexität: C
 merkmale:
   - Objekt
   - Elementar (Feuer)
-kosten: 11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)
+kosten: "11 AsP (Bor: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 3 Aktionen
 zielobjekt: Einzelobjekt
 reichweite: Berührung
-wirkungsdauer: ZfP*/2 KR (Bor: 1 Aktion pro AsP)
+wirkungsdauer: "ZfP*/2 KR (Bor: 1 Aktion pro AsP)"
 repräsentationen:
   Bor: 6
   Ach: 3

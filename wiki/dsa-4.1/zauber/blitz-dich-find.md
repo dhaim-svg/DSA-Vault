@@ -5,7 +5,7 @@ probe: KL/IN/GE
 komplexität: B
 merkmale:
   - Einfluss
-kosten: 4 AsP (Sch: 3 AsP)
+kosten: "4 AsP (Sch: 3 AsP)"
 zauberdauer: 1 Aktion
 zielobjekt: Einzelwesen
 reichweite: ZfW Schritt

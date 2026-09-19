@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Form
   - Objekt
-kosten: 10 AsP + 5 AsP pro SR (Sch: 3 AsP + 3 AsP/SR)
+kosten: "10 AsP + 5 AsP pro SR (Sch: 3 AsP + 3 AsP/SR)"
 zauberdauer: 4 Aktionen
 zielobjekt: Einzelperson
 reichweite: Berührung; Schelm kann sich danach entfernen, solange Sichtkontakt

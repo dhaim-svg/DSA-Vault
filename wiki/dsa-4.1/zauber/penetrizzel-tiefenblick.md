@@ -6,7 +6,7 @@ probe: KL/KL/KO
 komplexität: C
 merkmale:
   - Hellsicht
-kosten: 3 AsP + 1 AsP pro Spann (ca. 20 cm) Materialdicke (Sch: 2 AsP + 2 AsP/3 Spann)
+kosten: "3 AsP + 1 AsP pro Spann (ca. 20 cm) Materialdicke (Sch: 2 AsP + 2 AsP/3 Spann)"
 zauberdauer: 5 Aktionen + 1 Aktion pro Spann Dicke
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst; Sichttiefe nach AsP-Einsatz

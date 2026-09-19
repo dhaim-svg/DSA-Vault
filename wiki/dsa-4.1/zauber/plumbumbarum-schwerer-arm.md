@@ -6,7 +6,7 @@ probe: CH/GE/KK (+MR)
 komplexität: B
 merkmale:
   - Einfluss
-kosten: 4 AsP + 2 AsP pro Gegner (Sch: 3 AsP + 1 AsP/Gegner)
+kosten: "4 AsP + 2 AsP pro Gegner (Sch: 3 AsP + 1 AsP/Gegner)"
 zauberdauer: 3 Aktionen
 zielobjekt: mehrere Wesen
 reichweite: 7 Schritt

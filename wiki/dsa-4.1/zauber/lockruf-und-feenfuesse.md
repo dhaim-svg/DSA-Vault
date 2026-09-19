@@ -7,7 +7,7 @@ komplexität: B
 merkmale:
   - Telekinese
   - Illusion
-kosten: 7 AsP (Sch: 4 AsP)
+kosten: "7 AsP (Sch: 4 AsP)"
 zauberdauer: 2 Spielrunden
 zielobjekt: Gegenstand
 reichweite: Sichtweite

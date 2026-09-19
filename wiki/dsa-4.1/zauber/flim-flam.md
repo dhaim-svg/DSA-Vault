@@ -6,7 +6,7 @@ probe: KL/KL/FF
 komplexität: A
 merkmale:
   - Umwelt
-kosten: 1 AsP pro SR (Sch: 1 AsP/SR); +1 AsP/SR je Helligkeitsstufe erhöhen
+kosten: "1 AsP pro SR (Sch: 1 AsP/SR); +1 AsP/SR je Helligkeitsstufe erhöhen"
 zauberdauer: 2 Aktionen
 zielobjekt: Zone (Stelle im Raum oder auf einer Oberfläche)
 reichweite: Lichtkugel entsteht in maximal ZfW Schritt Entfernung

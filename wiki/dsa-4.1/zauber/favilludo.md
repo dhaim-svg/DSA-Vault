@@ -6,7 +6,7 @@ probe: IN/CH/FF
 komplexität: A
 merkmale:
   - Illusion
-kosten: 3 AsP (Sch: 2 AsP)
+kosten: "3 AsP (Sch: 2 AsP)"
 zauberdauer: 2 Aktionen
 zielobjekt: Einzelwesen, Einzelobjekt
 reichweite: Lichterschwarm entsteht max. 1 Schritt entfernt; Magierin darf sich bis 7 Schritt entfernen

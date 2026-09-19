@@ -6,11 +6,11 @@ probe: MU/IN/CH
 komplexität: D
 merkmale:
   - Herbeirufung
-kosten: 11 AsP (Bor-Variante: W20+3 AsP oder Hälfte als LeP)
+kosten: "11 AsP (Bor-Variante: W20+3 AsP oder Hälfte als LeP)"
 zauberdauer: 40 Aktionen
 zielobjekt: Zone
 reichweite: ZfW × 50 Schritt Radius
-wirkungsdauer: ZfP* × 2 Stunden (Bor-Variante: AsP-Kosten in Stunden)
+wirkungsdauer: "ZfP* × 2 Stunden (Bor-Variante: AsP-Kosten in Stunden)"
 repräsentationen:
   Mag: 2
   Bor: 1

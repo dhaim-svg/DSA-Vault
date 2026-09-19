@@ -7,7 +7,7 @@ komplexität: D
 merkmale:
   - Eigenschaften
   - Metamagie
-kosten: 2 AsP + die blockierenden AsP (Bor: mind. 1W3 AsP + blockierende AsP bzw. Hälfte als LeP)
+kosten: "2 AsP + die blockierenden AsP (Bor: mind. 1W3 AsP + blockierende AsP bzw. Hälfte als LeP)"
 zauberdauer: 1 Spielrunde
 zielobjekt: Einzelobjekt, Einzelwesen, freiwillig (inkl. Vertrauter)
 reichweite: selbst, Berührung

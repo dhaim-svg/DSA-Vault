@@ -6,7 +6,7 @@ probe: IN/CH/GE
 komplexität: D
 merkmale:
   - Illusion
-kosten: 9 AsP pro Spielrunde (Sch: 6 AsP/SR)
+kosten: "9 AsP pro Spielrunde (Sch: 6 AsP/SR)"
 zauberdauer: 6 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst

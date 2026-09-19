@@ -7,11 +7,11 @@ komplexität: C
 merkmale:
   - Elementar (Erz)
   - Umwelt
-kosten: 17 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)
+kosten: "17 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 5 Aktionen
 zielobjekt: Zone
 reichweite: Berührung; max. ZfW Raumschritt bis 21 Schritt Entfernung
-wirkungsdauer: ZfP* Spielrunden (Bor-Variante: AsP Spielrunden)
+wirkungsdauer: "ZfP* Spielrunden (Bor-Variante: AsP Spielrunden)"
 repräsentationen:
   Bor: 5
   Ach: 3

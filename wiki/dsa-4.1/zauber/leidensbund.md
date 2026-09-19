@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Heilung
   - Verständigung
-kosten: 5 AsP (Bor: 1W6 LeP)
+kosten: "5 AsP (Bor: 1W6 LeP)"
 zauberdauer: 1 Spielrunde
 zielobjekt: Einzelperson, freiwillig
 reichweite: Berührung

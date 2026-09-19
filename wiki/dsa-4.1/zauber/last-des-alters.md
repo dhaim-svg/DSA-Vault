@@ -7,7 +7,7 @@ komplexität: E
 merkmale:
   - Temporal
   - Form
-kosten: mind. 12 AsP + 1W3 pAsP (Bor: mind. 1W20 AsP oder 1W20/2 LeP)
+kosten: "mind. 12 AsP + 1W3 pAsP (Bor: mind. 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 6 Spielrunden
 zielobjekt: Einzelperson
 reichweite: Berührung

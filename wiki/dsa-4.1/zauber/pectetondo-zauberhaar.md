@@ -6,7 +6,7 @@ probe: KL/CH/FF
 komplexität: B
 merkmale:
   - Form
-kosten: 4 AsP (Sch: 3 AsP) + 2 AsP pro Spann Verlängerung
+kosten: "4 AsP (Sch: 3 AsP) + 2 AsP pro Spann Verlängerung"
 zauberdauer: 6 Aktionen
 zielobjekt: Einzelperson, freiwillig
 reichweite: selbst

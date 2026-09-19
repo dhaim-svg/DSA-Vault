@@ -6,7 +6,7 @@ probe: IN/IN/CH
 komplexität: C
 merkmale:
   - Herbeirufung
-kosten: 11 AsP (Sch: 7 AsP)
+kosten: "11 AsP (Sch: 7 AsP)"
 zauberdauer: 7 Aktionen
 zielobjekt: Einzelwesen
 reichweite: 1 Meile Radius

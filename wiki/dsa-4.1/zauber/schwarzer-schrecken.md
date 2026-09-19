@@ -6,11 +6,11 @@ probe: MU/IN/CH (+MR)
 komplexität: D
 merkmale:
   - Einfluss
-kosten: 10 AsP (Bor: 3W6 AsP oder 3W6/2 LeP)
+kosten: "10 AsP (Bor: 3W6 AsP oder 3W6/2 LeP)"
 zauberdauer: 3 Aktionen (Berührung muss gesamte Zauberdauer aufrechterhalten werden)
 zielobjekt: Einzelperson
 reichweite: Berührung
-wirkungsdauer: ZfP* Tage (Bor: AsP in Tagen)
+wirkungsdauer: "ZfP* Tage (Bor: AsP in Tagen)"
 repräsentationen:
   Bor: 6
   Mag: 3

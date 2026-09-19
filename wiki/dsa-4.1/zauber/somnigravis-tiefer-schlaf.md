@@ -6,7 +6,7 @@ probe: KL/CH/CH (+MR)
 komplexität: B
 merkmale:
   - Einfluss
-kosten: 7 AsP (Sch: 4 AsP)
+kosten: "7 AsP (Sch: 4 AsP)"
 zauberdauer: 7 Aktionen
 zielobjekt: Einzelperson
 reichweite: ZfW/2 Schritt

@@ -7,7 +7,7 @@ komplexität: B
 merkmale:
   - Umwelt
   - Elementar (Luft)
-kosten: 4 AsP (Sch: 3 AsP)
+kosten: "4 AsP (Sch: 3 AsP)"
 zauberdauer: 3 Aktionen
 zielobjekt: Zone
 reichweite: ZfP* × 2 Schritt; Basisbreite des Kegels max. ZfW Schritt

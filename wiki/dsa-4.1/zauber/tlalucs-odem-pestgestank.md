@@ -8,7 +8,7 @@ merkmale:
   - Beschwörung
   - Dämonisch (allgemein)
   - Schaden
-kosten: 11 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)
+kosten: "11 AsP (borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP)"
 zauberdauer: 5 Aktionen
 zielobjekt: Zone
 reichweite: 7 Schritt (Kegel)

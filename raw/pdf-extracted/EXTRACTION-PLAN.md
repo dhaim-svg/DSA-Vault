@@ -54,6 +54,7 @@ Jeder Unterordner hat `_<ordnername>.md` als Übersicht.
 - Kurzbeschreibung, Modifikator-Tabelle, Pflicht-Vor-/Nachteile (verlinkt), kombinierbare Kulturen (verlinkt)
 - `## Errata` nur wenn vorhanden
 - `## Verwandte Artikel`
+- **Frontmatter-Werte, die `: ` (Doppelpunkt + Leerzeichen) enthalten, immer in doppelte Anführungszeichen setzen** (z.B. `kosten: "4 AsP (Ach: 3 AsP)"`). Prüfung: `python raw/pdf-extracted/_tools/check-frontmatter.py` (Exit 0 = alles gültig).
 
 **C) Ordner-Index** (`_<ordnername>.md`)
 - Übersichtstabelle: Name → Kurzbeschreibung → Quelle + Seite

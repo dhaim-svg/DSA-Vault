@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Beschwörung
   - Dämonisch (Lolgramoth)
-kosten: 5 AsP + 1 AsP/Stunde (Bor: 1W6 + 1 AsP/Std. bzw. Hälfte als LeP)
+kosten: "5 AsP + 1 AsP/Stunde (Bor: 1W6 + 1 AsP/Std. bzw. Hälfte als LeP)"
 zauberdauer: 20 Aktionen
 zielobjekt: Einzelwesen
 reichweite: je nach AsP-Aufwand

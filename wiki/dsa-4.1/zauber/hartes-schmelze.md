@@ -7,11 +7,11 @@ komplexität: C
 merkmale:
   - Objekt
   - Elementar (Wasser)
-kosten: 2 AsP pro 100 cm³ (min. 7 AsP); borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP
+kosten: "2 AsP pro 100 cm³ (min. 7 AsP); borbaradianische Variante: 1W20 AsP oder 1W20/2 LeP"
 zauberdauer: 3 Aktionen
-zielobjekt: Einzelobjekt oder Teil davon (Bor: max. 1.000 cm³ zusammenhängendes Volumen)
+zielobjekt: "Einzelobjekt oder Teil davon (Bor: max. 1.000 cm³ zusammenhängendes Volumen)"
 reichweite: Berührung
-wirkungsdauer: ZfP*/2 SR (borbaradianische Variante: Minuten)
+wirkungsdauer: "ZfP*/2 SR (borbaradianische Variante: Minuten)"
 repräsentationen:
   Bor: 5
   Ach: 4

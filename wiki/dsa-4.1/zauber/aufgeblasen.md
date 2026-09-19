@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Form
   - Elementar (Luft)
-kosten: 15 AsP (Sch: 10 AsP)
+kosten: "15 AsP (Sch: 10 AsP)"
 zauberdauer: 7 Aktionen
 zielobjekt: Einzelperson
 reichweite: 7 Schritt

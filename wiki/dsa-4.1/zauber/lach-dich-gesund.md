@@ -7,7 +7,7 @@ komplexität: C
 merkmale:
   - Heilung
   - Einfluss
-kosten: so viele AsP wie LeP zurückgegeben werden (Sch: 2 AsP pro 3 LeP)
+kosten: "so viele AsP wie LeP zurückgegeben werden (Sch: 2 AsP pro 3 LeP)"
 zauberdauer: so lange, bis der Witz erzählt ist
 zielobjekt: Einzelperson
 reichweite: Berührung

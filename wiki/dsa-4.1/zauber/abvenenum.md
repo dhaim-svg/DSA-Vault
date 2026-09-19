@@ -6,7 +6,7 @@ probe: KL/KL/FF (+Mod.)
 komplexität: C
 merkmale:
   - Objekt
-kosten: 4 AsP pro Mahlzeit für bis zu 10 Personen (Ach: 3 AsP)
+kosten: "4 AsP pro Mahlzeit für bis zu 10 Personen (Ach: 3 AsP)"
 zauberdauer: mindestens 15 Aktionen
 zielobjekt: Nahrungsmenge (mehrere Objekte) nach AsP-Aufwand
 reichweite: 1 Schritt

@@ -6,7 +6,7 @@ probe: KL/KL/CH (+MR)
 komplexität: C
 merkmale:
   - Eigenschaften
-kosten: 6 AsP (Sch: 4 AsP)
+kosten: "6 AsP (Sch: 4 AsP)"
 zauberdauer: 2 Aktionen (zweite Aktion = Klaps auf die Stirn; kein Dauerkontakt nötig)
 zielobjekt: Einzelperson
 reichweite: Berührung

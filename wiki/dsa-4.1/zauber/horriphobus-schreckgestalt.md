@@ -6,7 +6,7 @@ probe: MU/IN/CH (+MR)
 komplexität: C
 merkmale:
   - Einfluss
-kosten: 7 AsP (borbaradianische Variante: 2W6 AsP oder Hälfte als LeP)
+kosten: "7 AsP (borbaradianische Variante: 2W6 AsP oder Hälfte als LeP)"
 zauberdauer: 3 Aktionen
 zielobjekt: Einzelwesen
 reichweite: 7 Schritt

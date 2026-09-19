@@ -7,7 +7,7 @@ komplexität: B
 merkmale:
   - Antimagie
   - Illusion
-kosten: 6 AsP plus 1/20 der Kosten des zu brechenden Spruchs (Sch: 4 AsP + 1/30)
+kosten: "6 AsP plus 1/20 der Kosten des zu brechenden Spruchs (Sch: 4 AsP + 1/30)"
 zauberdauer: 2 Aktionen
 zielobjekt: einzelner Zauber
 reichweite: 3 Schritt

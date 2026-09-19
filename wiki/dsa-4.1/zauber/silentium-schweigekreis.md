@@ -6,10 +6,10 @@ probe: KL/IN/CH
 komplexität: B
 merkmale:
   - Umwelt
-kosten: 1 AsP pro angefangenen 5 Schritt Radius und Spielrunde (Sch: dito)
+kosten: "1 AsP pro angefangenen 5 Schritt Radius und Spielrunde (Sch: dito)"
 zauberdauer: 2 Aktionen
 zielobjekt: Zone
-reichweite: max. ZfW Schritt Radius (Zentrum: Kopf des Elfen)
+reichweite: "max. ZfW Schritt Radius (Zentrum: Kopf des Elfen)"
 wirkungsdauer: nach AsP-Aufwand (A)
 repräsentationen:
   Elf: 7

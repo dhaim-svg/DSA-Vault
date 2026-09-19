@@ -8,7 +8,7 @@ merkmale:
   - Antimagie
   - Kraft
   - Metamagie
-kosten: 8 AsP + selbst auferlegte Kosten + Kosten des zu schützenden Zaubers (Bor: 8+1W6 AsP oder Hälfte als LeP)
+kosten: "8 AsP + selbst auferlegte Kosten + Kosten des zu schützenden Zaubers (Bor: 8+1W6 AsP oder Hälfte als LeP)"
 zauberdauer: 8 Aktionen + Zauberdauer des zu schützenden Zaubers
 zielobjekt: einzelner Zauber
 reichweite: selbst
