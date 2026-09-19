@@ -391,16 +391,17 @@ body::before{
 .spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
 .spell .wirkung-cell { padding-top:2px; }
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
-/* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) — darunter Kompaktlayout:
-   Name volle Breite, Probe/ZfW/ZD/Kosten als umbrechende Zeile, Wirkung volle Breite. */
-@media screen and (max-width:1040px){
+/* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
+   (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
+   umbrechende Zeile, Wirkung volle Breite. */
+@media screen and (max-width:1070px){
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }
   .spell .name, .spell .wirkung-cell{ flex:1 1 100%; min-width:0; }
   .spell .zfw-num{ min-width:0; }
   .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }
   .spell .zd::before{ content:"ZD "; color:var(--ink-mute); }
-  .spell .zd:empty, .spell .kosten:empty{ display:none; }
+  .spell .zd:empty, .spell .kosten:empty, .spell .wirkung-cell:empty{ display:none; }
 }
 .mods-details { margin-top:5px; }
 .mods-details summary.mods-toggle {

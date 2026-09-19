@@ -316,6 +316,13 @@ def test_render_without_register_shows_empty_state():
     assert re.search(r'Register\s*<span class="chronik-switch-count">0</span>', html)
 
 
+def test_register_group_without_entries_is_not_rendered():
+    reg = register_view(render(_chronik(), register={'nscs': REGISTER['nscs'], 'orte': []}))
+    assert 'data-gruppe="nsc"' in reg
+    assert 'data-gruppe="ort"' not in reg
+    assert 'register-suche' in reg
+
+
 def test_render_with_empty_register_shows_empty_state():
     reg = register_view(render(_chronik(), register={'nscs': [], 'orte': []}))
     assert 'register-suche' not in reg
