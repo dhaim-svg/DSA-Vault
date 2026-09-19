@@ -108,6 +108,8 @@ def _section(body: str, anchor: str) -> str | None:
     """Content of the '## <anchor>' section (heading line and closing '---' rule cut off), else None.
 
     The anchor is only a dict key here, never part of a file path.
+    Limits inherited from split_sections: a '## ' line inside a fenced code block also splits,
+    and repeated headings are concatenated (neither occurs in the SF group articles).
     """
     for title, content in split_sections(body, 2).items():
         if title != '__pre__' and title == anchor:
@@ -129,8 +131,8 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     anchor = wiki_path.partition('#')[2].strip()
     if anchor:
         section = _section(body, anchor)
-        if section is None:
-            log.warning('Wiki-Artikel %s: Abschnitt %r nicht gefunden', wiki_path, anchor)
+        if not section:  # None = heading missing, '' = heading without content
+            log.warning('Wiki-Artikel %s: Abschnitt %r nicht gefunden oder leer', wiki_path, anchor)
             return None
         titel, body = anchor, section
     else:
@@ -140,11 +142,15 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     except Exception as exc:  # one broken article must not take the whole dashboard down
         log.warning('Wiki-Artikel %s nicht renderbar: %s', wiki_path, _short(exc))
         return None
+    if anchor:  # section of a group file: no per-section meta
+        meta = []
+    else:
+        meta = [{'label': label, 'wert': _text(fm.get(key))}
+                for key, label in META_FIELDS if _text(fm.get(key))]
     return {
         'titel': _text(titel) or _fallback_title(fm, wiki_path),
         'quelle': _quelle(fm),
-        'meta': [] if anchor else [{'label': label, 'wert': _text(fm.get(key))}
-                                   for key, label in META_FIELDS if _text(fm.get(key))],  # group file: no per-section meta
+        'meta': meta,
         'html': html,
     }
 

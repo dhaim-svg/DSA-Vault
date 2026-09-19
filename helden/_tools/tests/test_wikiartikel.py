@@ -1,4 +1,4 @@
-"""Tests for parsers.wikiartikel — Zauber-Artikel loader (synthetic vault only)."""
+"""Tests for parsers.wikiartikel — wiki article/section loader (synthetic vault only)."""
 import logging
 import sys
 from pathlib import Path
@@ -402,8 +402,7 @@ def test_invalid_yaml_warning_carries_the_yaml_diagnosis(vault, caplog):
     with caplog.at_level(logging.WARNING):
         assert _load(vault, [f'{ZAUBER}/kaputt']) == {}
     message = caplog.records[0].getMessage()
-    assert 'mapping values are not allowed here' in message
-    assert 'Zeile' in message
+    assert 'Zeile' in message  # the wording of PyYAML's message itself is not ours to pin
 
 
 def test_non_utf8_file_warns_and_is_skipped(vault, caplog):
@@ -543,10 +542,21 @@ def test_anchor_entry_takes_quelle_from_frontmatter_and_has_no_meta(vault):
 
 
 def test_anchor_is_never_used_as_a_file_path(vault):
+    # Decoy INSIDE the whitelist: SF_DATEI + '/' + '../geheim' would land on it, and it even carries the matching
+    # heading, so a path-building anchor would load it (verified by mutation: replace('#', '/') in _resolve_article).
     _write(vault, SF_DATEI, SF_GRUPPE)
-    _write(vault, 'wiki/andere/geheim', '---\nname: G\n---\n# G\n\n## X\n\nGEHEIM\n')
-    assert _load(vault, [f'{SF_DATEI}#../../andere/geheim']) == {}
-    assert _load(vault, [f'{SF_DATEI}#{ANKER_A}/../../../../andere/geheim']) == {}
+    _write(vault, f'{SF}/geheim', '---\nname: G\n---\n# G\n\n## ../geheim\n\nGEHEIM\n')
+    assert _load(vault, [f'{SF_DATEI}#../geheim']) == {}
+
+
+def test_empty_section_warns_and_is_skipped(vault, caplog):
+    _write(vault, SF_DATEI, '---\ntyp: sf-gruppe\n---\n\n# G\n\n## Leer\n\n---\n\n## Voll\n\nINHALT\n')
+    with caplog.at_level(logging.WARNING):
+        res = _load(vault, [f'{SF_DATEI}#Leer', f'{SF_DATEI}#Voll'])
+    assert list(res) == [f'{SF_DATEI}#Voll']
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+    assert len(warnings) == 1
+    assert f'{SF_DATEI}#Leer' in warnings[0].getMessage()
 
 
 def test_path_without_anchor_still_loads_the_whole_file(vault):

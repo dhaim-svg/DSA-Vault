@@ -124,7 +124,7 @@ def parse_frontmatter(text: str) -> tuple[dict, str]:
 
 
 def _split_table_row(line: str) -> list[str]:
-    """Split a markdown table row on | while treating \| as a literal pipe."""
+    r"""Split a markdown table row on | while treating \| as a literal pipe."""
     PLACEHOLDER = '\x00PIPE\x00'
     line = line.replace(r'\|', PLACEHOLDER)
     cells = [c.replace(PLACEHOLDER, '|').strip() for c in line.strip('|').split('|')]

@@ -504,6 +504,10 @@ def test_css_sf_artikel_details_sit_in_the_text_column_of_the_row():
     base = ' '.join(_decls(_css_rules(_strip_print_blocks(css_bundle())), '.sf-list li .artikel-details'))
     assert re.search(r'grid-column\s*:\s*2\b', base)
     assert re.search(r'min-width\s*:\s*0', base)
+    # Abstand zur Beschreibung: nur Zeilen MIT Vorschau rücken auf 4px (kein Negativrand, der an gap:10px koppelt)
+    rows = _css_rules(_strip_print_blocks(css_bundle()))
+    assert any(re.search(r'row-gap\s*:\s*4px', d) for d in _decls(rows, '.sf-list li:has(> .artikel-details)'))
+    assert 'margin-top:-6px' not in base.replace(' ', '')
 
 
 def test_css_print_sf_row_with_open_article_may_break_across_columns():
@@ -1070,8 +1074,10 @@ def test_css_footer_bar_rises_above_open_dice_panel_on_desktop():
     panel = ' '.join(_decls(top, '.dice-panel'))
     assert re.search(r'(?<![-\w])bottom\s*:\s*calc\(\s*28px\s*\+\s*var\(\s*--dice-panel-h\s*,\s*0px\s*\)\s*\)', bar)
     assert re.search(r'position\s*:\s*fixed', panel)
-    z_panel = int(re.search(r'z-index\s*:\s*(\d+)', panel).group(1))
-    z_bar = int(re.search(r'z-index\s*:\s*(\d+)', bar).group(1))
+    assert re.search(r'(?<![-\w])bottom\s*:\s*0(?![.\w])', panel), 'die Anhebung stimmt nur bei Panel am Viewport-Boden'
+    m_panel, m_bar = (re.search(r'z-index\s*:\s*(\d+)', d) for d in (panel, bar))
+    assert m_panel and m_bar, 'Panel und Leiste brauchen beide ein z-index'
+    z_panel, z_bar = int(m_panel.group(1)), int(m_bar.group(1))
     assert z_panel > z_bar, 'Panel liegt ueber der Leiste -> Leiste muss um die Panelhoehe steigen'
 
 

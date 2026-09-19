@@ -10,7 +10,8 @@ Verwendung:
 Frontmatter wird wie in helden/_tools/parsers/held.py (parse_frontmatter) geteilt:
 nur wenn der Text mit '---' beginnt, dann text.split('---', 2); bei weniger als
 3 Teilen gilt die Datei als frontmatter-los. Geprüft wird yaml.safe_load(parts[1]);
-fehlerhaft ist ein YAML-Fehler oder ein Ergebnis, das weder None noch dict ist.
+fehlerhaft ist ein YAML-Fehler oder ein Ergebnis, das weder None noch dict ist
+(strenger als parse_frontmatter: dort werden falsy Nicht-Dicts wie [] zu {}).
 Nicht lesbare Dateien zählen ebenfalls als fehlerhaft.
 
 Häufigste Ursache: unquotierter Wert mit ': ' (z.B. kosten: 4 AsP (Ach: 3 AsP)).
@@ -58,7 +59,7 @@ def check_file(path: str) -> tuple[bool, str | None]:
 
 def main(argv: list[str]) -> int:
     sys.stdout.reconfigure(encoding="utf-8")  # Windows-Konsole/Pipe: cp1252 würde Umlaute verfälschen
-    root =argv[1] if len(argv) > 1 else "wiki"
+    root = argv[1] if len(argv) > 1 else "wiki"
     if not os.path.isabs(root):
         root = os.path.join(VAULT_ROOT, root)
     if not os.path.isdir(root):
