@@ -1,0 +1,64 @@
+<div class="tab-content" id="tab-journal">
+
+<div class="sec-head"><h2>📓 Kampagnen-Journal</h2><span class="rule"></span></div>
+
+{% if kampagne.sessions %}
+  {% for s in kampagne.sessions %}
+  <section class="card journal-session" data-session-nr="{{ s.nr }}">
+    <h3 class="journal-session-header">#{{ s.nr | e }} &middot; {{ s.datum | e }}</h3>
+
+    {% if s.sektionen.get('Zusammenfassung') %}
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">{{ s.sektionen.get('Zusammenfassung', '') | e }}</p>
+    </div>
+    {% endif %}
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="{{ s.datei }}" rows="8">{{ s.sektionen.get('Verlauf', '') | e }}</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="{{ s.datei }}" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    {% if s.sektionen.get('AsP/LeP-Verlauf') %}
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('AsP/LeP-Verlauf', '') | e }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Neue NSCs / Orte') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Neue NSCs / Orte', '') | e }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Offene Fäden / Cliffhanger') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Offene Fäden / Cliffhanger', '') | e }}</p>
+    </details>
+    {% endif %}
+
+    {% if s.sektionen.get('Loot / AP-Vergabe') %}
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">{{ s.sektionen.get('Loot / AP-Vergabe', '') | e }}</p>
+    </details>
+    {% endif %}
+
+  </section>
+  {% endfor %}
+{% else %}
+  <section class="card">
+    <p style="color:var(--ink-dim);text-align:center;padding:2rem 0;">Noch keine Sessions gespielt.</p>
+  </section>
+{% endif %}
+
+</div><!-- end tab-journal -->
+

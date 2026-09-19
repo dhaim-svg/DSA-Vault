@@ -1,0 +1,133 @@
+<div class="tab-content" id="tab-profil">
+
+{% if held.aussehen %}
+<!-- Aussehen & Kleidung -->
+<div class="sec-head"><h2>Aussehen &amp; Kleidung</h2><span class="rule"></span></div>
+<section class="card">
+  {% if held.portrait_path %}
+  <img class="aussehen-portrait" src="{{ held.portrait_path | e }}" alt="Portrait {{ held.meta.name | e }}">
+  {% endif %}
+  <dl class="aussehen-list">
+    {% for a in held.aussehen %}
+    {% set offen = 'nicht festgelegt' in a.beschreibung or a.beschreibung.strip() == '—' %}
+    <div class="aussehen-row{% if offen %} aussehen-row--offen{% endif %}">
+      <dt>{{ a.merkmal | e }}</dt>
+      <dd>{{ a.beschreibung | e }}</dd>
+    </div>
+    {% endfor %}
+  </dl>
+</section>
+{% endif %}
+
+<!-- Vor- & Nachteile -->
+<div class="sec-head"><h2>Vor- &amp; Nachteile · Schlechte Eigenschaften</h2><span class="rule"></span></div>
+<section class="card">
+  <div class="vn-grid">
+    <div class="vn-grp pos">
+      <h4>Vorteile</h4>
+      <ul class="vn-list">
+        {% for v in held.vor_nachteile.vorteile %}
+        <li>
+          <span><b>{{ v.name | e }}</b>{% if v.anmerkung %}<small>{{ v.anmerkung | e }}</small>{% endif %}</span>
+          <span class="stufe">{{ v.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="vn-grp neg">
+      <h4>Nachteile</h4>
+      <ul class="vn-list">
+        {% for n in held.vor_nachteile.nachteile %}
+        <li>
+          <span><b>{{ n.name | e }}</b>{% if n.anmerkung %}<small>{{ n.anmerkung | e }}</small>{% endif %}</span>
+          <span class="stufe">{{ n.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if held.vor_nachteile.schlecht %}
+    <div class="vn-grp bad" style="grid-column:1/-1">
+      <h4>Schlechte Eigenschaften</h4>
+      <ul class="vn-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px 18px">
+        {% for s in held.vor_nachteile.schlecht %}
+        <li>
+          <span><b>{{ s.name | e }}</b>{% if s.konsequenz %}<small>{{ s.konsequenz | e }}</small>{% endif %}</span>
+          <span class="stufe">{{ s.stufe }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Kampagne + Steigerungs-Log -->
+<div class="sec-head"><h2>Kampagne · Steigerung</h2><span class="rule"></span></div>
+<div class="grid cols-2">
+  <section class="card">
+    <h3 class="card-title">Aktive Kampagne</h3>
+    <div class="campaign">
+      <div class="c-head">
+        <h3>{{ kampagne.name }}</h3>
+        {% if kampagne.status_icon %}
+        <span class="status"><span class="dot-s"></span> {{ kampagne.status_text }}</span>
+        {% endif %}
+      </div>
+      <div class="c-meta">
+        <span><b>{{ kampagne.sessions | length }}</b> Sessions</span>
+        <span><b>1</b> Held</span>
+      </div>
+    </div>
+    {% if kampagne.sessions %}
+    <table style="width:100%;border-collapse:collapse;margin-top:14px;font-size:12px;font-family:var(--subhead)">
+      <thead><tr style="border-bottom:1px solid var(--rule)">
+        <th style="text-align:left;padding:4px 0;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">#</th>
+        <th style="text-align:left;padding:4px 8px;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">Datum</th>
+        <th style="text-align:left;padding:4px 0;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">Inhalt</th>
+      </tr></thead>
+      <tbody>
+      {% for s in kampagne.sessions %}
+      <tr style="border-bottom:1px dotted var(--rule)">
+        <td style="padding:5px 0;color:var(--ink-mute)">{{ s.nr | e }}</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">{{ s.datum | e }}</td>
+        <td style="padding:5px 0;color:var(--ink)">{{ s.inhalt | e }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:12px">Noch keine Sessions gespielt.</p>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <h3 class="card-title">Steigerungs-Log <span class="meta">AP-Chronik</span></h3>
+    <ul class="feed">
+      {% for entry in held.steigerungslog %}
+      <li>
+        <span class="when">{{ entry.datum }}</span>
+        <span class="what">{{ entry.aktion }}</span>
+        {% if entry.begruendung %}<small style="font-family:var(--mono);color:var(--ink-dim);font-size:10px;letter-spacing:.05em">{{ entry.begruendung }}</small>{% endif %}
+      </li>
+      {% endfor %}
+      {% if held._ap_bis_naechste_stufe %}
+      <li>
+        <span class="when">— in Aussicht</span>
+        <span class="what">Stufe {{ held.meta.stufe + 1 }} bei {{ (held.meta.ap_gesamt + held._ap_bis_naechste_stufe) | format_ap }} AP gesamt</span>
+        <small style="font-family:var(--mono);color:var(--ink-dim);font-size:10px;letter-spacing:.05em">noch {{ held._ap_bis_naechste_stufe }} AP bis Aufstieg</small>
+      </li>
+      {% endif %}
+    </ul>
+  </section>
+</div>
+
+<!-- Vorgeschichte -->
+<div class="sec-head"><h2>Vorgeschichte</h2><span class="rule"></span></div>
+<section class="card story">
+  {% for para in held.vorgeschichte_paragraphs %}
+  <p>{{ para }}</p>
+  {% endfor %}
+</section>
+
+</div><!-- end tab-profil -->
+

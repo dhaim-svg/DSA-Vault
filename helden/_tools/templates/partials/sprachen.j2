@@ -1,0 +1,68 @@
+<div class="tab-content" id="tab-sprachen">
+<div class="sec-head"><h2>Sprachen &amp; Schriften</h2><span class="rule"></span></div>
+<section class="card">
+
+  {% set sprachen_rows = held.talente.get('Sprachen (SKT A)', []) %}
+  {% set schriften_rows = held.talente.get('Schriften (SKT A)', []) %}
+
+  <h4 class="lang-section-head lang-section-head--first">Sprachen</h4>
+  {% if sprachen_rows %}
+  <table class="lang-table">
+    <thead>
+      <tr>
+        <th>Sprache</th>
+        <th>Komplexität</th>
+        <th>TaW</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in sprachen_rows %}
+      <tr>
+        <td class="l-name">
+          {{ row.name | e }}
+          {% if row.komplexitaet is not none and row.taw >= row.komplexitaet %}
+          <span class="lang-cap-warn">⚠ Grenze (K{{ row.komplexitaet | e }})</span>
+          {% endif %}
+        </td>
+        <td class="l-kompl">{% if row.komplexitaet is not none %}{{ row.komplexitaet | e }}{% else %}—{% endif %}</td>
+        <td class="l-taw">{{ row.taw | e }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="color:var(--ink-dim);font-size:12px;padding:8px 0;">Keine Sprachtalente vorhanden.</p>
+  {% endif %}
+
+  <h4 class="lang-section-head">Schriften</h4>
+  {% if schriften_rows %}
+  <table class="lang-table">
+    <thead>
+      <tr>
+        <th>Schrift</th>
+        <th>Komplexität</th>
+        <th>TaW</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in schriften_rows %}
+      <tr>
+        <td class="l-name">
+          {{ row.name | e }}
+          {% if row.komplexitaet is not none and row.taw >= row.komplexitaet %}
+          <span class="lang-cap-warn">⚠ Grenze (K{{ row.komplexitaet | e }})</span>
+          {% endif %}
+        </td>
+        <td class="l-kompl">{% if row.komplexitaet is not none %}{{ row.komplexitaet | e }}{% else %}—{% endif %}</td>
+        <td class="l-taw">{{ row.taw | e }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="color:var(--ink-dim);font-size:12px;padding:8px 0;">Keine Schrifttalente vorhanden.</p>
+  {% endif %}
+
+</section>
+</div><!-- end tab-sprachen -->
+

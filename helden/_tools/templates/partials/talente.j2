@@ -1,0 +1,43 @@
+<div class="tab-content" id="tab-talente">
+{{ eig_leiste(held.eigenschaften, held.basiswerte) }}
+
+<!-- ============================================================
+     SEITE 2 — TALENTE
+     ============================================================ -->
+<div class="sec-head"><h2>Talente</h2><span class="rule"></span></div>
+<section class="card">
+  <div class="talent-grid">
+
+    {% for grp_name, grp_rows in held.talente.items() %}
+    {% set is_kampf = 'Kampftechnik' in grp_name %}
+    <div class="talent-grp">
+      <h4>
+        {{ grp_name | replace(' (SKT D)', '') | replace(' (SKT B)', '') | replace(' (SKT A)', '') }}
+        <span class="skt">
+          {%- if is_kampf %}AT / PA · TaW
+          {%- elif 'SKT D' in grp_name %}SKT D
+          {%- elif 'SKT B' in grp_name %}SKT B
+          {%- elif 'SKT A' in grp_name %}SKT A
+          {%- endif -%}
+        </span>
+      </h4>
+      {% for row in grp_rows %}
+      {% set cls = 'high' if row.taw >= 5 else ('zero' if row.taw == 0 else '') %}
+      <div class="talent-row {{ cls }}"{% if not is_kampf and '/' in (row.probe or '') %} data-probe="{{ row.probe }}" data-taw="{{ row.taw }}" data-name="{{ row.name }}"{% endif %}>
+        <span class="t-name">{{ row.name }}</span>
+        <span class="t-probe">
+          {%- if is_kampf %}AT {{ row.at }} / PA {% if row.pa is not none %}{{ row.pa }}{% else %}—{% endif %}{% if row.stk %} · Stk {{ row.stk | e }}{% endif %}
+          {%- else %}{{ probe_eig(row.probe, held.eigenschaften) }}
+          {%- endif -%}
+        </span>
+        <span class="t-zfw">{{ row.taw }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+  </div>
+</section>
+
+</div><!-- end tab-talente -->
+

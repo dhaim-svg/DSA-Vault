@@ -1,0 +1,122 @@
+<div class="tab-content" id="tab-kampf">
+<!-- ============================================================
+     VITALS + KAMPFWERTE
+     ============================================================ -->
+{% set mr = held.basiswerte.get('MR', {}) %}
+{% set ini = held.basiswerte.get('INI', {}) %}
+{% set at_bw = held.basiswerte.get('AT', {}) %}
+{% set pa_bw = held.basiswerte.get('PA', {}) %}
+{% set gs = held.eigenschaften.get('GS', {}) %}
+{% set so = held.eigenschaften.get('SO', {}) %}
+
+<div class="grid cols-2">
+  <section class="card">
+    <h3 class="card-title">Vitalia <span class="meta">Aktuell / Maximum</span></h3>
+    <div class="vitals">
+      <div class="vital">
+        <span class="lbl">LeP</span>
+        <div class="bar lep"><span class="fill" id="bar-lep" style="width:{{ (le.current / le.max * 100) | round | int if le.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Lebensenergie (LE)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ le.max }}"
+             data-bar-id="bar-lep">
+          <button class="vital-btn vital-btn--minus" aria-label="LeP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ le.current }}" min="0" max="{{ le.max }}" aria-label="Aktuelle Lebensenergie">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ le.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="LeP erhöhen" type="button">+</button>
+        </div>
+      </div>
+      <div class="vital">
+        <span class="lbl">AsP</span>
+        <div class="bar asp"><span class="fill" id="bar-asp" style="width:{{ (ae.current / ae.max * 100) | round | int if ae.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Astralenergie (AE)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ ae.max }}"
+             data-bar-id="bar-asp">
+          <button class="vital-btn vital-btn--minus" aria-label="AsP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ ae.current }}" min="0" max="{{ ae.max }}" aria-label="Aktuelle Astralenergie">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ ae.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="AsP erhöhen" type="button">+</button>
+        </div>
+      </div>
+      <div class="vital">
+        <span class="lbl">AuP</span>
+        <div class="bar aup"><span class="fill" id="bar-aup" style="width:{{ (au.current / au.max * 100) | round | int if au.max else 100 }}%"></span><span class="ticks"></span></div>
+        <div class="vital-stepper"
+             data-locator='{"kind":"table_cell","file":"_illaen.md","section_path":["Eigenschaften &amp; Basiswerte","Basiswerte"],"row_key":{"column":"Basiswert","match":"Ausdauer (AU)"},"column":"Akt.","slug":"{{ slug }}"}'
+             data-max="{{ au.max }}"
+             data-bar-id="bar-aup">
+          <button class="vital-btn vital-btn--minus" aria-label="AuP verringern" type="button">−</button>
+          <input class="vital-input" type="number" value="{{ au.current }}" min="0" max="{{ au.max }}" aria-label="Aktuelle Ausdauer">
+          <span class="vital-sep">/</span>
+          <span class="vital-max">{{ au.max }}</span>
+          <button class="vital-btn vital-btn--plus" aria-label="AuP erhöhen" type="button">+</button>
+        </div>
+      </div>
+    </div>
+    <div data-wunden="{{ held.meta.wunden }}"></div>
+    <div id="zustand-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px"></div>
+    <div class="minor-stats">
+      <div class="minor"><span class="v">{{ mr.aktuell }}</span><span class="k">MR</span></div>
+      <div class="minor"><span class="v">{{ ini.aktuell }}</span><span class="k">INI</span></div>
+      <div class="minor"><span class="v">{{ gs.aktuell }}</span><span class="k">GS</span></div>
+      <div class="minor"><span class="v">{{ so.aktuell }}</span><span class="k">SO</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3 class="card-title">Kampfwerte <span class="meta">Basis</span></h3>
+    <div class="minor-stats" style="margin-top:0;border-top:0;padding-top:0;grid-template-columns:repeat(3,1fr);gap:14px">
+      <div class="minor" data-at="{{ at_bw.aktuell }}"><span class="v" style="color:var(--accent-gold)">{{ at_bw.aktuell }}</span><span class="k">AT-Basis</span></div>
+      <div class="minor" data-pa="{{ pa_bw.aktuell }}"><span class="v" style="color:var(--accent-gold)">{{ pa_bw.aktuell }}</span><span class="k">PA-Basis</span></div>
+      <div class="minor"><span class="v" style="color:var(--accent-gold)">{{ held.basiswerte.get('FK', {}).aktuell }}</span><span class="k">FK-Basis</span></div>
+    </div>
+    {% if held.ausruestung.waffen %}
+    <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--rule)">
+      {% set w = held.ausruestung.waffen[0] %}
+      <div class="weapon-card">
+        <div class="w-name">{{ w.name }}</div>
+        <div class="weapon-grid">
+          <div><span class="k">DK</span><span class="v">{{ w.dk }}</span></div>
+          <div data-tp="{{ w.tp }}"><span class="k">TP</span><span class="v">{{ w.tp }}</span></div>
+          <div><span class="k">AT</span><span class="v">{{ w.at }}</span></div>
+          <div><span class="k">PA</span><span class="v">{{ w.pa if w.pa else '—' }}</span></div>
+          <div><span class="k">INI</span><span class="v">{{ w.ini if w.ini else '+0' }}</span></div>
+          <div><span class="k">BF</span><span class="v">{{ w.bf if w.bf else '—' }}</span></div>
+        </div>
+      </div>
+      {% set kampf = held.talente.get('Kampftechniken', []) %}
+      {% for kt in kampf %}{% if kt.name in w.name or w.name in kt.name or 'Stab' in kt.name and 'Stab' in w.name %}
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ink-mute);letter-spacing:.06em;line-height:1.5">
+        Kampftechnik <b style="color:var(--ink)">{{ kt.name }}</b> · TaW {{ kt.taw }}{% if kt.stk %} · Stk {{ kt.stk }}{% endif %}
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+  </section>
+</div>
+
+<!-- Eigenschaften -->
+<div class="sec-head"><h2>Eigenschaften</h2><span class="rule"></span></div>
+<section class="card attr-card">
+  <div class="hex-grid">
+    {% set eig_order = ['MU','KL','IN','CH','FF','GE','KO','KK'] %}
+    {% for abbr in eig_order %}
+    {% set e = held.eigenschaften.get(abbr, {}) %}
+    <div class="hex" data-eigenschaft="{{ abbr }}" data-wert="{{ e.get('aktuell', 0) }}">
+      <div class="shape"></div>
+      {% if e.get('mod', 0) != 0 %}<span class="mod">{% if e.mod > 0 %}+{% endif %}{{ e.mod }}</span>{% endif %}
+      <div class="inner">
+        <span class="abbr">{{ abbr }}</span>
+        <span class="v">{{ e.get('aktuell', '?') }}</span>
+        <span class="full">{{ e.get('full', abbr) }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+</div><!-- end tab-kampf -->
+

@@ -1,0 +1,210 @@
+<div class="tab-content" id="tab-zauber">
+{{ eig_leiste(held.eigenschaften, held.basiswerte) }}
+<!-- ============================================================
+     SEITE 3 — ZAUBER + RITUALE + SONDERFERTIGKEITEN
+     ============================================================ -->
+<div class="sec-head"><h2>Zauberliste <span style="color:var(--ink-dim);font-size:10px;letter-spacing:.2em">· Repräsentation Mag · × = Hauszauber</span></h2><span class="rule"></span></div>
+<section class="card">
+
+  <div class="spell" style="border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-mute);text-transform:uppercase">
+    <span>Zauber</span><span>Probe</span><span>ZfW</span><span>ZD</span><span>Kosten</span><span>Wirkung</span>
+  </div>
+
+  {% for z in held.zauber %}
+  {% set url = z.wiki_path | obsidian if z.wiki_path else '' %}
+  {% set mods_raw = (z.mods or '').strip() %}
+  {% set mods_list = mods_raw.split(',') | map('trim') | reject('equalto', '') | reject('equalto', '—') | list %}
+  <div class="spell"{% if '/' in (z.probe or '') %} data-probe="{{ z.probe }}" data-zfw="{{ z.zfw }}" data-name="{{ z.name }}" data-kosten="{{ z.kosten }}"{% endif %}>
+    <span class="name">
+      {% if url %}<a class="nlink" href="{{ url }}">{{ z.name }}</a>{% else %}{{ z.name }}{% endif %}
+      {% if z.haus %}<span class="haus">×</span>{% endif %}
+      {% if z.merkmale or z.komp or z.lern %}
+      <span class="submeta">{{ z.merkmale }}{% if z.komp or z.lern %} · {{ z.komp }}/{{ z.lern }}{% endif %}</span>
+      {% endif %}
+    </span>
+    <span class="probe">{{ probe_eig(z.probe, held.eigenschaften) }}</span>
+    <span class="zfw-num">{{ z.zfw }}</span>
+    <span class="zd">{{ z.zd }}</span>
+    <span class="kosten">{{ z.kosten }}</span>
+    <span class="wirkung-cell">
+      {% if z.wirkung %}<span class="wirkung">{{ z.wirkung }}</span>{% endif %}
+      {% if mods_list %}
+      <details class="mods-details">
+        <summary class="mods-toggle">▸ {{ mods_list | length }} {{ 'Modifikation' if mods_list | length == 1 else 'Modifikationen' }}</summary>
+        <span class="mods-list">{{ mods_list | join(', ') }}</span>
+      </details>
+      {% endif %}
+    </span>
+  </div>
+  {% endfor %}
+
+  <div class="legend-row">
+    <span><b>Anti</b> Anti-Magie</span>
+    <span><b>Einfl</b> Einfluss</span>
+    <span><b>Eign</b> Eigenschaften</span>
+    <span><b>Elem</b> Elementar</span>
+    <span><b>Form</b> Form</span>
+    <span><b>Heil</b> Heilung</span>
+    <span><b>Hell</b> Hellsicht</span>
+    <span><b>Illu</b> Illusion</span>
+    <span><b>Krft</b> Kraft</span>
+    <span><b>Meta</b> Meta-Magie</span>
+    <span><b>Objk</b> Objekt</span>
+    <span><b>Scha</b> Schaden</span>
+    <span><b>Tele</b> Telekinese</span>
+    <span><b>Umwt</b> Umwelt</span>
+    <span><b>Vers</b> Verständigung</span>
+  </div>
+</section>
+
+{% if held.spontane_mods %}
+<section class="card" style="margin-top:var(--gap)">
+  <h3 class="card-title">Spontane Modifikationen <span class="meta">max. {{ held.mods_max }} gleichzeitig</span></h3>
+  <div class="mod-table">
+    <div class="mod-row header">
+      <span class="mod-name">Modifikation</span>
+      <span class="mod-zfp">ZfP*</span>
+      <span class="mod-probe">Probe</span>
+      <span class="mod-zd">ZD+</span>
+    </div>
+    {% for m in held.spontane_mods %}
+    <div class="mod-row">
+      <span class="mod-name">{{ m.name }}</span>
+      <span class="mod-zfp">{{ m.zfp }}</span>
+      <span class="mod-probe">{{ m.probe }}</span>
+      <span class="mod-zd">{{ m.zd }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  <a class="mod-footer-link" href="{{ 'wiki/dsa-4.1/magie/zauberregeln' | obsidian }}">Zauberregeln →</a>
+</section>
+{% endif %}
+
+<div class="grid cols-2" style="margin-top:var(--gap)">
+  <!-- Rituale -->
+  <section class="card">
+    <h3 class="card-title">Stabzauber &amp; Rituale <span class="meta">Ritualkenntnis {{ held.talente.get('Andere Talente', [{}])[0].get('taw', '') }}</span></h3>
+    {% if held.rituale.stabzauber_regel %}<p class="meta" style="margin:0 0 0.4em;font-style:italic;color:var(--ink-dim)">{{ held.rituale.stabzauber_regel | e }}</p>{% endif %}
+    <ul class="sf-list">
+      {% for r in held.rituale.stabzauber %}
+      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}{% if r.erschaffungsprobe %}<span class="meta">{{ r.erschaffungsprobe | e }} · {{ r.asp | e }} AsP</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      {% endfor %}
+      {% for r in held.rituale.andere %}
+      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      {% endfor %}
+    </ul>
+    {% if held.rituale.zauberspeicher_slots %}
+    <div class="speicher-box">
+      <div class="speicher-title">Zauberspeicher-Inhalt</div>
+      {# AsP-Summe über alle Slots #}
+      {% set asp_sum = namespace(val=0) %}
+      {% for slot in held.rituale.zauberspeicher_slots %}
+        {% if slot.asp != '—' and slot.asp != '' %}
+          {% set asp_sum.val = asp_sum.val + (slot.asp | int(default=0)) %}
+        {% endif %}
+      {% endfor %}
+      {# TODO: capacity 20 AsP is hardcoded — pull from ritual data if Zauberspeicher variant changes #}
+      <div class="speicher-summary">belegt: {{ asp_sum.val }} / 20 AsP</div>
+      <p class="meta" style="margin:0 0 8px;font-style:italic;color:var(--ink-dim)">{{ "Auslösung: 1 Aktion, Probe MU/IN/KL (kostet keine AsP). +1 Erschwernis je weiterem belegten Speicher. Misslingen = Zauber verpufft. Patzer = alle gespeicherten Zauber lösen aus." | e }}</p>
+
+      {% for slot in held.rituale.zauberspeicher_slots %}
+      {% set is_leer = not slot.zauber or '—' in slot.zauber %}
+      <div class="speicher-slot {% if is_leer %}leer{% endif %}"
+           data-slot="{{ slot.slot }}">
+        <div class="slot-header">
+          <span class="slot-num">{{ slot.slot }}</span>
+          <span class="slot-asp">{{ slot.asp }} AsP</span>
+          <span class="slot-zauber">{{ slot.zauber }}</span>
+          {% if not is_leer %}
+          {% set erschwernis = namespace(val=0) %}
+          {% for other in held.rituale.zauberspeicher_slots %}
+            {% if other.slot != slot.slot %}
+              {% set other_is_leer = not other.zauber or '—' in other.zauber %}
+              {% if not other_is_leer %}
+                {% set erschwernis.val = erschwernis.val + 1 %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <button class="slot-entleeren-btn" data-slot="{{ slot.slot }}" type="button">Entleeren</button>
+          <button class="slot-ausloesen-btn" data-slot="{{ slot.slot }}" data-probe="MU/IN/KL" data-erschwernis="{{ erschwernis.val }}" type="button">Auslösen</button>
+          {% endif %}
+        </div>
+        {% if not is_leer %}
+        <div class="slot-mods-row">
+          <span class="slot-mods-label">Mods:</span>
+          <span class="slot-mods">{{ slot.mods }}</span>
+          <span class="slot-erneuerung-label">Erneuerung:</span>
+          <span class="slot-erneuerung">{{ slot.erneuerung }}</span>
+        </div>
+        {% endif %}
+        {% if is_leer %}
+        <div class="slot-befuellen-area" data-slot="{{ slot.slot }}">
+          <button class="slot-befuellen-toggle" data-slot="{{ slot.slot }}" type="button">+ Befüllen</button>
+          <form class="slot-befuellen-form hidden" data-slot="{{ slot.slot }}">
+            <label class="slot-form-label">Zauber
+              <input class="slot-form-zauber" type="text" placeholder="Zauber-Name" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">AsP
+              <input class="slot-form-asp" type="number" min="0" max="20" placeholder="AsP" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">Mods
+              <input class="slot-form-mods" type="text" placeholder="— oder Erschwernis" data-slot="{{ slot.slot }}" />
+            </label>
+            <label class="slot-form-label">Erneuerung
+              <input class="slot-form-erneuerung" type="text" placeholder="Datum oder —" data-slot="{{ slot.slot }}" />
+            </label>
+            <div class="slot-form-actions">
+              <button class="slot-befuellen-submit" data-slot="{{ slot.slot }}" type="button">Speichern</button>
+              <button class="slot-befuellen-cancel" data-slot="{{ slot.slot }}" type="button">Abbrechen</button>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Sonderfertigkeiten -->
+  <section class="card">
+    <h3 class="card-title">Sonderfertigkeiten</h3>
+    {% if held.sf.magisch %}
+    <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-magic);margin:0 0 8px;text-transform:uppercase">Magische SF</h4>
+    <ul class="sf-list">
+      {% for sf in held.sf.magisch %}
+      <li><span class="ico">✦</span><span>
+        <span class="sf-name">
+          {%- if sf.wiki_path -%}
+            <a href="{{ sf.wiki_path | obsidian }}">{{ sf.name }}</a>
+          {%- else -%}
+            {{ sf.name }}
+          {%- endif -%}
+        </span>
+        <span class="sf-desc">{{ sf.desc }}</span>
+      </span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if held.sf.allgemein %}
+    <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-gold);margin:18px 0 8px;text-transform:uppercase">Allgemeine SF</h4>
+    <ul class="sf-list general">
+      {% for sf in held.sf.allgemein %}
+      <li><span class="ico">◈</span><span>
+        <span class="sf-name">
+          {%- if sf.wiki_path -%}
+            <a href="{{ sf.wiki_path | obsidian }}">{{ sf.name }}</a>
+          {%- else -%}
+            {{ sf.name }}
+          {%- endif -%}
+        </span>
+        <span class="sf-desc">{{ sf.desc }}</span>
+      </span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+</div>
+
+</div><!-- end tab-zauber -->
+

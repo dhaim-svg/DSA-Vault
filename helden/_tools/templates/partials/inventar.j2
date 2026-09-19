@@ -1,0 +1,98 @@
+<div class="tab-content" id="tab-inventar">
+
+<!-- Finanzen -->
+<div class="sec-head"><h2>Finanzen</h2><span class="rule"></span></div>
+<div class="grid cols-2">
+  <section class="card">
+    <h3 class="card-title">Münzbeutel</h3>
+    <div class="inv-coin-grid">
+      <span class="inv-coin-label">Dukaten</span>
+      <span class="inv-coin-val" id="geld-dukaten">{{ held.ausruestung.geld.dukaten }}</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="-1" type="button" aria-label="Dukaten verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="dukaten" data-delta="1"  type="button" aria-label="Dukaten erhöhen">+</button>
+      </div>
+      <span class="inv-coin-label">Silbertaler</span>
+      <span class="inv-coin-val" id="geld-silbertaler">{{ held.ausruestung.geld.silbertaler }}</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="-1" type="button" aria-label="Silbertaler verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="silbertaler" data-delta="1"  type="button" aria-label="Silbertaler erhöhen">+</button>
+      </div>
+      <span class="inv-coin-label">Heller</span>
+      <span class="inv-coin-val" id="geld-heller">{{ held.ausruestung.geld.heller }}</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="-1" type="button" aria-label="Heller verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="heller" data-delta="1"  type="button" aria-label="Heller erhöhen">+</button>
+      </div>
+      <span class="inv-coin-label">Kreuzer</span>
+      <span class="inv-coin-val" id="geld-kreuzer">{{ held.ausruestung.geld.kreuzer }}</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="-1" type="button" aria-label="Kreuzer verringern">−</button>
+        <button class="inv-stepper-btn" data-coin="kreuzer" data-delta="1"  type="button" aria-label="Kreuzer erhöhen">+</button>
+      </div>
+    </div>
+    <div class="inv-coin-total" id="geld-total">Gesamt: {{ held.ausruestung.geld.gesamt_kreuzer }} Kr ({{ held.ausruestung.geld.dukaten }} D · {{ held.ausruestung.geld.silbertaler }} S · {{ held.ausruestung.geld.heller }} H · {{ held.ausruestung.geld.kreuzer }} Kr)</div>
+  </section>
+
+  <section class="card">
+    <h3 class="card-title">Schulden &amp; Verbindlichkeiten</h3>
+    <div class="equip-stat">
+      <span class="k">Schulden</span>
+      <span class="v">{% for n in held.vor_nachteile.nachteile %}{% if 'Schulden' in n.name %}{{ n.stufe }}{% endif %}{% endfor %}</span>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:12px;line-height:1.6">
+      1 Dukaten = 10 Silbertaler = 100 Heller = 1000 Kreuzer
+    </p>
+  </section>
+</div>
+
+<!-- Inventar -->
+<div class="sec-head"><h2>Inventar</h2><span class="rule"></span></div>
+<section class="card">
+  <h3 class="card-title">Gegenstände <span class="meta">Inventar-Abschnitt</span></h3>
+  {% if held.ausruestung.inventar %}
+  <ul class="inv-list" id="inventar-list">
+    {% for item in held.ausruestung.inventar %}
+    <li data-item-name="{{ item.name | e }}">
+      <span>{{ item.name }}</span>
+      <span class="qty">{{ item.anzahl }}</span>
+      <div class="inv-stepper">
+        <button class="inv-stepper-btn" data-item="{{ item.name | e }}" data-delta="-1" type="button" aria-label="{{ item.name | e }} verringern">−</button>
+        <button class="inv-stepper-btn" data-item="{{ item.name | e }}" data-delta="1"  type="button" aria-label="{{ item.name | e }} erhöhen">+</button>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if held.ausruestung.inventar_gewicht_unzen > 0 %}
+  <div class="inv-weight-note">Teilgewicht (nur Inventar-Abschnitt): {{ held.ausruestung.inventar_gewicht_unzen }} Unzen — Reiseausrüstung ohne Gewichtsangabe</div>
+  {% endif %}
+  {% else %}
+  <p style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">Inventar leer.</p>
+  {% endif %}
+  <div class="inv-add-form">
+    <input class="inv-add-input" id="inv-add-name"  type="text" placeholder="Gegenstand" />
+    <input class="inv-add-input" id="inv-add-anzahl" type="text" placeholder="Anzahl" style="max-width:80px" />
+    <button class="inv-add-btn" id="inv-add-submit" type="button">+ Hinzufügen</button>
+  </div>
+</section>
+
+<!-- Reiseausrüstung -->
+<div class="sec-head"><h2>Reiseausrüstung</h2><span class="rule"></span></div>
+<section class="card">
+  <h3 class="card-title">Ausrüstung unterwegs</h3>
+  <p class="inv-reise-note">Mengenangaben werden in dieser Version nicht bearbeitet (z.B. "5 Tage", "10 Schritt").</p>
+  {% if held.ausruestung.reise %}
+  <ul class="inv-list">
+    {% for item in held.ausruestung.reise %}
+    <li>
+      <span>{{ item.name }}</span>
+      <span class="qty">{{ item.menge }}</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim);overflow-wrap:break-word;word-break:break-word">{{ item.anmerkung | e if item.anmerkung else '' }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+</div><!-- end tab-inventar -->
+
