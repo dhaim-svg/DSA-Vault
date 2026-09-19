@@ -451,7 +451,7 @@ body::before{
 .artikel-body a{ color:var(--accent-cold); }
 .artikel-body code{ font-family:var(--mono); font-size:11px; color:var(--ink-probe); }
 .artikel-body table{ display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:0 0 6px; font-size:11px; }
-.artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; }
+.artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; overflow-wrap:normal; } /* inherited "anywhere" would shrink columns to 1 char; the table scrolls instead */
 .artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
 /* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
    (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als

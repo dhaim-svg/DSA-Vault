@@ -380,6 +380,8 @@ def test_css_artikel_details_rules_desktop_compact_and_print():
     assert re.search(r'\.spell\s+\.artikel-details\s*\{[^}]*grid-column\s*:\s*1\s*/\s*-1', screen)
     compact = ''.join(_media_blocks(css, r'@media\s+screen\s+and\s+\(max-width:\s*1070px\)'))
     assert re.search(r'\.artikel-details[^{}]*\{[^}]*flex\s*:\s*1\s+1\s+100%', compact)
+    # table cells must not inherit the panel's overflow-wrap:anywhere (columns collapsed to 1 char at 400 px)
+    assert re.search(r'\.artikel-body\s+td\s*\{[^}]*overflow-wrap\s*:\s*normal', screen)
     prints = ''.join(_media_blocks(css, r'@media\s+print'))
     assert re.search(r'\.artikel-panel\s*\{[^}]*background\s*:\s*transparent', prints)
     assert re.search(r'\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
