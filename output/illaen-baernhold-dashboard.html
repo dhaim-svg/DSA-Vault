@@ -880,6 +880,10 @@ body::before{
   .spell .name .nlink,.spell .name .haus,.zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
   .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
+  /* Kopfzeile (Inline-color ink-mute, 1,95:1) und Modifikations-Details (ink-dim, 4,28:1) — im Druck ist das Desktop-Grid aktiv,
+     das Kompaktlayout gilt nur @media screen; Inline-Styles schlaegt nur !important. */
+  .spell.spell-head,.spell.spell-head *,
+  .mods-details summary.mods-toggle,.mods-details .mods-list{ color:var(--paper-ink) !important; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }
@@ -999,8 +1003,9 @@ body::before{
   overflow-wrap: anywhere;
   margin-bottom: 4px;
 }
-/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) gibt es nichts zu erklaeren. */
-#zustand-chips:empty + .zustand-legend { display: none; }
+/* Ohne Chips (Static-Render/file://: session.js rendert sie nicht) entfaellt nur der Chip-Satz;
+   der Wund-Satz ist dort der einzige Seitenhinweis auf die geltende Regel (dice.js-Fallback). */
+#zustand-chips:empty + .zustand-legend .zustand-legend-chips { display: none; }
 @media (max-width: 900px) {
   .vitals-sticky {
     position: sticky;
@@ -1504,7 +1509,7 @@ body { padding-top: 46px; }
     </div>
     <div data-wunden="0"></div>
     <div id="zustand-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px"></div>
-    <div class="zustand-legend">Zustände = Hausregel-Schalter (im Regelwerk kein fester Probenmalus). Wunden wirken regelkonform: AT/PA/FK/INI/GE −2, GS −1 je Wunde (WdS S. 57). <a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md">Details →</a></div>
+    <div class="zustand-legend"><span class="zustand-legend-chips">Zustände = Hausregel-Schalter (im Regelwerk kein fester Probenmalus).</span> Wunden wirken regelkonform: AT/PA/FK/INI/GE −2, GS −1 je Wunde (WdS S. 57). <a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md">Details →</a></div>
     <div class="minor-stats">
       <div class="minor"><span class="v">5</span><span class="k">MR</span></div>
       <div class="minor"><span class="v" data-wund-stat="INI" data-wund-base="10">10</span><span class="k">INI</span></div>
@@ -5483,10 +5488,23 @@ function initDashboard() {
       }, 0);
     }
 
+    // Summe <= 0 für den WERT einer Eigenschaft (MU KL IN CH FF GE KO KK): nur Wunden (bei GE),
+    // nie Zustände — die wirken über den Panel-Modifikator und würden hier doppelt zählen.
+    // dice.js parseProbe: die Wunde senkt die GE selbst, also gilt der niedrigere Wert in jeder Probe.
+    const ATTR_ZIELE = new Set(['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK']);
+    function attrMod(abbr, effects) {
+      if (!ATTR_ZIELE.has(abbr)) return 0;
+      return (effects || computeActiveEffects()).reduce((sum, e) => {
+        return sum + (!e.alle && e.mods && e.mods[abbr] ? e.mods[abbr] : 0);
+      }, 0);
+    }
+
     // Exposed so dice.js's getWundMod(cfg) can pre-fill the roll panel's modifier with the
     // same scoped values shown by the badge/overlays — wundregeln.js and session.js load
     // before dice.js (JS_FILES order).
-    window.DSASession = { computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod };
+    window.DSASession = {
+      computeActiveEffects: computeActiveEffects, probeMod: probeMod, statMod: statMod, attrMod: attrMod,
+    };
 
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
@@ -5741,8 +5759,24 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   var isManual = false;
 
   // ------------------------------------------------------------------
+  // Wound reduction of one Eigenschaft VALUE (negative number or 0). WdS S. 57: a wound
+  // lowers the attribute GE itself, so the lower value applies in every probe that uses
+  // GE (Talente/Zauber) — same as the "GE 13→9" overlay. Wounds only, never the Zustand
+  // chips (those act via the panel modifier dp-mod and would count twice). Without
+  // session.js (file://) the same wound rule is read from [data-wunden].
+  // ------------------------------------------------------------------
+  function wundAttrMod(abbr) {
+    if (window.DSASession && window.DSASession.attrMod) return window.DSASession.attrMod(abbr);
+    if (!/^(MU|KL|IN|CH|FF|GE|KO|KK)$/.test(abbr)) return 0;
+    var el = document.querySelector('[data-wunden]');
+    var w = el ? parseInt(el.dataset.wunden, 10) || 0 : 0;
+    return window.DSAWundregeln.wundMod(w, abbr);
+  }
+
+  // ------------------------------------------------------------------
   // Parse probe string "MU/GE/KK" → [eig1value, eig2value, eig3value]
-  // eig may be null for "**" slots or missing entries in window.DSA.eig.
+  // (wound-reduced, see wundAttrMod). eig may be null for "**" slots or
+  // missing entries in window.DSA.eig.
   // Returns null if not a 3-eigenschaft formula.
   // ------------------------------------------------------------------
   function parseProbe(probeStr) {
@@ -5753,7 +5787,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       abbr = abbr.trim().toUpperCase();
       if (abbr === '**') return null;
       var v = window.DSA && window.DSA.eig && window.DSA.eig[abbr];
-      return (v !== undefined) ? v : null;
+      if (v === undefined || v === null) return null;
+      return v + wundAttrMod(abbr);
     });
   }
 
