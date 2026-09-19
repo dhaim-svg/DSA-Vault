@@ -36,19 +36,24 @@ nur D-030/D-031 wandern nach „In Progress".
 
 ## Key Design Decisions
 
-- **D-030 läuft NICHT als Subagent-Feature-Task** — Verzeichnis-Junctions,
-  Dateiverschiebung außerhalb des Repos (`C:\Users\David\Google Drive\...`)
-  und die Sync-Verifikation sind Dateisystem-Operationen mit echtem
-  Störungsrisiko für den Nutzer (Google Drive), keine reine Code-Änderung.
-  Läuft direkt in der Hauptsession, mit Rückfrage vor dem eigentlichen
-  Verschieben der Live-Datei — analog zu W-001 in Sprint 013 (Wiki-Fix
-  auch kein Dashboard-Subagent-Task).
-- **Verifikationsreihenfolge bei D-030**: (1) Junction anlegen, (2) Testdatei
-  hineinschreiben, (3) User bittet, in der Google-Drive-Weboberfläche
-  nachzusehen, ob sie synct — **erst danach** die eigentliche
-  `Drachenchronik.md` verschieben. Bei Fehlschlag: Fallback-Optionen aus dem
-  Plan (robocopy-Mirror, Git-Zugriff) vorschlagen, nicht selbst entscheiden
-  welche — das ist Nutzer-Workflow, nicht Code.
+- **D-030, Teil 1 (Junction-Verifikation) lief NICHT als Subagent-Task** —
+  echte Dateisystem-/Google-Drive-Operation mit Störungsrisiko, direkt in
+  der Hauptsession ausgeführt. **Ergebnis: Junction verworfen** — Google
+  Drive for Desktop synct nicht über NTFS-Junctions (verifiziert 19.09.2026,
+  Fehlerliste „Einige Dateien können nicht hochgeladen werden"), Junction
+  sicher entfernt (`cmd /c rmdir`, kein Recurse, Zielordner unangetastet).
+  User hat den Fallback „Drive bleibt Quelle, periodischer Import" gewählt.
+- **D-030, Teil 2 (Import-Skript) läuft als normale Subagent-Task** —
+  sobald der riskante Erkundungsteil geklärt ist, ist der Rest gewöhnlicher,
+  testbarer Python-Code (einseitiges Kopieren + Tests gegen `tmp_path`-
+  Fixtures, nie gegen echte Drive-/Vault-Pfade) — passt zum etablierten
+  Subagent-Driven-Development-Muster aus Sprint 013.
+- **Kaskadierende Scope-Änderung durch den Fallback**: D-032 (Chronik-Tab)
+  wird read-only (kein Zurückschreiben in eine Kopie, die der nächste Import
+  überschreiben würde); D-033 (Quick-Capture) und D-034 (Ereignis-Auto-Log)
+  entfallen ersatzlos — es gibt keinen Live-Schreibpfad mehr, in den das
+  Dashboard schreiben könnte. D-035 (`/session-compile`) ruft künftig den
+  Import als ersten Schritt auf. BACKLOG.md bereits entsprechend korrigiert.
 - **D-031 braucht KEINE echte Nutzerdaten-Fixture im Repo** — die reale
   Chronik enthält private Kampagnendetails; Testfixture ist ein synthetischer,
   aber strukturell identischer Auszug (Datumsformate, IG-Tage, Szenen-Marker,
