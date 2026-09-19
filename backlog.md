@@ -16,6 +16,7 @@ _(keine)_
 | ID    | Kat.  | Titel                                                                                                   | Effort |
 |-------|-------|---------------------------------------------------------------------------------------------------------|--------|
 | B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen | M |
+| B-014 | tooling | `/sprint-wrap`-Kommando (`.claude/commands/sprint-wrap.md`) reparieren: (1) Phase 2 ruft `render-held.py` ohne Slug auf (Z. 32) und bricht mit Usage-Fehler ab — `python render-held.py <slug>`; (2) Phase 5 „Sprint-Nr. erhöhen“ (`{NNN}` → `{NNN+1}`) ist mehrdeutig und widerspricht `/sprint-plan` Phase 2d (N = NNN−1) und der Praxis: CLAUDE.md-Sprint-Nr. = zuletzt abgeschlossener Sprint (Wrap 019 → 19); Wortlaut klären | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
