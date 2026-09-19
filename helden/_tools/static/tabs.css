@@ -16,7 +16,7 @@
   .card::before,.banner::before{ display:none !important; }
   .card-title,.sec-head h2,.talent-grp h4,.vn-grp h4,.crest svg,
   .istat .lbl,.minor .k,.hex .abbr,.talent-row .t-probe,
-  .spell .merk,.spell .probe,.feed li .when,.c-meta{
+  .spell .submeta,.spell .probe,.feed li .when,.c-meta{
     color:var(--paper-ink) !important; text-shadow:none !important;
   }
   .card-title::before{ border-color:var(--paper-ink); box-shadow:none; }
@@ -79,10 +79,15 @@
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
   .talent-row .t-name,.talent-row .t-zfw,
-  .spell .name,.spell .merk,.spell .probe,
+  .spell .name,.spell .submeta,.spell .probe,
   .vn-list li b,.vn-list li small,
   .sf-list li .sf-name,.sf-list li .sf-desc,
   .inv-list li,.inv-list li .qty{ color:var(--paper-ink) !important; }
+  /* Zauberliste (D-046): eigene Bildschirm-color-Regeln (hell auf Papier, Kontrast ~1,1:1) fallen sonst durch;
+     das !important auf .spell .name vererbt sich nicht auf den Namenslink */
+  .spell .name .nlink,.spell .name .haus,.zfw-num,
+  .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
+  .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }

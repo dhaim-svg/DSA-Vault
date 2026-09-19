@@ -365,7 +365,7 @@ body::before{
 /* ---- Zauber ---- */
 .spell{
   display:grid;
-  grid-template-columns: minmax(200px,1.7fr) 240px 38px 80px minmax(110px,1fr) minmax(240px,2fr);
+  grid-template-columns: minmax(160px,1.7fr) 240px 38px 80px minmax(90px,1fr) minmax(200px,2fr);
   gap:10px;
   align-items:start;
   padding:9px 10px;
@@ -443,9 +443,10 @@ body::before{
 .artikel-body table{ display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:0 0 6px; font-size:11px; }
 .artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; overflow-wrap:normal; } /* inherited "anywhere" would shrink columns to 1 char; the table scrolls instead */
 .artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
-/* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
-   (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
-   umbrechende Zeile, Wirkung volle Breite. */
+/* Das 6-Spalten-Grid braucht gerechnet 878 px Zeilenbreite (Spaltenminima 160+240+38+80+90+200 = 808, 5 Gaps à 10,
+   20 px Padding); bei 1071 px Viewport ist die Zeile ~934 px breit (Sprint-018-Messung), Reserve also ~56 px.
+   Der Breakpoint bleibt bei 1070 px (Reserve statt Kante, Seitenrand der Karte) — darunter Kompaktlayout:
+   Name volle Breite, Probe/ZfW/ZD/Kosten als umbrechende Zeile, Wirkung volle Breite. */
 @media screen and (max-width:1070px){
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }

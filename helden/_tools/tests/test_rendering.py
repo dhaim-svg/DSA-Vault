@@ -388,6 +388,94 @@ def test_css_artikel_details_rules_desktop_compact_and_print():
     assert re.search(r'\.artikel-details:not\(\[open\]\)\s*\{[^}]*display\s*:\s*none', prints)
 
 
+def _css_rules(css):
+    """[(Selektor, Deklarationen)] aller flachen Regeln im CSS-Text (ohne Kommentare, Selektorlisten aufgespalten, Whitespace normalisiert)."""
+    rules = []
+    for m in re.finditer(r'([^{}]+)\{([^{}]*)\}', re.sub(r'/\*.*?\*/', '', css, flags=re.S)):
+        for sel in m.group(1).split(','):
+            rules.append((' '.join(sel.split()), m.group(2)))
+    return rules
+
+
+PRINT_SPELL_SELECTORS = (
+    '.spell .name .nlink', '.spell .name .nlink::after', '.spell .name .haus', '.zfw-num',
+    '.spell .zd', '.spell .kosten', '.spell .wirkung', '.spell .submeta',
+)
+
+
+def test_css_print_spell_list_colors_are_paper_ink():
+    # D-046: ohne Druckregel fielen die hellen Bildschirmfarben (Kontrast ~1,1:1 auf Papier) durch; .spell .name .nlink
+    # hat eine eigene color-Regel, das !important auf .spell .name vererbt sich nicht.
+    prints = ''.join(_media_blocks(css_bundle(), r'@media\s+print'))
+    rules = _css_rules(prints)
+    missing = [
+        sel for sel in PRINT_SPELL_SELECTORS
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+
+
+def test_css_print_spell_name_link_arrow_is_fully_opaque():
+    prints = ''.join(_media_blocks(css_bundle(), r'@media\s+print'))
+    decls = [d for s, d in _css_rules(prints) if s == '.spell .name .nlink::after']
+    assert any(re.search(r'opacity\s*:\s*1\b', d) for d in decls)
+
+
+def test_css_has_no_dead_merk_selector():
+    # .merk kommt in keinem Template/JS mehr vor (heute .spell .submeta); der Druck-Selektor war tot.
+    assert '.merk' not in css_bundle()
+
+
+def _px_list(value):
+    return [float(v) for v in re.findall(r'(-?[\d.]+)px', value)]
+
+
+def _top_level_tokens(value):
+    """Whitespace-Split der grid-template-columns-Werte, ohne minmax(...) aufzubrechen."""
+    tokens, depth, cur = [], 0, ''
+    for ch in value.strip():
+        depth += {'(': 1, ')': -1}.get(ch, 0)
+        if ch.isspace() and not depth:
+            if cur:
+                tokens.append(cur)
+            cur = ''
+        else:
+            cur += ch
+    if cur:
+        tokens.append(cur)
+    return tokens
+
+
+def _spell_grid_min_width(css):
+    """Mindestbreite der Desktop-Zeile (.spell, Bildschirm, ohne Media-Bloecke):
+    Summe der Spaltenminima (feste Spalte = ihr Wert, minmax(a,b) = a) + (Spalten-1) * column-gap + horizontales Padding."""
+    screen = _strip_print_blocks(css)
+    decl = next(d for s, d in _css_rules(screen) if s == '.spell' and 'grid-template-columns' in d)
+    cols = _top_level_tokens(re.search(r'grid-template-columns\s*:\s*([^;]+);', decl).group(1))
+    minima = []
+    for col in cols:
+        m = re.fullmatch(r'minmax\(\s*([\d.]+)px\s*,[^)]*\)', col)
+        minima.append(float(m.group(1)) if m else _px_list(col)[0])
+    gap = _px_list(re.search(r'(?<![-\w])gap\s*:\s*([^;]+);', decl).group(1))[0]
+    pad = _px_list(re.search(r'(?<![-\w])padding\s*:\s*([^;]+);', decl).group(1))
+    horizontal_padding = 2 * (pad[1] if len(pad) > 1 else pad[0])
+    return sum(minima) + (len(cols) - 1) * gap + horizontal_padding
+
+
+def test_css_spell_grid_min_width_fits_row_at_1071px():
+    # D-046: bei Viewport 1071 px ist die Zeile ~934 px breit (Sprint-018-Messung); das Grid darf mit Padding hoechstens
+    # 934 - 40 px Reserve brauchen, sonst ragen letzte Zelle und Artikel-Panel aus der .spell-Box (Vorzustand: 978 px).
+    assert _spell_grid_min_width(css_bundle()) <= 934 - 40
+
+
+def test_css_spell_grid_min_width_helper_computes_old_and_new_layouts():
+    old = '.spell{ display:grid; grid-template-columns: minmax(200px,1.7fr) 240px 38px 80px minmax(110px,1fr) minmax(240px,2fr); gap:10px; padding:9px 10px; }'
+    assert _spell_grid_min_width(old) == 908 + 5 * 10 + 20
+
+
 def test_zauber_sort_button_accessible_name_contains_visible_label(live_html):
     m = re.search(r'<button[^>]*data-spell-sort[^>]*aria-label="([^"]*)"[^>]*>([^<]*)</button>', live_html)
     assert m
