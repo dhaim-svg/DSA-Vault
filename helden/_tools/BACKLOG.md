@@ -5,14 +5,11 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-049 | Desktop-Footer über dem offenen Würfelpanel: `#footer-bar` (`z-index:100`, `bottom:28px`) liegt bei > 480 px unter `.dice-panel` (`z-index:200`); Fix `bottom: calc(28px + var(--dice-panel-h, 0px))` — `--dice-panel-h` setzt `dice.js` schon media-query-unabhängig | S | in-progress | 021 |
-| D-050 | Artikelvorschau für Sonderfertigkeiten: 13/17 SF-Zeilen haben `wiki_path` mit `##`-Anker → Anker-Abschnitt statt ganzer Datei einbetten (`split_sections`), `<details>`-Block als Makro geteilt mit Zauber; `WIKILINK_RE`-Fix für Anker mit `[…]` (Merkmalskenntnis). Rituale bleiben außen vor (keine Links, keine Headings je Stabzauber) | M | in-progress | 021 |
+_(keine)_
 
 ## Backlog
 
-_(keine — Dashboard-Backlog leer; B-013 läuft in Sprint 021 mit, offen bleiben B-015/B-016 im Vault-`backlog.md`)_
+_(keine — Dashboard-Backlog leer; offen im Vault-`backlog.md`: B-015/B-016/B-017/B-018)_
 
 ### Gestrichen
 
@@ -32,6 +29,8 @@ Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-050 | Artikelvorschau für Sonderfertigkeiten: 15 von 17 SF-Zeilen zeigen nur ihren `##`-Abschnitt (`load_wiki_artikel`, Anker → `split_sections`, Warnung bei fehlendem/leerem Abschnitt), `<details>`-Block als Makro `partials/_artikel.j2` geteilt mit Zauber, `WIKILINK_RE` erlaubt einzelnes `]` (Merkmalskenntnis-Anker); Browser-Fund: SF-Zeilenregeln trafen auch `li` im Artikeltext → `.sf-list > li` + Invariante (längster Artikel 7 841 → 808 px); Static-Render 450 → 481 KB, 40 Vorschauen | M | 021 |
+| D-049 | Desktop-Footer über dem offenen Würfelpanel: `#footer-bar{bottom:calc(28px + var(--dice-panel-h,0px))}` (Panel z-index 200 verdeckte die Leiste, −277 px @ 1280 → Abstand 28 px); ≤ 480 px unberührt | S | 021 |
 | D-048 | Zustands-Chips wirken nur noch über die Panel-Vorbelegung: `applyWundModsToProben` nutzt `attrMod` statt `probeMod` (kein Attribut-Overlay mehr auf 203 `[data-attr]`-Spans, Wund-Overlay bleibt), Legende präzisiert; Chip-Werte bleiben Hausregel (User-Entscheidung 19.09.2026) | S | 020 |
 | D-047 | Touch-Ziele & Mobile-Restposten @ 400 px: Inventar-Eingaben/„+ Hinzufügen“ (30 px) und Zustands-Chips (25 px) → 44 px nur ≤ 480 px; offenes Würfelpanel reserviert per `--dice-panel-h` (`dice.js` + `body`-Padding, Lücke Footer↔Panel +15,8 px); Steigern-Scroll-Hinweis/`tabindex` nur bei echtem Überlauf (`ResizeObserver`); Druck-Selektor `.spell .zfw-num` gescopt | S | 020 |
 | D-045 | Chronik-Druck: nur die aktive Ansicht (Roh/Kompiliert/Register) wird gedruckt, Register-Sonderregel entfällt; aktiver Register-Filter als Druck-Kopfzeile „Gefiltert nach: „…“ — n/N Einträge“ (`textContent`); mit Print-Emulation im Browser gemessen | S | 020 |

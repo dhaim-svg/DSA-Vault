@@ -24,11 +24,15 @@ enthalten sind.
 
 1. **Test-Suite** ausführen:
    ```bash
+   find helden/_tools -name __pycache__ -type d -prune -exec rm -rf {} +
    cd helden/_tools && python -m pytest tests/ -v 2>&1 | tail -20
    cd helden/_tools && python -m pytest tests/ -q -W error 2>&1 | tail -3
    ```
    Beide Läufe müssen grün sein (der zweite deckt Warnungen als Fehler ab — Standard seit
    Sprint 019). Ergebnis (Anzahl bestanden / Anzahl gesamt) notieren — geht ins Handoff.
+   Die erste Zeile löscht den Bytecode-Cache: bei gecachtem `.pyc` greift `-W error` nicht auf
+   Compile-Warnungen (Sprint 021: ein ungültiges `\|`-Escape in `held.py` blieb so unbemerkt).
+   `-W error` als pytest-Option lassen, **nicht** als `python -W error` (trifft Plugin-Importe).
 
 2. **Static-Render** prüfen — `render-held.py` braucht den Helden-Slug als Pflichtargument
    (Ordnername unter `helden/`, ohne `_tools`; aktuell nur `illaen-baernhold`), sonst bricht
