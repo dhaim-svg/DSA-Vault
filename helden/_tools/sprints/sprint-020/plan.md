@@ -5,11 +5,13 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-045/D-047/D-048 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-020/plan.md |
-| T1 | **D-045** Chronik-Druck: nur aktive Ansicht drucken, Register-Sonderregel streichen, Filter-Kopfzeile im Druck (`textContent`) | ⬜ todo | static/chronik.css, static/register.js, templates/partials/register.j2, tests/test_rendering.py, tests/test_register.py |
-| T2 | **D-047** Touch-Ziele & Mobile-Restposten bei 400 px: Inventar-Eingaben/Button + Zustands-Chips ≥ 44 px (nur ≤ 480 px), `.codex`-Reserve bei offenem Würfelpanel (erst messen), Scroll-Hinweis/`tabindex` nur bei Überlauf, `.zfw-num` → `.spell .zfw-num` (+ `PRINT_SPELL_SELECTORS` im selben Commit) | ⬜ todo | static/tabs.css, static/base.css, static/steigern.js, tests/test_rendering.py |
-| T3 | **D-048** Zustands-Chip-Overlay entfernen: Basiswert-Overlay nur aus Wund-Effekten, Chips wirken nur über Panel-Vorbelegung (`probeMod`); Legende anpassen | ⬜ todo | static/session.js, static/tabs.css / templates/partials/kampf.j2 (Legende), tests/test_wundregeln.py |
-| T4 | **B-014** `/sprint-wrap`-Kommando reparieren (Render-Slug, Sprint-Nr.-Wortlaut) — inline, kein Subagent | ⬜ todo | .claude/commands/sprint-wrap.md, backlog.md |
-| T5 | Verifikation (pytest inkl. `-W error`, Static-Render, Playwright @400 px + Druck-Emulation, Steuerzeichen-Scan, Domänen-Grenze) + Gesamt-Review, danach `/sprint-wrap` | ⬜ todo | sprints/sprint-020/verification.md, output/ |
+| T1 | **D-045** Chronik-Druck: nur aktive Ansicht drucken, Register-Sonderregel streichen, Filter-Kopfzeile im Druck (`textContent`) | ✅ done | static/chronik.css, static/register.js, templates/partials/register.j2, tests/test_rendering.py, tests/test_register.py |
+| T2 | **D-047** Touch-Ziele & Mobile-Restposten bei 400 px: Inventar-Eingaben/Button + Zustands-Chips ≥ 44 px (nur ≤ 480 px), `.codex`-Reserve bei offenem Würfelpanel (erst messen), Scroll-Hinweis/`tabindex` nur bei Überlauf, `.zfw-num` → `.spell .zfw-num` (+ `PRINT_SPELL_SELECTORS` im selben Commit) | ✅ done | static/tabs.css, static/base.css, static/steigern.js, tests/test_rendering.py |
+| T3 | **D-048** Zustands-Chip-Overlay entfernen: Basiswert-Overlay nur aus Wund-Effekten, Chips wirken nur über Panel-Vorbelegung (`probeMod`); Legende anpassen | ✅ done | static/session.js, static/tabs.css / templates/partials/kampf.j2 (Legende), tests/test_wundregeln.py |
+| T4 | **B-014** `/sprint-wrap`-Kommando reparieren (Render-Slug, Sprint-Nr.-Wortlaut) — inline, kein Subagent | ✅ done | .claude/commands/sprint-wrap.md, backlog.md |
+| T5 | Verifikation (pytest inkl. `-W error`, Static-Render, Playwright @400 px + Druck-Emulation, Steuerzeichen-Scan, Domänen-Grenze) + Gesamt-Review, danach `/sprint-wrap` | ✅ done (Verifikation + Review + Wrap) | sprints/sprint-020/verification.md, output/ |
+
+**Stand am Sprint-Ende (19.09.2026):** T0–T5 ✅. Commits `f7cc6a7` (T0), `bc2f3a9` (T1), `0284330` (T2), `d63a00b` (T3), `05a0cfa` + `30f2064` (T4), `ad1685a` (Review-Minors inline). 403/403 Tests (auch `-W error`), Browser 7 PASS / 0 FAIL, Gesamt-Review „Ready to merge: Yes“. Abweichung vom Plan: T3-Ursache korrigiert (`applyWundModsToProben`: `probeMod`→`attrMod`, statt „Overlay nach Effekt-Art filtern“); ungescopter Druck-Selektor `.zfw-num` stand in `tabs.css`, nicht `base.css`. Details: `verification.md`, `handoff.md`.
 
 **Reihenfolge:** T1 → T2 → T3 sequenziell (T1/T2 fassen beide `tests/test_rendering.py` an, T2/T3
 beide `tabs.css`). T4 ist unabhängig und läuft inline (Controller), z. B. vor oder nach T3.
