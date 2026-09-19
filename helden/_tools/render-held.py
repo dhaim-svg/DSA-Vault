@@ -10,24 +10,7 @@ VAULT_ROOT = TOOLS_DIR.parent.parent
 OUTPUT_DIR = VAULT_ROOT / 'output'
 
 sys.path.insert(0, str(TOOLS_DIR))
-from parsers.held import load_held
-from parsers.kampagne import load_kampagne
-from rendering import make_env
-
-
-def build_context(slug: str) -> dict:
-    """Load hero + campaign data, return the Jinja template context dict."""
-    return {
-        'held': load_held(VAULT_ROOT, slug),
-        'kampagne': load_kampagne(VAULT_ROOT, 'drachenchronik'),
-        'slug': slug,
-    }
-
-
-def render_html(context: dict) -> str:
-    """Render dashboard HTML from a pre-built context dict."""
-    env = make_env()
-    return env.get_template('dashboard.html.j2').render(**context)
+from rendering import build_context, render_dashboard as render_html
 
 
 def render(slug: str) -> Path:

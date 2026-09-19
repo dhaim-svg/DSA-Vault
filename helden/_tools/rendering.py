@@ -3,9 +3,14 @@ from pathlib import Path
 from urllib.parse import quote
 import jinja2
 
+from parsers.held import load_held
+from parsers.kampagne import load_kampagne
+
 TOOLS_DIR = Path(__file__).parent
+VAULT_ROOT = TOOLS_DIR.parent.parent
 TEMPLATES_DIR = TOOLS_DIR / 'templates'
 STATIC_DIR = TOOLS_DIR / 'static'
+KAMPAGNE_SLUG = 'drachenchronik'
 
 # Bundle order is load-bearing: CSS cascade depends on it.
 CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css']
@@ -52,3 +57,17 @@ def make_env() -> jinja2.Environment:
     env.filters['obsidian'] = obsidian_uri
     env.globals['css_bundle'] = css_bundle
     return env
+
+
+def build_context(slug: str, vault_root: Path = VAULT_ROOT) -> dict:
+    """Template context shared by the live server and the static render."""
+    return {
+        'held': load_held(vault_root, slug),
+        'kampagne': load_kampagne(vault_root, KAMPAGNE_SLUG),
+        'slug': slug,
+        'kampagne_slug': KAMPAGNE_SLUG,
+    }
+
+
+def render_dashboard(context: dict) -> str:
+    return make_env().get_template('dashboard.html.j2').render(**context)

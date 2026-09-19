@@ -17,18 +17,13 @@ sys.path.insert(0, str(TOOLS_DIR))
 from flask import Flask, jsonify, request
 from parsers.held import load_held
 from parsers.kampagne import load_kampagne
-from rendering import make_env           # shared Jinja helpers — no duplication
+from rendering import build_context, render_dashboard   # shared with render-held.py
 from writers.held_writer import patch, etag_for, mtime_map
 from git_ops import commit_helden
 
 
 def _render_dashboard(slug: str) -> str:
-    held = load_held(VAULT_ROOT, slug)
-    kampagne = load_kampagne(VAULT_ROOT, 'drachenchronik')
-    env = make_env()
-    return env.get_template('dashboard.html.j2').render(
-        held=held, kampagne=kampagne, slug=slug, kampagne_slug='drachenchronik'
-    )
+    return render_dashboard(build_context(slug, VAULT_ROOT))
 
 
 def create_app(slug: str) -> Flask:
