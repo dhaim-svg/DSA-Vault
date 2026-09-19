@@ -6,6 +6,7 @@ import jinja2
 from parsers.held import load_held
 from parsers.chronik import load_chronik
 from parsers.kampagne import load_kampagne
+from parsers.register import build_register
 
 TOOLS_DIR = Path(__file__).parent
 VAULT_ROOT = TOOLS_DIR.parent.parent
@@ -81,9 +82,11 @@ def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
 
     inline_js=True (static file:// render) embeds the JS and shows the "not saved" hint.
     """
+    kampagne = load_kampagne(vault_root, KAMPAGNE_SLUG)
     return {
         'held': load_held(vault_root, slug),
-        'kampagne': load_kampagne(vault_root, KAMPAGNE_SLUG),
+        'kampagne': kampagne,
+        'register': build_register(kampagne.get('sessions', [])),
         'chronik': load_chronik(vault_root),
         'chronik_bild_prefix': chronik_bild_prefix,
         'inline_js': inline_js,

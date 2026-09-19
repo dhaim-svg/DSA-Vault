@@ -155,6 +155,14 @@ def test_build_context_without_chronik_file_has_empty_chronik(tmp_path, monkeypa
     ctx = build_context('x', tmp_path, chronik_bild_prefix='/p/')
     assert ctx['chronik'] == {'spielabende': [], 'meta': {}}
     assert ctx['chronik_bild_prefix'] == '/p/'
+    assert ctx['register'] == {'nscs': [], 'orte': []}
+
+
+def test_build_context_has_register_from_live_vault():
+    ctx = build_context('illaen-baernhold')
+    assert set(ctx['register']) == {'nscs', 'orte'}
+    assert ctx['register']['nscs']
+    assert ctx['register']['orte']
 
 
 BILD = 'drachenchronik-daten/pergament-abschrift.png'
