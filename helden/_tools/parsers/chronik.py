@@ -17,6 +17,11 @@ IG_DATUM_RE = re.compile(
     r'|^\d\.\s+Namenloser Tag$'
 )
 
+# Unbolded "Datum: 13. Phex -> Start" line: group 1 = IG date, group 2 = optional note after "->".
+DATUM_PREFIX_RE = re.compile(
+    r'^Datum:\s*(\d{1,2}\.\s+(?:' + '|'.join(DSA_MONATE) + r'))(?:\s*->\s*(.+?))?\s*$'
+)
+
 BOLD_LINE_RE = re.compile(r'^\*\*([^*]+)\*\*$')
 ITALIC_LINE_RE = re.compile(r'^\*([^*]+)\*$')
 BULLET_RE = re.compile(r'^(\s*)-\s+(.*)$')
@@ -56,6 +61,15 @@ def _parse_spielabend_body(body: str) -> list[dict]:
                 current = {'ig_datum': inner, 'bloecke': []}
                 continue
             current['bloecke'].append({'typ': 'szene', 'text': strip_wikilink(inner)})
+            continue
+
+        datum_m = DATUM_PREFIX_RE.match(stripped)
+        if datum_m:
+            flush()
+            ig_datum = datum_m.group(1)
+            if datum_m.group(2):
+                ig_datum += f' ({datum_m.group(2)})'
+            current = {'ig_datum': ig_datum, 'bloecke': []}
             continue
 
         italic_m = ITALIC_LINE_RE.match(stripped)

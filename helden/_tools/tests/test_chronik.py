@@ -362,3 +362,65 @@ def test_srcless_tag_stays_while_sibling_tag_with_src_becomes_bild(tmp_path):
         {'typ': 'text', 'text': 'Vorher <img alt="a"> mitte Ende'},
         {'typ': 'bild', 'src': 'b.png'},
     ]
+
+
+# ---------------------------------------------------------------------------
+# D-042: "Datum: <IG-Datum> [-> Zusatz]" line starts a new IG day
+# ---------------------------------------------------------------------------
+
+def _ig_tage(tmp_path, body: str) -> list[dict]:
+    _write_chronik(tmp_path, '## 04.06.2026\n' + body)
+    return load_chronik(tmp_path)['spielabende'][0]['ig_tage']
+
+
+def test_datum_line_with_zusatz_starts_ig_tag_with_suffix(tmp_path):
+    ig_tage = _ig_tage(tmp_path, 'Datum: 13. Phex -> Start\n- Erster Punkt\n- Zweiter Punkt\n')
+
+    assert len(ig_tage) == 1
+    assert ig_tage[0]['ig_datum'] == '13. Phex (Start)'
+    assert ig_tage[0]['bloecke'] == [
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Erster Punkt'},
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Zweiter Punkt'},
+    ]
+    assert not any(b['typ'] == 'text' for b in ig_tage[0]['bloecke'])
+
+
+def test_datum_line_without_zusatz_yields_plain_ig_datum(tmp_path):
+    ig_tage = _ig_tage(tmp_path, 'Datum: 14. Rahja\n- Punkt\n')
+
+    assert len(ig_tage) == 1
+    assert ig_tage[0]['ig_datum'] == '14. Rahja'
+    assert ig_tage[0]['bloecke'] == [{'typ': 'bullet', 'tiefe': 0, 'text': 'Punkt'}]
+
+
+def test_datum_line_after_content_starts_new_ig_tag(tmp_path):
+    ig_tage = _ig_tage(
+        tmp_path,
+        '**12. Phex**\n- Vorher\nDatum: 13. Phex -> Start\n- Nachher\n',
+    )
+
+    assert [t['ig_datum'] for t in ig_tage] == ['12. Phex', '13. Phex (Start)']
+    assert ig_tage[0]['bloecke'] == [{'typ': 'bullet', 'tiefe': 0, 'text': 'Vorher'}]
+    assert ig_tage[1]['bloecke'] == [{'typ': 'bullet', 'tiefe': 0, 'text': 'Nachher'}]
+
+
+def test_datum_line_with_unknown_month_stays_text_block(tmp_path):
+    ig_tage = _ig_tage(tmp_path, 'Datum: 13. Foobar -> Start\n- Punkt\n')
+
+    assert len(ig_tage) == 1
+    assert ig_tage[0]['ig_datum'] is None
+    assert ig_tage[0]['bloecke'] == [
+        {'typ': 'text', 'text': 'Datum: 13. Foobar -> Start'},
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Punkt'},
+    ]
+
+
+def test_datum_line_coexists_with_later_bold_ig_datum(tmp_path):
+    ig_tage = _ig_tage(
+        tmp_path,
+        'Datum: 13. Phex -> Start\n- Erster\n**17. Phex**\n- Zweiter\n',
+    )
+
+    assert [t['ig_datum'] for t in ig_tage] == ['13. Phex (Start)', '17. Phex']
+    assert ig_tage[0]['bloecke'] == [{'typ': 'bullet', 'tiefe': 0, 'text': 'Erster'}]
+    assert ig_tage[1]['bloecke'] == [{'typ': 'bullet', 'tiefe': 0, 'text': 'Zweiter'}]
