@@ -1132,6 +1132,62 @@ body { padding-top: 46px; }
 .lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
 .lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
 .lang-section-head--first { margin-top: 0; }
+/* ---- Chronik tab ---- */
+.chronik-view { display: none; }
+.chronik-view--active { display: block; }
+
+.chronik-switch { display: inline-flex; margin: 0 0 var(--gap); border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; max-width: 100%; }
+.chronik-switch-btn { padding: 5px 14px; border: 0; border-right: 1px solid var(--rule); background: transparent; color: var(--ink-mute); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; cursor: pointer; }
+.chronik-switch-btn:last-child { border-right: 0; }
+.chronik-switch-btn:hover { color: var(--ink); background: rgba(95,195,228,.06); }
+.chronik-switch-btn--active,
+.chronik-switch-btn--active:hover { color: var(--accent-cold); background: rgba(95,195,228,.12); box-shadow: inset 0 0 0 1px var(--accent-cold); }
+.chronik-switch-btn:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: -2px; }
+.chronik-switch-count { margin-left: 4px; color: var(--ink-dim); }
+.chronik-switch-btn--active .chronik-switch-count { color: var(--accent-cold); }
+
+.chronik-abend { margin-bottom: var(--gap); }
+.chronik-abend > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; cursor: pointer; list-style: none; font-family: var(--display); }
+.chronik-abend > summary::-webkit-details-marker { display: none; }
+.chronik-abend > summary::before { content: "\25B8"; display: inline-block; width: 1em; color: var(--accent-cold); transition: transform .15s; }
+.chronik-abend[open] > summary::before { transform: rotate(90deg); }
+.chronik-abend > summary:hover .chronik-sum-datum { color: var(--accent-cold); }
+.chronik-abend > summary:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: 3px; }
+.chronik-abend[open] > summary { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule-soft); }
+.chronik-sum-datum { font-size: 16px; letter-spacing: .06em; color: var(--ink); }
+.chronik-sum-meta { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-mute); overflow-wrap: anywhere; }
+
+.chronik-igtag { margin-bottom: 14px; }
+.chronik-igtag:last-child { margin-bottom: 0; }
+.chronik-igtag-datum { margin: 14px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent-gold); overflow-wrap: anywhere; }
+.chronik-szene { margin: 14px 0 6px; font-family: var(--subhead); font-size: 17px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.chronik-text { margin: 0 0 8px; font-family: var(--body); color: var(--ink); overflow-wrap: anywhere; }
+.chronik-bullet { position: relative; margin: 0 0 4px; padding-left: calc(var(--tiefe, 0) * 1.25rem + 1rem); font-family: var(--body); color: var(--ink); overflow-wrap: anywhere; }
+.chronik-bullet::before { content: "\2022"; position: absolute; left: calc(var(--tiefe, 0) * 1.25rem); color: var(--accent-cold); opacity: calc(1 - min(var(--tiefe, 0), 1) * .5); }
+.chronik-bild { margin: 10px 0; }
+.chronik-bild img { display: block; max-width: 100%; height: auto; border: 1px solid var(--rule); border-radius: var(--r-card); }
+
+.chronik-meta { margin-top: var(--gap); }
+.chronik-meta-text { white-space: pre-wrap; font-family: var(--mono); font-size: 12px; color: var(--ink-mute); overflow-wrap: anywhere; }
+
+@media (max-width: 480px) {
+  .chronik-switch { display: flex; }
+  .chronik-switch-btn { flex: 1; padding: 8px 10px; }
+  .chronik-sum-datum { font-size: 15px; }
+}
+
+@media print {
+  .chronik-switch { display: none !important; }
+  .chronik-view { display: block !important; }
+  .chronik-abend > summary { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
+  .chronik-abend > summary::before { display: none; }
+  .chronik-sum-datum, .chronik-sum-meta, .chronik-szene, .chronik-text, .chronik-bullet, .chronik-meta-text { color: var(--paper-ink); }
+  .chronik-igtag-datum { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
+  .chronik-bild img { border-color: var(--paper-rule); max-height: 60mm; width: auto; }
+  .chronik-abend { break-inside: auto; }
+  .chronik-igtag-datum, .chronik-szene { break-inside: avoid; }
+  .chronik-igtag-datum, .chronik-szene { break-after: avoid; }
+}
 </style>
 </head>
 <body><div class="codex">
@@ -1142,7 +1198,7 @@ body { padding-top: 46px; }
   <button class="tab-btn" data-tab="steigern" type="button">⭐ Steigern</button>
   <button class="tab-btn" data-tab="inventar" type="button">🎒 Inventar</button>
   <button class="tab-btn" data-tab="profil"   type="button">📋 Profil</button>
-  <button class="tab-btn" data-tab="journal"  type="button">📓 Journal</button>
+  <button class="tab-btn" data-tab="chronik"  type="button">📜 Chronik</button>
   <button class="tab-btn" data-tab="sprachen" type="button">🗣️ Sprachen</button>
 </nav>
 
@@ -2778,10 +2834,273 @@ body { padding-top: 46px; }
 
 </div><!-- end tab-profil -->
 
-<div class="tab-content" id="tab-journal">
+<div class="tab-content" id="tab-chronik">
 
-<div class="sec-head"><h2>📓 Kampagnen-Journal</h2><span class="rule"></span></div>
+<div class="sec-head"><h2>📜 Chronik</h2><span class="rule"></span></div>
 
+<div class="chronik-switch" role="tablist" aria-label="Chronik-Ansicht">
+  <button type="button" class="chronik-switch-btn chronik-switch-btn--active" data-view="roh" role="tab" aria-selected="true" aria-controls="chronik-view-roh">Roh <span class="chronik-switch-count">4</span></button>
+  <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">1</span></button>
+</div>
+
+<div class="chronik-view chronik-view--active" id="chronik-view-roh" data-view="roh" role="tabpanel">
+  <details class="card chronik-abend" open>
+    <summary>
+      <span class="chronik-sum-datum">22.08.2026</span>
+      <span class="chronik-sum-meta">1 IG-Tag</span>
+    </summary>
+    <div class="chronik-igtag">
+      <div class="chronik-bullet" style="--tiefe: 0">Wir können uns hinzu schleichen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Und Peter kann sich hineinschleichen - und entdeckt, dass dort Novadis drinn sind</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dank ihm können wir uns auf den Kampf vorbereiten</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Es ist ein 12-exkiger Raum mit Statuen und einem Sarkophag in der mitte</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Mit 4 Novadis gekämpft</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Am hinteren Ende ist ein 2x2m schräger Schacht in die Erde (unnatürlich, wie hineingeschnitten)</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Danach durch den Schacht - der mündet in einer Kaverne wie die anderen (Element: Luft)</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Davor liegt eine Leiche - mit Dolch in der Brust</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir können den Dolch herausziehen - er ist ähnlicher machart wie der Dolch aus Punin</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Als wir hinausgehen - wird der Leichnam von 2 Armen umfasst und unter den Boden gezogen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir gehen durch den Haupteingang hinaus können die Steinplatte hochheben - Ludis Hund erschnüffelt die Richtung</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir können der Spur in den Wald folgen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dort verliert sie sich auf einer kleinen Lichtung - wo wir abere Klauenabrücke finden wie dass Flugwesen von hier gelandet/gestartet sind</div>
+      <h5 class="chronik-szene">Zurück im Dorf</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir holen die Baronins Tochter und klären sie über die aktuelle Lage auf</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Derweilen ist der Rest bei Muchacho und versucht in zum Reden zu bringen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Gemeinsam mit ihr reden wir dann, sie sagt, dass er eigentlich ein gutes Herz hat</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Er kann uns zu dem Novadi Dorf führen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir bekommen das Recht zu entscheiden ob er sich durch seine Taten eine Begnadigung verdient</div>
+      <h5 class="chronik-szene">Novadi Lager</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Er kann uns zum Lager führen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Es ist ca. 2h entfernt in einem Wald</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Peter(Salmann) kann es auskundschaften</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Es sind ca. 20 Personen</div>
+      <div class="chronik-bullet" style="--tiefe: 1">1 ca. 60m² Zelt</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Aber keine Kisten und Pferde</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Eher schäbig angezogen, zT Betrunken</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Unsere Idee wäre gewesen mit ihnen zu reden</div>
+      <div class="chronik-bullet" style="--tiefe: 0">sie wollten aber nicht und haben uns angegriffen</div>
+      <h5 class="chronik-szene">Zurück nach Brig-Lo</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir haben einen Gefangenen</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Sie sind aus Amhallah</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Mittelsmann: Besitzer des Teehauses der Koramsbestie</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Sie sollten alle Auffälligkeiten vom Schlachtfeld berichten</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Muchacha bekommt eine &#34;Empfehlung&#34; um als Rekrut in der Armee zu dienen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Entscheidung: Weiter nach Amhallah</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Idee: auf dem Schiff zu schlafen um regenerieren zu können</div>
+    </div>
+  </details>
+  <details class="card chronik-abend">
+    <summary>
+      <span class="chronik-sum-datum">18.07.2026</span>
+      <span class="chronik-sum-meta">3 IG-Tage &middot; 22. Phex &ndash; 23. Phex</span>
+    </summary>
+    <div class="chronik-igtag">
+      <p class="chronik-text">Es fehelen Tabea und Peter</p>
+      <h5 class="chronik-szene">Vision</h5>
+      <h5 class="chronik-szene">Von Ludi am Schiff erzählt</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Angeketteter bärtiger Mann - in den Bergen, unter Bergen aus Eis</div>
+      <div class="chronik-bullet" style="--tiefe: 0">ein von hass erfüllter angeketteter mann in der fintsternis - angekettet in einer kaverne umgeben von metall um die arkane macht einzuschränken</div>
+      <div class="chronik-bullet" style="--tiefe: 0">ein von hass erfüllter</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">22. Phex</h4>
+      <h5 class="chronik-szene">Brig-Lo</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Am späten Nachmittag erreichen wir Brig-Lo</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir legen bei der ANlegestelle im Süden des Ortes an</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Begrüßung durch die Tochter des Reichsmarschalls: Gerone von Berg (24Jahre)</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Ahnin: Leonore von Berg</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Es gibt eine Garnision auf der anderen Seite des Flusses Brigella</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Garnison liegt in einer anderen Baronie (Südpforte)</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Obristin der Garnision: Ferra Gabronde</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Kind: Brigaja - 11 Jahre, vermutlich novadisch - bietet uns an das Schlachtfeld zu zeigen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Schlachtfeld im norden von Brig-Lo</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Hier kommen am Morgen und dann am Tag die Geister</div>
+      <div class="chronik-bullet" style="--tiefe: 1">In der Nacht bekommen wir einen Touristen Führung von Brigaja</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Es gibt einen Tümpel - von dem trinkt keiner</div>
+      <div class="chronik-bullet" style="--tiefe: 1">In Sichtweite am Hügel ist der Tempel</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Tempel der 4 - Lob der 4 Götter die die Schlacht gerettet haben: Praios, Rondra, Efferd, Ingerimm</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Wurde nach 400 Jahren von einer Praios Geweihten geschliffen</div>
+      <div class="chronik-bullet" style="--tiefe: 2">wahrschinlich zur Zeit der Priesterkaiser (Alle anderen Götter müssen weichen)</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Am Fuß des Hügels ist ein Mausoleum das nicht kaputt ist</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Sie ist das einzige Opfer der Dämonen bevor die Götter eingegriffen haben</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Grabanlage von Leonore von Berg - Marmor, großes Brozenes Tor</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Prinzipiell haben wir frühling, alles ist grün und voller Blumen - aber dazwischen sind graue Felder wo alles tot ist.</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Reto, Mann von Wirtin wurde Novadis vor 4 Jahren verschleppt</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Muchacho erzählt, dass die Novadis ein Versteck im Wald haben.</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Echter Name: Alvadez, Sohn des Wirtshauses</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Novadis liefen am Schlachtfeld umher in der Nacht</div>
+      <div class="chronik-bullet" style="--tiefe: 2">ca. 10-20</div>
+      <h5 class="chronik-szene">Suche nach Nachtwache</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Kanzai hat Nachtwachendienst am Schlachtfeld</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Nachfrage bez. Novadis - beim letzten Mal wo sie gesehen wurden waren sie in der Nähe des Tsa Schreis in der Nähe eines Hains (ca. 150m)</div>
+      <h5 class="chronik-szene">Gang aufs Schlachtfeld</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Bei diesem Mauoleum waren &#34;frische&#34; Fackelspuren</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dann noch beim Tsa Schrein - 2 Kollegen haben den Schrein umgeschmissen - und dann wieder aufgestellt</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">23. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Beobachtung der Bevökerung</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dann mal Besuch auf dem Schlachtfeld</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Bei der Rückkehr steht der Rashtullatempel in Flammen</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Der Brandstifter sitzt davor auf seinem Pferd und gibt sich als Elfeneck - der Almadanische Held aus</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Allerdings sitzt er auf einem Schimmel und normalerweise sitzt der Held auf einem Fuchs</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Und auch seine Kleidung passt von den Farben her nicht zu Almada</div>
+      <h5 class="chronik-szene">Thomas und Ludi suchen verfolgen den Nachahmer</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">sie haben es geschafft und die jungen erwachsenen in einer Hütte im Wald gefunden</div>
+      <div class="chronik-bullet" style="--tiefe: 0">sie führen die verschwörer zurück</div>
+      <div class="chronik-bullet" style="--tiefe: 0">der brandstifter haut ab</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Thomas verfolgt ihn auf dem Pferd</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Und kann ihn zurückbringen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Im Ort: Ludi gibt seine 4 bei den Bütteln ab</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Gegen Mitternacht kommt Thomas zurück und gibt den Brandstifter ab</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dann schauen wir noch mal auf das Feld - vorallem in Richtung Tsa Hain und dann auch Tempel</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Beim Hain *sehen* wir ein Licht bei der Gruft aufleuchten</div>
+    </div>
+  </details>
+  <details class="card chronik-abend">
+    <summary>
+      <span class="chronik-sum-datum">27.06.2026</span>
+      <span class="chronik-sum-meta">5 IG-Tage &middot; 18. Phex &ndash; 22. Phex</span>
+    </summary>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">18. Phex</h4>
+      <figure class="chronik-bild"><img src="../abenteuer/drachenchronik/drachenchronik-daten/pergament-abschrift.png" alt="Chronik-Abbildung" loading="lazy"></figure>
+      <div class="chronik-bullet" style="--tiefe: 0">Verbindung: Mag. Mantagor SOZ 10, Saurologe in Punin</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Vorbereitungen für die Abfahrt mit einem Flussboot am nächsten Morgen noch vor oder bei Sonnenaufgang - erwartete Reisedauer: 1d -&gt; Erwartete Ankunft: Am Abend</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Kleiner Junge bei Unterkunft -&gt; Rosskopp (Rondrageweihter) soll zur Wachstube kommen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Info: Der Einbrecher wurde im Gewahrsam tot aufgefunden</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Der Dolch der bei ihm gefunden wurde ist von ungewöhlicher guter hochwertiger Qualität</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">19. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Am frühen morgen machen wir uns auf mit dem Schiff in den Süden</div>
+      <div class="chronik-bullet" style="--tiefe: 0">kurze Absprache</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Am Abend erreichen wir Kumrath</div>
+      <div class="chronik-bullet" style="--tiefe: 1">2 Felsen die aus dem Fluss ragen auf dem die Festung steht</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Nach Gang zur Festung werden wir eingelassen und nach kurzem warten treffen wir auf den Reichskanzler (Name=Rafik) und er grüßt uns mit Namen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">in einer halben Stunde gibt es eine Besprechung mit der Königin und dem Reichserzmarshall</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Treffen mit beiden im Heraldiksaal</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Ansprache</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Königin (Rohaya): Eure königliche Hoheite / Eure aller durchlauchteste Hoheit</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Reichsmarschall: Eure Excellenz</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir bekommen den Auftrag nach Brig-Lo zu gehen</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Dafür dürfen wir zur Reise das Flussschiff des Kanzlers nutzen</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">20. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Teilnahme am Praios Gottesdienst gemeinsam mit der Königin</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Segen von Praios: MU, MR, Götter/Kulte, Staatskunst +1 für eine Woche</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Ludi hatte einen Traum</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Unsere Zukunft beinhaltet eine unberührte Gebirgslandschaft auf der Schnee liegt</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Am Abend erreichen wir Omlad, wo wir die Nacht verbringen werden</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Omlad ist die zurück eroberte Stadt</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Beim Anlegen werden ~3 Kisten ausgeladen (was ist da wohl drinnen)</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">21. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Ungefähr nach 1h fahrt Novadische Späher am Südufer gesehen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir sind weitergefahren</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Kurz vor Winberger standen auf der nördlichen Seite des Flusses Weinberge und Felder in Brand</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Übernachtung in Bactrinn</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">22. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Am späten Nachmittag erreichen wir Brig-Lo</div>
+    </div>
+  </details>
+  <details class="card chronik-abend">
+    <summary>
+      <span class="chronik-sum-datum">04.06.2026</span>
+      <span class="chronik-sum-meta">3 IG-Tage &middot; 17. Phex &ndash; 18. Phex</span>
+    </summary>
+    <div class="chronik-igtag">
+      <p class="chronik-text">Datum: 13. Phex -&gt; Start</p>
+      <div class="chronik-bullet" style="--tiefe: 0">3 Tage in Punin, Vormittag Sightseeing, Nachmittag im Hesinde Tempel</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Am Abend des 3. Tages als wir zurück kamen haben wir unsere Zimmer verwüstet vorgefunden</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Anscheinend wurden sie durchsucht</div>
+      <div class="chronik-bullet" style="--tiefe: 1">wir haben eine Rastulla Gebetskette gefunden</div>
+      <p class="chronik-text">Sightseeing in Punin</p>
+      <div class="chronik-bullet" style="--tiefe: 0">Schweigeplatz, Kaffeehaus</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Rahjatempel und Weinviertel</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Jarmarktsviertel, Zhaori</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Theaterbesuch</div>
+      <h5 class="chronik-szene">Wissensaufbau im Hesindetempel</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Grob über aktuelle Gegebenheiten rund um Punin</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Dörfer und Städte rund um den Yaquir Fluss bis Briglo</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Info zu Briglo</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Austragungsort der 2. Dämonenkriege</div>
+      <div class="chronik-bullet" style="--tiefe: 1">4 Götter hatten sich manifestiert</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Kartenmaterial rund um den Yaquir</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Kartenmaterial südlich davon - Khom</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Infos zu Wüstenkultur</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Auch zu Rastullaglaube</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Infos generell zu Wüste</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Flora, Fauna - vorallem Gebirgskette am Rande der Wüste</div>
+      <div class="chronik-bullet" style="--tiefe: 1">zB Khormasbestien, Skorpione</div>
+      <div class="chronik-bullet" style="--tiefe: 1">zb Stiefel am Morgen ausleeren (Skorpion)</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Faustformel zu Skorpionen - je kleiner desto gefährlicher</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Kartenmaterial, Oasen</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Distanzen zwischen den Oasen</div>
+      <h5 class="chronik-szene">Punin Akademie am 15. Phex</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">großer Aufrur - da eine Leiche gefunden wurde</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Sie war in einer Kaverne ähnlich wie in Then</div>
+      <div class="chronik-bullet" style="--tiefe: 0">ca. 80m Durchmesser</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Sockel ist abgegriffen, aber nicht abgeschliffen</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Es sind Elementarzeichen, aber am meisten Humus</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Das kommt daher, dass das Artefakt ein Humusartefakt war - ein in die länge gezogenes Ei</div>
+      <h5 class="chronik-szene">Papyrus</h5>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir sind noch in die Papiermühle gegangen und haben die Meisterin gefragt</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Der Papyris ist aus dem Mhanadi Delta, ca. 3000 Jahre alt</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">17. Phex</h4>
+      <div class="chronik-bullet" style="--tiefe: 0">Wieder in der Akademie</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Plan: Durchsicht der Bücher</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Allerdings: Enzyklopedia Dracomagica ist verschwunden</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Hatte bis vor 2 Tagen eine Draconiterin Name: Richesa Bolongaro (2 verschiedene Augenfarben)</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Wir haben beim Draconiter Orden nachgefragt, sie ist erst kurz vor uns gekommen und jetzt verschwunden</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Inhalt:</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Alles zu Drachen</div>
+      <div class="chronik-bullet" style="--tiefe: 2">Genaue Aufzeichnungen zum Artefakt</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Wir bekommen einige Bücher zur Durchsicht</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Extrem potentes Artefakt</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Vermutung: Beinhaltet extrem starken Zorn der Elemente, wird eventuell &#34;Sumus Kraft&#34; -&gt; dem 7. Element zugeordnet</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Es kam ein Bote zu uns vom Reichskanzler - wir sollen zu ihm kommen wenn wir die Informationen haben -&gt; Cumrat, kaiserlichen Pfalz</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Als wir bei den Draconitern nachgefragt haben bekam der werte Parinor Aldebruch eine Information oder besser gesagt eine Prophezeihung bze. Pydracors Wiederkehr (3. Weltenbrand)</div>
+    </div>
+    <div class="chronik-igtag">
+      <h4 class="chronik-igtag-datum">18. Phex</h4>
+      <p class="chronik-text">Basiliskentag</p>
+      <div class="chronik-bullet" style="--tiefe: 0">Als wir in der Früh zur Akademie gingen um uns die Übersetzung abzuholen war der Magister nicht da</div>
+      <div class="chronik-bullet" style="--tiefe: 0">bei seiner Wohnung wurde eingebrochen, anscheinend von Menschen in Kaftanen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">er konnte sich soweit wehren, dass er im Nachtmantel mit Stab und einem Zettel? in der Hand fliehen</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Mit dem Hund konnten wir den Geruch bis in eine Seitengasse folgen, dort wurde anscheinend viel Magie gewirkt</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Dank Nasira haben wir erfahren, dass es ein Adlerschwinge war</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Er hat sich in eine Speikobra verwandelt</div>
+      <div class="chronik-bullet" style="--tiefe: 1">Wir haben ihn dann gesucht und konnten ihn im Park finden und vor Kindern retten</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Nasira konnte sie dann zurück verwandeln</div>
+      <div class="chronik-bullet" style="--tiefe: 0">Die original Abschrift wurde gestohlen, allerdings nicht die Übersetzung - die haben wir erhalten</div>
+    </div>
+  </details>
+  <section class="card chronik-meta"><h3 class="card-title">Nützliche SF</h3><div class="chronik-meta-text">Reg II -&gt; 100 AP
+Meisterliche Reg -&gt; 200 AP
+300 * 0,75 (akad. Ausbildung) = 225 GP
+IN 15 -&gt; 410 GP</div></section>
+  <section class="card chronik-meta"><h3 class="card-title">Nützliche Links</h3><div class="chronik-meta-text">- https://www.avespfade.de/</div></section>
+  <section class="card chronik-meta"><h3 class="card-title">Für später</h3><div class="chronik-meta-text">- Matrixkontrolle
+- Klarum Purum</div></section>
+  <section class="card chronik-meta"><h3 class="card-title">Vorbereitung</h3><div class="chronik-meta-text">- Verbindungen im Wert von Soz+6
+
+- Dekan des Leibwächter Zweigs in Riva (Soz 10)
+- Kontorleiterstellvertreter Stoerebrant Kontor Fasar (Soz 6)
+
+Ausrüstung: (Reise-)Kleidung passend zur Kultur, für Weißmagier jedoch auf jeden Fall das Reisegewand, Konventsgewand, Zauberstab mit erstem Stabzauber, Schreibzeug (Tinte oder Tusche, Gänsekiele, Federmesser, Sand, Löschbims), Vademecum/ Diarium, 20 Blatt Pergament, Umhängetasche, stabiler Gürtel mit Gürteltaschen</div></section>
+  <section class="card chronik-meta"><h3 class="card-title">Bugs in der Charackter Ansicht</h3><div class="chronik-meta-text">- Fehlende Information über aussehen und Kleidung
+- Eigenschaftswerte über Talente und Zauber
+- Stabzauber - Info über Aktivierungsprobe</div></section>
+</div>
+
+<div class="chronik-view" id="chronik-view-kompiliert" data-view="kompiliert" role="tabpanel">
   <section class="card journal-session" data-session-nr="1">
     <h3 class="journal-session-header">#1 &middot; 2025-10-04</h3>
 
@@ -2828,9 +3147,9 @@ Illaen: AsP 38 → 32 (Odem Arcanum 2×) → 32 (Ende Session)</p>
     </details>
 
   </section>
+</div>
 
-</div><!-- end tab-journal -->
-
+</div><!-- end tab-chronik -->
 <div class="tab-content" id="tab-sprachen">
 <div class="sec-head"><h2>Sprachen &amp; Schriften</h2><span class="rule"></span></div>
 <section class="card">
@@ -3002,6 +3321,7 @@ window.DSA = {
 <script src="/static/inventar.js"></script>
 <script src="/static/zauberspeicher.js"></script>
 <script src="/static/journal.js"></script>
+<script src="/static/chronik.js"></script>
 <script src="/static/commit.js"></script>
 </body>
 </html>
