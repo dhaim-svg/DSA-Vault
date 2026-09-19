@@ -7,7 +7,9 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.  | Titel                                                                                                   | Effort | Seit       |
+|-------|-------|---------------------------------------------------------------------------------------------------------|--------|------------|
+| B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen — Sprint 021 (T1 Reparatur inkl. 1× `goetter/bund-wahren-glaubens.md` + Konvention, T2 Fallback raus) | M | 2026-09-19 |
 
 ---
 
@@ -15,7 +17,6 @@ _(keine)_
 
 | ID    | Kat.  | Titel                                                                                                   | Effort |
 |-------|-------|---------------------------------------------------------------------------------------------------------|--------|
-| B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen | M |
 | B-015 | tooling | Test-Helfer deduplizieren (Final-Review Sprint 020): `needs_node` (test_register/test_rendering/test_wundregeln), `_js_function` == `_function_body`, drei fast identische node-Fake-DOM-Runner → gemeinsames `helden/_tools/tests/jsfixtures.py` | S |
 | B-016 | tooling | Repo-Hygiene (Final-Review Sprint 020, Sprint-019-Erbe): nur noch `.gitattributes` mit `* text=auto` offen (gemischte LF/CRLF-Working-Copies, `core.autocrlf=true`; ohne `--renormalize`, danach `git status` prüfen). Erledigt 2026-09-19: `.playwright-mcp/` in `.gitignore`, `.claude/settings.json` versioniert, `.obsidian/workspace.json` untracked + ignoriert | S |
 

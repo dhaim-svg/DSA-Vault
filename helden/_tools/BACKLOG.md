@@ -5,11 +5,14 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-049 | Desktop-Footer über dem offenen Würfelpanel: `#footer-bar` (`z-index:100`, `bottom:28px`) liegt bei > 480 px unter `.dice-panel` (`z-index:200`); Fix `bottom: calc(28px + var(--dice-panel-h, 0px))` — `--dice-panel-h` setzt `dice.js` schon media-query-unabhängig | S | in-progress | 021 |
+| D-050 | Artikelvorschau für Sonderfertigkeiten: 13/17 SF-Zeilen haben `wiki_path` mit `##`-Anker → Anker-Abschnitt statt ganzer Datei einbetten (`split_sections`), `<details>`-Block als Makro geteilt mit Zauber; `WIKILINK_RE`-Fix für Anker mit `[…]` (Merkmalskenntnis). Rituale bleiben außen vor (keine Links, keine Headings je Stabzauber) | M | in-progress | 021 |
 
 ## Backlog
 
-_(keine — Dashboard-Backlog leer; offen bleibt B-013 im Vault-`backlog.md`)_
+_(keine — Dashboard-Backlog leer; B-013 läuft in Sprint 021 mit, offen bleiben B-015/B-016 im Vault-`backlog.md`)_
 
 ### Gestrichen
 
