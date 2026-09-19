@@ -20,8 +20,8 @@ IG_DATUM_RE = re.compile(
 BOLD_LINE_RE = re.compile(r'^\*\*([^*]+)\*\*$')
 ITALIC_LINE_RE = re.compile(r'^\*([^*]+)\*$')
 BULLET_RE = re.compile(r'^(\s*)-\s+(.*)$')
-IMG_TAG_RE = re.compile(r'<img\b[^>]*>')
-IMG_RE = re.compile(r'<img\s+src="([^"]+)"')
+IMG_TAG_RE = re.compile(r'<img\b[^>]*>', re.I)
+IMG_SRC_RE = re.compile(r'\bsrc\s*=\s*["\']([^"\']+)["\']', re.I)
 
 
 def _text_block(line: str) -> dict:
@@ -63,21 +63,27 @@ def _parse_spielabend_body(body: str) -> list[dict]:
             current['bloecke'].append({'typ': 'szene', 'text': strip_wikilink(italic_m.group(1).strip())})
             continue
 
-        img_tags = IMG_TAG_RE.findall(stripped)
-        if img_tags:
-            block = _text_block(IMG_TAG_RE.sub(' ', raw_line))
+        if IMG_TAG_RE.search(stripped):
+            srcs: list[str] = []
+
+            def _extract(tag_m: re.Match) -> str:
+                src_m = IMG_SRC_RE.search(tag_m.group(0))
+                if not src_m:
+                    # No src at all: keep the raw tag visible instead of dropping it silently.
+                    return tag_m.group(0)
+                # Source chronicle uses Windows-style paths ("dir\bild.png"); a
+                # backslash is not a valid URL path separator, so <img src>
+                # emitted by a future renderer would 404. Normalize now, at the
+                # parsing boundary, rather than pushing this onto every consumer.
+                srcs.append(src_m.group(1).replace('\\', '/'))
+                return ' '
+
+            block = _text_block(IMG_TAG_RE.sub(_extract, raw_line))
             block['text'] = ' '.join(block['text'].split())
             if block['text']:
                 current['bloecke'].append(block)
-            for tag in img_tags:
-                img_m = IMG_RE.match(tag)
-                if img_m:
-                    # Source chronicle uses Windows-style paths ("dir\bild.png"); a
-                    # backslash is not a valid URL path separator, so <img src>
-                    # emitted by a future renderer would 404. Normalize now, at the
-                    # parsing boundary, rather than pushing this onto every consumer.
-                    src = img_m.group(1).replace('\\', '/')
-                    current['bloecke'].append({'typ': 'bild', 'src': src})
+            for src in srcs:
+                current['bloecke'].append({'typ': 'bild', 'src': src})
             continue
 
         current['bloecke'].append(_text_block(raw_line))

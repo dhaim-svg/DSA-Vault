@@ -320,3 +320,45 @@ def test_img_with_extra_attributes_is_removed_completely(tmp_path):
         {'typ': 'bullet', 'tiefe': 0, 'text': 'Text Ende'},
         {'typ': 'bild', 'src': 'x.png'},
     ]
+
+
+# ---------------------------------------------------------------------------
+# <img> src detection: any attribute position, either quote style, any case;
+# a tag without any src stays visible as raw text (Final-Fix)
+# ---------------------------------------------------------------------------
+
+def test_img_with_src_not_first_attribute_yields_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, '- <img alt="x" src="a\\b.png">\n')
+    assert bloecke == [{'typ': 'bild', 'src': 'a/b.png'}]
+
+
+def test_img_with_single_quoted_src_yields_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, "- <img src='y.png'>\n")
+    assert bloecke == [{'typ': 'bild', 'src': 'y.png'}]
+
+
+def test_uppercase_img_tag_and_attribute_yields_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, '- <IMG SRC="z.png">\n')
+    assert bloecke == [{'typ': 'bild', 'src': 'z.png'}]
+
+
+def test_img_without_src_keeps_raw_tag_as_text_and_no_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, '- <img alt="nur alt">\n')
+    assert bloecke == [{'typ': 'bullet', 'tiefe': 0, 'text': '<img alt="nur alt">'}]
+    assert not any(b['typ'] == 'bild' for b in bloecke)
+
+
+def test_mixed_line_with_reordered_attributes_keeps_text_then_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, '- Text <img alt="x" src="q.png"> Ende\n')
+    assert bloecke == [
+        {'typ': 'bullet', 'tiefe': 0, 'text': 'Text Ende'},
+        {'typ': 'bild', 'src': 'q.png'},
+    ]
+
+
+def test_srcless_tag_stays_while_sibling_tag_with_src_becomes_bild(tmp_path):
+    bloecke = _bloecke(tmp_path, 'Vorher <img alt="a"> mitte <img src="b.png"> Ende\n')
+    assert bloecke == [
+        {'typ': 'text', 'text': 'Vorher <img alt="a"> mitte Ende'},
+        {'typ': 'bild', 'src': 'b.png'},
+    ]
