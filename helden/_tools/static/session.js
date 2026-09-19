@@ -116,15 +116,17 @@
     // hook is a class (not an id) — both instances are updated in lockstep.
 
     // Active mali (Wunden + Zustand-Chips), the single source of truth for the badge text,
-    // the probe overlay (applyWundModsToProben), the base-value overlay
-    // (applyWundModsToStats) and dice.js's panel modifier (probeMod).
+    // the attribute-value overlay (applyWundModsToProben, via attrMod), the base-value overlay
+    // (applyWundModsToStats, via statMod) and dice.js's panel modifier (probeMod).
     //
     // Effect shape — the "Geltungsbereich" is one of two fields:
     //   { label, mods: { ZIEL: <=0, ... }, wunden }  Wunden: nur die genannten Ziele
     //        (AT/PA/FK/INI/GE/GS, aus DSAWundregeln.wundMod). Wirkt auf Proben (AT, PA, GE)
     //        UND Basiswert-Anzeigen (AT/PA/FK/INI/GS).
-    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt auf jede Probe,
-    //        nie auf Basiswert-Anzeigen und nie auf Schadenswürfe.
+    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt nur über die
+    //        Vorbelegung des Würfelpanel-Modifikators (probeMod → dice.js) auf jede Probe; nie als
+    //        Overlay auf Eigenschaftswerte (D-048: sonst doppelt gezählt), nie auf Basiswert-Anzeigen,
+    //        nie auf Schadenswürfe. Das Badge nennt sie nur als Information.
     function computeActiveEffects() {
       const effects = [];
       const wundenAnchor = document.querySelector('[data-wunden]');
@@ -142,7 +144,7 @@
       return effects;
     }
 
-    // Ziele einer Probe (Würfelpanel / Eigenschaftswert-Overlay) bzw. einer Basiswert-Anzeige.
+    // Ziele einer Probe (Würfelpanel-Modifikator) bzw. einer Basiswert-Anzeige.
     const PROBE_ZIELE = new Set(['AT', 'PA', 'MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK', 'talent', 'zauber']);
     const STAT_ZIELE = new Set(['AT', 'PA', 'FK', 'INI', 'GS']);
 
@@ -185,7 +187,8 @@
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
 
-      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles.
+      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles (nur via Panel-Modifikator,
+      // das Badge nennt sie ohne Zahlen-Overlay).
       // e.g. "Wunden ×2: GE −4 · Schmerz −2 (Hausregel)"; leer ohne aktive Effekte.
       const text = effects.map(e => e.alle
         ? e.label + ' −' + Math.abs(e.mod) + (e.hausregel ? ' (Hausregel)' : '')
@@ -199,14 +202,16 @@
 
     // Annotates every rendered attribute value in probe_eig's output
     // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
-    // effective value when a malus applies to that attribute, e.g. "GE 13→11".
-    // Wunden treffen nur die GE; reverts to the base value once the malus clears.
+    // effective value when a Wunden-malus applies to that attribute, e.g. "GE 13→11".
+    // Wunden treffen nur die GE (attrMod); Zustand-Chips nie — sie wirken nur über den
+    // Panel-Modifikator (probeMod), ein Overlay hier würde sie doppelt zählen (D-048).
+    // Reverts to the base value once the malus clears.
     function applyWundModsToProben(effects) {
       document.querySelectorAll('[data-attr]').forEach(el => {
         const abbr = el.dataset.attr;
         const base = parseInt(el.dataset.base, 10);
         if (isNaN(base)) return;
-        const mod = probeMod(abbr, effects);
+        const mod = attrMod(abbr, effects);
         el.textContent = mod !== 0 ? (abbr + ' ' + base + '→' + (base + mod)) : (abbr + ' ' + base);
       });
     }

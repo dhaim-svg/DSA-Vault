@@ -664,6 +664,19 @@ def test_zustand_legend_chip_sentence_hidden_without_chips_wound_sentence_kept_a
         assert any(re.search(r'display\s*:\s*none', d) for d in _decls(print_rules, sel)), f'{sel} fehlt in der Druck-Ausblendung'
 
 
+# -- D-048: Legende sagt, dass Zustands-Chips nur die Probe veraendern, nicht die angezeigten Werte --
+
+def test_render_zustand_legend_says_chips_change_only_the_roll_not_displayed_values(live_html):
+    legend = re.search(r'<div class="zustand-legend">(.*?)</div>', _kampf_tab(live_html), re.S).group(1)
+    chips_span = re.search(r'<span class="zustand-legend-chips">(.*?)</span>', legend, re.S).group(1)
+    assert 'nur die Probe' in chips_span and 'Würfelpanel' in chips_span
+    assert re.search(r'nicht die angezeigten\s+Attribut- und Basiswerte', chips_span)
+    # Der Wund-Satz (regelkonformes Overlay) bleibt ausserhalb des ausblendbaren Chip-Satzes und ohne fuehrendes Leerzeichen.
+    outside = legend.replace(chips_span, '')
+    assert 'nicht die angezeigten' not in outside
+    assert re.search(r'</span>Wunden wirken regelkonform', legend)
+
+
 def test_render_zustand_legend_links_to_wiki_article_without_double_md(live_html):
     legend = re.search(r'<div class="zustand-legend">(.*?)</div>', _kampf_tab(live_html), re.S).group(1)
     hrefs = re.findall(r'href="([^"]+)"', legend)

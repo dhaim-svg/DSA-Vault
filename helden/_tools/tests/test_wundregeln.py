@@ -350,3 +350,95 @@ def test_parse_probe_is_only_used_by_talent_and_zauber_probes():
     render_talent = src.index("if (cfg.type === 'talent' || cfg.type === 'zauber') {", src.index('function render('))
     render_eig = src.index("} else if (cfg.type === 'eigenschaft') {", render_talent)
     assert render_talent < calls[1] < render_eig
+
+
+# -- D-048: Zustands-Chips wirken nur ueber die Panel-Vorbelegung, nie als Attributwert-Overlay --
+# Vorher senkte applyWundModsToProben (probeMod = Wunden + Chips) ALLE [data-attr]-Spans ("MU 12→10"), und das
+# Wuerfelpanel fuellte dp-mod zusaetzlich mit dem Chip-Wert vor -> von Hand gewuerfelt zaehlte der Malus doppelt.
+# Diese Tests laden die echte session.js in einem Fake-DOM mit den Eigenschafts-Spans der Talent-/Zauberproben.
+
+_OVERLAY_RUNNER = """
+const fs = require('fs'), vm = require('vm');
+const ST = process.argv[1];
+const spec = JSON.parse(process.argv[2]);
+const store = {};
+if (spec.zustaende.length) store['dsa:illaen-baernhold:session'] = JSON.stringify({ zustaende: spec.zustaende });
+const anchor = { dataset: { wunden: String(spec.wunden) }, textContent: '', insertAdjacentElement() {} };
+const noop = { dataset: {}, textContent: '', innerHTML: '', addEventListener() {}, querySelectorAll() { return []; }, insertAdjacentElement() {} };
+const spans = Object.keys(spec.eig).map((k) => ({ dataset: { attr: k, base: String(spec.eig[k]) }, textContent: k + ' ' + spec.eig[k] }));
+const badges = [{ textContent: '' }];
+const document = {
+  readyState: 'complete',
+  querySelector: (sel) => (sel === '[data-wunden]' ? anchor : null),
+  querySelectorAll: (sel) => (sel === '[data-attr]' ? spans : sel === '.eig-leiste-mods' ? badges : []),
+  getElementById: (id) => (id === 'wunden-widget' ? null : noop),
+  createElement: () => noop,
+  addEventListener() {},
+};
+const window = {};
+const ctx = {
+  window, document, console, confirm: () => true, fetch: () => Promise.resolve({}),
+  location: { protocol: 'http:' },
+  localStorage: { getItem: (k) => store[k] || null, setItem() {}, removeItem() {} },
+};
+vm.createContext(ctx);
+for (const f of ['wundregeln.js', 'session.js']) vm.runInContext(fs.readFileSync(ST + f, 'utf8'), ctx);
+const S = window.DSASession;
+process.stdout.write(JSON.stringify({
+  spans: spans.map((s) => s.textContent),
+  badge: badges[0].textContent,
+  probe: S ? spec.probes.map((p) => S.probeMod(p)) : null,
+}));
+"""
+
+_ALL_CHIPS = ['schmerz', 'furcht', 'betaeubt', 'verwirrt', 'erschoepft']
+_BASE_SPANS = [f'{k} {v}' for k, v in _EIG.items()]
+
+
+def _overlay(wunden, zustaende=(), probes=()):
+    spec = {'wunden': wunden, 'zustaende': list(zustaende), 'eig': _EIG, 'probes': list(probes)}
+    proc = subprocess.run(
+        ['node', '-e', _OVERLAY_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec)],
+        capture_output=True, text=True, encoding='utf-8', timeout=30,
+    )
+    assert proc.returncode == 0, proc.stderr
+    return json.loads(proc.stdout)
+
+
+@needs_node
+def test_chips_alone_leave_every_attribute_span_untouched_but_keep_the_panel_prefill():
+    out = _overlay(0, ['schmerz'], probes=['MU', 'AT', 'GE'])
+    assert out['spans'] == _BASE_SPANS
+    assert not any('→' in t for t in out['spans'])
+    assert out['probe'] == [-2, -2, -2]  # Panel-Vorbelegung (dice.js -> probeMod) bleibt
+    assert 'Schmerz' in out['badge'] and 'Hausregel' in out['badge']  # Badge informiert weiter, ohne Zahlen-Overlay
+
+
+@needs_node
+def test_all_chips_together_still_touch_no_attribute_span():
+    out = _overlay(0, _ALL_CHIPS, probes=['MU'])
+    assert out['spans'] == _BASE_SPANS
+    assert out['probe'] == [-2 - 2 - 4 - 2 - 2]
+
+
+@needs_node
+def test_wounds_plus_chip_overlay_only_ge_and_panel_prefill_sums_both():
+    out = _overlay(2, ['schmerz'], probes=['GE', 'MU', 'AT'])
+    expected = [f'{k} {v}' for k, v in _EIG.items()]
+    expected[list(_EIG).index('GE')] = 'GE 13→9'
+    assert out['spans'] == expected
+    assert [t for t in out['spans'] if '→' in t] == ['GE 13→9']
+    assert out['probe'] == [-4 - 2, -2, -4 - 2]  # Panel: Wunde (GE -4 / AT -4) + Chip (-2)
+
+
+@needs_node
+def test_wounds_alone_still_overlay_ge_span():
+    out = _overlay(1, probes=['GE'])
+    assert [t for t in out['spans'] if '→' in t] == ['GE 13→11']
+    assert out['probe'] == [-2]
+
+
+def test_apply_wund_mods_to_proben_uses_wounds_only_attr_mod():
+    src = SESSION_JS.read_text(encoding='utf-8')
+    _params, body = _function_body(src, 'applyWundModsToProben')
+    assert 'attrMod(' in body and 'probeMod(' not in body
