@@ -190,7 +190,11 @@
           {%- endif -%}
         </span>
         <span class="sf-desc">{{ sf.desc }}</span>
-      </span></li>
+      </span>
+      {%- set art = (wiki_artikel | default({})).get(sf.wiki_path) if sf.wiki_path else none %}
+      {%- if art %}
+{{ artikel_details(art, sf.wiki_path | obsidian) }}
+      {%- endif %}</li>
       {% endfor %}
     </ul>
     {% endif %}
@@ -207,7 +211,11 @@
           {%- endif -%}
         </span>
         <span class="sf-desc">{{ sf.desc }}</span>
-      </span></li>
+      </span>
+      {%- set art = (wiki_artikel | default({})).get(sf.wiki_path) if sf.wiki_path else none %}
+      {%- if art %}
+{{ artikel_details(art, sf.wiki_path | obsidian) }}
+      {%- endif %}</li>
       {% endfor %}
     </ul>
     {% endif %}

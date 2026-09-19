@@ -184,7 +184,10 @@ def test_build_context_has_wiki_artikel_from_live_vault():
     assert isinstance(artikel, dict)
     assert artikel
     zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
-    assert set(artikel) <= zauber_pfade
+    sf_pfade = {sf['wiki_path'] for sf in ctx['held']['sf']['magisch'] + ctx['held']['sf']['allgemein'] if sf['wiki_path']}
+    assert set(artikel) <= zauber_pfade | sf_pfade
+    assert set(artikel) & zauber_pfade
+    assert set(artikel) & sf_pfade
     # completeness (incl. unquoted ': ' frontmatter) is pinned by the synthetic loader tests, not by the live vault
     for pfad, art in artikel.items():
         assert set(art) == {'titel', 'quelle', 'meta', 'html'}, pfad
@@ -205,6 +208,33 @@ def test_build_context_wiki_artikel_skips_spells_without_article(tmp_path, monke
     ctx = build_context('x', tmp_path)
     assert list(ctx['wiki_artikel']) == ['wiki/dsa-4.1/zauber/da']
     assert ctx['wiki_artikel']['wiki/dsa-4.1/zauber/da']['titel'] == 'DA'
+
+
+def test_build_context_wiki_artikel_includes_sf_anchor_sections(tmp_path, monkeypatch):
+    sf_dir = tmp_path / 'wiki' / 'dsa-4.1' / 'sonderfertigkeiten'
+    sf_dir.mkdir(parents=True)
+    (sf_dir / 'magische.md').write_text(
+        '---\nquelle: WdZ\n---\n# M\n\n## Eins\n\nText EINS.\n\n---\n\n## Zwei\n\nText ZWEI.\n', encoding='utf-8')
+    (sf_dir / 'allgemeine.md').write_text('---\nquelle: WdH\n---\n# A\n\n## Drei\n\nText DREI.\n', encoding='utf-8')
+    pfad = 'wiki/dsa-4.1/sonderfertigkeiten/'
+    monkeypatch.setattr(rendering, 'load_held', lambda root, slug: {
+        'zauber': [],
+        'sf': {
+            'magisch': [
+                {'name': 'Eins', 'wiki_path': pfad + 'magische#Eins'},
+                {'name': 'Eins b', 'wiki_path': pfad + 'magische#Eins'},
+                {'name': 'Ohne', 'wiki_path': None},
+                {'name': 'Fehlt', 'wiki_path': pfad + 'magische#Fehlt'},
+            ],
+            'allgemein': [{'name': 'Drei', 'wiki_path': pfad + 'allgemeine#Drei'}, {'name': 'Leer'}],
+        },
+    })
+    monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
+    ctx = build_context('x', tmp_path)
+    assert list(ctx['wiki_artikel']) == [pfad + 'magische#Eins', pfad + 'allgemeine#Drei']
+    assert ctx['wiki_artikel'][pfad + 'magische#Eins']['titel'] == 'Eins'
+    assert 'ZWEI' not in ctx['wiki_artikel'][pfad + 'magische#Eins']['html']
+    assert ctx['wiki_artikel'][pfad + 'allgemeine#Drei']['quelle'] == 'WdH'
 
 
 BILD = 'drachenchronik-daten/pergament-abschrift.png'
@@ -311,7 +341,11 @@ def test_render_wiki_artikel_details_one_per_spell_with_article(live_html):
     ctx = build_context('illaen-baernhold')
     erwartet = sum(1 for z in ctx['held']['zauber'] if z.get('wiki_path') in ctx['wiki_artikel'])
     assert erwartet
-    assert live_html.count('class="artikel-details"') == erwartet
+    sf = ctx['held']['sf']['magisch'] + ctx['held']['sf']['allgemein']
+    erwartet_sf = sum(1 for e in sf if e.get('wiki_path') in ctx['wiki_artikel'])
+    assert erwartet_sf
+    assert live_html.count('class="artikel-details"') == erwartet + erwartet_sf
+    assert len(_artikel_details_parents(_sf_card(live_html))) == erwartet_sf  # D-050: SF-Zeilen, nicht die Zauberliste
     parents = _artikel_details_parents(_spell_list_fragment(live_html))
     assert len(parents) == erwartet
     # direktes Kind der Zeile (wandert beim Sortieren mit), Zeile direkt im Listen-Wrapper
@@ -355,6 +389,127 @@ def test_render_wiki_artikel_has_single_obsidian_link_without_nlink(live_html):
     # der ↗ am Zaubernamen bleibt Sache des Namenslinks in .name (CSS ::after)
     row = live_html[:live_html.index('class="artikel-details"')]
     assert row.rindex('class="nlink"') > row.rindex('<div class="spell"')
+
+
+# -- D-050: Artikelvorschau fuer Sonderfertigkeiten ---------------------------
+
+SF_A = 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Alpha'
+SF_D = 'wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Delta'
+
+
+def _sf_context(wiki_artikel):
+    """Kontext mit synthetischen SF: Alpha (magisch) und Delta (allgemein) haben einen Anker-Link, Gamma/Eps
+    einen ohne geladenen Artikel, Beta keinen Link."""
+    ctx = build_context('illaen-baernhold')
+    ctx['held']['sf'] = {
+        'magisch': [
+            {'name': 'Alpha', 'wiki_path': SF_A, 'desc': 'Beschreibung-A'},
+            {'name': 'Beta', 'wiki_path': None, 'desc': 'Beschreibung-B'},
+            {'name': 'Gamma', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Gamma',
+             'desc': 'Beschreibung-G'},
+        ],
+        'allgemein': [
+            {'name': 'Delta', 'wiki_path': SF_D, 'desc': 'Beschreibung-D'},
+            {'name': 'Eps', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Eps', 'desc': ''},
+        ],
+    }
+    ctx['wiki_artikel'] = wiki_artikel
+    return ctx
+
+
+def _sf_artikel(titel='Titel A', html='<p>Body A</p>'):
+    return {'titel': titel, 'quelle': 'WdZ', 'meta': [], 'html': html}
+
+
+def _sf_card(html):
+    start = html.index('<h3 class="card-title">Sonderfertigkeiten</h3>')
+    return html[start:html.index('</section>', start)]
+
+
+def _sf_items(html_fragment):
+    """[{'text': Text der Zeile, 'details': [Tag-Name des Elternelements je artikel-details]}] je <li> direkt unter
+    einer ul.sf-list."""
+    from html.parser import HTMLParser
+
+    items, stack = [], []
+
+    class P(HTMLParser):
+        def handle_starttag(self, tag, attrs):
+            a = dict(attrs)
+            item = stack[-1][2] if stack else None
+            if tag == 'li' and stack and stack[-1][0] == 'ul' and 'sf-list' in (stack[-1][1].get('class') or '').split():
+                item = {'text': '', 'details': []}
+                items.append(item)
+            if tag == 'details' and 'artikel-details' in (a.get('class') or '').split() and item is not None:
+                item['details'].append(stack[-1][0])
+            if tag not in VOID_TAGS:
+                stack.append((tag, a, item))
+
+        def handle_endtag(self, tag):
+            for i in range(len(stack) - 1, -1, -1):
+                if stack[i][0] == tag:
+                    del stack[i:]
+                    return
+
+        def handle_data(self, data):
+            if stack and stack[-1][2] is not None:
+                stack[-1][2]['text'] += data
+
+    P().feed(html_fragment)
+    return items
+
+
+def test_render_sf_artikel_details_inside_their_own_li_with_title_source_and_body():
+    html = render_dashboard(_sf_context({SF_A: _sf_artikel(), SF_D: _sf_artikel('Titel D', '<p>Body D</p>')}))
+    items = _sf_items(_sf_card(html))
+    assert [i['details'] for i in items] == [['li'], [], [], ['li'], []]
+    assert 'Alpha' in items[0]['text'] and 'Titel A' in items[0]['text'] and 'Body A' in items[0]['text']
+    assert 'Titel D' in items[3]['text'] and 'Body D' in items[3]['text'] and 'Body A' not in items[3]['text']
+    assert html.count('class="artikel-details"') == 2  # Zauber ohne geladenen Artikel bekommen keinen
+    block = re.search(r'<details class="artikel-details">.*?</details>', _sf_card(html), re.S).group(0)
+    assert '<span class="artikel-quelle">WdZ</span>' in block
+    assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', block)
+
+
+def test_render_sf_artikel_details_follow_the_description():
+    html = _sf_card(render_dashboard(_sf_context({SF_A: _sf_artikel()})))
+    li = html[html.index('Alpha'):html.index('</li>', html.index('Alpha'))]
+    assert li.index('Beschreibung-A') < li.index('class="artikel-details"')
+
+
+def test_render_sf_without_article_has_no_details_and_keeps_its_row():
+    ctx = _sf_context({SF_A: _sf_artikel()})
+    unveraendert = _sf_card(render_dashboard(_sf_context({})))
+    assert 'artikel-details' not in unveraendert
+    ctx['wiki_artikel'] = {}
+    assert _sf_card(render_dashboard(ctx)) == unveraendert
+    del ctx['wiki_artikel']
+    assert _sf_card(render_dashboard(ctx)) == unveraendert
+    for name in ('Alpha', 'Beta', 'Gamma', 'Delta', 'Eps'):
+        assert name in unveraendert
+
+
+def test_render_sf_artikel_escapes_text_fields_but_not_html():
+    art = {'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [], 'html': '<p>ok</p>'}
+    html = render_dashboard(_sf_context({SF_A: art}))
+    block = re.search(r'<details class="artikel-details">.*?</details>', _sf_card(html), re.S).group(0)
+    for roh in ('<b>T</b>', 'Q<i>'):
+        assert roh not in block
+    for escaped in ('&lt;b&gt;T&lt;/b&gt;', 'Q&lt;i&gt;'):
+        assert escaped in block
+    assert '<div class="artikel-body"><p>ok</p></div>' in block
+
+
+def test_css_sf_artikel_details_sit_in_the_text_column_of_the_row():
+    base = ' '.join(_decls(_css_rules(_strip_print_blocks(css_bundle())), '.sf-list li .artikel-details'))
+    assert re.search(r'grid-column\s*:\s*2\b', base)
+    assert re.search(r'min-width\s*:\s*0', base)
+
+
+def test_css_print_sf_row_with_open_article_may_break_across_columns():
+    # .sf-list li{break-inside:avoid} zwaenge einen langen offenen Artikel sonst in eine Spalte
+    prints = ''.join(_media_blocks(css_bundle(), r'@media\s+print'))
+    assert re.search(r'\.sf-list\s+li\s*:has\(\s*\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
 
 
 def test_dice_js_click_guard_ignores_clicks_inside_details():

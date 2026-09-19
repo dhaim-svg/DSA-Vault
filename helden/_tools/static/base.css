@@ -414,6 +414,9 @@ body::before{
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
 /* Artikelvorschau (D-018): letztes Kind der .spell-Zeile, ueber die volle Zeilenbreite */
 .spell .artikel-details{ grid-column:1 / -1; min-width:0; }
+/* D-050: dieselbe Vorschau in der SF-Zeile (Grid 14px Symbol | 1fr Text): letztes Kind des li, in der Textspalte;
+   der negative Rand nimmt den Zeilenabstand (gap 10px) bis auf 4px zurueck, damit sie an der Beschreibung haengt. */
+.sf-list li .artikel-details{ grid-column:2; min-width:0; margin-top:-6px; }
 .artikel-details summary.artikel-toggle{
   list-style:none; font-family:var(--mono); font-size:10px; padding:2px 0;
   color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;

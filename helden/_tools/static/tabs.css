@@ -75,6 +75,7 @@
   .spell{ break-inside:avoid; }
   /* Zeile mit aufgeklapptem Artikel darf umbrechen; ohne :has()-Support bleibt es bei avoid */
   .spell:has(.artikel-details[open]){ break-inside:auto; }
+  .sf-list li:has(.artikel-details[open]){ break-inside:auto; }
   .story p{ orphans:3; widows:3; }
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }

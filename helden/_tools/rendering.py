@@ -85,12 +85,14 @@ def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
     """
     kampagne = load_kampagne(vault_root, KAMPAGNE_SLUG)
     held = load_held(vault_root, slug)
-    zauber_pfade = [z['wiki_path'] for z in (held.get('zauber') or []) if z.get('wiki_path')]
+    sf = held.get('sf') or {}
+    artikel_eintraege = ((held.get('zauber') or []) + (sf.get('magisch') or []) + (sf.get('allgemein') or []))
+    artikel_pfade = [e['wiki_path'] for e in artikel_eintraege if e.get('wiki_path')]
     return {
         'held': held,
         'kampagne': kampagne,
         'register': build_register(kampagne.get('sessions', [])),
-        'wiki_artikel': load_wiki_artikel(vault_root, zauber_pfade, link_fn=obsidian_uri),
+        'wiki_artikel': load_wiki_artikel(vault_root, artikel_pfade, link_fn=obsidian_uri),
         'chronik': load_chronik(vault_root),
         'chronik_bild_prefix': chronik_bild_prefix,
         'inline_js': inline_js,

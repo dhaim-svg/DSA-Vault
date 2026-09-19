@@ -263,7 +263,9 @@ def test_key_is_original_wiki_path_including_anchor(vault):
     key = f'{ZAUBER}/adlerauge#Wirkung'
     res = _load(vault, [key])
     assert list(res) == [key]
-    assert res[key]['titel'] == 'ADLERAUGE (LUCHSENOHR)'
+    # D-050: the anchor now selects the '## Wirkung' section (it used to load the whole file)
+    assert res[key]['titel'] == 'Wirkung'
+    assert 'Blick' in res[key]['html'] and 'Keine Wirkung' not in res[key]['html']
 
 
 def test_empty_paths_give_empty_dict(vault):
@@ -413,6 +415,147 @@ def test_non_utf8_file_warns_and_is_skipped(vault, caplog):
         res = _load(vault, [f'{ZAUBER}/latin', f'{ZAUBER}/adlerauge'])
     assert list(res) == [f'{ZAUBER}/adlerauge']
     assert len([r for r in caplog.records if r.levelno == logging.WARNING]) == 1
+
+
+# --- Sonderfertigkeiten: pfad#anker laedt nur den ##-Abschnitt ------------------
+
+SF = 'wiki/dsa-4.1/sonderfertigkeiten'
+SF_DATEI = f'{SF}/magische-sonderfertigkeiten'
+ANKER_A = 'Aufmerksamkeit'
+ANKER_MK = 'Merkmalskenntnis [einzelnes Merkmal]'
+ANKER_OK = 'Ortskenntnis (Stadtteil / Kleinstadt)'
+
+SF_GRUPPE = """---
+typ: sf-gruppe
+kategorie: magisch
+quelle: WdZ
+---
+
+# Magische Sonderfertigkeiten (Gildenmagier)
+
+> **Quelle:** Wege der Zauberei (WdZ)
+
+Einleitung vor der ersten Ueberschrift.
+
+---
+
+## Aufmerksamkeit
+
+Text ALPHA mit **Fettdruck**.
+
+### Regel
+
+Unterabschnitt REGEL.
+
+---
+
+## Merkmalskenntnis [einzelnes Merkmal]
+
+Text BETA.
+
+- Punkt eins
+
+---
+
+## Ortskenntnis (Stadtteil / Kleinstadt)
+
+Text GAMMA.
+
+---
+"""
+
+
+def _sf(vault, *anker):
+    _write(vault, SF_DATEI, SF_GRUPPE)
+    return _load(vault, [f'{SF_DATEI}#{a}' for a in anker])
+
+
+def test_anchor_loads_only_that_section(vault):
+    res = _sf(vault, ANKER_A)
+    assert list(res) == [f'{SF_DATEI}#{ANKER_A}']
+    art = res[f'{SF_DATEI}#{ANKER_A}']
+    assert art['titel'] == ANKER_A
+    html = art['html']
+    assert 'ALPHA' in html and '<strong>Fettdruck</strong>' in html
+    assert '<h3>Regel</h3>' in html and 'REGEL' in html
+    assert 'BETA' not in html and 'GAMMA' not in html
+    assert 'Einleitung' not in html and 'Gildenmagier' not in html
+    assert '<h1' not in html and '<h2' not in html
+    assert '<hr' not in html
+
+
+def test_anchor_section_without_trailing_rule_and_last_section(vault):
+    _write(vault, SF_DATEI, SF_GRUPPE.rstrip('\n').removesuffix('---'))
+    html = _load(vault, [f'{SF_DATEI}#{ANKER_OK}'])[f'{SF_DATEI}#{ANKER_OK}']['html']
+    assert 'GAMMA' in html
+    assert '<hr' not in html
+
+
+def test_only_the_trailing_rule_of_a_section_is_removed(vault):
+    _write(vault, SF_DATEI, SF_GRUPPE.replace('Text BETA.', 'Text BETA.\n\n---\n\nText DELTA.'))
+    html = _load(vault, [f'{SF_DATEI}#{ANKER_MK}'])[f'{SF_DATEI}#{ANKER_MK}']['html']
+    assert 'BETA' in html and 'DELTA' in html
+    assert html.count('<hr') == 1
+
+
+def test_missing_anchor_warns_once_and_is_skipped(vault, caplog):
+    _write(vault, SF_DATEI, SF_GRUPPE)
+    fehlt = f'{SF_DATEI}#Gibt es nicht'
+    with caplog.at_level(logging.WARNING):
+        res = _load(vault, [fehlt, f'{SF_DATEI}#{ANKER_A}'])
+    assert list(res) == [f'{SF_DATEI}#{ANKER_A}']
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+    assert len(warnings) == 1
+    assert fehlt in warnings[0].getMessage()
+
+
+def test_missing_anchor_never_falls_back_to_the_whole_file(vault):
+    _write(vault, SF_DATEI, SF_GRUPPE)
+    assert _load(vault, [f'{SF_DATEI}#Gibt es nicht']) == {}
+    assert _load(vault, [f'{SF_DATEI}#']) != {}  # empty anchor = no anchor = whole file, as before
+
+
+@pytest.mark.parametrize('anker, marker', [(ANKER_MK, 'BETA'), (ANKER_OK, 'GAMMA')])
+def test_anchor_with_brackets_spaces_and_slash_hits_the_right_section(vault, anker, marker):
+    art = _sf(vault, anker)[f'{SF_DATEI}#{anker}']
+    assert art['titel'] == anker
+    assert marker in art['html']
+    assert 'ALPHA' not in art['html']
+
+
+def test_two_anchors_of_one_file_are_two_separate_entries(vault):
+    res = _sf(vault, ANKER_A, ANKER_MK)
+    assert list(res) == [f'{SF_DATEI}#{ANKER_A}', f'{SF_DATEI}#{ANKER_MK}']
+    assert 'ALPHA' in res[f'{SF_DATEI}#{ANKER_A}']['html'] and 'BETA' not in res[f'{SF_DATEI}#{ANKER_A}']['html']
+    assert 'BETA' in res[f'{SF_DATEI}#{ANKER_MK}']['html'] and 'ALPHA' not in res[f'{SF_DATEI}#{ANKER_MK}']['html']
+
+
+def test_same_anchor_twice_is_loaded_once(vault):
+    res = _sf(vault, ANKER_A, ANKER_A)
+    assert list(res) == [f'{SF_DATEI}#{ANKER_A}']
+
+
+def test_anchor_entry_takes_quelle_from_frontmatter_and_has_no_meta(vault):
+    art = _sf(vault, ANKER_A)[f'{SF_DATEI}#{ANKER_A}']
+    assert art['quelle'] == 'WdZ'
+    assert art['meta'] == []
+    assert set(art) == {'titel', 'quelle', 'meta', 'html'}
+
+
+def test_anchor_is_never_used_as_a_file_path(vault):
+    _write(vault, SF_DATEI, SF_GRUPPE)
+    _write(vault, 'wiki/andere/geheim', '---\nname: G\n---\n# G\n\n## X\n\nGEHEIM\n')
+    assert _load(vault, [f'{SF_DATEI}#../../andere/geheim']) == {}
+    assert _load(vault, [f'{SF_DATEI}#{ANKER_A}/../../../../andere/geheim']) == {}
+
+
+def test_path_without_anchor_still_loads_the_whole_file(vault):
+    _write(vault, SF_DATEI, SF_GRUPPE)
+    art = _load(vault, [SF_DATEI])[SF_DATEI]
+    assert art['titel'] == 'Magische Sonderfertigkeiten (Gildenmagier)'
+    for marker in ('ALPHA', 'BETA', 'GAMMA'):
+        assert marker in art['html']
+    assert '<h2>Aufmerksamkeit</h2>' in art['html']
 
 
 # --- Escaping / security --------------------------------------------------

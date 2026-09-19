@@ -7,7 +7,7 @@ from typing import Callable, Iterable
 import mistune
 import yaml
 
-from .held import WIKILINK_RE, parse_frontmatter
+from .held import WIKILINK_RE, parse_frontmatter, split_sections
 
 log = logging.getLogger(__name__)
 
@@ -104,13 +104,37 @@ def _read_article(file: Path) -> tuple[dict, str]:
     return fm, body
 
 
+def _section(body: str, anchor: str) -> str | None:
+    """Content of the '## <anchor>' section (heading line and closing '---' rule cut off), else None.
+
+    The anchor is only a dict key here, never part of a file path.
+    """
+    for title, content in split_sections(body, 2).items():
+        if title != '__pre__' and title == anchor:
+            lines = content.split('\n')
+            while lines and not lines[-1].strip():
+                lines.pop()
+            if lines and lines[-1].strip() == '---':  # separator to the next heading, not part of the section
+                lines.pop()
+            return '\n'.join(lines).strip('\n')
+    return None
+
+
 def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict | None:
     try:
         fm, body = _read_article(file)
     except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
         log.warning('Wiki-Artikel %s nicht lesbar: %s', wiki_path, _short(exc))
         return None
-    titel, body = _split_title(body)
+    anchor = wiki_path.partition('#')[2].strip()
+    if anchor:
+        section = _section(body, anchor)
+        if section is None:
+            log.warning('Wiki-Artikel %s: Abschnitt %r nicht gefunden', wiki_path, anchor)
+            return None
+        titel, body = anchor, section
+    else:
+        titel, body = _split_title(body)
     try:
         html = _MARKDOWN(_link_wikilinks(body, link_fn))
     except Exception as exc:  # one broken article must not take the whole dashboard down
@@ -119,8 +143,8 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     return {
         'titel': _text(titel) or _fallback_title(fm, wiki_path),
         'quelle': _quelle(fm),
-        'meta': [{'label': label, 'wert': _text(fm.get(key))}
-                 for key, label in META_FIELDS if _text(fm.get(key))],
+        'meta': [] if anchor else [{'label': label, 'wert': _text(fm.get(key))}
+                                   for key, label in META_FIELDS if _text(fm.get(key))],  # group file: no per-section meta
         'html': html,
     }
 
@@ -129,6 +153,7 @@ def load_wiki_artikel(vault_root: Path, wiki_paths: Iterable[str],
                       link_fn: Callable[[str], str]) -> dict[str, dict]:
     """Map each wiki_path (unchanged) to {'titel','quelle','meta','html'}; unreadable/missing paths get no entry.
 
+    'pfad#anker' loads only the '## anker' section (titel = anchor, meta empty); a missing section gets no entry.
     Text fields are raw (the template escapes them); only 'html' is already HTML.
     link_fn(path[#anker]) builds the URL for [[wikilinks]] (injected: rendering imports this module).
     """
