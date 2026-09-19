@@ -1,0 +1,447 @@
+"""Tests for parsers.wikiartikel — Zauber-Artikel loader (synthetic vault only)."""
+import logging
+import sys
+from pathlib import Path
+
+import pytest
+
+TOOLS_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(TOOLS_DIR))
+
+from parsers.wikiartikel import load_zauber_artikel
+from rendering import obsidian_uri
+
+ZAUBER = 'wiki/dsa-4.1/zauber'
+
+ADLERAUGE = """---
+typ: zauber
+name: ADLERAUGE
+alternativname: LUCHSENOHR
+probe: KL/IN/FF
+komplexität: B
+kosten: 4 AsP
+zauberdauer: 2 Aktionen
+wirkungsdauer: ''
+quelle: LC
+seite: 15
+---
+
+# ADLERAUGE (LUCHSENOHR)
+
+> **Quelle:** LC S. 15
+
+## Wirkung
+
+Schärft den **Blick** des Zaubernden.
+
+- Erste Variante
+- Zweite Variante
+
+## Reversalis
+
+Keine Wirkung.
+"""
+
+
+def _write(vault: Path, rel: str, text: str) -> Path:
+    p = vault / (rel + '.md')
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text, encoding='utf-8')
+    return p
+
+
+def _link(path: str) -> str:
+    return f'test-link://{path}'
+
+
+def _load(vault, paths, link_fn=_link):
+    return load_zauber_artikel(vault, paths, link_fn)
+
+
+@pytest.fixture
+def vault(tmp_path):
+    return tmp_path
+
+
+# --- Happy path -----------------------------------------------------------
+
+def test_happy_path_model(vault):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    res = _load(vault, [f'{ZAUBER}/adlerauge'])
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+    art = res[f'{ZAUBER}/adlerauge']
+    assert set(art) == {'titel', 'quelle', 'meta', 'html'}
+    assert art['titel'] == 'ADLERAUGE (LUCHSENOHR)'
+    assert art['quelle'] == 'LC S. 15'
+    assert art['meta'] == [
+        {'label': 'Probe', 'wert': 'KL/IN/FF'},
+        {'label': 'Kosten', 'wert': '4 AsP'},
+        {'label': 'Zauberdauer', 'wert': '2 Aktionen'},
+    ]
+
+
+def test_html_has_sections_and_lists_but_no_h1_or_quelle(vault):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    html = _load(vault, [f'{ZAUBER}/adlerauge'])[f'{ZAUBER}/adlerauge']['html']
+    assert '<h2>Wirkung</h2>' in html
+    assert '<h2>Reversalis</h2>' in html
+    assert '<li>Erste Variante</li>' in html
+    assert '<strong>Blick</strong>' in html
+    assert '<h1' not in html
+    assert 'ADLERAUGE' not in html
+    assert 'Quelle' not in html
+
+
+def test_meta_order_is_fixed_regardless_of_frontmatter_order(vault):
+    _write(vault, f'{ZAUBER}/x',
+           '---\nwirkungsdauer: 1 SR\nzauberdauer: 1 Aktion\nkosten: 2 AsP\nprobe: MU/MU/MU\n---\n# X\n')
+    meta = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['meta']
+    assert [m['label'] for m in meta] == ['Probe', 'Kosten', 'Zauberdauer', 'Wirkungsdauer']
+
+
+def test_tables_are_rendered(vault):
+    _write(vault, f'{ZAUBER}/t',
+           '---\nname: T\n---\n# T\n\n## Wirkung\n\n| ZfP* | Wirkung |\n|------|---------|\n| 1 | Eins |\n')
+    html = _load(vault, [f'{ZAUBER}/t'])[f'{ZAUBER}/t']['html']
+    assert '<table>' in html
+    assert '<td>Eins</td>' in html
+
+
+def test_only_quelle_block_after_h1_is_removed(vault):
+    _write(vault, f'{ZAUBER}/x',
+           '---\nname: X\n---\n# X\n\n> **Quelle:** LC S. 1\n> zweite Zeile\n\n> Anmerkung bleibt\n\nText.\n')
+    html = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['html']
+    assert 'Quelle' not in html
+    assert 'zweite Zeile' not in html
+    assert 'Anmerkung bleibt' in html
+    assert 'Text.' in html
+
+
+def test_other_blockquote_after_h1_is_kept(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\n---\n# X\n\n> Hinweis\n\nText.\n')
+    html = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['html']
+    assert '<blockquote>' in html
+    assert 'Hinweis' in html
+
+
+# --- Titel / Quelle fallbacks --------------------------------------------
+
+def test_title_falls_back_to_name_and_alternativname(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: ADLERAUGE\nalternativname: LUCHSENOHR\n---\n\n## Wirkung\n\nText.\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['titel'] == 'ADLERAUGE (LUCHSENOHR)'
+
+
+def test_title_falls_back_to_name_only(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: ANALYS\n---\nText.\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['titel'] == 'ANALYS'
+
+
+def test_title_falls_back_to_last_path_part(vault):
+    _write(vault, f'{ZAUBER}/blick-aufs-wesen', 'Nur Text.\n')
+    assert _load(vault, [f'{ZAUBER}/blick-aufs-wesen'])[f'{ZAUBER}/blick-aufs-wesen']['titel'] == 'blick-aufs-wesen'
+
+
+def test_no_h1_removes_nothing(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\n---\n> **Quelle:** LC S. 1\n\n## Wirkung\n\nText.\n')
+    html = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['html']
+    assert 'Quelle' in html
+    assert '<h2>Wirkung</h2>' in html
+
+
+def test_h1_title_keeps_trailing_hash_of_word(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\n---\n# Lerne C#\n\nText.\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['titel'] == 'Lerne C#'
+
+
+def test_quelle_only_without_seite(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\nquelle: LC\n---\n# X\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == 'LC'
+
+
+def test_quelle_missing_gives_empty_string(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\nseite: 12\n---\n# X\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == ''
+
+
+def test_seite_as_int_and_string(vault):
+    _write(vault, f'{ZAUBER}/a', '---\nquelle: LC\nseite: 15\n---\n# A\n')
+    _write(vault, f'{ZAUBER}/b', '---\nquelle: LC\nseite: "15f."\n---\n# B\n')
+    res = _load(vault, [f'{ZAUBER}/a', f'{ZAUBER}/b'])
+    assert res[f'{ZAUBER}/a']['quelle'] == 'LC S. 15'
+    assert res[f'{ZAUBER}/b']['quelle'] == 'LC S. 15f.'
+
+
+def test_no_frontmatter_still_loads(vault):
+    _write(vault, f'{ZAUBER}/x', '# X\n\nText.\n')
+    art = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']
+    assert art['titel'] == 'X'
+    assert art['quelle'] == ''
+    assert art['meta'] == []
+
+
+def test_text_values_are_raw_not_escaped(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\nprobe: "KL<IN & FF"\n---\n# A & B <c>\n')
+    art = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']
+    assert art['titel'] == 'A & B <c>'
+    assert art['meta'] == [{'label': 'Probe', 'wert': 'KL<IN & FF'}]
+
+
+# --- Wikilinks ------------------------------------------------------------
+
+def test_wikilink_with_text_uses_link_fn(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\nSiehe [[{ZAUBER}/y|Text]] dort.\n')
+    html = _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['html']
+    assert f'<a href="test-link://{ZAUBER}/y">Text</a>' in html
+
+
+def test_wikilink_calls_link_fn_with_path(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\n[[{ZAUBER}/y|A]] und [[{ZAUBER}/z#Abschnitt|B]]\n')
+    calls = []
+
+    def spy(path):
+        calls.append(path)
+        return 'https://example.org/' + path.replace('#', '-')
+
+    _load(vault, [f'{ZAUBER}/x'], spy)
+    assert calls == [f'{ZAUBER}/y', f'{ZAUBER}/z#Abschnitt']
+
+
+def test_wikilink_with_real_obsidian_uri(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\nSiehe [[{ZAUBER}/y|Text]].\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert (f'<a href="obsidian://open?vault=DSA-Vault&amp;file={ZAUBER}/y.md">Text</a>') in html
+
+
+def test_wikilink_without_text_uses_last_path_part(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\nSiehe [[{ZAUBER}/blick-aufs-wesen]].\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert '>blick aufs wesen</a>' in html
+
+
+def test_wikilink_with_anchor(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\n[[{ZAUBER}/y#Wirkung|Text]]\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert f'file={ZAUBER}/y.md#Wirkung">Text</a>' in html
+
+
+def test_wikilink_with_parentheses_in_path_does_not_break_markdown(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\nVor [[{ZAUBER}/y (alt)|Text]] nach.\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert '>Text</a> nach.' in html
+    assert '%28alt%29' in html
+    assert '[[' not in html
+
+
+def test_wikilink_with_parentheses_from_a_naive_link_fn(vault):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\nVor [[a/(b) c|Text]] nach.\n')
+    html = _load(vault, [f'{ZAUBER}/x'], lambda p: f'/x/{p}')[f'{ZAUBER}/x']['html']
+    assert '>Text</a> nach.' in html
+
+
+def test_wikilink_in_table_cell_with_escaped_pipe(vault):
+    _write(vault, f'{ZAUBER}/x',
+           f'---\nname: X\n---\n# X\n\n| A | B |\n|---|---|\n| [[{ZAUBER}/y\\|Text]] | zwei |\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert '>Text</a></td>' in html
+    assert '<td>zwei</td>' in html
+
+
+def test_wikilink_with_quote_or_angle_bracket_cannot_break_attribute(vault):
+    _write(vault, f'{ZAUBER}/x',
+           f'---\nname: X\n---\n# X\n\n[[a/b"onmouseover="alert(1)|T"x]] [[a/<b>|<i>T</i>]]\n')
+    html = _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+    assert '"onmouseover=' not in html
+    assert '<i>' not in html
+    assert '<b>' not in html
+    assert '&lt;i&gt;T&lt;/i&gt;' in html
+
+
+# --- Key / path handling --------------------------------------------------
+
+def test_key_is_original_wiki_path_including_anchor(vault):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    key = f'{ZAUBER}/adlerauge#Wirkung'
+    res = _load(vault, [key])
+    assert list(res) == [key]
+    assert res[key]['titel'] == 'ADLERAUGE (LUCHSENOHR)'
+
+
+def test_empty_paths_give_empty_dict(vault):
+    assert _load(vault, []) == {}
+
+
+def test_duplicate_paths_give_one_entry(vault):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    res = _load(vault, [f'{ZAUBER}/adlerauge'] * 3)
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+
+
+def test_missing_file_is_skipped_silently(vault, caplog):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    with caplog.at_level(logging.DEBUG):
+        res = _load(vault, [f'{ZAUBER}/fehlt', f'{ZAUBER}/adlerauge'])
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+    assert caplog.records == []
+
+
+@pytest.mark.parametrize('path', ['', None])
+def test_empty_or_none_path_is_skipped(vault, path):
+    assert _load(vault, [path]) == {}
+
+
+def test_directory_is_skipped(vault):
+    (vault / ZAUBER / 'ordner.md').mkdir(parents=True)
+    assert _load(vault, [f'{ZAUBER}/ordner']) == {}
+
+
+@pytest.fixture
+def secret_vault(vault):
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    _write(vault, 'helden/illaen-baernhold/zauber', '---\nname: GEHEIM\n---\n# Geheim\n')
+    _write(vault, 'wiki/dsa-4.1x/zauber/fake', '---\nname: FAKE\n---\n# Fake\n')
+    _write(vault, 'wiki/andere/artikel', '---\nname: ANDERE\n---\n# Andere\n')
+    _write(vault, 'wiki/dsa-4.1/_regeln', '---\nname: REGELN\n---\n# Regeln\n')
+    return vault
+
+
+@pytest.mark.parametrize('path', [
+    f'{ZAUBER}/../../../../helden/illaen-baernhold/zauber',
+    '../secret',
+    f'{ZAUBER}/../../../../../etc/passwd',
+    'helden/illaen-baernhold/zauber',
+    'wiki/andere/artikel',
+    'wiki/dsa-4.1x/zauber/fake',
+    'wiki/dsa-4.1/../andere/artikel',
+    f'wiki\\dsa-4.1\\zauber\\adlerauge',
+    f'{ZAUBER}\\adlerauge',
+    f'{ZAUBER}/..\\..\\..\\helden\\illaen-baernhold\\zauber',
+    '/wiki/dsa-4.1/zauber/adlerauge',
+    'C:/wiki/dsa-4.1/zauber/adlerauge',
+    f'{ZAUBER}/adlerauge\x00',
+])
+def test_path_outside_whitelist_is_skipped(secret_vault, path):
+    assert _load(secret_vault, [path]) == {}
+
+
+def test_absolute_path_is_skipped(secret_vault):
+    absolute = str(secret_vault / ZAUBER / 'adlerauge')
+    assert _load(secret_vault, [absolute]) == {}
+    assert _load(secret_vault, [absolute.replace('\\', '/')]) == {}
+
+
+def test_other_wiki_folder_files_inside_dsa_are_allowed(secret_vault):
+    assert list(_load(secret_vault, ['wiki/dsa-4.1/_regeln'])) == ['wiki/dsa-4.1/_regeln']
+
+
+def test_dotdot_that_stays_inside_whitelist_is_allowed(secret_vault):
+    key = f'{ZAUBER}/../zauber/adlerauge'
+    assert list(_load(secret_vault, [key])) == [key]
+
+
+def test_symlink_escape_is_skipped(vault):
+    _write(vault, 'helden/illaen-baernhold/zauber', '---\nname: GEHEIM\n---\n# Geheim\n')
+    (vault / ZAUBER).mkdir(parents=True)
+    link = vault / ZAUBER / 'boese.md'
+    try:
+        link.symlink_to(vault / 'helden' / 'illaen-baernhold' / 'zauber.md')
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f'symlinks not creatable here: {exc}')
+    assert _load(vault, [f'{ZAUBER}/boese']) == {}
+
+
+def test_symlinked_directory_escape_is_skipped(vault):
+    _write(vault, 'helden/illaen-baernhold/zauber', '---\nname: GEHEIM\n---\n# Geheim\n')
+    (vault / 'wiki' / 'dsa-4.1').mkdir(parents=True)
+    link = vault / 'wiki' / 'dsa-4.1' / 'raus'
+    try:
+        link.symlink_to(vault / 'helden' / 'illaen-baernhold', target_is_directory=True)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f'symlinks not creatable here: {exc}')
+    assert _load(vault, ['wiki/dsa-4.1/raus/zauber']) == {}
+
+
+# --- Unreadable / broken files -------------------------------------------
+
+def test_broken_yaml_warns_once_and_others_still_load(vault, caplog):
+    _write(vault, f'{ZAUBER}/kaputt', '---\nname: [unclosed\nprobe: : :\n---\n# Kaputt\n')
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    with caplog.at_level(logging.WARNING):
+        res = _load(vault, [f'{ZAUBER}/kaputt', f'{ZAUBER}/adlerauge'])
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+    assert len(warnings) == 1
+    assert f'{ZAUBER}/kaputt' in warnings[0].getMessage()
+
+
+def test_non_mapping_frontmatter_is_treated_as_broken(vault, caplog):
+    _write(vault, f'{ZAUBER}/liste', '---\n- a\n- b\n---\n# Liste\n')
+    with caplog.at_level(logging.WARNING):
+        assert _load(vault, [f'{ZAUBER}/liste']) == {}
+    assert len([r for r in caplog.records if r.levelno == logging.WARNING]) == 1
+
+
+def test_non_utf8_file_warns_and_is_skipped(vault, caplog):
+    p = vault / ZAUBER / 'latin.md'
+    p.parent.mkdir(parents=True)
+    p.write_bytes('---\nname: Ärger\n---\n# Ärger\n'.encode('latin-1'))
+    _write(vault, f'{ZAUBER}/adlerauge', ADLERAUGE)
+    with caplog.at_level(logging.WARNING):
+        res = _load(vault, [f'{ZAUBER}/latin', f'{ZAUBER}/adlerauge'])
+    assert list(res) == [f'{ZAUBER}/adlerauge']
+    assert len([r for r in caplog.records if r.levelno == logging.WARNING]) == 1
+
+
+# --- Escaping / security --------------------------------------------------
+
+def _body_html(vault, body):
+    _write(vault, f'{ZAUBER}/x', f'---\nname: X\n---\n# X\n\n{body}\n')
+    return _load(vault, [f'{ZAUBER}/x'], obsidian_uri)[f'{ZAUBER}/x']['html']
+
+
+def test_script_tag_is_escaped(vault):
+    html = _body_html(vault, '<script>alert(1)</script>')
+    assert '<script' not in html
+    assert '&lt;script&gt;' in html
+
+
+def test_inline_script_tag_is_escaped(vault):
+    html = _body_html(vault, 'Text <script>alert(1)</script> Ende')
+    assert '<script' not in html
+    assert '&lt;script&gt;' in html
+
+
+def test_img_onerror_is_escaped(vault):
+    html = _body_html(vault, '<img src=x onerror=alert(1)>\n\nInline <img src=x onerror=alert(2)> Text')
+    assert '<img' not in html
+    assert '&lt;img' in html
+
+
+def test_html_block_and_comment_are_escaped(vault):
+    html = _body_html(vault, '<div onclick="x()">Box</div>\n\n<!-- Kommentar -->')
+    assert '<div' not in html
+    assert '<!--' not in html
+
+
+@pytest.mark.parametrize('link', [
+    '[x](javascript:alert(1))',
+    '[x](JavaScript:alert(1))',
+    '[x](vbscript:msgbox(1))',
+    '[x](data:text/html;base64,PHNjcmlwdD4=)',
+    '[x][ref]\n\n[ref]: javascript:alert(1)',
+    '<javascript:alert(1)>',
+])
+def test_dangerous_link_protocols_do_not_become_href(vault, link):
+    html = _body_html(vault, link)
+    assert 'href="javascript:' not in html.lower()
+    assert 'href="vbscript:' not in html.lower()
+    assert 'href="data:' not in html.lower()
+
+
+def test_dangerous_image_protocol_does_not_become_src(vault):
+    html = _body_html(vault, '![x](javascript:alert(1))')
+    assert 'src="javascript:' not in html.lower()
+
+
+def test_obsidian_link_survives_harmful_protocol_filter(vault):
+    html = _body_html(vault, f'[[{ZAUBER}/y|Text]]')
+    assert 'href="obsidian://' in html

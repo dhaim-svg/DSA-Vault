@@ -165,6 +165,7 @@ def test_build_context_without_chronik_file_has_empty_chronik(tmp_path, monkeypa
     assert ctx['chronik'] == {'spielabende': [], 'meta': {}}
     assert ctx['chronik_bild_prefix'] == '/p/'
     assert ctx['register'] == {'nscs': [], 'orte': []}
+    assert ctx['zauber_artikel'] == {}
 
 
 def test_build_context_has_register_from_live_vault():
@@ -172,6 +173,34 @@ def test_build_context_has_register_from_live_vault():
     assert set(ctx['register']) == {'nscs', 'orte'}
     assert ctx['register']['nscs']
     assert ctx['register']['orte']
+
+
+def test_build_context_has_zauber_artikel_from_live_vault():
+    ctx = build_context('illaen-baernhold')
+    artikel = ctx['zauber_artikel']
+    assert isinstance(artikel, dict)
+    assert artikel
+    zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
+    assert set(artikel) <= zauber_pfade
+    for pfad, art in artikel.items():
+        assert set(art) == {'titel', 'quelle', 'meta', 'html'}, pfad
+        assert art['html'].strip(), pfad
+
+
+def test_build_context_zauber_artikel_skips_spells_without_article(tmp_path, monkeypatch):
+    artikel_dir = tmp_path / 'wiki' / 'dsa-4.1' / 'zauber'
+    artikel_dir.mkdir(parents=True)
+    (artikel_dir / 'da.md').write_text('---\nname: DA\n---\n# DA\n\n## Wirkung\n\nText.\n', encoding='utf-8')
+    monkeypatch.setattr(rendering, 'load_held', lambda root, slug: {'zauber': [
+        {'name': 'Da', 'wiki_path': 'wiki/dsa-4.1/zauber/da'},
+        {'name': 'Weg', 'wiki_path': 'wiki/dsa-4.1/zauber/weg'},
+        {'name': 'Leer', 'wiki_path': None},
+        {'name': 'Ohne'},
+    ]})
+    monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
+    ctx = build_context('x', tmp_path)
+    assert list(ctx['zauber_artikel']) == ['wiki/dsa-4.1/zauber/da']
+    assert ctx['zauber_artikel']['wiki/dsa-4.1/zauber/da']['titel'] == 'DA'
 
 
 BILD = 'drachenchronik-daten/pergament-abschrift.png'
