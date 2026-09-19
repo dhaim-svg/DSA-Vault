@@ -22,7 +22,8 @@ ausdrücklich „stoppen" steht. Unsicheres wird markiert und im Report gemeldet
 - `helden/` **nie ändern**.
 - In `abenteuer/` **nur** schreiben: (1) die neuen Session-Dateien, (2) die zwei beschriebenen Stellen
   in `abenteuer/drachenchronik/_drachenchronik.md` (Schritt 4) — plus den Import-Lauf aus Schritt 1.
-- **Nichts löschen** — Aufräumen ist ein Schritt außerhalb dieses Kommandos und braucht User-Freigabe.
+- **Keine Dateien löschen** — Aufräumen ist ein Schritt außerhalb dieses Kommandos und braucht User-Freigabe
+  (das Entfernen der Platzhalter-*Zeilen* in `_drachenchronik.md`, Schritt 4, ist davon nicht betroffen).
 - **Keine Git-Commits.** Commit erst nach Sichtung durch den User (`abenteuer/` ist User-Domäne).
 - Außerhalb der Session-Dateien und `_drachenchronik.md` nur `wiki-luecken.md` (Schritt 5) ergänzen.
 

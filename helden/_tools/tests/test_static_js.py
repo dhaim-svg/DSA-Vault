@@ -1,6 +1,10 @@
 """Regression guard: classic <script> tags share one global lexical scope, so the same
 top-level name declared in two static/*.js files is a SyntaxError (const/let/class) or a
-silent overwrite (var/function). Pure-Python scan, no JS engine needed."""
+silent overwrite (var/function). Pure-Python scan, no JS engine needed.
+
+Limits: only scans static/*.js line-start declarations (not the inline <script> blocks in
+templates/dashboard.html.j2, not `for (var …)`, a 2nd declaration after `;` on one line,
+continuation lines of declarator lists, or implicit globals)."""
 import re
 from collections import defaultdict
 from pathlib import Path
