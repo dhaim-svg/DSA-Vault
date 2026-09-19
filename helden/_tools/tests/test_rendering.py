@@ -655,4 +655,4 @@ def test_css_bundle_styles_hausregel_chip_and_legend():
     legend = re.search(r'\.zustand-legend\s*\{([^}]*)\}', css)
     assert legend and 'overflow-wrap' in legend.group(1)
     for _sel, body in re.findall(r'(\.zustand-(?:chip\.hausregel|legend)[^{]*)\{([^}]*)\}', css):
-        assert not re.search(r'#[0-9a-fA-F]{3,8}', re.sub(r'var\([^)]*\)', '', body)), 'keine neuen Hex-Werte'
+        assert not re.search(r'#[0-9a-fA-F]{3,8}\b', re.sub(r'var\([^)]*\)', '', body)), 'keine neuen Hex-Werte'
