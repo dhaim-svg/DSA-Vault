@@ -5,10 +5,10 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-018/D-043 → in-progress, plan.md anlegen) | ✅ done | BACKLOG.md, sprints/sprint-018/plan.md |
-| T1 | **D-043** Sortierung aus dem Inline-Block nach `static/zauber-sort.js` (IIFE, `JS_FILES`), Bedienelement in beiden Layouts erreichbar, Tastatur/ARIA, 3. Zustand „Standard" | ⬜ todo | templates/dashboard.html.j2, templates/partials/zauber.j2, static/zauber-sort.js (neu), static/base.css, rendering.py, tests/test_rendering.py |
-| T2 | **D-018a** Artikel-Loader: `parsers/wikiartikel.py` (Frontmatter ab, Markdown→HTML via mistune, `[[wikilinks]]` → Obsidian-Links, Kopf-Metadaten), `zauber_artikel` als Top-Level-Key in `build_context` | ⬜ todo | parsers/wikiartikel.py (neu), rendering.py, requirements.txt, tests/test_wikiartikel.py (neu), tests/test_rendering.py |
-| T3 | **D-018b** Vorschau im Zauber-Tab: `<details class="artikel-details">` je Zauberzeile mit Panel-Kopf (Name, Quelle/Seite, `↗`), Styles inkl. Kompaktlayout ≤ 1070 px und Druckregel | ⬜ todo | templates/partials/zauber.j2, static/base.css, tests/test_rendering.py |
-| T4 | Verifikation (pytest inkl. `-W error`, Static-Render + Größe, Browser served **und** `file://`, Domänen-Grenze `abenteuer/`) + Gesamt-Review, danach `/sprint-wrap` | ⬜ todo | — |
+| T1 | **D-043** Sortierung aus dem Inline-Block nach `static/zauber-sort.js` (IIFE, `JS_FILES`), Bedienelement in beiden Layouts erreichbar, Tastatur/ARIA, 3. Zustand „Standard" | ✅ done | templates/dashboard.html.j2, templates/partials/zauber.j2, static/zauber-sort.js (neu), static/base.css, rendering.py, tests/test_rendering.py |
+| T2 | **D-018a** Artikel-Loader: `parsers/wikiartikel.py` (Frontmatter ab, Markdown→HTML via mistune, `[[wikilinks]]` → Obsidian-Links, Kopf-Metadaten), `zauber_artikel` als Top-Level-Key in `build_context` | ✅ done | parsers/wikiartikel.py (neu), rendering.py, requirements.txt, tests/test_wikiartikel.py (neu), tests/test_rendering.py |
+| T3 | **D-018b** Vorschau im Zauber-Tab: `<details class="artikel-details">` je Zauberzeile mit Panel-Kopf (Name, Quelle/Seite, `↗`), Styles inkl. Kompaktlayout ≤ 1070 px und Druckregel | ✅ done | templates/partials/zauber.j2, static/base.css, tests/test_rendering.py |
+| T4 | Verifikation (pytest inkl. `-W error`, Static-Render + Größe, Browser served **und** `file://`, Domänen-Grenze `abenteuer/`) + Gesamt-Review, danach `/sprint-wrap` | ✅ done (Verifikation + Review; `/sprint-wrap` steht aus) | — |
 
 **Reihenfolge:** T1 → T2 → T3 sequenziell (T1 und T3 fassen beide `zauber.j2`/`base.css` an,
 T3 braucht T2s Datenmodell). T2 ist inhaltlich unabhängig von T1, wird aber wegen der
@@ -90,3 +90,18 @@ Markdown→HTML mit **mistune**.
    gegenlesen).
 5. `git status --short` zeigt **keine** Änderung unter `abenteuer/` oder `wiki/`.
 6. Druck-Emulation: aufgeklappte Artikel erscheinen, zugeklappte nicht; Zauberliste intakt.
+
+## Stand am Sprint-Ende
+
+- **T1–T4 fertig, 333/333 Tests** (Baseline 243, `-W error` sauber). Commits ab `dda1dd0`: T1 `a4cfae6`; T2 `c6639a4` + `658b094` (Fallback-Parser); Tracker `68c0895`; T3 `d4d740d`; Static-Render `95cc6a3`; Final-Review-Fixes `51780bf`, `8e82c70`; Tabellen-Fix `bd59ad7` (+ Render). **Nichts gepusht.**
+- **Gesamt-Review (Opus): „With fixes"** — 0 Critical, 2 Important (Artikel-Render-Fehler crasht das Dashboard → pro Artikel isoliert; Live-Vault-Test mit strikter Mengengleichheit → entkoppelt), beide sowie zwei empfohlene Einzeiler (Druck: geschlossene Summaries, Label-in-Name am Sortier-Button) direkt vom Controller gefixt (je mit Negativprobe, Suite grün).
+- **Browser-Verifikation (Playwright, served + Static über `http.server`):** PASS. 25 Vorschauen; Klick auf Panel/Summary öffnet kein Würfelpanel, Klick auf die Zelle daneben schon; Sortier-Zyklus Standard → ZfW ↓ → ↑ → Standard inkl. Tastatur, Legende bleibt hinter der Liste, offene Vorschau wandert mit; bei verifiziertem 400 px alle 8 Tabs `scrollWidth == clientWidth` (385), alle 25 Artikel offen: −33 px zur Karte (kein Überstand); 1071/1280 px: −9/−33 px; Konsole nur `favicon.ico 404`; nur GET-Requests. Beim Nachmessen fiel eine Regression dieses Sprints auf (erste Tabellenspalte in Artikeln kollabierte bei 400 px, `overflow-wrap:anywhere` geerbt) → `bd59ad7`, im Browser nachgeprüft (27×69 → 40×22 px).
+- **Größe:** Static-Render 379 → 434 KB (+55 KB, 25 eingebettete Artikel, ≈ 29 KB Artikel-HTML).
+- **Abweichungen von der Planskizze:** (1) Zeilen-Wrapper `[data-spell-list]` (behebt zusätzlich den Bestandsfehler „Legende wandert beim Sortieren nach oben"); (2) `parsers/wikiartikel.py` bekommt `link_fn` injiziert (Zirkelimport); (3) **Fallback-Parser für kaputtes Wiki-Frontmatter** — 103 von 268 Zauberartikeln haben ungültiges YAML (unquotiertes `: ` in `kosten:`/`zauberdauer:`), ohne Fallback hätten 10 von 25 Helden-Zaubern keine Vorschau; Wiki-Reparatur als `wiki-luecken.md` L22 / `backlog.md` B-013 vorgemerkt, danach Fallback entfernen.
+- **Für `/sprint-wrap` vormerken:** D-018 + D-043 → Done (Sprint 018). Offene Kleinigkeiten (bewusst nicht in diesem Sprint):
+  - Druck: `.spell .nlink`/`.zfw-num` sind auf Papier hell auf hellem Grund (kontrast ≈ 1,1:1, Bestand vor Sprint 018) → zu D-045/Druck-Themen.
+  - Zauberliste bei exakt 1071 px: Artikel-Panel (`grid-column:1/-1`) ragt 14 px aus der `.spell`-Box, bleibt in der Karte — derselbe Bestandsüberstand wie die letzte Zelle geschlossener Zeilen (D-040-Breakpoint-Kante); 1072–1130 px nicht durchgemessen.
+  - Summary-Tap-Ziel „▸ Artikel" im Kompaktlayout ≈ 18 px (< 44 px) → D-044 (Touch-Feinschliff).
+  - Deferred Minors: T1 aria-live/`aria-pressed`, Zeilen-Snapshot beim Laden, stale Testkommentar, formatierungsabhängige Regexe; T2 `ValueError` um `parse_frontmatter` (Fallback nur bei `yaml.YAMLError`), Wikilinks in Code-Spans, Test-Nits; T3 `== 1` auf ersten live `wiki_path`, Guard-Test-Slice.
+  - Nicht im Browser gegengeprüft: `file://` direkt (Playwright blockt `file:`) — Static-Render wurde über `http.server` geprüft; die Vorschau braucht kein JS, die Sortierung keine Protokollprüfung.
+- **Unverändert offen (Out of Scope):** D-041, D-044, D-045; Vorschau für Rituale/SF; die übrigen Punkte aus dem Sprint-017-Handoff.
