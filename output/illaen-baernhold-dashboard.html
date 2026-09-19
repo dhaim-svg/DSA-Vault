@@ -258,6 +258,22 @@ body::before{
 .banner-meta strong{ color:var(--ink); font-weight:700; font-family:var(--subhead); }
 .banner-meta .sep{ color:var(--ink-dim); }
 
+/* ---- Static-render hint (only emitted with inline_js; hidden in print via .screen-only) ---- */
+.static-hinweis{
+  margin-bottom:var(--gap);
+  padding:8px 14px;
+  background:var(--bg-inset);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent-gold);
+  border-radius:var(--r-card);
+  font-family:var(--subhead);
+  font-size:13px;
+  line-height:1.4;
+  color:var(--ink-mute);
+}
+.static-hinweis strong{ color:var(--ink); }
+.static-hinweis code{ font-family:var(--mono); font-size:12px; color:var(--accent-cold); overflow-wrap:anywhere; }
+
 /* ---- Vitals ---- */
 .vitals{ display:flex; flex-direction:column; gap:14px; }
 .vital{
@@ -1203,6 +1219,10 @@ body { padding-top: 46px; }
 </nav>
 
 
+<div id="static-hinweis" class="static-hinweis screen-only" role="note">
+  <span>📄 Statische Ansicht (file://) — Änderungen (Steigern, Inventar, Zauberspeicher, Wunden, Session-Notizen) werden <strong>nicht gespeichert</strong>.
+  Zum Bearbeiten: <code>python helden\_tools\render-held.py serve illaen-baernhold --open</code></span>
+</div>
 <!-- ============================================================
      IDENTITY BANNER (Seite 1 im Print)
      ============================================================ -->
@@ -2786,10 +2806,10 @@ body { padding-top: 46px; }
     <div class="campaign">
       <div class="c-head">
         <h3>Drachenchronik</h3>
-        <span class="status"><span class="dot-s"></span> In Vorbereitung — noch keine Spielsitzungen.</span>
+        <span class="status"><span class="dot-s"></span> Läuft — 4 Spielabende gespielt (04.06.–22.08.2026, Session 1–4).</span>
       </div>
       <div class="c-meta">
-        <span><b>1</b> Sessions</span>
+        <span><b>4</b> Sessions</span>
         <span><b>1</b> Held</span>
       </div>
     </div>
@@ -2802,8 +2822,23 @@ body { padding-top: 46px; }
       <tbody>
       <tr style="border-bottom:1px dotted var(--rule)">
         <td style="padding:5px 0;color:var(--ink-mute)">1</td>
-        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2025-10-04</td>
-        <td style="padding:5px 0;color:var(--ink)">Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne &#34;Zum Goldenen Anker&#34; trifft er auf den mysteriösen Händler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2026-06-04</td>
+        <td style="padding:5px 0;color:var(--ink)">Die Gruppe verbringt drei Tage in Punin, findet ihre Zimmer verwüstet vor und sammelt im Hesindetempel Wissen über die Gegend um den Yaquir, Briglo und die Wüste. An der Punin Akademie herrscht Aufruhr wegen einer in einer Kaverne gefundenen Leiche und eines Humusartefakts; die Enzyklopedia Dracomagica ist verschwunden, und ein Bote des Reichskanzlers bittet die Gruppe zu sich. Am 18. Phex wird beim Magister eingebrochen und die originale Abschrift gestohlen, die Gruppe erhält aber die Übersetzung.</td>
+      </tr>
+      <tr style="border-bottom:1px dotted var(--rule)">
+        <td style="padding:5px 0;color:var(--ink-mute)">2</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2026-06-27</td>
+        <td style="padding:5px 0;color:var(--ink)">Die Gruppe bereitet am 18. Phex die Abfahrt mit einem Flussboot vor und fährt am 19. Phex nach Süden, wo sie am Abend Kumrath erreicht. Dort treffen sie den Reichskanzler, die Königin und den Reichserzmarshall (?) und erhalten den Auftrag, nach Brig-Lo zu gehen; dafür dürfen sie das Flussschiff des Kanzlers nutzen. Am 20. Phex nimmt die Gruppe an einem Praios-Gottesdienst mit der Königin teil, danach führt die Fahrt über Omlad und Bactrinn, vorbei an novadischen Spähern und brennenden Weinbergen, am 22. Phex nach Brig-Lo.</td>
+      </tr>
+      <tr style="border-bottom:1px dotted var(--rule)">
+        <td style="padding:5px 0;color:var(--ink-mute)">3</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2026-07-18</td>
+        <td style="padding:5px 0;color:var(--ink)">Die Gruppe erreicht am 22. Phex Brig-Lo, wird von Gerone von Berg begrüßt und bekommt nachts von dem Kind Brigaja das Schlachtfeld gezeigt. Ludi erzählt außerdem von einer Vision eines angeketteten, hasserfüllten bärtigen Mannes unter Bergen aus Eis. Am 23. Phex steht bei der Rückkehr der Rashtullatempel in Flammen, ein Brandstifter gibt sich als Elfeneck aus und wird gestellt. Der Abend endet damit, dass beim Tsa-Hain ein Licht bei der Gruft aufleuchtet; an diesem Abend fehlen Tabea und Peter.</td>
+      </tr>
+      <tr style="border-bottom:1px dotted var(--rule)">
+        <td style="padding:5px 0;color:var(--ink-mute)">4</td>
+        <td style="padding:5px 8px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)">2026-08-22</td>
+        <td style="padding:5px 0;color:var(--ink)">Die Gruppe schleicht sich heran und kämpft in einem 12-eckigen Raum mit Statuen und einem Sarkophag gegen 4 Novadis. Hinter dem Raum führt ein Schacht in eine Kaverne (Element: Luft) mit einer Leiche, in deren Brust ein Dolch steckt; der Leichnam wird beim Hinausgehen von 2 Armen unter den Boden gezogen, und die Spur führt in den Wald zu Klauenabdrücken auf einer Lichtung. Muchacho führt die Gruppe zum Novadi-Lager, dessen Bewohner sie angreifen; ein Gefangener gibt an, sie seien aus Amhallah. Die Gruppe entscheidet, weiter nach Amhallah zu gehen.</td>
       </tr>
       </tbody>
     </table>
@@ -2840,7 +2875,7 @@ body { padding-top: 46px; }
 
 <div class="chronik-switch" role="tablist" aria-label="Chronik-Ansicht">
   <button type="button" class="chronik-switch-btn chronik-switch-btn--active" data-view="roh" role="tab" aria-selected="true" aria-controls="chronik-view-roh">Roh <span class="chronik-switch-count">4</span></button>
-  <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">1</span></button>
+  <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">4</span></button>
 </div>
 
 <div class="chronik-view chronik-view--active" id="chronik-view-roh" data-view="roh" role="tabpanel">
@@ -3102,18 +3137,84 @@ Ausrüstung: (Reise-)Kleidung passend zur Kultur, für Weißmagier jedoch auf je
 
 <div class="chronik-view" id="chronik-view-kompiliert" data-view="kompiliert" role="tabpanel">
   <section class="card journal-session" data-session-nr="1">
-    <h3 class="journal-session-header">#1 &middot; 2025-10-04</h3>
+    <h3 class="journal-session-header">#1 &middot; 2026-06-04</h3>
 
     <div class="journal-section">
       <h4>Zusammenfassung</h4>
-      <p class="journal-readonly">Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne &#34;Zum Goldenen Anker&#34; trifft er auf den mysteriösen Händler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.</p>
+      <p class="journal-readonly">Die Gruppe verbringt drei Tage in Punin, findet ihre Zimmer verwüstet vor und sammelt im Hesindetempel Wissen über die Gegend um den Yaquir, Briglo und die Wüste. An der Punin Akademie herrscht Aufruhr wegen einer in einer Kaverne gefundenen Leiche und eines Humusartefakts; die Enzyklopedia Dracomagica ist verschwunden, und ein Bote des Reichskanzlers bittet die Gruppe zu sich. Am 18. Phex wird beim Magister eingebrochen und die originale Abschrift gestohlen, die Gruppe erhält aber die Übersetzung.</p>
     </div>
 
     <div class="journal-section">
       <h4>Verlauf</h4>
-      <textarea class="journal-verlauf" data-datei="2025-10-04-session-01.md" rows="8">Die Gruppe trifft sich im Hafen von Havena. [[helden/illaen-baernhold/_illaen|Illaen]] spricht mit dem Hafenmeister Ardaniel, der von einem unbekannten Schiff berichtet, das vor drei Tagen ohne Ladescheine eingelaufen ist. In der Taverne &#34;Zum Goldenen Anker&#34; wartet Ferdok der Händler — für 5 Silbertaler teilt er seinen Hinweis auf die Ruinen südlich von Kuslik mit. Unterwegs werden die Helden von einer Räuberbande aufgehalten (Kampf, 2 Räuber fliehen, 1 gefangen). Der Gefangene nennt den Namen &#34;Borbarad-Diener&#34; bevor er schweigt. Ankunft am Stadttor Kuslik kurz vor Sonnenuntergang.</textarea>
+      <textarea class="journal-verlauf" data-datei="2026-06-04-session-01.md" rows="8">### 13. Phex (Start)
+- 3 Tage in Punin, Vormittag Sightseeing, Nachmittag im [[wiki/dsa-4.1/goetter/hesinde|Hesinde]]-Tempel
+- Am Abend des 3. Tages, als wir zurückkamen, haben wir unsere Zimmer verwüstet vorgefunden
+  - Anscheinend wurden sie durchsucht
+  - Wir haben eine [[wiki/dsa-4.1/goetter/rastullah-glaube|Rastulla]] Gebetskette gefunden
+
+**Sightseeing in Punin**
+- Schweigeplatz, Kaffeehaus
+- [[wiki/dsa-4.1/goetter/rahja|Rahja]]tempel und Weinviertel
+- Jarmarktsviertel, Zhaori (?)
+- Theaterbesuch
+
+**Wissensaufbau im Hesindetempel**
+- Grob über aktuelle Gegebenheiten rund um Punin
+  - Dörfer und Städte rund um den Yaquir Fluss bis Briglo
+- Info zu Briglo
+  - Austragungsort der 2. Dämonenkriege
+  - 4 Götter hatten sich manifestiert
+- Kartenmaterial rund um den Yaquir
+- Kartenmaterial südlich davon - Khom
+- Infos zu [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|Wüstenkultur]]
+  - Auch zu Rastullaglaube
+- Infos generell zu [[wiki/dsa-4.1/geographie/terraintypen#Wüste (S. 36–38)|Wüste]]
+  - Flora, Fauna - vor allem Gebirgskette am Rande der Wüste
+  - z. B. Khormasbestien, Skorpione
+  - z. B. Stiefel am Morgen ausleeren (Skorpion)
+  - Faustformel zu Skorpionen - je kleiner desto gefährlicher
+  - Kartenmaterial, Oasen
+    - Distanzen zwischen den Oasen
+
+**Punin Akademie am 15. Phex**
+- Großer Aufruhr, da eine Leiche gefunden wurde
+- Sie war in einer Kaverne ähnlich wie in Then (?)
+- ca. 80m Durchmesser
+  - Sockel ist abgegriffen, aber nicht abgeschliffen
+  - Es sind [[wiki/dsa-4.1/magie/elemente-hexalogien|Elementarzeichen]], aber am meisten Humus
+  - Das kommt daher, dass das [[wiki/dsa-4.1/magie/artefakte|Artefakt]] ein Humusartefakt war - ein in die Länge gezogenes Ei
+
+**Papyrus**
+- Wir sind noch in die Papiermühle gegangen und haben die Meisterin gefragt
+- Der Papyrus ist aus dem Mhanadi Delta, ca. 3000 Jahre alt
+
+### 17. Phex
+- Wieder in der Akademie
+- Plan: Durchsicht der Bücher
+- Allerdings: Enzyklopedia Dracomagica ist verschwunden
+  - Hatte bis vor 2 Tagen eine [[wiki/dsa-4.1/goetter/hesinde#Orden und Laienbünde|Draconiterin]] (?) Name: Richesa Bolongaro (2 verschiedene Augenfarben)
+    - Wir haben beim Draconiter Orden nachgefragt, sie ist erst kurz vor uns gekommen und jetzt verschwunden
+  - Inhalt:
+    - Alles zu Drachen
+    - Genaue Aufzeichnungen zum Artefakt
+- Wir bekommen einige Bücher zur Durchsicht
+  - Extrem potentes Artefakt
+  - Vermutung: Beinhaltet extrem starken Zorn der Elemente, wird eventuell &#34;[[wiki/dsa-4.1/goetter/sumu-glaube|Sumus]] Kraft&#34; → dem 7. Element zugeordnet
+- Es kam ein Bote zu uns vom Reichskanzler - wir sollen zu ihm kommen, wenn wir die Informationen haben → Cumrat (?), kaiserliche Pfalz
+- Als wir bei den Draconitern nachgefragt haben, bekam der werte Parinor Aldebruch (?) eine Information oder besser gesagt eine Prophezeiung bzw. Pydracors (?) Wiederkehr (3. Weltenbrand)
+
+### 18. Phex (Basiliskentag)
+- Als wir in der Früh zur Akademie gingen, um uns die Übersetzung abzuholen, war der Magister nicht da
+- Bei seiner Wohnung wurde eingebrochen, anscheinend von Menschen in Kaftanen
+- Er konnte sich soweit wehren, dass er im Nachtmantel mit Stab und einem Zettel? in der Hand fliehen konnte
+- Mit dem Hund konnten wir den Geruch bis in eine Seitengasse folgen, dort wurde anscheinend viel Magie gewirkt
+- Dank Nasira (?) haben wir erfahren, dass es ein Adlerschwinge (?) war
+  - Er (?) hat sich in eine Speikobra verwandelt
+  - Wir haben ihn dann gesucht und konnten ihn im Park finden und vor Kindern retten
+- Nasira konnte sie (?) dann zurück verwandeln
+- Die original Abschrift wurde gestohlen, allerdings nicht die Übersetzung - die haben wir erhalten</textarea>
       <div class="journal-actions">
-        <button class="journal-save-btn" data-datei="2025-10-04-session-01.md" type="button">Speichern</button>
+        <button class="journal-save-btn" data-datei="2026-06-04-session-01.md" type="button">Speichern</button>
         <span class="sg-error journal-save-error" style="display:none"></span>
         <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
       </div>
@@ -3121,29 +3222,346 @@ Ausrüstung: (Reise-)Kleidung passend zur Kultur, für Weißmagier jedoch auf je
 
     <details class="journal-section journal-collapsed">
       <summary>AsP/LeP-Verlauf</summary>
-      <p class="journal-readonly">Illaen: LeP 30 → 24 (Räuberkampf, Schwerthieb) → 24 (Ende Session)
-Illaen: AsP 38 → 32 (Odem Arcanum 2×) → 32 (Ende Session)</p>
+      <p class="journal-readonly">—</p>
     </details>
 
     <details class="journal-section journal-collapsed">
       <summary>Neue NSCs / Orte</summary>
-      <p class="journal-readonly">- **Ardaniel** — Hafenmeister Havena, misstrauisch, hilfreich gegen Bezahlung
-- **Ferdok** — reisender Händler, Informant, Motiv unklar
-- **Kuslik Stadttor** — Wachen kennen Illaens Elfen-Abstammung, leicht feindlich</p>
+      <p class="journal-readonly">### NSCs
+- **Richesa Bolongaro** — Draconiterin, 2 verschiedene Augenfarben; kam erst kurz vor der Gruppe zum Draconiter Orden und ist jetzt verschwunden
+- **Parinor Aldebruch** (?) — „der werte“; bekam bei der Nachfrage der Gruppe bei den Draconitern eine Information bzw. Prophezeiung zu Pydracors (?) Wiederkehr (3. Weltenbrand)
+- **Reichskanzler** — schickt einen Boten: die Gruppe soll zu ihm kommen, wenn sie die Informationen hat (Cumrat (?), kaiserliche Pfalz)
+- **Magister** (Punin Akademie, Übersetzung) — Name in der Chronik nicht genannt; bei seiner Wohnung wurde eingebrochen, er konnte fliehen
+- **Meisterin der Papiermühle** — Name in der Chronik nicht genannt; wurde zum Papyrus befragt
+- **Nasira** (?) — durch sie wurde erkannt, dass es ein Adlerschwinge (?) war; konnte zurück verwandeln (Rolle in der Chronik nicht genannt)
+
+### Orte
+- **Punin** — 3 Tage Aufenthalt: Vormittag Sightseeing, Nachmittag Hesindetempel
+- **Sehenswertes in Punin** — Schweigeplatz, Kaffeehaus, Rahjatempel, Weinviertel, Jarmarktsviertel, Zhaori (?), Theaterbesuch
+- **Hesindetempel** — Wissensaufbau (Punin, Yaquir, Briglo, Khom, Wüste)
+- **Punin Akademie** — Aufruhr am 15. Phex (Leichenfund); Bücherdurchsicht und Übersetzung
+- **Kaverne** (Fundort der Leiche) — ähnlich wie in Then (?); ca. 80m Durchmesser; Sockel abgegriffen, aber nicht abgeschliffen; Elementarzeichen, am meisten Humus
+- **Papiermühle** — Meisterin zum Papyrus befragt
+- **Yaquir** (Fluss) — Dörfer und Städte rund um den Yaquir bis Briglo; Kartenmaterial
+- **Briglo** — Austragungsort der 2. Dämonenkriege; 4 Götter hatten sich manifestiert
+- **Khom** — Kartenmaterial südlich des Yaquir
+- **Mhanadi Delta** — Herkunft des Papyrus (ca. 3000 Jahre alt)
+- **Cumrat** (?) — kaiserliche Pfalz; dorthin soll die Gruppe zum Reichskanzler kommen</p>
     </details>
 
     <details class="journal-section journal-collapsed">
       <summary>Offene Fäden / Cliffhanger</summary>
-      <p class="journal-readonly">- Wer ist der &#34;Borbarad-Diener&#34; den der Räuber erwähnte?
-- Was befindet sich in den Ruinen südlich von Kuslik?
-- Ferdok verschwand nach dem Gespräch spurlos — war er verkleidet?</p>
+      <p class="journal-readonly">- Bote des Reichskanzlers: Die Gruppe soll zu ihm kommen, wenn sie die Informationen hat (Cumrat (?), kaiserliche Pfalz)</p>
     </details>
 
     <details class="journal-section journal-collapsed">
       <summary>Loot / AP-Vergabe</summary>
-      <p class="journal-readonly">- 5 Silbertaler ausgegeben (Hinweis von Ferdok)
-- Beute: 12 Silbertaler von Räubern, 1 Dolch (Qualität +1)
-- AP: 15 AP (gute Rollenspiel-Entscheidungen, Informationsbeschaffung)</p>
+      <p class="journal-readonly">- Rastulla Gebetskette — in den verwüsteten Zimmern gefunden (13. Phex)
+- Übersetzung der gestohlenen originalen Abschrift — erhalten (18. Phex)</p>
+    </details>
+
+  </section>
+  <section class="card journal-session" data-session-nr="2">
+    <h3 class="journal-session-header">#2 &middot; 2026-06-27</h3>
+
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">Die Gruppe bereitet am 18. Phex die Abfahrt mit einem Flussboot vor und fährt am 19. Phex nach Süden, wo sie am Abend Kumrath erreicht. Dort treffen sie den Reichskanzler, die Königin und den Reichserzmarshall (?) und erhalten den Auftrag, nach Brig-Lo zu gehen; dafür dürfen sie das Flussschiff des Kanzlers nutzen. Am 20. Phex nimmt die Gruppe an einem Praios-Gottesdienst mit der Königin teil, danach führt die Fahrt über Omlad und Bactrinn, vorbei an novadischen Spähern und brennenden Weinbergen, am 22. Phex nach Brig-Lo.</p>
+    </div>
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="2026-06-27-session-02.md" rows="8">### 18. Phex
+- (Bild: pergament-abschrift.png — siehe Roh-Chronik)
+- [[wiki/dsa-4.1/vor-nachteile/vorteile|Verbindung]]: Mag. Mantagor [[wiki/dsa-4.1/grundregeln/sozialstatus|SOZ]] 10, Saurologe in Punin
+- Vorbereitungen für die Abfahrt mit einem Flussboot am nächsten Morgen noch vor oder bei Sonnenaufgang - erwartete Reisedauer: 1d → Erwartete Ankunft: am Abend
+- Kleiner Junge bei Unterkunft → Rosskopp (?) ([[wiki/dsa-4.1/professionen/rondra-geweihte|Rondrageweihter]]) soll zur Wachstube kommen
+- Info: Der Einbrecher wurde im Gewahrsam tot aufgefunden
+- Der Dolch, der bei ihm gefunden wurde, ist von ungewöhnlich guter, hochwertiger Qualität
+
+### 19. Phex
+- Am frühen Morgen machen wir uns mit dem Schiff auf in den Süden
+- Kurze Absprache
+- Am Abend erreichen wir Kumrath
+  - 2 Felsen, die aus dem Fluss ragen, auf denen die Festung steht
+- Nach Gang zur Festung werden wir eingelassen und nach kurzem Warten treffen wir auf den Reichskanzler (Name=Rafik), und er grüßt uns mit Namen
+- In einer halben Stunde gibt es eine Besprechung mit der Königin und dem Reichserzmarshall (?)
+- Treffen mit beiden im Heraldiksaal
+- Ansprache
+  - Königin (Rohaya): Eure königliche Hoheit / Eure allerdurchlauchteste Hoheit
+  - Reichsmarschall: Eure Excellenz
+- Wir bekommen den Auftrag, nach Brig-Lo zu gehen
+  - Dafür dürfen wir zur Reise das Flussschiff des Kanzlers nutzen
+
+### 20. Phex
+- Teilnahme am [[wiki/dsa-4.1/goetter/praios|Praios]]-Gottesdienst gemeinsam mit der Königin
+- Segen von Praios: MU, MR, Götter/Kulte, Staatskunst +1 für eine Woche
+- Ludi hatte einen Traum
+  - Unsere Zukunft beinhaltet eine unberührte Gebirgslandschaft, auf der Schnee liegt
+- Am Abend erreichen wir Omlad, wo wir die Nacht verbringen werden
+  - Omlad ist die zurückeroberte Stadt
+  - Beim Anlegen werden ~3 Kisten ausgeladen (was ist da wohl drinnen)
+
+### 21. Phex
+- Ungefähr nach 1h Fahrt [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|novadische]] Späher am Südufer gesehen
+- Wir sind weitergefahren
+- Kurz vor Winberger (?) standen auf der nördlichen Seite des Flusses Weinberge und Felder in Brand
+- Übernachtung in Bactrinn
+
+### 22. Phex
+- Am späten Nachmittag erreichen wir Brig-Lo</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="2026-06-27-session-02.md" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">—</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">### NSCs
+- **Mag. Mantagor** — Verbindung (SOZ 10), Saurologe in Punin
+- **Rosskopp** (?) — Rondrageweihter; ein kleiner Junge bei der Unterkunft richtet aus, er soll zur Wachstube kommen (ob NSC oder Gruppenmitglied, nennt die Chronik nicht)
+- **Rohaya** — Königin; Anrede „Eure königliche Hoheit“ / „Eure allerdurchlauchteste Hoheit“; Praios-Gottesdienst gemeinsam mit der Gruppe
+- **Reichsmarschall** (auch „Reichserzmarshall“ (?)) — Anrede „Eure Excellenz“; Name in der Chronik nicht genannt; Besprechung mit der Königin im Heraldiksaal
+
+### Orte
+- **Heraldiksaal** — Treffen mit der Königin und dem Reichserzmarshall (?)
+- **Omlad** — die zurückeroberte Stadt; Übernachtung am 20. Phex; beim Anlegen werden ~3 Kisten ausgeladen
+- **Winberger** (?) — kurz davor standen Weinberge und Felder am nördlichen Flussufer in Brand
+- **Bactrinn** — Übernachtung am 21. Phex</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">- Beim Anlegen in Omlad werden ~3 Kisten ausgeladen — „was ist da wohl drinnen“</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">- Segen von Praios: MU, MR, Götter/Kulte, Staatskunst +1 für eine Woche (20. Phex, Praios-Gottesdienst)</p>
+    </details>
+
+  </section>
+  <section class="card journal-session" data-session-nr="3">
+    <h3 class="journal-session-header">#3 &middot; 2026-07-18</h3>
+
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">Die Gruppe erreicht am 22. Phex Brig-Lo, wird von Gerone von Berg begrüßt und bekommt nachts von dem Kind Brigaja das Schlachtfeld gezeigt. Ludi erzählt außerdem von einer Vision eines angeketteten, hasserfüllten bärtigen Mannes unter Bergen aus Eis. Am 23. Phex steht bei der Rückkehr der Rashtullatempel in Flammen, ein Brandstifter gibt sich als Elfeneck aus und wird gestellt. Der Abend endet damit, dass beim Tsa-Hain ein Licht bei der Gruft aufleuchtet; an diesem Abend fehlen Tabea und Peter.</p>
+    </div>
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="2026-07-18-session-03.md" rows="8">### IG-Datum nicht genannt
+Es fehlen Tabea und Peter
+
+**Vision**
+**Von Ludi am Schiff erzählt**
+- Angeketteter bärtiger Mann - in den Bergen, unter Bergen aus Eis
+- Ein von Hass erfüllter angeketteter Mann in der Finsternis - angekettet in einer Kaverne, umgeben von Metall, um die arkane Macht einzuschränken
+- Ein von Hass erfüllter … (?) (Roh-Chronik: Zeile bricht hier ab)
+
+### 22. Phex
+**Brig-Lo**
+- Am späten Nachmittag erreichen wir Brig-Lo
+- Wir legen bei der Anlegestelle im Süden des Ortes an
+- Begrüßung durch die Tochter des Reichsmarschalls: Gerone von Berg (24 Jahre)
+  - Ahnin: Leonore von Berg
+- Es gibt eine Garnison auf der anderen Seite des Flusses Brigella
+  - Garnison liegt in einer anderen Baronie (Südpforte)
+  - Obristin der Garnison: Ferra Gabronde
+- Kind: Brigaja - 11 Jahre, vermutlich [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|novadisch]] - bietet uns an, das Schlachtfeld zu zeigen
+- Schlachtfeld im Norden von Brig-Lo
+  - Hier kommen am Morgen und dann am Tag (?) die Geister
+  - In der Nacht bekommen wir eine Touristenführung von Brigaja
+  - Es gibt einen Tümpel - von dem trinkt keiner
+  - In Sichtweite am Hügel ist der Tempel
+  - Tempel der 4 - Lob der 4 Götter, die die Schlacht gerettet haben: [[wiki/dsa-4.1/goetter/praios|Praios]], [[wiki/dsa-4.1/goetter/rondra|Rondra]], [[wiki/dsa-4.1/goetter/efferd|Efferd]], [[wiki/dsa-4.1/goetter/ingerimm|Ingerimm]]
+    - Wurde nach 400 Jahren von einer Praios-Geweihten geschliffen
+    - Wahrscheinlich zur Zeit der Priesterkaiser (Alle anderen Götter müssen weichen)
+  - Am Fuß des Hügels ist ein Mausoleum, das nicht kaputt ist
+    - Sie (?) ist das einzige Opfer der [[wiki/dsa-4.1/invokation/daemonen|Dämonen]], bevor die Götter eingegriffen haben
+    - Grabanlage von Leonore von Berg - Marmor, großes bronzenes Tor
+  - Prinzipiell haben wir Frühling, alles ist grün und voller Blumen - aber dazwischen sind graue Felder, wo alles tot ist.
+  - Reto, Mann von Wirtin, wurde Novadis (?) vor 4 Jahren verschleppt
+  - Muchacho erzählt, dass die Novadis ein Versteck im Wald haben.
+    - Echter Name: Alvadez, Sohn des Wirtshauses
+    - Novadis liefen am Schlachtfeld umher in der Nacht
+    - ca. 10-20
+
+**Suche nach Nachtwache**
+- Kanzai hat Nachtwachendienst am Schlachtfeld
+- Nachfrage bezüglich Novadis - beim letzten Mal, wo sie gesehen wurden, waren sie in der Nähe des [[wiki/dsa-4.1/goetter/tsa|Tsa]]-Schreins in der Nähe eines Hains (ca. 150m)
+
+**Gang aufs Schlachtfeld**
+- Bei diesem Mausoleum waren &#34;frische&#34; Fackelspuren
+- Dann noch beim Tsa-Schrein - 2 Kollegen (?) haben den Schrein umgeschmissen - und dann wieder aufgestellt
+
+### 23. Phex
+- Beobachtung der Bevölkerung
+- Dann mal Besuch auf dem Schlachtfeld
+- Bei der Rückkehr steht der [[wiki/dsa-4.1/goetter/rastullah-glaube|Rashtullatempel]] in Flammen
+  - Der Brandstifter sitzt davor auf seinem Pferd und gibt sich als Elfeneck - der Almadanische Held - aus
+  - Allerdings sitzt er auf einem Schimmel und normalerweise sitzt der Held auf einem Fuchs
+  - Und auch seine Kleidung passt von den Farben her nicht zu Almada
+
+**Thomas und Ludi suchen verfolgen (?) den Nachahmer**
+- Sie haben es geschafft und die jungen Erwachsenen in einer Hütte im Wald gefunden
+- Sie führen die Verschwörer zurück
+- Der Brandstifter haut ab
+  - Thomas verfolgt ihn auf dem Pferd
+  - Und kann ihn zurückbringen
+- Im Ort: Ludi gibt seine 4 (?) bei den Bütteln ab
+- Gegen Mitternacht kommt Thomas zurück und gibt den Brandstifter ab
+- Dann schauen wir noch mal auf das Feld - vor allem in Richtung Tsa-Hain und dann auch Tempel
+- Beim Hain *sehen* wir ein Licht bei der Gruft aufleuchten</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="2026-07-18-session-03.md" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">—</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">### NSCs
+- **Gerone von Berg** — Tochter des Reichsmarschalls, 24 Jahre; begrüßt die Gruppe in Brig-Lo; Ahnin: Leonore von Berg
+- **Leonore von Berg** — Ahnin von Gerone; Grabanlage (Mausoleum: Marmor, großes bronzenes Tor); „das einzige Opfer der Dämonen, bevor die Götter eingegriffen haben“ (Bezug des „Sie“ in der Chronik nicht eindeutig (?))
+- **Ferra Gabronde** — Obristin der Garnison auf der anderen Seite der Brigella (Baronie Südpforte)
+- **Brigaja** — Kind, 11 Jahre, vermutlich novadisch; bietet an, das Schlachtfeld zu zeigen; Touristenführung in der Nacht
+- **Reto** — Mann von Wirtin; wurde Novadis (?) vor 4 Jahren verschleppt
+- **Muchacho** — erzählt, dass die Novadis ein Versteck im Wald haben; echter Name: Alvadez, Sohn des Wirtshauses
+- **Kanzai** — hat Nachtwachendienst am Schlachtfeld
+- **Elfeneck** — der Almadanische Held (sitzt normalerweise auf einem Fuchs); der Brandstifter gibt sich als er aus
+- **Brandstifter** (Nachahmer) — gibt sich als Elfeneck aus (auf einem Schimmel, Kleidung farblich nicht zu Almada passend); haut ab, wird von Thomas zurückgebracht und abgegeben; Name in der Chronik nicht genannt
+- **Novadis** — laut Muchacho ein Versteck im Wald; liefen in der Nacht am Schlachtfeld umher; ca. 10-20
+- **Junge Erwachsene / Verschwörer** — in einer Hütte im Wald gefunden und zurückgeführt
+
+### Orte
+- **Brigella** — Fluss; auf der anderen Seite liegt die Garnison
+- **Garnison** — auf der anderen Seite der Brigella; Obristin Ferra Gabronde
+- **Südpforte** — Baronie, in der die Garnison liegt
+- **Schlachtfeld** — im Norden von Brig-Lo; hier kommen am Morgen und dann am Tag (?) die Geister; graue Felder, wo alles tot ist
+- **Tümpel** — von ihm trinkt keiner
+- **Tempel der 4** — in Sichtweite am Hügel; Lob der 4 Götter, die die Schlacht gerettet haben (Praios, Rondra, Efferd, Ingerimm); nach 400 Jahren von einer Praios-Geweihten geschliffen
+- **Mausoleum** — am Fuß des Hügels, nicht kaputt; Grabanlage von Leonore von Berg; „frische“ Fackelspuren
+- **Tsa-Schrein und Tsa-Hain** — Novadis wurden zuletzt in der Nähe gesehen (Hain ca. 150m); der Schrein wurde von 2 Kollegen (?) umgeschmissen und wieder aufgestellt
+- **Rashtullatempel** — steht bei der Rückkehr am 23. Phex in Flammen
+- **Gruft** — beim Hain; ein Licht leuchtet dort auf</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">- Der Abend endet mitten in der Szene: Beim Tsa-Hain *sehen* wir ein Licht bei der Gruft aufleuchten</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">—</p>
+    </details>
+
+  </section>
+  <section class="card journal-session" data-session-nr="4">
+    <h3 class="journal-session-header">#4 &middot; 2026-08-22</h3>
+
+    <div class="journal-section">
+      <h4>Zusammenfassung</h4>
+      <p class="journal-readonly">Die Gruppe schleicht sich heran und kämpft in einem 12-eckigen Raum mit Statuen und einem Sarkophag gegen 4 Novadis. Hinter dem Raum führt ein Schacht in eine Kaverne (Element: Luft) mit einer Leiche, in deren Brust ein Dolch steckt; der Leichnam wird beim Hinausgehen von 2 Armen unter den Boden gezogen, und die Spur führt in den Wald zu Klauenabdrücken auf einer Lichtung. Muchacho führt die Gruppe zum Novadi-Lager, dessen Bewohner sie angreifen; ein Gefangener gibt an, sie seien aus Amhallah. Die Gruppe entscheidet, weiter nach Amhallah zu gehen.</p>
+    </div>
+
+    <div class="journal-section">
+      <h4>Verlauf</h4>
+      <textarea class="journal-verlauf" data-datei="2026-08-22-session-04.md" rows="8">### IG-Datum nicht genannt
+- Wir können uns hinzuschleichen
+- Und Peter kann sich hineinschleichen - und entdeckt, dass dort [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|Novadis]] drinnen sind
+- Dank ihm können wir uns auf den Kampf vorbereiten
+- Es ist ein 12-eckiger Raum mit Statuen und einem Sarkophag in der Mitte
+- Mit 4 Novadis gekämpft
+  - Am hinteren Ende ist ein 2x2m schräger Schacht in die Erde (unnatürlich, wie hineingeschnitten)
+- Danach durch den Schacht - der mündet in einer Kaverne wie die anderen ([[wiki/dsa-4.1/magie/elemente-hexalogien|Element]]: Luft)
+- Davor liegt eine Leiche - mit Dolch in der Brust
+- Wir können den Dolch herausziehen - er ist von ähnlicher Machart wie der Dolch aus Punin
+- Als wir hinausgehen, wird der Leichnam von 2 Armen umfasst und unter den Boden gezogen
+- Wir gehen durch den Haupteingang hinaus, können die Steinplatte hochheben (?) - Ludis Hund erschnüffelt die Richtung
+- Wir können der Spur in den Wald folgen
+- Dort verliert sie sich auf einer kleinen Lichtung - wo wir Klauenabdrücke finden, als seien dort Flugwesen gelandet/gestartet
+
+**Zurück im Dorf**
+- Wir holen die Baronins Tochter (?) und klären sie über die aktuelle Lage auf
+- Derweil ist der Rest bei Muchacho und versucht, ihn zum Reden zu bringen
+- Gemeinsam mit ihr reden wir dann, sie sagt, dass er eigentlich ein gutes Herz hat
+- Er kann uns zu dem Novadi Dorf führen
+- Wir bekommen das Recht zu entscheiden, ob er sich durch seine Taten eine Begnadigung verdient
+
+**Novadi Lager**
+- Er kann uns zum Lager führen
+- Es ist ca. 2h entfernt in einem Wald
+- Peter (Salmann) kann es auskundschaften
+  - Es sind ca. 20 Personen
+  - 1 ca. 60m² Zelt
+  - Aber keine Kisten und Pferde
+  - Eher schäbig angezogen, zT betrunken
+- Unsere Idee wäre gewesen, mit ihnen zu reden
+- Sie wollten aber nicht und haben uns angegriffen
+
+**Zurück nach Brig-Lo**
+- Wir haben einen Gefangenen
+  - Sie sind aus Amhallah
+  - Mittelsmann: Besitzer des Teehauses der Koramsbestie (?)
+  - Sie sollten alle Auffälligkeiten vom Schlachtfeld berichten
+- Muchacha (?) bekommt eine &#34;Empfehlung&#34;, um als Rekrut in der Armee zu dienen
+- Entscheidung: Weiter nach Amhallah
+- Idee: auf dem Schiff zu schlafen, um regenerieren zu können</textarea>
+      <div class="journal-actions">
+        <button class="journal-save-btn" data-datei="2026-08-22-session-04.md" type="button">Speichern</button>
+        <span class="sg-error journal-save-error" style="display:none"></span>
+        <span class="journal-save-ok" style="display:none">gespeichert ✓</span>
+      </div>
+    </div>
+
+    <details class="journal-section journal-collapsed">
+      <summary>AsP/LeP-Verlauf</summary>
+      <p class="journal-readonly">—</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Neue NSCs / Orte</summary>
+      <p class="journal-readonly">### NSCs
+- **Baronins Tochter** (?) — wird von der Gruppe geholt und über die Lage aufgeklärt; spricht mit Muchacho (ob identisch mit Gerone von Berg, der Tochter des Reichsmarschalls, nennt die Chronik nicht)
+- **Gefangener** (Novadi) — Name in der Chronik nicht genannt; „Sie sind aus Amhallah“
+- **Mittelsmann** — Besitzer des Teehauses der Koramsbestie (?); Name in der Chronik nicht genannt
+
+### Orte
+- **12-eckiger Raum** — Statuen und ein Sarkophag in der Mitte; Kampf mit 4 Novadis; am hinteren Ende ein 2x2m schräger Schacht
+- **Schacht** — 2x2m, schräg in die Erde, unnatürlich, wie hineingeschnitten
+- **Kaverne** (Element: Luft) — „wie die anderen“; davor liegt eine Leiche mit Dolch in der Brust
+- **Lichtung im Wald** — die Spur verliert sich hier; Klauenabdrücke
+- **Novadi Lager** (zunächst „Novadi Dorf“ (?)) — ca. 2h entfernt in einem Wald; ca. 20 Personen, 1 ca. 60m² Zelt, keine Kisten und Pferde
+- **Amhallah** — Herkunft der Novadis laut Gefangenem; Ziel der Weiterreise
+- **Teehaus der Koramsbestie** (?) — Besitzer ist der Mittelsmann</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Offene Fäden / Cliffhanger</summary>
+      <p class="journal-readonly">- Entscheidung: Weiter nach Amhallah
+- Idee: auf dem Schiff zu schlafen, um regenerieren zu können</p>
+    </details>
+
+    <details class="journal-section journal-collapsed">
+      <summary>Loot / AP-Vergabe</summary>
+      <p class="journal-readonly">- Dolch aus der Brust der Leiche in der Kaverne — herausgezogen; von ähnlicher Machart wie der Dolch aus Punin
+- „Empfehlung“ für Muchacha (?): als Rekrut in der Armee zu dienen</p>
     </details>
 
   </section>
@@ -3307,21 +3725,2217 @@ window.DSA = {
     inventar_gewicht_unzen: 90
   },
   zauberspeicher: [{"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "1", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "2", "zauber": "\u2014 frei \u2014"}, {"asp": "\u2014", "erneuerung": "\u2014", "mods": "\u2014", "slot": "3", "zauber": "\u2014 frei \u2014"}],
-  kampagne: [{"datei": "2025-10-04-session-01.md", "datum": "2025-10-04", "inhalt": "Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne \"Zum Goldenen Anker\" trifft er auf den mysteri\u00f6sen H\u00e4ndler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik.", "nr": "1", "sektionen": {"AsP/LeP-Verlauf": "Illaen: LeP 30 \u2192 24 (R\u00e4uberkampf, Schwerthieb) \u2192 24 (Ende Session)\nIllaen: AsP 38 \u2192 32 (Odem Arcanum 2\u00d7) \u2192 32 (Ende Session)", "Loot / AP-Vergabe": "- 5 Silbertaler ausgegeben (Hinweis von Ferdok)\n- Beute: 12 Silbertaler von R\u00e4ubern, 1 Dolch (Qualit\u00e4t +1)\n- AP: 15 AP (gute Rollenspiel-Entscheidungen, Informationsbeschaffung)", "Neue NSCs / Orte": "- **Ardaniel** \u2014 Hafenmeister Havena, misstrauisch, hilfreich gegen Bezahlung\n- **Ferdok** \u2014 reisender H\u00e4ndler, Informant, Motiv unklar\n- **Kuslik Stadttor** \u2014 Wachen kennen Illaens Elfen-Abstammung, leicht feindlich", "Offene F\u00e4den / Cliffhanger": "- Wer ist der \"Borbarad-Diener\" den der R\u00e4uber erw\u00e4hnte?\n- Was befindet sich in den Ruinen s\u00fcdlich von Kuslik?\n- Ferdok verschwand nach dem Gespr\u00e4ch spurlos \u2014 war er verkleidet?", "Verlauf": "Die Gruppe trifft sich im Hafen von Havena. [[helden/illaen-baernhold/_illaen|Illaen]] spricht mit dem Hafenmeister Ardaniel, der von einem unbekannten Schiff berichtet, das vor drei Tagen ohne Ladescheine eingelaufen ist. In der Taverne \"Zum Goldenen Anker\" wartet Ferdok der H\u00e4ndler \u2014 f\u00fcr 5 Silbertaler teilt er seinen Hinweis auf die Ruinen s\u00fcdlich von Kuslik mit. Unterwegs werden die Helden von einer R\u00e4uberbande aufgehalten (Kampf, 2 R\u00e4uber fliehen, 1 gefangen). Der Gefangene nennt den Namen \"Borbarad-Diener\" bevor er schweigt. Ankunft am Stadttor Kuslik kurz vor Sonnenuntergang.", "Zusammenfassung": "Illaen bricht aus Havena auf und begibt sich auf die Suche nach dem verschollenen Artefakt. In der Taverne \"Zum Goldenen Anker\" trifft er auf den mysteri\u00f6sen H\u00e4ndler Ferdok, der ihm einen entscheidenden Hinweis verkauft. Die Session endet mit der Ankunft am Stadttor von Kuslik."}}],
+  kampagne: [{"datei": "2026-06-04-session-01.md", "datum": "2026-06-04", "inhalt": "Die Gruppe verbringt drei Tage in Punin, findet ihre Zimmer verw\u00fcstet vor und sammelt im Hesindetempel Wissen \u00fcber die Gegend um den Yaquir, Briglo und die W\u00fcste. An der Punin Akademie herrscht Aufruhr wegen einer in einer Kaverne gefundenen Leiche und eines Humusartefakts; die Enzyklopedia Dracomagica ist verschwunden, und ein Bote des Reichskanzlers bittet die Gruppe zu sich. Am 18. Phex wird beim Magister eingebrochen und die originale Abschrift gestohlen, die Gruppe erh\u00e4lt aber die \u00dcbersetzung.", "nr": "1", "sektionen": {"AsP/LeP-Verlauf": "\u2014", "Loot / AP-Vergabe": "- Rastulla Gebetskette \u2014 in den verw\u00fcsteten Zimmern gefunden (13. Phex)\n- \u00dcbersetzung der gestohlenen originalen Abschrift \u2014 erhalten (18. Phex)", "Neue NSCs / Orte": "### NSCs\n- **Richesa Bolongaro** \u2014 Draconiterin, 2 verschiedene Augenfarben; kam erst kurz vor der Gruppe zum Draconiter Orden und ist jetzt verschwunden\n- **Parinor Aldebruch** (?) \u2014 \u201eder werte\u201c; bekam bei der Nachfrage der Gruppe bei den Draconitern eine Information bzw. Prophezeiung zu Pydracors (?) Wiederkehr (3. Weltenbrand)\n- **Reichskanzler** \u2014 schickt einen Boten: die Gruppe soll zu ihm kommen, wenn sie die Informationen hat (Cumrat (?), kaiserliche Pfalz)\n- **Magister** (Punin Akademie, \u00dcbersetzung) \u2014 Name in der Chronik nicht genannt; bei seiner Wohnung wurde eingebrochen, er konnte fliehen\n- **Meisterin der Papierm\u00fchle** \u2014 Name in der Chronik nicht genannt; wurde zum Papyrus befragt\n- **Nasira** (?) \u2014 durch sie wurde erkannt, dass es ein Adlerschwinge (?) war; konnte zur\u00fcck verwandeln (Rolle in der Chronik nicht genannt)\n\n### Orte\n- **Punin** \u2014 3 Tage Aufenthalt: Vormittag Sightseeing, Nachmittag Hesindetempel\n- **Sehenswertes in Punin** \u2014 Schweigeplatz, Kaffeehaus, Rahjatempel, Weinviertel, Jarmarktsviertel, Zhaori (?), Theaterbesuch\n- **Hesindetempel** \u2014 Wissensaufbau (Punin, Yaquir, Briglo, Khom, W\u00fcste)\n- **Punin Akademie** \u2014 Aufruhr am 15. Phex (Leichenfund); B\u00fccherdurchsicht und \u00dcbersetzung\n- **Kaverne** (Fundort der Leiche) \u2014 \u00e4hnlich wie in Then (?); ca. 80m Durchmesser; Sockel abgegriffen, aber nicht abgeschliffen; Elementarzeichen, am meisten Humus\n- **Papierm\u00fchle** \u2014 Meisterin zum Papyrus befragt\n- **Yaquir** (Fluss) \u2014 D\u00f6rfer und St\u00e4dte rund um den Yaquir bis Briglo; Kartenmaterial\n- **Briglo** \u2014 Austragungsort der 2. D\u00e4monenkriege; 4 G\u00f6tter hatten sich manifestiert\n- **Khom** \u2014 Kartenmaterial s\u00fcdlich des Yaquir\n- **Mhanadi Delta** \u2014 Herkunft des Papyrus (ca. 3000 Jahre alt)\n- **Cumrat** (?) \u2014 kaiserliche Pfalz; dorthin soll die Gruppe zum Reichskanzler kommen", "Offene F\u00e4den / Cliffhanger": "- Bote des Reichskanzlers: Die Gruppe soll zu ihm kommen, wenn sie die Informationen hat (Cumrat (?), kaiserliche Pfalz)", "Verlauf": "### 13. Phex (Start)\n- 3 Tage in Punin, Vormittag Sightseeing, Nachmittag im [[wiki/dsa-4.1/goetter/hesinde|Hesinde]]-Tempel\n- Am Abend des 3. Tages, als wir zur\u00fcckkamen, haben wir unsere Zimmer verw\u00fcstet vorgefunden\n  - Anscheinend wurden sie durchsucht\n  - Wir haben eine [[wiki/dsa-4.1/goetter/rastullah-glaube|Rastulla]] Gebetskette gefunden\n\n**Sightseeing in Punin**\n- Schweigeplatz, Kaffeehaus\n- [[wiki/dsa-4.1/goetter/rahja|Rahja]]tempel und Weinviertel\n- Jarmarktsviertel, Zhaori (?)\n- Theaterbesuch\n\n**Wissensaufbau im Hesindetempel**\n- Grob \u00fcber aktuelle Gegebenheiten rund um Punin\n  - D\u00f6rfer und St\u00e4dte rund um den Yaquir Fluss bis Briglo\n- Info zu Briglo\n  - Austragungsort der 2. D\u00e4monenkriege\n  - 4 G\u00f6tter hatten sich manifestiert\n- Kartenmaterial rund um den Yaquir\n- Kartenmaterial s\u00fcdlich davon - Khom\n- Infos zu [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|W\u00fcstenkultur]]\n  - Auch zu Rastullaglaube\n- Infos generell zu [[wiki/dsa-4.1/geographie/terraintypen#W\u00fcste (S. 36\u201338)|W\u00fcste]]\n  - Flora, Fauna - vor allem Gebirgskette am Rande der W\u00fcste\n  - z. B. Khormasbestien, Skorpione\n  - z. B. Stiefel am Morgen ausleeren (Skorpion)\n  - Faustformel zu Skorpionen - je kleiner desto gef\u00e4hrlicher\n  - Kartenmaterial, Oasen\n    - Distanzen zwischen den Oasen\n\n**Punin Akademie am 15. Phex**\n- Gro\u00dfer Aufruhr, da eine Leiche gefunden wurde\n- Sie war in einer Kaverne \u00e4hnlich wie in Then (?)\n- ca. 80m Durchmesser\n  - Sockel ist abgegriffen, aber nicht abgeschliffen\n  - Es sind [[wiki/dsa-4.1/magie/elemente-hexalogien|Elementarzeichen]], aber am meisten Humus\n  - Das kommt daher, dass das [[wiki/dsa-4.1/magie/artefakte|Artefakt]] ein Humusartefakt war - ein in die L\u00e4nge gezogenes Ei\n\n**Papyrus**\n- Wir sind noch in die Papierm\u00fchle gegangen und haben die Meisterin gefragt\n- Der Papyrus ist aus dem Mhanadi Delta, ca. 3000 Jahre alt\n\n### 17. Phex\n- Wieder in der Akademie\n- Plan: Durchsicht der B\u00fccher\n- Allerdings: Enzyklopedia Dracomagica ist verschwunden\n  - Hatte bis vor 2 Tagen eine [[wiki/dsa-4.1/goetter/hesinde#Orden und Laienb\u00fcnde|Draconiterin]] (?) Name: Richesa Bolongaro (2 verschiedene Augenfarben)\n    - Wir haben beim Draconiter Orden nachgefragt, sie ist erst kurz vor uns gekommen und jetzt verschwunden\n  - Inhalt:\n    - Alles zu Drachen\n    - Genaue Aufzeichnungen zum Artefakt\n- Wir bekommen einige B\u00fccher zur Durchsicht\n  - Extrem potentes Artefakt\n  - Vermutung: Beinhaltet extrem starken Zorn der Elemente, wird eventuell \"[[wiki/dsa-4.1/goetter/sumu-glaube|Sumus]] Kraft\" \u2192 dem 7. Element zugeordnet\n- Es kam ein Bote zu uns vom Reichskanzler - wir sollen zu ihm kommen, wenn wir die Informationen haben \u2192 Cumrat (?), kaiserliche Pfalz\n- Als wir bei den Draconitern nachgefragt haben, bekam der werte Parinor Aldebruch (?) eine Information oder besser gesagt eine Prophezeiung bzw. Pydracors (?) Wiederkehr (3. Weltenbrand)\n\n### 18. Phex (Basiliskentag)\n- Als wir in der Fr\u00fch zur Akademie gingen, um uns die \u00dcbersetzung abzuholen, war der Magister nicht da\n- Bei seiner Wohnung wurde eingebrochen, anscheinend von Menschen in Kaftanen\n- Er konnte sich soweit wehren, dass er im Nachtmantel mit Stab und einem Zettel? in der Hand fliehen konnte\n- Mit dem Hund konnten wir den Geruch bis in eine Seitengasse folgen, dort wurde anscheinend viel Magie gewirkt\n- Dank Nasira (?) haben wir erfahren, dass es ein Adlerschwinge (?) war\n  - Er (?) hat sich in eine Speikobra verwandelt\n  - Wir haben ihn dann gesucht und konnten ihn im Park finden und vor Kindern retten\n- Nasira konnte sie (?) dann zur\u00fcck verwandeln\n- Die original Abschrift wurde gestohlen, allerdings nicht die \u00dcbersetzung - die haben wir erhalten", "Zusammenfassung": "Die Gruppe verbringt drei Tage in Punin, findet ihre Zimmer verw\u00fcstet vor und sammelt im Hesindetempel Wissen \u00fcber die Gegend um den Yaquir, Briglo und die W\u00fcste. An der Punin Akademie herrscht Aufruhr wegen einer in einer Kaverne gefundenen Leiche und eines Humusartefakts; die Enzyklopedia Dracomagica ist verschwunden, und ein Bote des Reichskanzlers bittet die Gruppe zu sich. Am 18. Phex wird beim Magister eingebrochen und die originale Abschrift gestohlen, die Gruppe erh\u00e4lt aber die \u00dcbersetzung."}}, {"datei": "2026-06-27-session-02.md", "datum": "2026-06-27", "inhalt": "Die Gruppe bereitet am 18. Phex die Abfahrt mit einem Flussboot vor und f\u00e4hrt am 19. Phex nach S\u00fcden, wo sie am Abend Kumrath erreicht. Dort treffen sie den Reichskanzler, die K\u00f6nigin und den Reichserzmarshall (?) und erhalten den Auftrag, nach Brig-Lo zu gehen; daf\u00fcr d\u00fcrfen sie das Flussschiff des Kanzlers nutzen. Am 20. Phex nimmt die Gruppe an einem Praios-Gottesdienst mit der K\u00f6nigin teil, danach f\u00fchrt die Fahrt \u00fcber Omlad und Bactrinn, vorbei an novadischen Sp\u00e4hern und brennenden Weinbergen, am 22. Phex nach Brig-Lo.", "nr": "2", "sektionen": {"AsP/LeP-Verlauf": "\u2014", "Loot / AP-Vergabe": "- Segen von Praios: MU, MR, G\u00f6tter/Kulte, Staatskunst +1 f\u00fcr eine Woche (20. Phex, Praios-Gottesdienst)", "Neue NSCs / Orte": "### NSCs\n- **Mag. Mantagor** \u2014 Verbindung (SOZ 10), Saurologe in Punin\n- **Rosskopp** (?) \u2014 Rondrageweihter; ein kleiner Junge bei der Unterkunft richtet aus, er soll zur Wachstube kommen (ob NSC oder Gruppenmitglied, nennt die Chronik nicht)\n- **Rohaya** \u2014 K\u00f6nigin; Anrede \u201eEure k\u00f6nigliche Hoheit\u201c / \u201eEure allerdurchlauchteste Hoheit\u201c; Praios-Gottesdienst gemeinsam mit der Gruppe\n- **Reichsmarschall** (auch \u201eReichserzmarshall\u201c (?)) \u2014 Anrede \u201eEure Excellenz\u201c; Name in der Chronik nicht genannt; Besprechung mit der K\u00f6nigin im Heraldiksaal\n\n### Orte\n- **Heraldiksaal** \u2014 Treffen mit der K\u00f6nigin und dem Reichserzmarshall (?)\n- **Omlad** \u2014 die zur\u00fcckeroberte Stadt; \u00dcbernachtung am 20. Phex; beim Anlegen werden ~3 Kisten ausgeladen\n- **Winberger** (?) \u2014 kurz davor standen Weinberge und Felder am n\u00f6rdlichen Flussufer in Brand\n- **Bactrinn** \u2014 \u00dcbernachtung am 21. Phex", "Offene F\u00e4den / Cliffhanger": "- Beim Anlegen in Omlad werden ~3 Kisten ausgeladen \u2014 \u201ewas ist da wohl drinnen\u201c", "Verlauf": "### 18. Phex\n- (Bild: pergament-abschrift.png \u2014 siehe Roh-Chronik)\n- [[wiki/dsa-4.1/vor-nachteile/vorteile|Verbindung]]: Mag. Mantagor [[wiki/dsa-4.1/grundregeln/sozialstatus|SOZ]] 10, Saurologe in Punin\n- Vorbereitungen f\u00fcr die Abfahrt mit einem Flussboot am n\u00e4chsten Morgen noch vor oder bei Sonnenaufgang - erwartete Reisedauer: 1d \u2192 Erwartete Ankunft: am Abend\n- Kleiner Junge bei Unterkunft \u2192 Rosskopp (?) ([[wiki/dsa-4.1/professionen/rondra-geweihte|Rondrageweihter]]) soll zur Wachstube kommen\n- Info: Der Einbrecher wurde im Gewahrsam tot aufgefunden\n- Der Dolch, der bei ihm gefunden wurde, ist von ungew\u00f6hnlich guter, hochwertiger Qualit\u00e4t\n\n### 19. Phex\n- Am fr\u00fchen Morgen machen wir uns mit dem Schiff auf in den S\u00fcden\n- Kurze Absprache\n- Am Abend erreichen wir Kumrath\n  - 2 Felsen, die aus dem Fluss ragen, auf denen die Festung steht\n- Nach Gang zur Festung werden wir eingelassen und nach kurzem Warten treffen wir auf den Reichskanzler (Name=Rafik), und er gr\u00fc\u00dft uns mit Namen\n- In einer halben Stunde gibt es eine Besprechung mit der K\u00f6nigin und dem Reichserzmarshall (?)\n- Treffen mit beiden im Heraldiksaal\n- Ansprache\n  - K\u00f6nigin (Rohaya): Eure k\u00f6nigliche Hoheit / Eure allerdurchlauchteste Hoheit\n  - Reichsmarschall: Eure Excellenz\n- Wir bekommen den Auftrag, nach Brig-Lo zu gehen\n  - Daf\u00fcr d\u00fcrfen wir zur Reise das Flussschiff des Kanzlers nutzen\n\n### 20. Phex\n- Teilnahme am [[wiki/dsa-4.1/goetter/praios|Praios]]-Gottesdienst gemeinsam mit der K\u00f6nigin\n- Segen von Praios: MU, MR, G\u00f6tter/Kulte, Staatskunst +1 f\u00fcr eine Woche\n- Ludi hatte einen Traum\n  - Unsere Zukunft beinhaltet eine unber\u00fchrte Gebirgslandschaft, auf der Schnee liegt\n- Am Abend erreichen wir Omlad, wo wir die Nacht verbringen werden\n  - Omlad ist die zur\u00fcckeroberte Stadt\n  - Beim Anlegen werden ~3 Kisten ausgeladen (was ist da wohl drinnen)\n\n### 21. Phex\n- Ungef\u00e4hr nach 1h Fahrt [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|novadische]] Sp\u00e4her am S\u00fcdufer gesehen\n- Wir sind weitergefahren\n- Kurz vor Winberger (?) standen auf der n\u00f6rdlichen Seite des Flusses Weinberge und Felder in Brand\n- \u00dcbernachtung in Bactrinn\n\n### 22. Phex\n- Am sp\u00e4ten Nachmittag erreichen wir Brig-Lo", "Zusammenfassung": "Die Gruppe bereitet am 18. Phex die Abfahrt mit einem Flussboot vor und f\u00e4hrt am 19. Phex nach S\u00fcden, wo sie am Abend Kumrath erreicht. Dort treffen sie den Reichskanzler, die K\u00f6nigin und den Reichserzmarshall (?) und erhalten den Auftrag, nach Brig-Lo zu gehen; daf\u00fcr d\u00fcrfen sie das Flussschiff des Kanzlers nutzen. Am 20. Phex nimmt die Gruppe an einem Praios-Gottesdienst mit der K\u00f6nigin teil, danach f\u00fchrt die Fahrt \u00fcber Omlad und Bactrinn, vorbei an novadischen Sp\u00e4hern und brennenden Weinbergen, am 22. Phex nach Brig-Lo."}}, {"datei": "2026-07-18-session-03.md", "datum": "2026-07-18", "inhalt": "Die Gruppe erreicht am 22. Phex Brig-Lo, wird von Gerone von Berg begr\u00fc\u00dft und bekommt nachts von dem Kind Brigaja das Schlachtfeld gezeigt. Ludi erz\u00e4hlt au\u00dferdem von einer Vision eines angeketteten, hasserf\u00fcllten b\u00e4rtigen Mannes unter Bergen aus Eis. Am 23. Phex steht bei der R\u00fcckkehr der Rashtullatempel in Flammen, ein Brandstifter gibt sich als Elfeneck aus und wird gestellt. Der Abend endet damit, dass beim Tsa-Hain ein Licht bei der Gruft aufleuchtet; an diesem Abend fehlen Tabea und Peter.", "nr": "3", "sektionen": {"AsP/LeP-Verlauf": "\u2014", "Loot / AP-Vergabe": "\u2014", "Neue NSCs / Orte": "### NSCs\n- **Gerone von Berg** \u2014 Tochter des Reichsmarschalls, 24 Jahre; begr\u00fc\u00dft die Gruppe in Brig-Lo; Ahnin: Leonore von Berg\n- **Leonore von Berg** \u2014 Ahnin von Gerone; Grabanlage (Mausoleum: Marmor, gro\u00dfes bronzenes Tor); \u201edas einzige Opfer der D\u00e4monen, bevor die G\u00f6tter eingegriffen haben\u201c (Bezug des \u201eSie\u201c in der Chronik nicht eindeutig (?))\n- **Ferra Gabronde** \u2014 Obristin der Garnison auf der anderen Seite der Brigella (Baronie S\u00fcdpforte)\n- **Brigaja** \u2014 Kind, 11 Jahre, vermutlich novadisch; bietet an, das Schlachtfeld zu zeigen; Touristenf\u00fchrung in der Nacht\n- **Reto** \u2014 Mann von Wirtin; wurde Novadis (?) vor 4 Jahren verschleppt\n- **Muchacho** \u2014 erz\u00e4hlt, dass die Novadis ein Versteck im Wald haben; echter Name: Alvadez, Sohn des Wirtshauses\n- **Kanzai** \u2014 hat Nachtwachendienst am Schlachtfeld\n- **Elfeneck** \u2014 der Almadanische Held (sitzt normalerweise auf einem Fuchs); der Brandstifter gibt sich als er aus\n- **Brandstifter** (Nachahmer) \u2014 gibt sich als Elfeneck aus (auf einem Schimmel, Kleidung farblich nicht zu Almada passend); haut ab, wird von Thomas zur\u00fcckgebracht und abgegeben; Name in der Chronik nicht genannt\n- **Novadis** \u2014 laut Muchacho ein Versteck im Wald; liefen in der Nacht am Schlachtfeld umher; ca. 10-20\n- **Junge Erwachsene / Verschw\u00f6rer** \u2014 in einer H\u00fctte im Wald gefunden und zur\u00fcckgef\u00fchrt\n\n### Orte\n- **Brigella** \u2014 Fluss; auf der anderen Seite liegt die Garnison\n- **Garnison** \u2014 auf der anderen Seite der Brigella; Obristin Ferra Gabronde\n- **S\u00fcdpforte** \u2014 Baronie, in der die Garnison liegt\n- **Schlachtfeld** \u2014 im Norden von Brig-Lo; hier kommen am Morgen und dann am Tag (?) die Geister; graue Felder, wo alles tot ist\n- **T\u00fcmpel** \u2014 von ihm trinkt keiner\n- **Tempel der 4** \u2014 in Sichtweite am H\u00fcgel; Lob der 4 G\u00f6tter, die die Schlacht gerettet haben (Praios, Rondra, Efferd, Ingerimm); nach 400 Jahren von einer Praios-Geweihten geschliffen\n- **Mausoleum** \u2014 am Fu\u00df des H\u00fcgels, nicht kaputt; Grabanlage von Leonore von Berg; \u201efrische\u201c Fackelspuren\n- **Tsa-Schrein und Tsa-Hain** \u2014 Novadis wurden zuletzt in der N\u00e4he gesehen (Hain ca. 150m); der Schrein wurde von 2 Kollegen (?) umgeschmissen und wieder aufgestellt\n- **Rashtullatempel** \u2014 steht bei der R\u00fcckkehr am 23. Phex in Flammen\n- **Gruft** \u2014 beim Hain; ein Licht leuchtet dort auf", "Offene F\u00e4den / Cliffhanger": "- Der Abend endet mitten in der Szene: Beim Tsa-Hain *sehen* wir ein Licht bei der Gruft aufleuchten", "Verlauf": "### IG-Datum nicht genannt\nEs fehlen Tabea und Peter\n\n**Vision**\n**Von Ludi am Schiff erz\u00e4hlt**\n- Angeketteter b\u00e4rtiger Mann - in den Bergen, unter Bergen aus Eis\n- Ein von Hass erf\u00fcllter angeketteter Mann in der Finsternis - angekettet in einer Kaverne, umgeben von Metall, um die arkane Macht einzuschr\u00e4nken\n- Ein von Hass erf\u00fcllter \u2026 (?) (Roh-Chronik: Zeile bricht hier ab)\n\n### 22. Phex\n**Brig-Lo**\n- Am sp\u00e4ten Nachmittag erreichen wir Brig-Lo\n- Wir legen bei der Anlegestelle im S\u00fcden des Ortes an\n- Begr\u00fc\u00dfung durch die Tochter des Reichsmarschalls: Gerone von Berg (24 Jahre)\n  - Ahnin: Leonore von Berg\n- Es gibt eine Garnison auf der anderen Seite des Flusses Brigella\n  - Garnison liegt in einer anderen Baronie (S\u00fcdpforte)\n  - Obristin der Garnison: Ferra Gabronde\n- Kind: Brigaja - 11 Jahre, vermutlich [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|novadisch]] - bietet uns an, das Schlachtfeld zu zeigen\n- Schlachtfeld im Norden von Brig-Lo\n  - Hier kommen am Morgen und dann am Tag (?) die Geister\n  - In der Nacht bekommen wir eine Touristenf\u00fchrung von Brigaja\n  - Es gibt einen T\u00fcmpel - von dem trinkt keiner\n  - In Sichtweite am H\u00fcgel ist der Tempel\n  - Tempel der 4 - Lob der 4 G\u00f6tter, die die Schlacht gerettet haben: [[wiki/dsa-4.1/goetter/praios|Praios]], [[wiki/dsa-4.1/goetter/rondra|Rondra]], [[wiki/dsa-4.1/goetter/efferd|Efferd]], [[wiki/dsa-4.1/goetter/ingerimm|Ingerimm]]\n    - Wurde nach 400 Jahren von einer Praios-Geweihten geschliffen\n    - Wahrscheinlich zur Zeit der Priesterkaiser (Alle anderen G\u00f6tter m\u00fcssen weichen)\n  - Am Fu\u00df des H\u00fcgels ist ein Mausoleum, das nicht kaputt ist\n    - Sie (?) ist das einzige Opfer der [[wiki/dsa-4.1/invokation/daemonen|D\u00e4monen]], bevor die G\u00f6tter eingegriffen haben\n    - Grabanlage von Leonore von Berg - Marmor, gro\u00dfes bronzenes Tor\n  - Prinzipiell haben wir Fr\u00fchling, alles ist gr\u00fcn und voller Blumen - aber dazwischen sind graue Felder, wo alles tot ist.\n  - Reto, Mann von Wirtin, wurde Novadis (?) vor 4 Jahren verschleppt\n  - Muchacho erz\u00e4hlt, dass die Novadis ein Versteck im Wald haben.\n    - Echter Name: Alvadez, Sohn des Wirtshauses\n    - Novadis liefen am Schlachtfeld umher in der Nacht\n    - ca. 10-20\n\n**Suche nach Nachtwache**\n- Kanzai hat Nachtwachendienst am Schlachtfeld\n- Nachfrage bez\u00fcglich Novadis - beim letzten Mal, wo sie gesehen wurden, waren sie in der N\u00e4he des [[wiki/dsa-4.1/goetter/tsa|Tsa]]-Schreins in der N\u00e4he eines Hains (ca. 150m)\n\n**Gang aufs Schlachtfeld**\n- Bei diesem Mausoleum waren \"frische\" Fackelspuren\n- Dann noch beim Tsa-Schrein - 2 Kollegen (?) haben den Schrein umgeschmissen - und dann wieder aufgestellt\n\n### 23. Phex\n- Beobachtung der Bev\u00f6lkerung\n- Dann mal Besuch auf dem Schlachtfeld\n- Bei der R\u00fcckkehr steht der [[wiki/dsa-4.1/goetter/rastullah-glaube|Rashtullatempel]] in Flammen\n  - Der Brandstifter sitzt davor auf seinem Pferd und gibt sich als Elfeneck - der Almadanische Held - aus\n  - Allerdings sitzt er auf einem Schimmel und normalerweise sitzt der Held auf einem Fuchs\n  - Und auch seine Kleidung passt von den Farben her nicht zu Almada\n\n**Thomas und Ludi suchen verfolgen (?) den Nachahmer**\n- Sie haben es geschafft und die jungen Erwachsenen in einer H\u00fctte im Wald gefunden\n- Sie f\u00fchren die Verschw\u00f6rer zur\u00fcck\n- Der Brandstifter haut ab\n  - Thomas verfolgt ihn auf dem Pferd\n  - Und kann ihn zur\u00fcckbringen\n- Im Ort: Ludi gibt seine 4 (?) bei den B\u00fctteln ab\n- Gegen Mitternacht kommt Thomas zur\u00fcck und gibt den Brandstifter ab\n- Dann schauen wir noch mal auf das Feld - vor allem in Richtung Tsa-Hain und dann auch Tempel\n- Beim Hain *sehen* wir ein Licht bei der Gruft aufleuchten", "Zusammenfassung": "Die Gruppe erreicht am 22. Phex Brig-Lo, wird von Gerone von Berg begr\u00fc\u00dft und bekommt nachts von dem Kind Brigaja das Schlachtfeld gezeigt. Ludi erz\u00e4hlt au\u00dferdem von einer Vision eines angeketteten, hasserf\u00fcllten b\u00e4rtigen Mannes unter Bergen aus Eis. Am 23. Phex steht bei der R\u00fcckkehr der Rashtullatempel in Flammen, ein Brandstifter gibt sich als Elfeneck aus und wird gestellt. Der Abend endet damit, dass beim Tsa-Hain ein Licht bei der Gruft aufleuchtet; an diesem Abend fehlen Tabea und Peter."}}, {"datei": "2026-08-22-session-04.md", "datum": "2026-08-22", "inhalt": "Die Gruppe schleicht sich heran und k\u00e4mpft in einem 12-eckigen Raum mit Statuen und einem Sarkophag gegen 4 Novadis. Hinter dem Raum f\u00fchrt ein Schacht in eine Kaverne (Element: Luft) mit einer Leiche, in deren Brust ein Dolch steckt; der Leichnam wird beim Hinausgehen von 2 Armen unter den Boden gezogen, und die Spur f\u00fchrt in den Wald zu Klauenabdr\u00fccken auf einer Lichtung. Muchacho f\u00fchrt die Gruppe zum Novadi-Lager, dessen Bewohner sie angreifen; ein Gefangener gibt an, sie seien aus Amhallah. Die Gruppe entscheidet, weiter nach Amhallah zu gehen.", "nr": "4", "sektionen": {"AsP/LeP-Verlauf": "\u2014", "Loot / AP-Vergabe": "- Dolch aus der Brust der Leiche in der Kaverne \u2014 herausgezogen; von \u00e4hnlicher Machart wie der Dolch aus Punin\n- \u201eEmpfehlung\u201c f\u00fcr Muchacha (?): als Rekrut in der Armee zu dienen", "Neue NSCs / Orte": "### NSCs\n- **Baronins Tochter** (?) \u2014 wird von der Gruppe geholt und \u00fcber die Lage aufgekl\u00e4rt; spricht mit Muchacho (ob identisch mit Gerone von Berg, der Tochter des Reichsmarschalls, nennt die Chronik nicht)\n- **Gefangener** (Novadi) \u2014 Name in der Chronik nicht genannt; \u201eSie sind aus Amhallah\u201c\n- **Mittelsmann** \u2014 Besitzer des Teehauses der Koramsbestie (?); Name in der Chronik nicht genannt\n\n### Orte\n- **12-eckiger Raum** \u2014 Statuen und ein Sarkophag in der Mitte; Kampf mit 4 Novadis; am hinteren Ende ein 2x2m schr\u00e4ger Schacht\n- **Schacht** \u2014 2x2m, schr\u00e4g in die Erde, unnat\u00fcrlich, wie hineingeschnitten\n- **Kaverne** (Element: Luft) \u2014 \u201ewie die anderen\u201c; davor liegt eine Leiche mit Dolch in der Brust\n- **Lichtung im Wald** \u2014 die Spur verliert sich hier; Klauenabdr\u00fccke\n- **Novadi Lager** (zun\u00e4chst \u201eNovadi Dorf\u201c (?)) \u2014 ca. 2h entfernt in einem Wald; ca. 20 Personen, 1 ca. 60m\u00b2 Zelt, keine Kisten und Pferde\n- **Amhallah** \u2014 Herkunft der Novadis laut Gefangenem; Ziel der Weiterreise\n- **Teehaus der Koramsbestie** (?) \u2014 Besitzer ist der Mittelsmann", "Offene F\u00e4den / Cliffhanger": "- Entscheidung: Weiter nach Amhallah\n- Idee: auf dem Schiff zu schlafen, um regenerieren zu k\u00f6nnen", "Verlauf": "### IG-Datum nicht genannt\n- Wir k\u00f6nnen uns hinzuschleichen\n- Und Peter kann sich hineinschleichen - und entdeckt, dass dort [[wiki/dsa-4.1/kulturen/tulamidisch-kulturen|Novadis]] drinnen sind\n- Dank ihm k\u00f6nnen wir uns auf den Kampf vorbereiten\n- Es ist ein 12-eckiger Raum mit Statuen und einem Sarkophag in der Mitte\n- Mit 4 Novadis gek\u00e4mpft\n  - Am hinteren Ende ist ein 2x2m schr\u00e4ger Schacht in die Erde (unnat\u00fcrlich, wie hineingeschnitten)\n- Danach durch den Schacht - der m\u00fcndet in einer Kaverne wie die anderen ([[wiki/dsa-4.1/magie/elemente-hexalogien|Element]]: Luft)\n- Davor liegt eine Leiche - mit Dolch in der Brust\n- Wir k\u00f6nnen den Dolch herausziehen - er ist von \u00e4hnlicher Machart wie der Dolch aus Punin\n- Als wir hinausgehen, wird der Leichnam von 2 Armen umfasst und unter den Boden gezogen\n- Wir gehen durch den Haupteingang hinaus, k\u00f6nnen die Steinplatte hochheben (?) - Ludis Hund erschn\u00fcffelt die Richtung\n- Wir k\u00f6nnen der Spur in den Wald folgen\n- Dort verliert sie sich auf einer kleinen Lichtung - wo wir Klauenabdr\u00fccke finden, als seien dort Flugwesen gelandet/gestartet\n\n**Zur\u00fcck im Dorf**\n- Wir holen die Baronins Tochter (?) und kl\u00e4ren sie \u00fcber die aktuelle Lage auf\n- Derweil ist der Rest bei Muchacho und versucht, ihn zum Reden zu bringen\n- Gemeinsam mit ihr reden wir dann, sie sagt, dass er eigentlich ein gutes Herz hat\n- Er kann uns zu dem Novadi Dorf f\u00fchren\n- Wir bekommen das Recht zu entscheiden, ob er sich durch seine Taten eine Begnadigung verdient\n\n**Novadi Lager**\n- Er kann uns zum Lager f\u00fchren\n- Es ist ca. 2h entfernt in einem Wald\n- Peter (Salmann) kann es auskundschaften\n  - Es sind ca. 20 Personen\n  - 1 ca. 60m\u00b2 Zelt\n  - Aber keine Kisten und Pferde\n  - Eher sch\u00e4big angezogen, zT betrunken\n- Unsere Idee w\u00e4re gewesen, mit ihnen zu reden\n- Sie wollten aber nicht und haben uns angegriffen\n\n**Zur\u00fcck nach Brig-Lo**\n- Wir haben einen Gefangenen\n  - Sie sind aus Amhallah\n  - Mittelsmann: Besitzer des Teehauses der Koramsbestie (?)\n  - Sie sollten alle Auff\u00e4lligkeiten vom Schlachtfeld berichten\n- Muchacha (?) bekommt eine \"Empfehlung\", um als Rekrut in der Armee zu dienen\n- Entscheidung: Weiter nach Amhallah\n- Idee: auf dem Schiff zu schlafen, um regenerieren zu k\u00f6nnen", "Zusammenfassung": "Die Gruppe schleicht sich heran und k\u00e4mpft in einem 12-eckigen Raum mit Statuen und einem Sarkophag gegen 4 Novadis. Hinter dem Raum f\u00fchrt ein Schacht in eine Kaverne (Element: Luft) mit einer Leiche, in deren Brust ein Dolch steckt; der Leichnam wird beim Hinausgehen von 2 Armen unter den Boden gezogen, und die Spur f\u00fchrt in den Wald zu Klauenabdr\u00fccken auf einer Lichtung. Muchacho f\u00fchrt die Gruppe zum Novadi-Lager, dessen Bewohner sie angreifen; ein Gefangener gibt an, sie seien aus Amhallah. Die Gruppe entscheidet, weiter nach Amhallah zu gehen."}}],
   kampagne_slug: "drachenchronik"
 };
 </script>
 <!-- util.js must remain first — app.js + commit.js depend on window.dsaShowIndicator -->
-<script src="/static/util.js"></script>
-<script src="/static/app.js"></script>
-<script src="/static/session.js"></script>
-<script src="/static/dice.js"></script>
-<script src="/static/tabs.js"></script>
-<script src="/static/steigern.js"></script>
-<script src="/static/inventar.js"></script>
-<script src="/static/zauberspeicher.js"></script>
-<script src="/static/journal.js"></script>
-<script src="/static/chronik.js"></script>
-<script src="/static/commit.js"></script>
+<script>/* util.js */
+/**
+ * util.js — Shared UI utilities for the DSA dashboard.
+ * Must be loaded before app.js and commit.js.
+ */
+(function () {
+  'use strict';
+  var indicatorTimer = null;
+  window.dsaShowIndicator = function (text, isError) {
+    var indicator = document.getElementById('save-indicator');
+    if (!indicator) return;
+    indicator.textContent = text;
+    indicator.style.background = isError ? 'rgba(180,40,40,0.85)' : 'rgba(0,0,0,0.75)';
+    indicator.classList.add('visible');
+    clearTimeout(indicatorTimer);
+    indicatorTimer = setTimeout(function () {
+      indicator.classList.remove('visible');
+    }, 2500);
+  };
+}());
+
+</script>
+<script>/* app.js */
+/**
+ * app.js — Interactive dashboard: debounced PATCH to Flask server.
+ * Runs when served via server.py (http://localhost:5500).
+ * Degrades gracefully when opened as file:// (no interactive behaviour).
+ */
+
+const IS_SERVED = location.protocol === 'http:' || location.protocol === 'https:';
+if (!IS_SERVED) {
+  console.info('[dsa-dashboard] static mode — interactive features disabled');
+} else {
+  initDashboard();
+}
+
+function initDashboard() {
+  const DEBOUNCE_MS = 1600;
+  const POLL_INTERVAL_MS = 8000;
+
+  const showIndicator = window.dsaShowIndicator;
+
+  async function sendPatch(locator) {
+    showIndicator('speichern…', false);
+    try {
+      const resp = await fetch(`/api/held/${locator.slug}/value`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(locator),
+      });
+      const data = await resp.json();
+      if (resp.status === 409) {
+        showIndicator('Konflikt — Seite neu laden', true);
+        if (confirm('Die Quelldatei wurde extern geändert. Seite neu laden?')) {
+          location.reload();
+        }
+        return false;
+      }
+      if (!resp.ok || !data.ok) {
+        showIndicator('Fehler: ' + (data.error || resp.status), true);
+        return false;
+      }
+      showIndicator('gespeichert ✓', false);
+      return true;
+    } catch (err) {
+      showIndicator('Netzwerkfehler', true);
+      return false;
+    }
+  }
+
+  const debounceTimers = new WeakMap();
+
+  function schedulePatch(el, locator, value) {
+    clearTimeout(debounceTimers.get(el));
+    debounceTimers.set(el, setTimeout(() => {
+      sendPatch({ ...locator, value: String(value) });
+    }, DEBOUNCE_MS));
+  }
+
+  // Vital steppers
+  document.querySelectorAll('.vital-stepper').forEach(stepper => {
+    const rawLocator = JSON.parse(stepper.dataset.locator);
+    const max = parseInt(stepper.dataset.max, 10);
+    const barId = stepper.dataset.barId;
+    const input = stepper.querySelector('.vital-input');
+    const minusBtn = stepper.querySelector('.vital-btn--minus');
+    const plusBtn = stepper.querySelector('.vital-btn--plus');
+
+    if (!input) return;
+
+    function clamp(v) { return Math.max(0, Math.min(max, v)); }
+
+    function setValue(v, shouldPatch) {
+      const clamped = clamp(v);
+      input.value = clamped;
+      const bar = barId ? document.getElementById(barId) : null;
+      if (bar) bar.style.width = Math.round(clamped / max * 100) + '%';
+      if (shouldPatch) schedulePatch(stepper, rawLocator, clamped);
+    }
+
+    minusBtn?.addEventListener('click', () => setValue(parseInt(input.value, 10) - 1, true));
+    plusBtn?.addEventListener('click', () => setValue(parseInt(input.value, 10) + 1, true));
+    input.addEventListener('change', () => setValue(parseInt(input.value, 10) || 0, true));
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') setValue(parseInt(input.value, 10) || 0, true);
+    });
+  });
+
+  // Flush pending patches on page unload
+  window.addEventListener('beforeunload', () => {
+    document.querySelectorAll('.vital-stepper').forEach(el => {
+      const timer = debounceTimers.get(el);
+      if (timer) {
+        clearTimeout(timer);
+        const locator = JSON.parse(el.dataset.locator);
+        const val = el.querySelector('.vital-input')?.value;
+        if (val != null) {
+          navigator.sendBeacon(
+            `/api/held/${locator.slug}/value`,
+            JSON.stringify({ ...locator, value: val })
+          );
+        }
+      }
+    });
+  });
+
+  // Poll for external file changes (e.g. Obsidian editing while dashboard is open)
+  let lastMtimes = {};
+  async function pollMtimes() {
+    const stpr = document.querySelector('.vital-stepper');
+    if (!stpr) return;
+    const slug = JSON.parse(stpr.dataset.locator).slug || 'illaen-baernhold';
+    try {
+      const resp = await fetch(`/api/held/${slug}/mtime`);
+      const mtimes = await resp.json();
+      if (Object.keys(lastMtimes).length === 0) {
+        lastMtimes = mtimes;
+        return;
+      }
+      const changed = Object.entries(mtimes).some(([k, v]) => lastMtimes[k] && v > lastMtimes[k]);
+      if (changed) {
+        lastMtimes = mtimes;
+        showIndicator('Quelldatei geändert — neu laden empfohlen', false);
+      }
+    } catch (_) {}
+  }
+  setInterval(pollMtimes, POLL_INTERVAL_MS);
+}
+
+</script>
+<script>/* session.js */
+/**
+ * session.js — Tier-B transient state (Zustände, temp mods) in localStorage.
+ * Key: dsa:<slug>:session  →  { zustaende: [...] }
+ *
+ * Wunden count persists to markdown via PATCH (Tier A).
+ * This file manages the Wunden UI widget and the transient Zustände chips.
+ */
+
+(function () {
+  const IS_SERVED = location.protocol === 'http:' || location.protocol === 'https:';
+  if (IS_SERVED) initSession();
+
+  function initSession() {
+    const stpr = document.querySelector('.vital-stepper');
+    const slug = stpr ? JSON.parse(stpr.dataset.locator).slug : 'illaen-baernhold';
+    const STORAGE_KEY = `dsa:${slug}:session`;
+
+    function loadState() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch { return {}; }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // DSA 4.1 Wundregeln: simplified penalty overlay.
+    // Wundschwelle = ceil(KO/2). Each wound = -2 cumulative on all checks.
+    // TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds) before shipping.
+    function computeWundPenalty(wunden) {
+      if (wunden <= 0) return 0;
+      return wunden * 2;
+    }
+
+    // ── Wunden widget ──────────────────────────────────────────────────
+    function renderWundenWidget() {
+      if (document.getElementById('wunden-widget')) return;
+      const anchor = document.querySelector('[data-wunden]');
+      if (!anchor) return;
+
+      const currentWunden = parseInt(anchor.dataset.wunden, 10) || 0;
+      const widget = document.createElement('div');
+      widget.id = 'wunden-widget';
+      widget.className = 'wunden-counter';
+      widget.innerHTML =
+        '<span>Wunden:</span>' +
+        '<button id="wunden-minus" type="button" aria-label="Wunde heilen">−</button>' +
+        '<span id="wunden-count" style="font-weight:700;font-size:1.2rem">' + currentWunden + '</span>' +
+        '<button id="wunden-plus" type="button" aria-label="Wunde erleiden">+</button>' +
+        '<span id="wunden-penalty" style="opacity:0.7;font-size:0.9rem">' +
+          (currentWunden > 0 ? '(−' + computeWundPenalty(currentWunden) + ' auf Proben)' : '') +
+        '</span>';
+      anchor.insertAdjacentElement('afterend', widget);
+
+      document.getElementById('wunden-minus').addEventListener('click', () => changeWunden(-1));
+      document.getElementById('wunden-plus').addEventListener('click', () => changeWunden(+1));
+    }
+
+    function changeWunden(delta) {
+      const anchor = document.querySelector('[data-wunden]');
+      const countEl = document.getElementById('wunden-count');
+      const penaltyEl = document.getElementById('wunden-penalty');
+      if (!anchor || !countEl) return;
+
+      const next = Math.max(0, (parseInt(countEl.textContent, 10) || 0) + delta);
+      countEl.textContent = next;
+      penaltyEl.textContent = next > 0 ? '(−' + computeWundPenalty(next) + ' auf Proben)' : '';
+      anchor.dataset.wunden = next;
+      updateEigLeisteBadge();
+
+      const stpr2 = document.querySelector('.vital-stepper');
+      if (!stpr2) return;
+      const baseLocator = JSON.parse(stpr2.dataset.locator);
+      fetch('/api/held/' + baseLocator.slug + '/value', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'frontmatter', file: '_illaen.md', key: 'wunden', value: String(next), slug: baseLocator.slug }),
+      }).catch(console.error);
+    }
+
+    // ── Zustände chips (transient localStorage only) ───────────────────
+    const ZUSTAENDE = [
+      { key: 'schmerz',    label: 'Schmerz',   mod: -2 },
+      { key: 'furcht',     label: 'Furcht',     mod: -2 },
+      { key: 'betaeubt',   label: 'Betäubt',    mod: -4 },
+      { key: 'verwirrt',   label: 'Verwirrt',   mod: -2 },
+      { key: 'erschoepft', label: 'Erschöpft',  mod: -2 },
+    ];
+
+    function renderZustandChips() {
+      const container = document.getElementById('zustand-chips');
+      if (!container) return;
+      const active = new Set((loadState().zustaende) || []);
+      container.innerHTML = ZUSTAENDE.map(z =>
+        '<button class="zustand-chip' + (active.has(z.key) ? ' active' : '') + '" ' +
+        'data-key="' + z.key + '" type="button" ' +
+        'title="' + z.label + ': ' + z.mod + ' auf Proben">' +
+        z.label + '</button>'
+      ).join('');
+      container.querySelectorAll('.zustand-chip').forEach(btn => {
+        btn.addEventListener('click', () => toggleZustand(btn.dataset.key));
+      });
+      updateEigLeisteBadge();
+    }
+
+    // ── Eigenschafts-Leiste mod badge (Talente/Zauber tabs, D-025/D-026) ──
+    // Note: the bar macro is rendered once per tab (Talente + Zauber), so the
+    // hook is a class (not an id) — both instances are updated in lockstep.
+
+    // Combined wound+Zustand effects (active mali), shared by the badge text
+    // (updateEigLeisteBadge) and the per-attribute effective-value overlay
+    // (applyWundModsToProben) — single source of truth for the total penalty.
+    function computeActiveEffects() {
+      const effects = [];
+      const wundenAnchor = document.querySelector('[data-wunden]');
+      const wunden = wundenAnchor ? parseInt(wundenAnchor.dataset.wunden, 10) || 0 : 0;
+      if (wunden > 0) effects.push({ label: 'Wunden', penalty: computeWundPenalty(wunden) });
+
+      const active = new Set((loadState().zustaende) || []);
+      ZUSTAENDE.forEach(z => {
+        if (active.has(z.key)) effects.push({ label: z.label, penalty: -z.mod });
+      });
+      return effects;
+    }
+
+    // Exposed so dice.js's getWundMod() can pre-fill the roll panel's modifier
+    // with the same total (wounds + Zustände) shown by the badge/overlay above
+    // — session.js loads before dice.js in dashboard.html.j2.
+    window.DSASession = { computeActiveEffects: computeActiveEffects };
+
+    function updateEigLeisteBadge() {
+      const effects = computeActiveEffects();
+
+      const badges = document.querySelectorAll('.eig-leiste-mods');
+      if (badges.length) {
+        let text = '';
+        if (effects.length === 1) {
+          text = '−' + effects[0].penalty + ' ' + effects[0].label;
+        } else if (effects.length > 1) {
+          const total = effects.reduce((sum, e) => sum + e.penalty, 0);
+          text = '−' + total + ' (' + effects.length + ' Effekte)';
+        }
+        badges.forEach(badge => { badge.textContent = text; });
+      }
+
+      applyWundModsToProben(effects);
+    }
+
+    // Annotates every rendered attribute value in probe_eig's output
+    // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
+    // effective value when a wound/Zustand malus is active, e.g. "GE 13→11".
+    // Reverts to just the base value once the penalty clears back to zero.
+    function applyWundModsToProben(effects) {
+      const total = effects.reduce((sum, e) => sum + e.penalty, 0);
+      document.querySelectorAll('[data-attr]').forEach(el => {
+        const abbr = el.dataset.attr;
+        const base = parseInt(el.dataset.base, 10);
+        if (isNaN(base)) return;
+        el.textContent = total > 0 ? (abbr + ' ' + base + '→' + (base - total)) : (abbr + ' ' + base);
+      });
+    }
+
+    function toggleZustand(key) {
+      const state = loadState();
+      const active = new Set(state.zustaende || []);
+      if (active.has(key)) active.delete(key); else active.add(key);
+      state.zustaende = [...active];
+      saveState(state);
+      renderZustandChips();
+    }
+
+    // ── Session reset ──────────────────────────────────────────────────
+    function resetSession() {
+      if (!confirm('Transiente Zustände zurücksetzen?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderZustandChips();
+    }
+
+    // ── Init ───────────────────────────────────────────────────────────
+    function init() {
+      renderWundenWidget();
+      renderZustandChips();
+      const resetBtn = document.getElementById('session-reset-btn');
+      if (resetBtn) resetBtn.addEventListener('click', resetSession);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  }
+})();
+
+</script>
+<script>/* dice.js */
+/**
+ * dice.js — DSA 4.1 dice rolling: pure math + floating panel controller.
+ *
+ * Pure math on window.Dice.* — no DOM access, deterministic given fixed inputs.
+ * Panel controller (openPanel, event binding) follows in Task 5.
+ *
+ * Degrades gracefully when opened as file:// (no PATCH actions available).
+ */
+'use strict';
+
+window.Dice = {};
+
+// ---------------------------------------------------------------------------
+// Pure math — mirrors test_dice.py exactly
+// ---------------------------------------------------------------------------
+
+/**
+ * Roll n dice with the given number of sides.
+ * Returns an array of n integers in [1, sides].
+ */
+window.Dice.roll = function(n, sides) {
+  var result = [];
+  for (var i = 0; i < n; i++) {
+    result.push(Math.floor(Math.random() * sides) + 1);
+  }
+  return result;
+};
+
+/**
+ * Parse a DSA dice string: "2W6+3", "1W+1", "W20", "3", etc.
+ * Returns {count, sides, bonus} or null for unrecognised formats.
+ * sides=null means a fixed value (pure integer string like "3").
+ */
+window.Dice.parseDiceString = function(s) {
+  s = (s || '').trim();
+  // Pure integer
+  if (/^\d+$/.test(s)) {
+    return { count: 1, sides: null, bonus: parseInt(s, 10) };
+  }
+  // WY or NWY with optional bonus: "2W6+3", "W20", "3W6-1"
+  var m = s.match(/^(\d*)W(\d+)\s*([+-]\d+)?$/i);
+  if (m) {
+    return {
+      count: m[1] ? parseInt(m[1], 10) : 1,
+      sides: parseInt(m[2], 10),
+      bonus: m[3] ? parseInt(m[3], 10) : 0,
+    };
+  }
+  // "1W+1" style — implicit W6
+  m = s.match(/^(\d*)W\s*([+-]\d+)$/i);
+  if (m) {
+    return {
+      count: m[1] ? parseInt(m[1], 10) : 1,
+      sides: 6,
+      bonus: parseInt(m[2], 10),
+    };
+  }
+  return null;
+};
+
+/**
+ * Roll a parsed dice spec and return the total.
+ * If sides is null (fixed value), return bonus directly.
+ */
+window.Dice.rollParsed = function(spec) {
+  if (!spec) return null;
+  if (spec.sides === null) return spec.bonus;
+  var rolls = window.Dice.roll(spec.count, spec.sides);
+  return rolls.reduce(function(a, b) { return a + b; }, 0) + spec.bonus;
+};
+
+/**
+ * Calculate a 3W20 talent or spell probe.
+ *
+ * eig3: Array of 3 eigenschaft values (integers, or null for ** slots).
+ * taw: Talentwert / ZfW (integer).
+ * rolls: Array of 3 W20 results.
+ * mod: Modifier on effTaW (negative = erschwerend).
+ *
+ * Returns { tap, success, isCrit, isPatzer, perSlot }
+ */
+window.Dice.calcTalentProbe = function(eig3, taw, rolls, mod) {
+  var effTaw = taw + (mod || 0);
+  // Negative effective TaW (talentregeln.md:24): the overflow is applied as
+  // a per-die Erschwernis on each attribute check, not subtracted wholesale
+  // from tap — otherwise tap = effTaw - totalFehl is negative for every
+  // possible roll and the probe becomes unwinnable. When effTaw >= 0 this
+  // is 0 and the formula below is identical to the original.
+  var overflow = Math.min(effTaw, 0);
+  var perSlot = [];
+  var totalFehl = 0;
+  for (var i = 0; i < 3; i++) {
+    var roll = rolls[i];
+    var eig = eig3[i];
+    if (eig === null || eig === undefined) {
+      perSlot.push({ roll: roll, eig: null, fehl: 0 });
+    } else {
+      var fehl = Math.max(0, roll - (eig + overflow));
+      totalFehl += fehl;
+      perSlot.push({ roll: roll, eig: eig, fehl: fehl });
+    }
+  }
+  var ones = rolls.filter(function(r) { return r === 1; }).length;
+  var twenties = rolls.filter(function(r) { return r === 20; }).length;
+  var isCrit = ones >= 2;
+  var isPatzer = twenties >= 2;
+  var tap, success;
+  if (effTaw >= 0) {
+    tap = effTaw - totalFehl;
+    success = tap >= 0 || isCrit;
+  } else {
+    // All three (non-**) attribute checks passed → probe besteht, but
+    // TaP* mirrors the negative effective TaW rather than going positive.
+    tap = totalFehl === 0 ? effTaw : effTaw - totalFehl;
+    success = totalFehl === 0 || isCrit;
+  }
+  return {
+    tap: tap,
+    success: success,
+    isCrit: isCrit,
+    isPatzer: isPatzer,
+    perSlot: perSlot,
+  };
+};
+
+/**
+ * Calculate a 1W20 eigenschaft probe.
+ * Roll 1 is always critical success. Roll 20 is always patzer.
+ */
+window.Dice.calcEigProbe = function(wert, roll, mod) {
+  var effWert = wert + (mod || 0);
+  return {
+    success: roll <= effWert || roll === 1,
+    isCrit: roll === 1,
+    isPatzer: roll === 20,
+  };
+};
+
+/**
+ * Calculate a 1W20 combat probe (AT or PA). Same rules as eigenschaft probe.
+ */
+window.Dice.calcKampfProbe = function(atOrPa, roll, mod) {
+  var eff = atOrPa + (mod || 0);
+  return {
+    success: roll <= eff || roll === 1,
+    isCrit: roll === 1,
+    isPatzer: roll === 20,
+  };
+};
+
+/**
+ * Roll damage from a TP string and return {rolls, total, formula}.
+ * Returns null if string cannot be parsed.
+ */
+window.Dice.calcSchaden = function(tpStr, bonusMod) {
+  bonusMod = bonusMod || 0;
+  var spec = window.Dice.parseDiceString(tpStr);
+  if (!spec) return null;
+  if (spec.sides === null) {
+    return { rolls: [], total: spec.bonus + bonusMod, formula: tpStr };
+  }
+  var rolls = window.Dice.roll(spec.count, spec.sides);
+  var total = rolls.reduce(function(a, b) { return a + b; }, 0) + spec.bonus + bonusMod;
+  return { rolls: rolls, total: total, formula: tpStr };
+};
+
+// ---------------------------------------------------------------------------
+// Panel controller
+// ---------------------------------------------------------------------------
+
+(function () {
+  'use strict';
+
+  var panel = null;       // set on DOMContentLoaded
+  var currentConfig = {}; // the last openPanel config
+  var currentRolls = [];  // rolls from the last render call
+  var isManual = false;
+
+  // ------------------------------------------------------------------
+  // Parse probe string "MU/GE/KK" → [eig1value, eig2value, eig3value]
+  // eig may be null for "**" slots or missing entries in window.DSA.eig.
+  // Returns null if not a 3-eigenschaft formula.
+  // ------------------------------------------------------------------
+  function parseProbe(probeStr) {
+    if (!probeStr || probeStr.indexOf('/') === -1) return null;
+    var parts = probeStr.split('/');
+    if (parts.length !== 3) return null;
+    return parts.map(function (abbr) {
+      abbr = abbr.trim().toUpperCase();
+      if (abbr === '**') return null;
+      var v = window.DSA && window.DSA.eig && window.DSA.eig[abbr];
+      return (v !== undefined) ? v : null;
+    });
+  }
+
+  // ------------------------------------------------------------------
+  // Get current Wunden+Zustände penalty as a negative modifier (e.g. -2 for
+  // 1 wound). Delegates to session.js's computeActiveEffects() — the same
+  // source of truth the Eigenschafts-Leiste badge and probe overlay use —
+  // so a toggled Zustand chip (Schmerz, Furcht, ...) reaches the dice panel
+  // too, not just wounds. Falls back to wounds-only when session.js hasn't
+  // run (e.g. opened as file://).
+  // ------------------------------------------------------------------
+  function getWundMod() {
+    if (window.DSASession && window.DSASession.computeActiveEffects) {
+      var effects = window.DSASession.computeActiveEffects();
+      var total = effects.reduce(function (sum, e) { return sum + e.penalty; }, 0);
+      return -total;
+    }
+    var el = document.querySelector('[data-wunden]');
+    var w = el ? parseInt(el.dataset.wunden, 10) : 0;
+    return w > 0 ? -(w * 2) : 0;
+  }
+
+  // ------------------------------------------------------------------
+  // PATCH helper — independent of app.js
+  // ------------------------------------------------------------------
+  function patchValue(locator) {
+    if (location.protocol === 'file:') return;
+    fetch('/api/held/' + locator.slug + '/value', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(locator),
+    }).catch(console.error);
+  }
+
+  // ------------------------------------------------------------------
+  // Determine rolls for current config in auto mode
+  // ------------------------------------------------------------------
+  function autoRoll() {
+    var cfg = currentConfig;
+    if (cfg.type === 'talent' || cfg.type === 'zauber') {
+      return window.Dice.roll(3, 20);
+    }
+    if (cfg.type === 'eigenschaft' || cfg.type === 'at' || cfg.type === 'pa') {
+      return window.Dice.roll(1, 20);
+    }
+    if (cfg.type === 'schaden') {
+      var spec = window.Dice.parseDiceString(cfg.tpStr || '0');
+      if (spec && spec.sides) return window.Dice.roll(spec.count, spec.sides);
+    }
+    return [];
+  }
+
+  // ------------------------------------------------------------------
+  // Render panel content for a given set of rolls
+  // ------------------------------------------------------------------
+  function render(rolls) {
+    var cfg = currentConfig;
+    var mod = parseInt(document.getElementById('dp-mod').value, 10) || 0;
+    var eigRow = document.getElementById('dp-eig-row');
+    var diceRow = document.getElementById('dp-dice-row');
+    var resultEl = document.getElementById('dp-result');
+    var actionEl = document.getElementById('dp-action');
+
+    eigRow.innerHTML = '';
+    diceRow.innerHTML = '';
+    resultEl.innerHTML = '';
+    resultEl.className = 'dp-result';
+    actionEl.innerHTML = '';
+
+    if (cfg.type === 'talent' || cfg.type === 'zauber') {
+      var eig3 = parseProbe(cfg.probe);
+      if (!eig3) {
+        resultEl.textContent = 'Keine auswürfelbare Probe (fehlende Eigenschaft)';
+        return;
+      }
+      var taw = cfg.type === 'zauber' ? (cfg.zfw || 0) : (cfg.taw || 0);
+      var probeAbbrs = cfg.probe.split('/');
+      var res = window.Dice.calcTalentProbe(eig3, taw, rolls, mod);
+
+      // Eigenschaft display row
+      probeAbbrs.forEach(function (abbr, i) {
+        abbr = abbr.trim().toUpperCase();
+        var val = eig3[i];
+        var slot = document.createElement('div');
+        slot.className = 'dp-eig-slot';
+        slot.innerHTML =
+          '<span class="dp-eig-abbr">' + abbr + '</span>' +
+          '<span class="dp-eig-val">' + (val !== null && val !== undefined ? val : '?') + '</span>';
+        eigRow.appendChild(slot);
+      });
+
+      // Dice inputs
+      for (var i = 0; i < 3; i++) {
+        (function (idx) {
+          var die = document.createElement('div');
+          die.className = 'dp-die';
+          var inp = document.createElement('input');
+          inp.type = 'number'; inp.min = 1; inp.max = 20;
+          inp.value = rolls[idx];
+          if (!isManual) inp.setAttribute('readonly', 'readonly');
+          inp.addEventListener('input', function () {
+            if (!isManual) return;
+            var newRolls = currentRolls.slice();
+            newRolls[idx] = Math.max(1, Math.min(20, parseInt(this.value, 10) || 1));
+            render(newRolls);
+          });
+          die.appendChild(inp);
+          var fehlEl = document.createElement('span');
+          var eig = eig3[idx];
+          if (eig !== null && eig !== undefined) {
+            var fehl = res.perSlot[idx].fehl;
+            fehlEl.className = fehl > 0 ? 'dp-die-fehl' : 'dp-die-label';
+            fehlEl.textContent = fehl > 0 ? '−' + fehl : '✓';
+          } else {
+            fehlEl.className = 'dp-die-label';
+            fehlEl.textContent = '**';
+          }
+          die.appendChild(fehlEl);
+          diceRow.appendChild(die);
+        })(i);
+      }
+      currentRolls = rolls.slice();
+
+      // Result line
+      var label = cfg.type === 'zauber' ? 'ZfP*' : 'TaP*';
+      if (res.isPatzer) {
+        resultEl.textContent = '⚠️ Patzer! Zwei 20en (' + label + ' ignoriert)';
+        resultEl.classList.add('patzer');
+      } else if (res.isCrit) {
+        resultEl.textContent = '⭐ Kritisch! ' + label + '* = ' + res.tap + ' (automatischer Erfolg)';
+        resultEl.classList.add('crit');
+      } else if (res.success) {
+        resultEl.textContent = '✅ Erfolg — ' + label + '* = ' + res.tap;
+        resultEl.classList.add('success');
+      } else {
+        resultEl.textContent = '❌ Misserfolg — ' + label + '* = ' + res.tap;
+        resultEl.classList.add('fail');
+      }
+
+      // Action: AsP abziehen after Zauber success
+      if (cfg.type === 'zauber' && res.success && !res.isPatzer && cfg.kosten) {
+        var aspCost = parseInt(cfg.kosten, 10) || 0;
+        if (aspCost > 0) {
+          var slug = (window.DSA && window.DSA.slug) || '';
+          var curAe = (window.DSA && window.DSA.vitals && window.DSA.vitals.AE && window.DSA.vitals.AE.current) || 0;
+          var newAe = Math.max(0, curAe - aspCost);
+          var aspBtn = document.createElement('button');
+          aspBtn.className = 'dp-btn';
+          aspBtn.type = 'button';
+          aspBtn.textContent = aspCost + ' AsP abziehen (' + curAe + '→' + newAe + ')';
+          aspBtn.onclick = function () {
+            patchValue({
+              kind: 'table_cell', file: '_illaen.md',
+              section_path: ['Eigenschaften & Basiswerte', 'Basiswerte'],
+              row_key: { column: 'Basiswert', match: 'Astralenergie (AE)' },
+              column: 'Akt.', value: String(newAe), slug: slug,
+            });
+            if (window.DSA && window.DSA.vitals && window.DSA.vitals.AE) {
+              window.DSA.vitals.AE.current = newAe;
+            }
+            aspBtn.disabled = true;
+            aspBtn.textContent = '✓ AsP abgezogen';
+          };
+          actionEl.appendChild(aspBtn);
+        }
+      }
+
+      // Action: Zauberspeicher-Auslöseprobe result handling.
+      // Reuses window.Zauberspeicher.handleEntleeren (zauberspeicher.js) — the
+      // same PATCH flow as the manual "Entleeren" button — instead of a
+      // second PATCH call. Plain Misslingen (not Patzer) does nothing further:
+      // per the wiki source the stored spell "verpufft wirkungslos" but the
+      // slot itself isn't described as cleared by this action alone.
+      if (cfg.type === 'talent' && cfg.speicherSlot) {
+        if (res.isPatzer) {
+          var patzerBtn = document.createElement('button');
+          patzerBtn.className = 'dp-btn';
+          patzerBtn.type = 'button';
+          patzerBtn.textContent = 'Patzer — alle Speicher entleeren…';
+          patzerBtn.onclick = function () {
+            if (!confirm('Patzer! Alle gespeicherten Zauber lösen sich ebenfalls aus. Alle Slots entleeren?')) return;
+            if (!window.Zauberspeicher) return;
+            patzerBtn.disabled = true;
+            patzerBtn.textContent = '…';
+            var btns = Array.prototype.slice.call(document.querySelectorAll('.slot-entleeren-btn'));
+            // skipReload on every call — each PATCH runs independently, and a
+            // per-call reload would navigate away and abort the others still
+            // in flight (see zauberspeicher.js handleEntleeren). Wait for all
+            // to settle, then reload exactly once.
+            Promise.all(btns.map(function (btn) {
+              return window.Zauberspeicher.handleEntleeren(btn, { skipReload: true });
+            })).then(function () {
+              window.location.reload();
+            });
+          };
+          actionEl.appendChild(patzerBtn);
+        } else if (res.success) {
+          var slotNum = cfg.speicherSlot;
+          var ausloesenBtn = document.createElement('button');
+          ausloesenBtn.className = 'dp-btn';
+          ausloesenBtn.type = 'button';
+          ausloesenBtn.textContent = 'Zauber ausgelöst — Slot ' + slotNum + ' entleeren';
+          ausloesenBtn.onclick = function () {
+            var entleerenBtn = document.querySelector('.slot-entleeren-btn[data-slot="' + slotNum + '"]');
+            if (entleerenBtn && window.Zauberspeicher) {
+              ausloesenBtn.disabled = true;
+              window.Zauberspeicher.handleEntleeren(entleerenBtn);
+            }
+          };
+          actionEl.appendChild(ausloesenBtn);
+        }
+      }
+
+    } else if (cfg.type === 'eigenschaft') {
+      var roll = rolls[0];
+      var res = window.Dice.calcEigProbe(cfg.wert || 0, roll, mod);
+      var inp = document.createElement('input');
+      inp.type = 'number'; inp.min = 1; inp.max = 20; inp.value = roll;
+      if (!isManual) inp.setAttribute('readonly', 'readonly');
+      inp.addEventListener('input', function () {
+        if (!isManual) return;
+        render([Math.max(1, Math.min(20, parseInt(this.value, 10) || 1))]);
+      });
+      diceRow.appendChild(inp);
+      currentRolls = [roll];
+      eigRow.innerHTML = '<span>' + (cfg.abbr || '') + '(' + (cfg.wert || 0) + ')</span>';
+      if (res.isPatzer) {
+        resultEl.textContent = '⚠️ Patzer! (20)'; resultEl.classList.add('patzer');
+      } else if (res.isCrit) {
+        resultEl.textContent = '⭐ Kritisch! (1) — immer Erfolg'; resultEl.classList.add('crit');
+      } else if (res.success) {
+        resultEl.textContent = '✅ Erfolg (' + roll + ' ≤ ' + (cfg.wert || 0) + ')'; resultEl.classList.add('success');
+      } else {
+        resultEl.textContent = '❌ Misserfolg (' + roll + ' > ' + (cfg.wert || 0) + ')'; resultEl.classList.add('fail');
+      }
+
+    } else if (cfg.type === 'at' || cfg.type === 'pa') {
+      var roll = rolls[0];
+      var lbl = cfg.type === 'at' ? 'AT' : 'PA';
+      var res = window.Dice.calcKampfProbe(cfg.atOrPa || 0, roll, mod);
+      var inp = document.createElement('input');
+      inp.type = 'number'; inp.min = 1; inp.max = 20; inp.value = roll;
+      if (!isManual) inp.setAttribute('readonly', 'readonly');
+      inp.addEventListener('input', function () {
+        if (!isManual) return;
+        render([Math.max(1, Math.min(20, parseInt(this.value, 10) || 1))]);
+      });
+      diceRow.appendChild(inp);
+      currentRolls = [roll];
+      eigRow.innerHTML = '<span>' + lbl + '-Basis: ' + (cfg.atOrPa || 0) + '</span>';
+      if (res.isPatzer) {
+        resultEl.textContent = '⚠️ Patzer! (20)'; resultEl.classList.add('patzer');
+      } else if (res.isCrit) {
+        resultEl.textContent = '⭐ Kritisch! (1)'; resultEl.classList.add('crit');
+      } else if (res.success) {
+        resultEl.textContent = '✅ ' + (cfg.type === 'at' ? 'Treffer!' : 'Pariert!') + ' (' + roll + ' ≤ ' + (cfg.atOrPa || 0) + ')';
+        resultEl.classList.add('success');
+        if (cfg.type === 'at' && cfg.tpStr) {
+          var schadenBtn = document.createElement('button');
+          schadenBtn.className = 'dp-btn';
+          schadenBtn.type = 'button';
+          schadenBtn.textContent = 'Schaden würfeln (' + cfg.tpStr + ')';
+          schadenBtn.onclick = function () {
+            window.Dice.openPanel({ type: 'schaden', name: 'Schaden', tpStr: cfg.tpStr, slug: cfg.slug });
+          };
+          actionEl.appendChild(schadenBtn);
+        }
+      } else {
+        resultEl.textContent = '❌ ' + (cfg.type === 'at' ? 'Verfehlt!' : 'Nicht pariert!') + ' (' + roll + ' > ' + (cfg.atOrPa || 0) + ')';
+        resultEl.classList.add('fail');
+        if (cfg.type === 'pa') {
+          var leBtn = document.createElement('button');
+          leBtn.className = 'dp-btn';
+          leBtn.type = 'button';
+          leBtn.textContent = 'SP kassiert — LeP abziehen…';
+          leBtn.onclick = function () {
+            var sp = parseInt(prompt('Wie viele SP (nach RS)?', '0'), 10) || 0;
+            if (sp <= 0) return;
+            var slug = (window.DSA && window.DSA.slug) || '';
+            var curLe = (window.DSA && window.DSA.vitals && window.DSA.vitals.LE && window.DSA.vitals.LE.current) || 0;
+            var newLe = Math.max(0, curLe - sp);
+            patchValue({
+              kind: 'table_cell', file: '_illaen.md',
+              section_path: ['Eigenschaften & Basiswerte', 'Basiswerte'],
+              row_key: { column: 'Basiswert', match: 'Lebensenergie (LE)' },
+              column: 'Akt.', value: String(newLe), slug: slug,
+            });
+            if (window.DSA && window.DSA.vitals && window.DSA.vitals.LE) {
+              window.DSA.vitals.LE.current = newLe;
+            }
+            leBtn.disabled = true;
+            leBtn.textContent = '✓ LeP abgezogen (' + curLe + '→' + newLe + ')';
+          };
+          actionEl.appendChild(leBtn);
+        }
+      }
+
+    } else if (cfg.type === 'schaden') {
+      // Use the rolls parameter — set by autoRoll() on open, by currentRolls on re-render
+      var spec = window.Dice.parseDiceString(cfg.tpStr || '0');
+      if (spec && spec.sides) {
+        currentRolls = rolls.slice();
+        var total = rolls.reduce(function (a, b) { return a + b; }, 0) + (spec.bonus || 0);
+        rolls.forEach(function (r, idx) {
+          var inp = document.createElement('input');
+          inp.type = 'number'; inp.min = 1; inp.max = spec.sides; inp.value = r;
+          if (!isManual) inp.setAttribute('readonly', 'readonly');
+          inp.dataset.idx = idx;
+          inp.addEventListener('input', function () {
+            if (!isManual) return;
+            var newRolls = currentRolls.slice();
+            newRolls[parseInt(this.dataset.idx, 10)] = Math.max(1, Math.min(spec.sides, parseInt(this.value, 10) || 1));
+            render(newRolls);
+          });
+          diceRow.appendChild(inp);
+        });
+        resultEl.textContent = 'Schaden: ' + total + ' TP (' + cfg.tpStr + ')';
+        resultEl.classList.add('success');
+      } else if (spec) {
+        currentRolls = [];
+        resultEl.textContent = 'Schaden: ' + spec.bonus + ' TP (fix)';
+        resultEl.classList.add('success');
+      } else {
+        currentRolls = [];
+        resultEl.textContent = 'Unbekanntes TP-Format: ' + (cfg.tpStr || '');
+        resultEl.classList.add('fail');
+      }
+    }
+  }
+
+  // ------------------------------------------------------------------
+  // Public API
+  // ------------------------------------------------------------------
+  window.Dice.openPanel = function (config) {
+    currentConfig = config;
+    isManual = false;
+    if (!panel) return;
+
+    document.getElementById('dp-title').textContent = '🎲 ' + (config.name || 'Probe');
+    document.getElementById('dp-mod').value = getWundMod() + (currentConfig.baseMod || 0);
+    document.getElementById('dp-auto').classList.add('active');
+    document.getElementById('dp-manual').classList.remove('active');
+
+    var rolls = autoRoll();
+    render(rolls);
+    panel.classList.remove('hidden');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  // ------------------------------------------------------------------
+  // Event binding — runs once on DOMContentLoaded
+  // ------------------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', function () {
+    panel = document.getElementById('dice-panel');
+    if (!panel) return;
+
+    document.getElementById('dp-close').addEventListener('click', function () {
+      panel.classList.add('hidden');
+    });
+
+    document.getElementById('dp-auto').addEventListener('click', function () {
+      isManual = false;
+      this.classList.add('active');
+      document.getElementById('dp-manual').classList.remove('active');
+      render(autoRoll());
+    });
+
+    document.getElementById('dp-manual').addEventListener('click', function () {
+      isManual = true;
+      this.classList.add('active');
+      document.getElementById('dp-auto').classList.remove('active');
+      render(currentRolls);
+    });
+
+    document.getElementById('dp-roll').addEventListener('click', function () {
+      if (isManual) return;
+      render(autoRoll());
+    });
+
+    document.getElementById('dp-mod').addEventListener('change', function () {
+      render(currentRolls.length ? currentRolls : autoRoll());
+    });
+
+    // Talent rows (3W20 + TaW)
+    document.querySelectorAll('.talent-row[data-probe]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        window.Dice.openPanel({
+          type: 'talent',
+          name: el.dataset.name,
+          probe: el.dataset.probe,
+          taw: parseInt(el.dataset.taw, 10) || 0,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // Spell rows (3W20 + ZfW)
+    document.querySelectorAll('.spell[data-probe]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        if (e.target.closest('details') || e.target.closest('a')) return;
+        window.Dice.openPanel({
+          type: 'zauber',
+          name: el.dataset.name,
+          probe: el.dataset.probe,
+          zfw: parseInt(el.dataset.zfw, 10) || 0,
+          kosten: el.dataset.kosten || '',
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // Eigenschaft hexes (1W20)
+    document.querySelectorAll('.hex[data-eigenschaft]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var abbr = el.dataset.eigenschaft;
+        window.Dice.openPanel({
+          type: 'eigenschaft',
+          name: abbr + '-Probe',
+          abbr: abbr,
+          wert: parseInt(el.dataset.wert, 10) || 0,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // AT-Basis
+    document.querySelectorAll('.minor[data-at]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var tpEl = document.querySelector('[data-tp]');
+        window.Dice.openPanel({
+          type: 'at',
+          name: 'Attacke',
+          atOrPa: parseInt(el.dataset.at, 10) || 0,
+          tpStr: tpEl ? tpEl.dataset.tp : '',
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // PA-Basis
+    document.querySelectorAll('.minor[data-pa]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        window.Dice.openPanel({
+          type: 'pa',
+          name: 'Parade',
+          atOrPa: parseInt(el.dataset.pa, 10) || 0,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // Zauberspeicher-Auslöseprobe (3W20 pure attribute probe, no TaW buffer)
+    document.querySelectorAll('.slot-ausloesen-btn[data-probe]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        window.Dice.openPanel({
+          type: 'talent',
+          name: 'Zauberspeicher auslösen (Slot ' + el.dataset.slot + ')',
+          probe: el.dataset.probe,
+          taw: 0,
+          baseMod: -parseInt(el.dataset.erschwernis, 10) || 0,
+          speicherSlot: el.dataset.slot,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+
+    // Weapon TP (Schaden)
+    document.querySelectorAll('[data-tp]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        window.Dice.openPanel({
+          type: 'schaden',
+          name: 'Schaden',
+          tpStr: el.dataset.tp,
+          slug: window.DSA && window.DSA.slug,
+        });
+      });
+    });
+  });
+
+}());
+
+</script>
+<script>/* tabs.js */
+/* tabs.js — client-side tab controller for DSA dashboard */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'dsa-active-tab';
+  var DEFAULT_TAB = 'kampf';
+
+  function switchTab(id) {
+    document.querySelectorAll('.tab-content').forEach(function (el) {
+      el.classList.toggle('tab-content--active', el.id === 'tab-' + id);
+    });
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+      btn.classList.toggle('tab-btn--active', btn.dataset.tab === id);
+    });
+    try { sessionStorage.setItem(STORAGE_KEY, id); } catch (e) {}
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () { switchTab(btn.dataset.tab); });
+    });
+    var saved;
+    try { saved = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
+    if (saved === 'journal') saved = 'chronik';
+    if (!saved || !document.getElementById('tab-' + saved)) saved = DEFAULT_TAB;
+    switchTab(saved);
+  });
+}());
+
+</script>
+<script>/* steigern.js */
+/* steigern.js — AP cost calculation and Steigern-Tab controller */
+(function () {
+  'use strict';
+
+  /* DSA 4.1 SKT cost table
+     SKT_COSTS[skt][bracket] — bracket 0 = target TaW 1-5, 1 = 6-10, 2 = 11-15, 3 = 16-20 */
+  var SKT_COSTS = {
+    A: [1, 2, 3, 4],
+    B: [2, 4, 6, 8],
+    C: [3, 6, 9, 12],
+    D: [4, 8, 12, 16],
+    E: [5, 10, 15, 20],
+    F: [6, 12, 18, 24],
+    G: [7, 14, 21, 28],
+    H: [8, 16, 24, 32]
+  };
+
+  /* Shift a SKT column left (negative) or right (positive), clamped to [A, H]. */
+  var SKT_ORDER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  function shiftSktColumn(skt, shift) {
+    var idx = SKT_ORDER.indexOf(skt);
+    if (idx === -1) return skt;
+    var newIdx = idx + shift;
+    if (newIdx < 0) newIdx = 0;
+    if (newIdx > SKT_ORDER.length - 1) newIdx = SKT_ORDER.length - 1;
+    return SKT_ORDER[newIdx];
+  }
+
+  /* Cost to raise currentTaw → currentTaw+1.
+     Bracket is determined by the TARGET value (currentTaw + 1).
+     Optional shift: applied via shiftSktColumn before bracket lookup. */
+  function calcApCost(skt, currentTaw, shift) {
+    var effectiveSkt = shift ? shiftSktColumn(skt, shift) : skt;
+    var costs = SKT_COSTS[effectiveSkt];
+    if (!costs) return null;
+    var targetTaw = currentTaw + 1;
+    var bracket = targetTaw <= 5 ? 0 : targetTaw <= 10 ? 1 : targetTaw <= 15 ? 2 : 3;
+    return costs[bracket];
+  }
+
+  /* Cost to raise eigenschaft → eigenschaft+1 = (currentVal + 1) * 15 */
+  function calcEigCost(currentVal) {
+    return (currentVal + 1) * 15;
+  }
+
+  /* Render a Kosten-Zelle einheitlich (Initial-Render + Erfahrungs-Wechsel). */
+  function setCostCell(cell, cost, canAfford) {
+    cell.textContent = cost !== null ? cost + ' AP' : '—';
+    cell.className = 'sg-cost ' + (canAfford ? 'affordable' : 'expensive');
+  }
+
+  /* ── PATCH helper ─────────────────────────────────────────────────────── */
+  function patchLocator(locator) {
+    if (window.location.protocol === 'file:') return Promise.resolve({ ok: true });
+    return fetch('/api/held/' + window.DSA.slug + '/value', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(locator)
+    }).then(function (r) {
+      if (r.status === 409) return Promise.reject(new Error('Konflikt — Datei wurde extern geändert'));
+      if (!r.ok) return r.json().then(function (d) {
+        return Promise.reject(new Error(d.error || 'PATCH fehlgeschlagen'));
+      });
+      return r.json();
+    });
+  }
+
+  /* ── Steigern: 4 sequential PATCHes ──────────────────────────────────── */
+  /* Known limitation: no rollback on partial failure. If PATCH 1 (stat) succeeds
+     but a later PATCH fails, the stat on disk is already raised. Recovery: git revert. */
+  function doSteigern(item, onSuccess, onError) {
+    var slug = window.DSA.slug;
+    var ap = window.DSA.steigern.ap;
+    var newVal = item.currentVal + 1;
+    var newAvail = ap.verfuegbar - item.cost;
+    var newEinges = ap.eingesetzt + item.cost;
+
+    /* PATCH 1: raise the stat */
+    var patch1;
+    if (item.kind === 'eigenschaft') {
+      patch1 = {
+        kind: 'table_cell', file: '_illaen.md', slug: slug,
+        section_path: ['Eigenschaften & Basiswerte', 'Eigenschaften'],
+        row_key: { column: 'Eigenschaft', match: item.eigFull },
+        column: 'Aktuell', value: String(newVal)
+      };
+    } else if (item.kind === 'talent') {
+      patch1 = {
+        kind: 'table_cell', file: item.file, slug: slug,
+        section_path: [item.section],
+        row_key: { column: item.rowKeyCol, match: item.name },
+        column: 'TaW', value: String(newVal)
+      };
+    } else { /* zauber */
+      patch1 = {
+        kind: 'table_cell', file: item.file, slug: slug,
+        section_path: ['Zauberliste'],
+        row_key: { column: 'Zauber', match: item.name },
+        column: 'ZfW', value: String(newVal)
+      };
+    }
+
+    patchLocator(patch1)
+      .then(function () {
+        return patchLocator({
+          kind: 'frontmatter', file: '_illaen.md', slug: slug,
+          key: 'ap_verfuegbar', value: String(newAvail)
+        });
+      })
+      .then(function () {
+        return patchLocator({
+          kind: 'frontmatter', file: '_illaen.md', slug: slug,
+          key: 'ap_eingesetzt', value: String(newEinges)
+        });
+      })
+      .then(function () {
+        var today = new Date().toISOString().slice(0, 10);
+        var aktion = item.kind === 'eigenschaft'
+          ? (item.abbr + ' ' + item.currentVal + '→' + newVal)
+          : item.kind === 'talent'
+          ? (item.name + ' TaW ' + item.currentVal + '→' + newVal)
+          : (item.name + ' ZfW ' + item.currentVal + '→' + newVal);
+        return patchLocator({
+          kind: 'table_append_row', file: 'steigerungs-log.md', slug: slug,
+          section_path: ['Protokoll'],
+          cells: [today, newAvail + ' verf.', aktion, String(item.cost), 'Steigerung im Dashboard']
+        });
+      })
+      .then(function () {
+        window.DSA.steigern.ap.verfuegbar = newAvail;
+        window.DSA.steigern.ap.eingesetzt = newEinges;
+        onSuccess();
+      })
+      .catch(function (err) { onError(err.message || 'Fehler'); });
+  }
+
+  /* Promise-Wrapper um doSteigern — additiv, ändert die PATCH-Logik nicht.
+     Erlaubt sequentielles await im Sammel-Commit. */
+  function doSteigernAsync(item) {
+    return new Promise(function (resolve, reject) {
+      doSteigern(item, resolve, function (msg) { reject(new Error(msg)); });
+    });
+  }
+
+  /* ── Warenkorb (cart) ─────────────────────────────────────────────────
+     Sammelt ausgewählte Items über alle 3 Sektionen, zeigt laufende
+     AP-Summe gegen den Vorrat, committet sequentiell mit EINEM reload. */
+  var cart = {
+    selected: [],          /* {item, row} */
+    bar: null,             /* footer DOM-Leiste */
+    summaryEl: null,       /* Summen-/Zähler-Anzeige */
+    commitBtn: null,       /* Sammel-Bestätigen-Button */
+    statusEl: null,        /* Fehler-/Fortschritts-Meldung */
+    committing: false
+  };
+
+  function cartTotal() {
+    return cart.selected.reduce(function (sum, e) { return sum + (e.item.cost || 0); }, 0);
+  }
+
+  function cartUpdate() {
+    if (!cart.bar) return;
+    var n = cart.selected.length;
+    var total = cartTotal();
+    var avail = window.DSA.steigern.ap.verfuegbar;
+    var over = total > avail;
+
+    cart.summaryEl.textContent = n === 0
+      ? 'Keine Auswahl'
+      : n + (n === 1 ? ' Eintrag' : ' Einträge') + ' · ' + total + ' / ' + avail + ' AP';
+    cart.summaryEl.classList.toggle('over', over && n > 0);
+
+    cart.commitBtn.textContent = n === 0
+      ? 'Steigern'
+      : 'Steigern (' + n + ', ' + total + ' AP)';
+    cart.commitBtn.disabled = cart.committing || n === 0 || over;
+  }
+
+  function cartToggle(item, row, on) {
+    if (on) {
+      cart.selected.push({ item: item, row: row });
+      row.classList.add('sg-selected');
+    } else {
+      cart.selected = cart.selected.filter(function (e) { return e.item !== item; });
+      row.classList.remove('sg-selected');
+    }
+    cartUpdate();
+  }
+
+  /* Sequentieller Sammel-Commit: pro Eintrag die volle doSteigern-Sequenz,
+     await zwischen den Einträgen (jeder PATCH schreibt ap_* fort).
+     Beim ersten Fehler: stoppen, melden was durchlief, dann reload. */
+  function cartCommit() {
+    if (cart.committing || cart.selected.length === 0) return;
+    cart.committing = true;
+    cart.commitBtn.disabled = true;
+    cart.statusEl.classList.remove('over');
+    cart.statusEl.textContent = 'Steigere …';
+
+    var queue = cart.selected.slice();
+    var done = 0;
+    var ERR_RELOAD_DELAY_MS = 2500; // Fehlertext lesbar lassen, bevor neu geladen wird
+
+    function step(i) {
+      if (i >= queue.length) {
+        cart.statusEl.textContent = 'Fertig — Seite wird neu geladen …';
+        window.location.reload();
+        return;
+      }
+      var entry = queue[i];
+      cart.statusEl.textContent = 'Steigere ' + entry.item.displayName +
+        ' (' + (i + 1) + '/' + queue.length + ') …';
+      doSteigernAsync(entry.item).then(function () {
+        done += 1;
+        step(i + 1);
+      }).catch(function (err) {
+        /* Beim ersten Fehler stoppen. Melden, was bis hier durchlief, dann reload. */
+        cart.statusEl.classList.add('over');
+        cart.statusEl.textContent = '⚠ ' + err.message + ' — ' + done +
+          ' von ' + queue.length + ' gesteigert. Seite wird neu geladen …';
+        setTimeout(function () { window.location.reload(); }, ERR_RELOAD_DELAY_MS);
+      });
+    }
+    step(0);
+  }
+
+  function buildCartBar() {
+    var bar = document.createElement('div');
+    bar.className = 'sg-cart';
+
+    var summary = document.createElement('div');
+    summary.className = 'sg-cart-summary';
+    summary.textContent = 'Keine Auswahl';
+
+    var status = document.createElement('div');
+    status.className = 'sg-cart-status';
+
+    var commit = document.createElement('button');
+    commit.type = 'button';
+    commit.className = 'sg-btn sg-btn--ok sg-cart-commit';
+    commit.textContent = 'Steigern';
+    commit.disabled = true;
+    commit.addEventListener('click', cartCommit);
+
+    bar.appendChild(summary);
+    bar.appendChild(status);
+    bar.appendChild(commit);
+
+    cart.bar = bar;
+    cart.summaryEl = summary;
+    cart.statusEl = status;
+    cart.commitBtn = commit;
+    return bar;
+  }
+
+  /* ── Row renderer (one <tr> for the steiger-table) ───────────────────── */
+  function renderRow(item) {
+    var ap = window.DSA.steigern.ap.verfuegbar;
+    var canAfford = item.cost !== null && ap >= item.cost;
+
+    var row = document.createElement('tr');
+    row.className = 'sg-row';
+
+    /* Name cell */
+    var nameCell = document.createElement('td');
+    nameCell.className = 'sg-name';
+
+    var nameLabel = document.createElement('span');
+    nameLabel.textContent = item.displayName;
+    nameCell.appendChild(nameLabel);
+
+    /* Komplexitätsgrenze warning (Sprachen/Schriften only) */
+    if (item.komplexitaet != null && item.currentVal >= item.komplexitaet) {
+      var warnEl = document.createElement('span');
+      warnEl.className = 'sg-cap-warn';
+      warnEl.textContent = '⚠ Komplexitätsgrenze K' + item.komplexitaet;
+      nameCell.appendChild(warnEl);
+    }
+
+    /* Wert cell (aktuell → nächster) */
+    var valCell = document.createElement('td');
+    valCell.className = 'sg-val';
+    valCell.textContent = item.currentVal + ' → ' + (item.currentVal + 1);
+
+    /* Kosten cell */
+    var costCell = document.createElement('td');
+    setCostCell(costCell, item.cost, canAfford);
+
+    /* Aktion cell */
+    var actionCell = document.createElement('td');
+    actionCell.className = 'sg-action';
+
+    row.appendChild(nameCell);
+    row.appendChild(valCell);
+    row.appendChild(costCell);
+    row.appendChild(actionCell);
+
+    /* Erfahrungs-Selektor (nur talent + zauber, nicht eigenschaft) */
+    if (item.skt) {
+      var erfSel = document.createElement('select');
+      erfSel.className = 'sg-erf';
+      erfSel.setAttribute('aria-label', 'Erfahrung: ' + item.displayName);
+      [
+        { label: '—', value: '0' },
+        { label: 'gut (−1 Sp.)', value: '-1' },
+        { label: 'schlecht (+1 Sp.)', value: '1' }
+      ].forEach(function (opt) {
+        var o = document.createElement('option');
+        o.value = opt.value;
+        o.textContent = opt.label;
+        erfSel.appendChild(o);
+      });
+
+      erfSel.addEventListener('change', function () {
+        var shift = parseInt(erfSel.value, 10);
+        item.cost = calcApCost(item.skt, item.currentVal, shift);
+        var canAffordNow = item.cost !== null &&
+          window.DSA.steigern.ap.verfuegbar >= item.cost;
+        setCostCell(costCell, item.cost, canAffordNow);
+        cartUpdate();
+      });
+
+      actionCell.appendChild(erfSel);
+    }
+
+    /* Warenkorb-Auswahl: Checkbox statt Einzel-Steigern-Button.
+       Nur für Items mit bekannten Kosten (cost !== null). */
+    if (item.cost !== null) {
+      var label = document.createElement('label');
+      label.className = 'sg-select';
+
+      var box = document.createElement('input');
+      box.type = 'checkbox';
+      box.className = 'sg-select-box';
+      box.setAttribute('aria-label', 'In Warenkorb: ' + item.displayName);
+
+      var hint = document.createElement('span');
+      hint.className = 'sg-select-hint';
+      hint.textContent = 'auswählen';
+
+      box.addEventListener('change', function () {
+        cartToggle(item, row, box.checked);
+      });
+
+      label.appendChild(box);
+      label.appendChild(hint);
+      actionCell.appendChild(label);
+    } else {
+      actionCell.textContent = '—';
+    }
+
+    return row;
+  }
+
+  /* ── Stufenaufstieg: 3 sequential PATCHes ─────────────────────────────── */
+  /* Known limitation: no rollback on partial failure. Recovery: git revert. */
+  function doStufenaufstieg(onSuccess, onError) {
+    var slug = window.DSA.slug;
+    var ap = window.DSA.steigern.ap;
+    var oldStufe = ap.stufe;
+    var newStufe = oldStufe + 1;
+
+    /* PATCH 1: frontmatter stufe +1 */
+    patchLocator({
+      kind: 'frontmatter', file: '_illaen.md', slug: slug,
+      key: 'stufe', value: String(newStufe)
+    })
+    .then(function () {
+      /* PATCH 2: sync ## Abenteuerpunkte display table */
+      return patchLocator({
+        kind: 'table_cell', file: '_illaen.md', slug: slug,
+        section_path: ['Abenteuerpunkte'],
+        row_key: { column: 'Stufe', match: String(oldStufe) },
+        column: 'Stufe', value: String(newStufe)
+      });
+    })
+    .then(function () {
+      /* PATCH 3: log to steigerungs-log.md */
+      var today = new Date().toISOString().slice(0, 10);
+      return patchLocator({
+        kind: 'table_append_row', file: 'steigerungs-log.md', slug: slug,
+        section_path: ['Protokoll'],
+        cells: [today, ap.verfuegbar + ' verf.',
+                'Stufe ' + oldStufe + '→' + newStufe + ' (GM)', '—',
+                'Stufenaufstieg im Dashboard']
+      });
+    })
+    .then(function () { ap.stufe = newStufe; onSuccess(); })
+    .catch(function (err) { onError(err.message || 'Fehler'); });
+  }
+
+  /* ── Tab renderer ─────────────────────────────────────────────────────── */
+  var EIG_ORDER = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK'];
+  var EIG_FULL = {
+    MU: 'Mut', KL: 'Klugheit', IN: 'Intuition', CH: 'Charisma',
+    FF: 'Fingerfertigkeit', GE: 'Gewandtheit', KO: 'Konstitution', KK: 'Körperkraft'
+  };
+
+  function renderSteigernTab() {
+    var dsa = window.DSA;
+    if (!dsa || !dsa.steigern) return;
+    var ap = dsa.steigern.ap;
+
+    /* AP overview */
+    var overview = document.getElementById('steigern-ap-overview');
+    if (overview) {
+      var availStr = '<span class="sg-ap-label">AP verfügbar<\/span><span class="sg-ap-val avail">' + ap.verfuegbar + '<\/span>';
+      var einsStr  = '<span class="sg-ap-label">AP eingesetzt<\/span><span class="sg-ap-val">' + ap.eingesetzt + '<\/span>';
+      var gesStr   = '<span class="sg-ap-label">AP gesamt<\/span><span class="sg-ap-val">' + ap.gesamt + '<\/span>';
+      var stufeStr = (ap.bis_naechste !== null && ap.bis_naechste > 0)
+        ? '<div class="sg-stufe">Nächste Stufe (Stufe ' + (ap.stufe + 1) + '): noch ' + ap.bis_naechste + ' AP<\/div>'
+        : '';
+      overview.innerHTML = '<div class="sg-ap-row">' + availStr + einsStr + gesStr + '<\/div>' + stufeStr;
+
+      /* Stufen-Aufstieg button (DSA 4.1 max Stufe = 10) */
+      if (ap.stufe >= 10) return;
+      var stufeBox = document.createElement('div');
+      stufeBox.style.marginTop = '12px';
+
+      var stufeBtn = document.createElement('button');
+      stufeBtn.type = 'button';
+      stufeBtn.className = 'sg-btn';
+      stufeBtn.textContent = '⬆ Stufe aufsteigen (GM)';
+
+      var stufeConfirm = document.createElement('div');
+      stufeConfirm.className = 'sg-confirm hidden';
+
+      var stufeJa = document.createElement('button');
+      stufeJa.type = 'button';
+      stufeJa.className = 'sg-btn sg-btn--ok';
+      stufeJa.textContent = 'Ja';
+
+      var stufeNein = document.createElement('button');
+      stufeNein.type = 'button';
+      stufeNein.className = 'sg-btn';
+      stufeNein.textContent = 'Nein';
+
+      var stufeErr = document.createElement('span');
+      stufeErr.className = 'sg-error';
+      stufeErr.style.display = 'none';
+
+      stufeConfirm.appendChild(
+        document.createTextNode('Stufe ' + ap.stufe + ' → ' + (ap.stufe + 1) + ' bestätigen? ')
+      );
+      stufeConfirm.appendChild(stufeJa);
+      stufeConfirm.appendChild(stufeNein);
+
+      stufeBtn.addEventListener('click', function () {
+        stufeBtn.classList.add('hidden');
+        stufeConfirm.classList.remove('hidden');
+      });
+      stufeNein.addEventListener('click', function () {
+        stufeConfirm.classList.add('hidden');
+        stufeBtn.classList.remove('hidden');
+        stufeErr.style.display = 'none';
+      });
+      stufeJa.addEventListener('click', function () {
+        stufeJa.disabled = true;
+        stufeJa.textContent = '…';
+        doStufenaufstieg(function () {
+          window.location.reload();
+        }, function (err) {
+          stufeJa.disabled = false;
+          stufeJa.textContent = 'Ja';
+          stufeConfirm.classList.add('hidden');
+          stufeBtn.classList.remove('hidden');
+          stufeErr.textContent = '⚠ ' + err;
+          stufeErr.style.display = '';
+        });
+      });
+
+      stufeBox.appendChild(stufeBtn);
+      stufeBox.appendChild(stufeConfirm);
+      stufeBox.appendChild(stufeErr);
+      overview.appendChild(stufeBox);
+    }
+
+    /* Steigerungsliste */
+    var list = document.getElementById('steigern-list');
+    if (!list) return;
+    list.innerHTML = '';
+    cart.selected = [];   /* frischer Warenkorb pro Render */
+
+    /* Build one <table class="steiger-table"> per section with its own heading.
+       `items` are pre-mapped objects ready for renderRow(). */
+    function addSection(title, items) {
+      var h = document.createElement('h4');
+      h.className = 'sg-section-head';
+      h.textContent = title;
+      list.appendChild(h);
+
+      var table = document.createElement('table');
+      table.className = 'steiger-table';
+
+      var thead = document.createElement('thead');
+      var headRow = document.createElement('tr');
+      ['Name', 'Wert', 'Kosten', 'Aktion'].forEach(function (label) {
+        var th = document.createElement('th');
+        th.textContent = label;
+        headRow.appendChild(th);
+      });
+      thead.appendChild(headRow);
+      table.appendChild(thead);
+
+      var tbody = document.createElement('tbody');
+      items.forEach(function (item) {
+        tbody.appendChild(renderRow(item));
+      });
+      table.appendChild(tbody);
+
+      list.appendChild(table);
+    }
+
+    /* Eigenschaften */
+    addSection('Eigenschaften (Zielwert × 15 AP)', EIG_ORDER.map(function (abbr) {
+      var val = dsa.eig[abbr];
+      return {
+        kind: 'eigenschaft', abbr: abbr,
+        displayName: abbr + ' · ' + EIG_FULL[abbr],
+        currentVal: val, cost: calcEigCost(val),
+        eigFull: EIG_FULL[abbr] + ' (' + abbr + ')'
+      };
+    }));
+
+    /* Talente & Kampftechniken */
+    addSection('Talente & Kampftechniken', dsa.steigern.talente.map(function (t) {
+      return {
+        kind: 'talent', name: t.name,
+        displayName: t.name + ' · SKT ' + t.skt,
+        currentVal: t.taw, cost: calcApCost(t.skt, t.taw),
+        skt: t.skt,
+        section: t.section, file: t.file, rowKeyCol: t.row_key_column,
+        komplexitaet: t.komplexitaet
+      };
+    }));
+
+    /* Zauber */
+    addSection('Zauber', dsa.steigern.zauber.map(function (z) {
+      return {
+        kind: 'zauber', name: z.name,
+        displayName: z.name + ' · Lern ' + z.lern,
+        currentVal: z.zfw, cost: calcApCost(z.lern, z.zfw),
+        skt: z.lern,
+        file: z.file
+      };
+    }));
+
+    /* Warenkorb-Leiste (Summe + Sammel-Commit) unter den Tabellen */
+    list.appendChild(buildCartBar());
+    cartUpdate();
+  }
+
+  document.addEventListener('DOMContentLoaded', renderSteigernTab);
+}());
+
+</script>
+<script>/* inventar.js */
+/* inventar.js — Inventar-Tab write-back controller
+   Handles three PATCH operations:
+     1. Coin steppers   → frontmatter key 'geld' on _illaen.md
+     2. Item qty        → table_cell on ausruestung.md ## Inventar
+     3. Add item        → table_append_row on ausruestung.md ## Inventar
+*/
+(function () {
+  'use strict';
+
+  /* DSA 4.1 coin conversion table (in Kreuzer) */
+  var COIN_KR = { dukaten: 1000, silbertaler: 100, heller: 10, kreuzer: 1 };
+
+  /* makeChange(geld, coin, delta) → new geld object
+     Throws a string error message on invalid input. */
+  function makeChange(geld, coin, delta) {
+    var coinKr = COIN_KR[coin];
+    if (!coinKr) throw 'Unbekannte Münze: ' + coin;
+
+    var totalKr = geld.dukaten * 1000
+                + geld.silbertaler * 100
+                + geld.heller * 10
+                + geld.kreuzer;
+
+    totalKr += delta * coinKr;
+
+    if (totalKr < 0) throw 'Nicht genug Münzen';
+
+    var d = Math.floor(totalKr / 1000);
+    totalKr -= d * 1000;
+    var s = Math.floor(totalKr / 100);
+    totalKr -= s * 100;
+    var h = Math.floor(totalKr / 10);
+    var k = totalKr - h * 10;
+
+    return { dukaten: d, silbertaler: s, heller: h, kreuzer: k };
+  }
+
+  /* ── PATCH helper ─────────────────────────────────────────────────────── */
+  /* Identical copy from steigern.js — handles file: protocol gracefully. */
+  function patchLocator(locator) {
+    if (window.location.protocol === 'file:') return Promise.resolve({ ok: true });
+    return fetch('/api/held/' + window.DSA.slug + '/value', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(locator)
+    }).then(function (r) {
+      if (r.status === 409) return Promise.reject(new Error('Konflikt — Datei wurde extern geändert'));
+      if (!r.ok) return r.json().then(function (d) {
+        return Promise.reject(new Error(d.error || 'PATCH fehlgeschlagen'));
+      });
+      return r.json();
+    });
+  }
+
+  /* ── Error display helper ─────────────────────────────────────────────── */
+  function showError(container, message) {
+    var prev = container.querySelector('.sg-error');
+    if (prev) prev.remove();
+    var errEl = document.createElement('span');
+    errEl.className = 'sg-error';
+    errEl.textContent = '⚠ ' + message;
+    container.appendChild(errEl);
+  }
+
+  function clearError(container) {
+    var prev = container.querySelector('.sg-error');
+    if (prev) prev.remove();
+  }
+
+  /* ── Coin stepper handler ─────────────────────────────────────────────── */
+  function coinButtonHandler(btn) {
+    var coin  = btn.dataset.coin;
+    var delta = parseInt(btn.dataset.delta, 10);
+    if (!coin || isNaN(delta)) return;
+
+    /* Compute new coin balance — reject early without network call */
+    var newGeld;
+    try {
+      newGeld = makeChange(window.DSA.inventar.geld, coin, delta);
+    } catch (e) {
+      var row = btn.closest('.inv-coin-grid') || btn.parentNode;
+      showError(row, e);
+      return;
+    }
+
+    /* Disable all coin buttons while the PATCH is in flight */
+    var allCoinBtns = document.querySelectorAll('.inv-stepper-btn[data-coin]');
+    allCoinBtns.forEach(function (b) { b.disabled = true; });
+
+    var yamlValue = '{dukaten: ' + newGeld.dukaten
+                  + ', silbertaler: ' + newGeld.silbertaler
+                  + ', heller: ' + newGeld.heller
+                  + ', kreuzer: ' + newGeld.kreuzer + '}';
+
+    patchLocator({
+      kind:  'frontmatter',
+      file:  '_illaen.md',
+      key:   'geld',
+      value: yamlValue
+    }).then(function () {
+      window.location.reload();
+    }).catch(function (err) {
+      allCoinBtns.forEach(function (b) { b.disabled = false; });
+      var row = btn.closest('.inv-coin-grid') || btn.parentNode;
+      showError(row, err.message || 'PATCH fehlgeschlagen');
+    });
+  }
+
+  /* ── Item quantity stepper handler ───────────────────────────────────── */
+  function itemButtonHandler(btn) {
+    var itemName = btn.dataset.item;
+    var delta    = parseInt(btn.dataset.delta, 10);
+    if (!itemName || isNaN(delta)) return;
+
+    /* Find current anzahl from window.DSA */
+    var items = window.DSA.inventar.items;
+    var item  = null;
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].name === itemName) { item = items[i]; break; }
+    }
+
+    var row = btn.closest('li') || btn.parentNode;
+
+    if (!item) {
+      showError(row, 'Gegenstand nicht gefunden: ' + itemName);
+      return;
+    }
+
+    var currentQty = parseInt(item.anzahl, 10);
+    if (isNaN(currentQty)) {
+      showError(row, 'Ungültige Menge: ' + item.anzahl);
+      return;
+    }
+
+    var newQty = currentQty + delta;
+    if (newQty < 0) {
+      showError(row, 'Anzahl kann nicht negativ sein');
+      return;
+    }
+
+    clearError(row);
+    btn.disabled = true;
+    var origText = btn.textContent;
+    btn.textContent = '…';
+
+    patchLocator({
+      kind:         'table_cell',
+      file:         'ausruestung.md',
+      section_path: ['Inventar'],
+      row_key:      { column: 'Gegenstand', match: itemName },
+      column:       'Anzahl',
+      value:        String(newQty)
+    }).then(function () {
+      window.location.reload();
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = origText;
+      showError(row, err.message || 'PATCH fehlgeschlagen');
+    });
+  }
+
+  /* ── Add item handler ────────────────────────────────────────────────── */
+  function addItemHandler() {
+    var nameInput   = document.getElementById('inv-add-name');
+    var anzahlInput = document.getElementById('inv-add-anzahl');
+    var addBtn      = document.getElementById('inv-add-submit');
+    var form        = addBtn ? addBtn.closest('.inv-add-form') || addBtn.parentNode : document.body;
+
+    if (!nameInput || !anzahlInput || !addBtn) return;
+
+    var itemName = nameInput.value.trim();
+    var anzahlRaw = anzahlInput.value.trim();
+
+    if (!itemName) {
+      showError(form, 'Bitte einen Gegenstandsnamen eingeben');
+      return;
+    }
+
+    var anzahl = parseInt(anzahlRaw, 10);
+    if (!anzahlRaw || isNaN(anzahl) || anzahl < 0) {
+      showError(form, 'Bitte eine gültige Anzahl eingeben (≥ 0)');
+      return;
+    }
+
+    clearError(form);
+    addBtn.disabled = true;
+    var origText = addBtn.textContent;
+    addBtn.textContent = '…';
+
+    patchLocator({
+      kind:         'table_append_row',
+      file:         'ausruestung.md',
+      section_path: ['Inventar'],
+      cells:        [itemName, String(anzahl), '0']
+    }).then(function () {
+      window.location.reload();
+    }).catch(function (err) {
+      addBtn.disabled = false;
+      addBtn.textContent = origText;
+      showError(form, err.message || 'PATCH fehlgeschlagen');
+    });
+  }
+
+  /* ── DOMContentLoaded: wire up all event listeners ───────────────────── */
+  document.addEventListener('DOMContentLoaded', function () {
+    /* Coin steppers */
+    document.querySelectorAll('.inv-stepper-btn[data-coin]').forEach(function (btn) {
+      btn.addEventListener('click', function () { coinButtonHandler(btn); });
+    });
+
+    /* Item qty steppers */
+    document.querySelectorAll('.inv-stepper-btn[data-item]').forEach(function (btn) {
+      btn.addEventListener('click', function () { itemButtonHandler(btn); });
+    });
+
+    /* Add item */
+    var addBtn = document.getElementById('inv-add-submit');
+    if (addBtn) addBtn.addEventListener('click', addItemHandler);
+  });
+}());
+
+</script>
+<script>/* zauberspeicher.js */
+(function () {
+  'use strict';
+
+  // ---------- PATCH helper (same pattern as inventar.js) ----------
+
+  function patchLocator(locator) {
+    if (window.location.protocol === 'file:') return Promise.resolve({ ok: true });
+    return fetch('/api/held/' + window.DSA.slug + '/value', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(locator)
+    }).then(function(r) {
+      if (r.status === 409) return Promise.reject(new Error('Konflikt — Datei wurde extern geändert'));
+      if (!r.ok) return r.json().then(function(d) {
+        return Promise.reject(new Error(d.error || 'PATCH fehlgeschlagen'));
+      });
+      return r.json();
+    });
+  }
+
+  // ---------- Error display helper ----------
+
+  function showSlotError(slotEl, msg) {
+    var existing = slotEl.querySelector('.sg-error');
+    if (existing) existing.remove();
+    var span = document.createElement('span');
+    span.className = 'sg-error';
+    span.textContent = '⚠ ' + msg;
+    slotEl.appendChild(span);
+  }
+
+  // ---------- The common PATCH locator shape for Zauberspeicher ----------
+  // section_path MUST be ['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt']
+  // row_key: {column: 'Slot', match: <slot number as string>}
+  // FRAGILITY: '(9 Rituale)' in the H2 heading is a literal that the writer matches
+  // exactly. If a ritual is ever added/removed, the heading count changes and every
+  // PATCH will silently fail with "cell not found". The render (parser uses substring
+  // match) would still work, masking the break. Update both here and rituale.md if needed.
+
+  var SECTION_PATH = ['Stabzauber (9 Rituale)', 'Zauberspeicher-Inhalt'];
+
+  // ---------- Entleeren ----------
+
+  // opts.skipReload: caller takes responsibility for reloading (used when
+  // clearing several slots at once — e.g. a Patzer on the Zauberspeicher-
+  // Auslöseprobe in dice.js — so each independent PATCH doesn't navigate the
+  // page away and abort the others still in flight). Always resolves (never
+  // rejects) so Promise.all over several calls waits for every attempt to
+  // settle, success or failure, before the caller reloads once.
+  function handleEntleeren(btn, opts) {
+    opts = opts || {};
+    var slot = btn.dataset.slot;
+    var slotEl = btn.closest('.speicher-slot');
+    if (slotEl) { var old = slotEl.querySelector('.sg-error'); if (old) old.remove(); }
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    return patchLocator({
+      kind: 'table_row',
+      file: 'rituale.md',
+      section_path: SECTION_PATH,
+      row_key: { column: 'Slot', match: slot },
+      cells: {
+        'AsP': '—',
+        'Gespeicherter Zauber': '— frei —',
+        'Erschwernis-Mods': '—',
+        'Letzte Erneuerung': '—'
+      }
+    }).then(function() {
+      if (!opts.skipReload) window.location.reload();
+      return true;
+    }).catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Entleeren';
+      if (slotEl) showSlotError(slotEl, err.message || 'PATCH fehlgeschlagen');
+      return false;
+    });
+  }
+
+  // Exposed so dice.js can reuse this exact PATCH flow for the
+  // Zauberspeicher-Auslöseprobe result handling (success / Patzer) instead
+  // of duplicating the PATCH shape. Callers pass the real .slot-entleeren-btn
+  // element for the slot they want cleared.
+  window.Zauberspeicher = { handleEntleeren: handleEntleeren };
+
+  // ---------- Befüllen toggle ----------
+
+  function handleBefuellenToggle(btn) {
+    var slot = btn.dataset.slot;
+    var area = btn.closest('.slot-befuellen-area');
+    if (!area) return;
+    var form = area.querySelector('.slot-befuellen-form[data-slot="' + slot + '"]');
+    if (!form) return;
+    var isHidden = form.classList.contains('hidden');
+    form.classList.toggle('hidden', !isHidden);
+    btn.textContent = isHidden ? '× Abbrechen' : '+ Befüllen';
+  }
+
+  // ---------- Befüllen cancel ----------
+
+  function handleBefuellenCancel(btn) {
+    var slot = btn.dataset.slot;
+    var area = btn.closest('.slot-befuellen-area');
+    if (!area) return;
+    var form = area.querySelector('.slot-befuellen-form[data-slot="' + slot + '"]');
+    var toggleBtn = area.querySelector('.slot-befuellen-toggle[data-slot="' + slot + '"]');
+    if (form) form.classList.add('hidden');
+    if (toggleBtn) toggleBtn.textContent = '+ Befüllen';
+  }
+
+  // ---------- Befüllen submit ----------
+
+  function handleBefuellenSubmit(btn) {
+    var slot = btn.dataset.slot;
+    var area = btn.closest('.slot-befuellen-area');
+    if (!area) return;
+
+    var zauberInput = area.querySelector('.slot-form-zauber[data-slot="' + slot + '"]');
+    var aspInput    = area.querySelector('.slot-form-asp[data-slot="'    + slot + '"]');
+    var modsInput   = area.querySelector('.slot-form-mods[data-slot="'   + slot + '"]');
+    var ernInput    = area.querySelector('.slot-form-erneuerung[data-slot="' + slot + '"]');
+
+    var zauber = zauberInput ? zauberInput.value.trim() : '';
+    var asp    = aspInput    ? aspInput.value.trim()    : '';
+    var mods   = modsInput   ? modsInput.value.trim()   : '—';
+    var ern    = ernInput     ? ernInput.value.trim()    : '—';
+
+    var slotEl = btn.closest('.speicher-slot');
+    if (slotEl) { var old = slotEl.querySelector('.sg-error'); if (old) old.remove(); }
+
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    // Validation
+    if (!zauber) {
+      btn.disabled = false;
+      btn.textContent = 'Speichern';
+      if (slotEl) showSlotError(slotEl, 'Zauber-Name darf nicht leer sein.');
+      return;
+    }
+    if (!asp || isNaN(Number(asp)) || Number(asp) < 0) {
+      btn.disabled = false;
+      btn.textContent = 'Speichern';
+      if (slotEl) showSlotError(slotEl, 'AsP muss eine nicht-negative Zahl sein.');
+      return;
+    }
+
+    // Defaults for optional fields
+    if (!mods) mods = '—';
+    if (!ern)  ern  = '—';
+
+    patchLocator({
+      kind: 'table_row',
+      file: 'rituale.md',
+      section_path: SECTION_PATH,
+      row_key: { column: 'Slot', match: slot },
+      cells: {
+        'AsP': asp,
+        'Gespeicherter Zauber': zauber,
+        'Erschwernis-Mods': mods,
+        'Letzte Erneuerung': ern
+      }
+    }).then(function() {
+      window.location.reload();
+    }).catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Speichern';
+      if (slotEl) showSlotError(slotEl, err.message || 'PATCH fehlgeschlagen');
+    });
+  }
+
+  // ---------- Wire listeners ----------
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Guard: no zauberspeicher data (hero without Stab)
+    if (!window.DSA || !(window.DSA.zauberspeicher || []).length) return;
+
+    document.querySelectorAll('.slot-entleeren-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleEntleeren(btn); });
+    });
+
+    document.querySelectorAll('.slot-befuellen-toggle').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleBefuellenToggle(btn); });
+    });
+
+    document.querySelectorAll('.slot-befuellen-cancel').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleBefuellenCancel(btn); });
+    });
+
+    document.querySelectorAll('.slot-befuellen-submit').forEach(function(btn) {
+      btn.addEventListener('click', function() { handleBefuellenSubmit(btn); });
+    });
+  });
+}());
+
+</script>
+<script>/* journal.js */
+(function () {
+  'use strict';
+
+  var IS_SERVED = window.location.protocol !== 'file:';
+
+  // Guard: only run when served and kampagne data is present
+  if (!IS_SERVED || !window.DSA || !window.DSA.kampagne) return;
+
+  // ---------- PATCH helper for kampagne section bodies ----------
+
+  function patchKampagne(camp, locator) {
+    return fetch('/api/kampagne/' + camp + '/value', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(locator)
+    }).then(function (r) {
+      if (r.status === 409) return Promise.reject(new Error('Konflikt — Datei wurde extern geändert'));
+      if (!r.ok) return r.json().then(function (d) {
+        return Promise.reject(new Error(d.error || 'PATCH fehlgeschlagen'));
+      });
+      return r.json();
+    });
+  }
+
+  // ---------- Save handler ----------
+
+  function handleSave(btn) {
+    var datei = btn.dataset.datei;
+    var card = btn.closest('.journal-session');
+    if (!card) return;
+
+    var textarea = card.querySelector('.journal-verlauf[data-datei="' + datei + '"]');
+    var errorSpan = card.querySelector('.journal-save-error');
+    var okSpan = card.querySelector('.journal-save-ok');
+
+    if (!textarea) return;
+
+    // Clear previous feedback
+    if (errorSpan) { errorSpan.textContent = ''; errorSpan.style.display = 'none'; }
+    if (okSpan) okSpan.style.display = 'none';
+
+    btn.disabled = true;
+    btn.textContent = '…';
+
+    patchKampagne(window.DSA.kampagne_slug, {
+      kind: 'section_body',
+      file: datei,
+      section: 'Verlauf',
+      value: textarea.value
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = 'Speichern';
+      if (okSpan) {
+        okSpan.style.display = 'inline';
+        setTimeout(function () { okSpan.style.display = 'none'; }, 3000);
+      }
+    }).catch(function (err) {
+      btn.disabled = false;
+      btn.textContent = 'Speichern';
+      if (errorSpan) {
+        errorSpan.textContent = '⚠ ' + (err.message || 'PATCH fehlgeschlagen');
+        errorSpan.style.display = 'inline';
+      }
+    });
+  }
+
+  // ---------- Wire listeners ----------
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.journal-save-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () { handleSave(btn); });
+    });
+  });
+}());
+
+</script>
+<script>/* chronik.js */
+/* chronik.js — Roh/Kompiliert view switcher for the Chronik tab */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'dsa-chronik-view';
+  var DEFAULT_VIEW = 'roh';
+  var VIEWS = ['roh', 'kompiliert'];
+
+  function switchView(view) {
+    document.querySelectorAll('.chronik-view').forEach(function (el) {
+      el.classList.toggle('chronik-view--active', el.dataset.view === view);
+    });
+    document.querySelectorAll('.chronik-switch-btn').forEach(function (btn) {
+      var active = btn.dataset.view === view;
+      btn.classList.toggle('chronik-switch-btn--active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    try { sessionStorage.setItem(STORAGE_KEY, view); } catch (e) {}
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.chronik-switch-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () { switchView(btn.dataset.view); });
+    });
+    var saved;
+    try { saved = sessionStorage.getItem(STORAGE_KEY); } catch (e) {}
+    switchView(VIEWS.indexOf(saved) !== -1 ? saved : DEFAULT_VIEW);
+  });
+
+  // Chrome does not print the body of a closed <details>; open them for printing.
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('details.chronik-abend').forEach(function (d) {
+      if (d.dataset.wasOpen === undefined) { d.dataset.wasOpen = d.open ? '1' : ''; }
+      d.open = true;
+    });
+  });
+
+  window.addEventListener('afterprint', function () {
+    document.querySelectorAll('details.chronik-abend').forEach(function (d) {
+      if (d.dataset.wasOpen === undefined) { return; }
+      d.open = (d.dataset.wasOpen === '1');
+      delete d.dataset.wasOpen;
+    });
+  });
+}());
+
+</script>
+<script>/* commit.js */
+(function () {
+  'use strict';
+
+  var IS_SERVED = window.location.protocol !== 'file:';
+  if (!IS_SERVED) return;
+
+  var showIndicator = window.dsaShowIndicator;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var btn = document.getElementById('commit-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      btn.textContent = '…';
+
+      var msgInput = document.getElementById('commit-msg');
+      var msgValue = msgInput ? msgInput.value.trim() : '';
+
+      fetch('/api/commit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msgValue }),
+      })
+        .then(function (resp) {
+          return resp.json().then(function (data) {
+            return { ok: resp.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          var data = result.data;
+          if (!result.ok || !data.ok) {
+            showIndicator('Git-Fehler: ' + (data.error || 'unbekannt'), true);
+          } else if (data.committed === false) {
+            showIndicator('nichts zu sichern', false);
+          } else {
+            showIndicator('committed ✓', false);
+            if (msgInput) msgInput.value = '';
+          }
+        })
+        .catch(function (err) {
+          showIndicator('Netzwerkfehler: ' + (err.message || 'unbekannt'), true);
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = '💾 Sichern';
+        });
+    });
+  });
+}());
+
+</script>
 </body>
 </html>
