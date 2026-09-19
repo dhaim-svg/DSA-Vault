@@ -73,6 +73,8 @@
   .card,.weapon-card,.vn-grp,.speicher-box,.feed li,.istat{ break-inside:avoid; }
   .card-title,.sec-head,.vn-grp h4{ break-after:avoid; }
   .spell{ break-inside:avoid; }
+  /* Zeile mit aufgeklapptem Artikel darf umbrechen; ohne :has()-Support bleibt es bei avoid */
+  .spell:has(.artikel-details[open]){ break-inside:auto; }
   .story p{ orphans:3; widows:3; }
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
@@ -88,6 +90,11 @@
   .weapon-grid > div{ background:transparent !important; border-color:var(--paper-ink) !important; }
   .weapon-grid .k,.weapon-grid .v{ color:var(--paper-ink) !important; }
   .sf-list li .ico{ color:var(--paper-ink) !important; text-shadow:none !important; }
+  /* --- Artikelvorschau (D-018): geschlossene <details> drucken nichts, offene hell auf Papier --- */
+  .artikel-panel{ background:transparent !important; border-color:var(--paper-rule) !important; }
+  .artikel-toggle,.artikel-titel,.artikel-quelle,.artikel-meta,.artikel-meta b,
+  .artikel-body,.artikel-body *{ color:var(--paper-ink) !important; }
+  .artikel-obsidian{ display:none !important; }
   .campaign{ background:transparent !important; border:1px solid var(--paper-ink) !important; }
   .campaign h3,.status,.status .dot-s,.c-meta b,.c-meta{ color:var(--paper-ink) !important; }
   .status .dot-s{ background:var(--paper-ink) !important; box-shadow:none !important; animation:none; }

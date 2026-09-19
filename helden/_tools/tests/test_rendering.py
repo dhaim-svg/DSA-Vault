@@ -268,6 +268,125 @@ def test_render_zauber_rows_all_inside_list_wrapper(live_html):
     assert 'spell-head' not in inside
 
 
+VOID_TAGS = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
+
+
+def _artikel_details_parents(html_fragment):
+    """(Klassen des Elternelements, Klassen des Grosselternelements, data-spell-list am Grosselternelement) je
+    <details class="artikel-details"> im Fragment; das Fragment beginnt am Listen-Wrapper."""
+    from html.parser import HTMLParser
+
+    found, stack = [], []
+
+    class P(HTMLParser):
+        def handle_starttag(self, tag, attrs):
+            a = dict(attrs)
+            if tag == 'details' and 'artikel-details' in (a.get('class') or '').split():
+                parent = stack[-1] if stack else ('', {})
+                grand = stack[-2] if len(stack) > 1 else ('', {})
+                found.append(((parent[0], parent[1].get('class')), (grand[0], 'data-spell-list' in grand[1])))
+            if tag not in VOID_TAGS:
+                stack.append((tag, a))
+
+        def handle_endtag(self, tag):
+            for i in range(len(stack) - 1, -1, -1):
+                if stack[i][0] == tag:
+                    del stack[i:]
+                    return
+
+    P().feed(html_fragment)
+    return found
+
+
+def _spell_list_fragment(html):
+    return html[html.index('<div class="spell-list" data-spell-list>'):html.index('class="legend-row"')]
+
+
+def _first_wiki_path(ctx):
+    return next(z['wiki_path'] for z in ctx['held']['zauber'] if z.get('wiki_path'))
+
+
+def test_render_zauber_artikel_details_one_per_spell_with_article(live_html):
+    ctx = build_context('illaen-baernhold')
+    erwartet = sum(1 for z in ctx['held']['zauber'] if z.get('wiki_path') in ctx['zauber_artikel'])
+    assert erwartet
+    assert live_html.count('class="artikel-details"') == erwartet
+    parents = _artikel_details_parents(_spell_list_fragment(live_html))
+    assert len(parents) == erwartet
+    # direktes Kind der Zeile (wandert beim Sortieren mit), Zeile direkt im Listen-Wrapper
+    assert all(p == (('div', 'spell'), ('div', True)) for p in parents)
+
+
+def test_render_zauber_artikel_empty_or_missing_has_no_details_but_keeps_name_links():
+    ctx = build_context('illaen-baernhold')
+    ctx['zauber_artikel'] = {}
+    html = render_dashboard(ctx)
+    assert html.count('class="artikel-details"') == 0
+    assert 'class="nlink"' in html
+    del ctx['zauber_artikel']
+    html = render_dashboard(ctx)
+    assert html.count('class="artikel-details"') == 0
+    assert 'class="nlink"' in html
+
+
+def test_render_zauber_artikel_escapes_text_fields_but_not_html():
+    ctx = build_context('illaen-baernhold')
+    pfad = _first_wiki_path(ctx)
+    ctx['zauber_artikel'] = {pfad: {
+        'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [{'label': 'L<u>', 'wert': 'W<s>'}], 'html': '<p>ok</p>',
+    }}
+    html = render_dashboard(ctx)
+    assert html.count('class="artikel-details"') == 1
+    block = re.search(r'<details class="artikel-details">.*?</details>', html, re.S).group(0)
+    for roh in ('<b>T</b>', 'Q<i>', 'L<u>', 'W<s>'):
+        assert roh not in block
+    for escaped in ('&lt;b&gt;T&lt;/b&gt;', 'Q&lt;i&gt;', 'L&lt;u&gt;', 'W&lt;s&gt;'):
+        assert escaped in block
+    assert '<div class="artikel-body"><p>ok</p></div>' in block
+
+
+def test_render_zauber_artikel_has_single_obsidian_link_without_nlink(live_html):
+    block = re.search(r'<details class="artikel-details">.*?</details>', live_html, re.S).group(0)
+    kopf = re.search(r'<div class="artikel-kopf">.*?</div>', block, re.S).group(0)
+    assert kopf.count('href="obsidian://') == 1
+    assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', kopf)
+    assert 'nlink' not in block
+    # der ↗ am Zaubernamen bleibt Sache des Namenslinks in .name (CSS ::after)
+    row = live_html[:live_html.index('class="artikel-details"')]
+    assert row.rindex('class="nlink"') > row.rindex('<div class="spell"')
+
+
+def test_dice_js_click_guard_ignores_clicks_inside_details():
+    js = (STATIC_DIR / 'dice.js').read_text(encoding='utf-8')
+    start = js.index("querySelectorAll('.spell[data-probe]')")
+    guard = js[start:start + 400]
+    assert re.search(r"if\s*\(\s*e\.target\.closest\('details'\)", guard)
+    assert guard.index("closest('details')") < guard.index('openPanel')
+
+
+def _media_blocks(css, header_regex):
+    """Rumpf aller @media-Bloecke, deren Kopf zu header_regex passt (Klammer-Zaehlung)."""
+    blocks = []
+    for m in re.finditer(header_regex + r'\s*\{', css):
+        depth, j = 1, m.end()
+        while depth and j < len(css):
+            depth += {'{': 1, '}': -1}.get(css[j], 0)
+            j += 1
+        blocks.append(css[m.end():j - 1])
+    return blocks
+
+
+def test_css_artikel_details_rules_desktop_compact_and_print():
+    css = css_bundle()
+    screen = _strip_print_blocks(css)
+    assert re.search(r'\.spell\s+\.artikel-details\s*\{[^}]*grid-column\s*:\s*1\s*/\s*-1', screen)
+    compact = ''.join(_media_blocks(css, r'@media\s+screen\s+and\s+\(max-width:\s*1070px\)'))
+    assert re.search(r'\.artikel-details[^{}]*\{[^}]*flex\s*:\s*1\s+1\s+100%', compact)
+    prints = ''.join(_media_blocks(css, r'@media\s+print'))
+    assert re.search(r'\.artikel-panel\s*\{[^}]*background\s*:\s*transparent', prints)
+    assert re.search(r'\.artikel-details\[open\]\s*\)\s*\{[^}]*break-inside\s*:\s*auto', prints)
+
+
 def test_render_has_no_inline_spell_sort_block(live_html, static_js_html):
     for html in (live_html, static_js_html, server._render_dashboard('illaen-baernhold')):
         assert 'Sortierung Zauber-Tabelle' not in html

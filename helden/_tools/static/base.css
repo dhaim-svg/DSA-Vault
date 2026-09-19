@@ -400,6 +400,49 @@ body::before{
 .spell .kosten { font-family:var(--mono); font-size:11px; color:var(--ink-mute); padding-top:2px; }
 .spell .wirkung-cell { padding-top:2px; }
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
+/* Artikelvorschau (D-018): letztes Kind der .spell-Zeile, ueber die volle Zeilenbreite */
+.spell .artikel-details{ grid-column:1 / -1; min-width:0; }
+.artikel-details summary.artikel-toggle{
+  list-style:none; font-family:var(--mono); font-size:10px; padding:2px 0;
+  color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
+}
+.artikel-details summary.artikel-toggle::-webkit-details-marker{ display:none; }
+.artikel-details summary.artikel-toggle::marker{ display:none; }
+.artikel-details summary.artikel-toggle:hover, .artikel-details[open] summary.artikel-toggle{ color:var(--accent-cold); }
+.artikel-details summary.artikel-toggle:focus-visible{ outline:2px solid var(--accent-cold); outline-offset:2px; }
+.artikel-panel{
+  margin-top:6px; padding:10px 12px; cursor:auto; min-width:0;
+  background:var(--bg-inset); border:1px solid var(--rule); border-left:2px solid var(--accent-cold);
+  color:var(--ink); overflow-wrap:anywhere;
+}
+.artikel-kopf{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; }
+.artikel-titel{ font-family:var(--subhead); font-size:14px; color:var(--ink); }
+.artikel-quelle{ font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--ink-mute); }
+.artikel-obsidian{ margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--accent-cold); text-decoration:none; white-space:nowrap; }
+.artikel-obsidian:hover{ text-decoration:underline; }
+.artikel-meta{
+  display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:6px;
+  font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:.03em; line-height:1.5;
+}
+.artikel-meta b{ color:var(--accent-gold); font-weight:600; }
+.artikel-body{ margin-top:8px; font-family:var(--body); font-size:12px; line-height:1.55; color:var(--ink); min-width:0; }
+.artikel-body > :first-child{ margin-top:0; }
+.artikel-body > :last-child{ margin-bottom:0; }
+.artikel-body h1, .artikel-body h2, .artikel-body h3{ margin:12px 0 4px; line-height:1.3; font-weight:600; }
+.artikel-body h1{ font-family:var(--display); font-size:13px; color:var(--ink); }
+.artikel-body h2{ font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-cold); }
+.artikel-body h3{ font-family:var(--subhead); font-size:12px; color:var(--ink); }
+.artikel-body p{ margin:0 0 6px; }
+.artikel-body ul, .artikel-body ol{ margin:0 0 6px; padding-left:18px; }
+.artikel-body li{ margin:0 0 2px; }
+.artikel-body blockquote{ margin:0 0 6px; padding:2px 10px; border-left:2px solid var(--rule); color:var(--ink-mute); }
+.artikel-body strong{ color:var(--ink); font-weight:700; }
+.artikel-body em{ font-style:italic; }
+.artikel-body a{ color:var(--accent-cold); }
+.artikel-body code{ font-family:var(--mono); font-size:11px; color:var(--ink-probe); }
+.artikel-body table{ display:block; max-width:100%; overflow-x:auto; border-collapse:collapse; margin:0 0 6px; font-size:11px; }
+.artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; }
+.artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
 /* Das 6-Spalten-Grid braucht ~1019 px Mindestbreite (gemessen) plus ~43 px Seitenrand rechts der Karte
    (Karten-Rand ragt sonst raus) — darunter Kompaktlayout: Name volle Breite, Probe/ZfW/ZD/Kosten als
    umbrechende Zeile, Wirkung volle Breite. */
@@ -407,7 +450,7 @@ body::before{
   .spell{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
   .spell.spell-head{ display:none; }
   .spell-sort-btn{ min-height:44px; }
-  .spell .name, .spell .wirkung-cell{ flex:1 1 100%; min-width:0; }
+  .spell .name, .spell .wirkung-cell, .spell .artikel-details{ flex:1 1 100%; min-width:0; }
   .spell .zfw-num{ min-width:0; }
   .spell .zfw-num::before{ content:"ZfW "; font-size:10px; font-weight:400; color:var(--ink-mute); }
   .spell .zd::before{ content:"ZD "; color:var(--ink-mute); }
