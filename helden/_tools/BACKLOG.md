@@ -5,11 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-042 | Chronik-Parser: `Datum: 13. Phex -> Start`-Zeile als IG-Datum erkennen | S | in-progress | 017 |
-| D-036 | NSC-/Orts-Register aus kompilierten Sessions (generiert zur Render-Zeit, 3. Ansicht im Chronik-Tab, clientseitige Suche; keine Dateien in `abenteuer/`) | M | in-progress | 017 |
-| D-040 | Mobile 400 px: horizontaler Überlauf in Zauber-/Steigern-/Inventar-/Profil-Tab | S | in-progress | 017 |
+_(keine)_
 
 ## Backlog
 
@@ -17,6 +13,9 @@
 |------|-------|--------|-------|--------|
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
 | D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
+| D-043 | Zauber: ZfW-Sortierung im Kompaktlayout (≤ 1070 px) erreichbar machen | S | ready | Review D-040, 19.09.2026 |
+| D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | ready | Browser-Check D-040, 19.09.2026 |
+| D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
 
 ### Gestrichen
 
@@ -35,22 +34,25 @@ Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, 
 **D-033 / D-034 — Quick-Capture & Ereignis-Auto-Log — *entfallen 19.09.2026***
 Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im Vault voraus. Da Drive Quelle bleibt (D-030-Fallback, Junction-Ansatz gescheitert), gibt es keinen Live-Schreibpfad mehr, in den das Dashboard schreiben könnte, ohne beim nächsten Import überschrieben zu werden. Ersatzlos gestrichen — der User schreibt weiterhin direkt in Google Drive, keine Dashboard-Interaktion während des Spiels vorgesehen.
 
-**D-036 — NSC-/Orts-Register**
-Aus den per D-035 kompilierten Sessions extrahiert (`nsc.md`, `orte.md`), plus Suche im Chronik-Tab. Mehrwert gegenüber flacher MD-Datei — die Chronik nennt allein in vier Spielabenden ~15 NSCs und ~8 Orte. D-035 ist erledigt (Sprint 016): die vier Spielabende liegen als Session-Dateien vor (`abenteuer/drachenchronik/2026-*-session-0N.md`, Abschnitte „Neue NSCs / Orte").
-
-**D-040 — Mobile 400 px: horizontaler Überlauf**
-Beim Browser-Check zu D-039 (Static-Render unter `file://`, 400 px Breite) scrollt die Seite in vier Tabs horizontal: Zauber (1019 px, `.wirkung`/`.wirkung-cell`), Steigern (442 px, `.steiger-table`), Inventar (485 px, `.inv-add-btn`), Profil (450 px, `SECTION.card`). Kampf/Talente/Chronik/Sprachen bleiben ≤ 400 px. Rein CSS, im Server-Modus identisch; vorher unter `file://` nur unsichtbar, weil dort nie ein Tab angezeigt wurde. Zusätzlich bekannt (Sprint 015): bei 400 px überlappen Banner-Titel und die feste Fußleiste. Fix-Skizze: `overflow-wrap`/`min-width:0` bzw. Tabellen in `overflow-x:auto`-Container, danach per Headless-Chrome `scrollWidth ≤ 400` je Tab prüfen.
-
 **D-041 — Wundregel-/Zustände-Audit**
 `static/session.js:29` trägt seit Mai 2026 ein `TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds)`. Aktuell: −2 je Wunde (`computeWundPenalty`), Zustands-Mali fest (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2), und das Overlay zieht pauschal von **allen** `[data-attr]`-Werten ab (203 Stück, auch dort, wo die Regel es nicht verlangt). Nichts davon ist gegen DSA 4.1 geprüft — erst mit D-038 (Sprint 016) läuft der Code überhaupt im Browser. Umfang: Wundregeln/Zustände im Wiki nachlesen (`wiki/dsa-4.1/grundregeln/`), Abweichungen auflisten, Werte/Geltungsbereich korrigieren, Python-Würfelmathe und JS-Spiegel (`dice.js`) angleichen, ggf. `wiki-luecken.md`-Eintrag.
 
-**D-042 — Chronik-Parser: `Datum:`-Zeile**
-Der 04.06.2026-Abend beginnt mit `Datum: 13. Phex -> Start`. `parsers/chronik.py::IG_DATUM_RE` erkennt nur fette Zeilen der Form `**17. Phex**`; die `Datum:`-Zeile landet daher als Textblock in einem IG-Tag **ohne** Datum (verifiziert 19.09.2026: erster IG-Tag `ig_datum=None`). Betrifft die Roh-Ansicht im Chronik-Tab. Fix-Skizze: zusätzliches Muster `^Datum:\s*(\d{1,2}\.\s+<Monat>)(?:\s*->\s*(.+))?$`, Zusatz („Start") als Suffix; Test mit der echten Zeile. Design-Frage: Leerer IG-Tag (Überschrift ohne Inhalt) wird weiterhin verworfen.
+**D-043 — Zauber: ZfW-Sortierung im Kompaktlayout**
+Die ZfW-Sortierung hängt an der Kopfzeile (`.spell:first-child`, Inline-JS in `templates/dashboard.html.j2` ab Zeile ~158: Klick → „Nach ZfW sortieren"). D-040 blendet diese Kopfzeile unterhalb von 1070 px aus (`.spell.spell-head{display:none}` in `static/base.css`), damit das Kompaktlayout lesbar bleibt — damit ist die Sortierung dort unerreichbar. Betrifft nicht nur Handys, sondern auch kleine Laptop-Fenster. Fix-Skizze: im Kompaktlayout ein schmales Sortier-Bedienelement (Button oder Select) statt der Spaltenköpfe sichtbar lassen; beim Anfassen das Inline-Skript nach `static/` (IIFE, `JS_FILES`) verlagern.
+
+**D-044 — Mobile/Touch-Feinschliff**
+Beim Browser-Check zu D-040 (Sprint 017) offen geblieben: (1) Banner-Titel „ILLAEN BAERNHOLD" ist bei 400 px rechts abgeschnitten; (2) Footer-Leiste (`#footer-bar`, `position:fixed`) hat ~33-px-Buttons (< 44 px Touch-Ziel) und verdeckt ~82 px Viewport — Alternative `position:static` unter 480 px; (3) Steigern-Tabelle scrollt ≤ 600 px im Container ohne `tabindex="0"` (per Tastatur nicht scrollbar), und der „auswählen"-Hinweis ist erst nach dem Scrollen sichtbar; (4) `.inv-add-input:first-child` hängt an der DOM-Reihenfolge — besser eine Klasse. Messmethode wie in D-040: `scrollWidth`/Rects bei verifiziertem `innerWidth === 400` (Playwright im served-Modus).
+
+**D-045 — Chronik-Druck**
+Der Print-Block in `static/chronik.css` druckt Roh und Kompiliert immer (`.chronik-view{display:block !important}`), das Register nur wenn es aktiv ist. Ein aktiver Register-Filter bleibt im Druck bestehen (`entry.hidden`), während Suchfeld und Umschalter ausgeblendet sind — der Ausdruck zeigt still eine Teilmenge. Zu klären: nur die aktive Ansicht drucken oder alle drei; Filter bei `beforeprint` zurücksetzen (analog zum `<details>`-Handling in `chronik.js`).
 
 ## Done
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-042 | Chronik-Parser erkennt `Datum: 13. Phex -> Start` als IG-Datum (`13. Phex (Start)`), 5 Tests | S | 017 |
+| D-040 | Mobile 400 px: Überlauf in Zauber/Steigern/Inventar/Profil beseitigt — alle 8 Tabs ≤ 400 px, Zauber-Kompaktlayout ≤ 1070 px, Footer-Leiste umbricht | S | 017 |
+| D-036 | NSC-/Orts-Register: `parsers/register.py`, 3. Ansicht „Register" im Chronik-Tab (55 Einträge), clientseitige Suche, zur Render-Zeit generiert | M | 017 |
 | D-039 | Static-Render interaktiv: JS wird eingebettet (`JS_FILES`/`js_files()`/`inline_js`), Hinweis-Banner `#static-hinweis`, README — Tabs/Würfel unter `file://` | S | 016 |
 | D-038 | Bug: `session.js` lief nie (`IS_SERVED`-Kollision) → IIFE + Top-Level-Kollisionstest, Browser-Gegenprüfung 9/9 | S | 016 |
 | D-035 | `/session-compile`-Kommando + 4 Spielabende kompiliert (Session 1–4), Platzhalter-Session entfernt | M | 016 |
