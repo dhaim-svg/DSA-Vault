@@ -5,16 +5,17 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Quelle |
+|------|-------|--------|-------|--------|
+| D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | in-progress | Browser-Check D-038, 19.09.2026 |
+| D-046 | Zauberliste: Bestandsränder — Druck-Kontrast (Name-Link, ZfW, ZD, Kosten hell auf Papier) + Grid-Überstand bei 1071–~1130 px | S | in-progress | Browser-Check D-018, 19.09.2026 |
+| D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | in-progress | Browser-Check D-040, 19.09.2026 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
-| D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
-| D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | ready | Browser-Check D-040, 19.09.2026 |
 | D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
-| D-046 | Zauberliste: Bestandsränder — Druck-Kontrast (Name-Link, ZfW, ZD, Kosten hell auf Papier) + Grid-Überstand bei 1071–~1130 px | S | ready | Browser-Check D-018, 19.09.2026 |
 
 ### Gestrichen
 
