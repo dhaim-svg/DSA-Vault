@@ -14,8 +14,8 @@ from rendering import build_context, render_dashboard as render_html
 
 
 def render(slug: str) -> Path:
-    """Full pipeline: load → render → write file. Returns the output path."""
-    html = render_html(build_context(slug))
+    """Full pipeline: load → render (JS inlined for file://) → write file. Returns the output path."""
+    html = render_html(build_context(slug, inline_js=True))
     OUTPUT_DIR.mkdir(exist_ok=True)
     out_path = OUTPUT_DIR / f'{slug}-dashboard.html'
     out_path.write_text(html, encoding='utf-8')

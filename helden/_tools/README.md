@@ -17,15 +17,27 @@ pip install -r requirements.txt
 Alle Befehle vom **Vault-Root** aus ausführen:
 
 ```powershell
-# Nur rendern
+# Interaktiv (Standard): Flask-Server auf Port 5500, Änderungen werden gespeichert
+python helden\_tools\render-held.py serve illaen-baernhold --open
+
+# Statischer Render (Druck-/Archivansicht) nach output/
 python helden\_tools\render-held.py illaen-baernhold
 
-# Rendern + Browser öffnen
+# Statischer Render + Browser öffnen
 python helden\_tools\render-held.py illaen-baernhold --open
 
 # Live-Reload: Dashboard aktualisiert sich automatisch bei Dateiänderungen
 python helden\_tools\render-held.py illaen-baernhold --watch --open
 ```
+
+**Interaktive Nutzung = `serve`:** Der Flask-Server liefert das Dashboard über
+`http://127.0.0.1:5500` und schreibt Steigern, Inventar, Zauberspeicher, Wunden
+und Session-Notizen zurück in die Markdown-Dateien.
+
+**Der statische Render ist die Druck-/Archivansicht:** Das JS ist eingebettet,
+Tabs, Würfelpanel und Rechner funktionieren auch unter `file://`. **Schreibaktionen
+werden dort nicht gespeichert** — ein Hinweis-Banner (`#static-hinweis`, im Druck
+ausgeblendet) weist darauf hin.
 
 **`slug`** = Name des Unterordners in `helden/` (z.B. `illaen-baernhold`).
 Output landet immer in `output/<slug>-dashboard.html`.
@@ -83,6 +95,14 @@ helden/_tools/
 `/static/…` nicht laden). Die Reihenfolge von `CSS_FILES` in `rendering.py` ist
 Kaskaden-relevant, und jede neue `static/*.css` muss dort eingetragen werden
 (ein Test erzwingt das).
+
+**JS wird im Static-Render ebenfalls eingebettet:** `rendering.py::js_files()`
+liefert die `static/*.js` als je ein eigener `<script>`-Block (`build_context(…,
+inline_js=True)`); der Server-Modus verlinkt sie weiter als `/static/*.js`. Die
+Reihenfolge von `JS_FILES` in `rendering.py` ist Ladeabhängigkeit (`util.js`
+zuerst, `session.js` vor `dice.js`), und jede neue `static/*.js` muss dort
+eingetragen werden (ein Test erzwingt das; `</script` in einer JS-Datei ist
+verboten).
 
 ## Chronik-Bilder
 

@@ -20,6 +20,11 @@ CHRONIK_BILD_PREFIX_STATIC = '../abenteuer/drachenchronik/'
 # Bundle order is load-bearing: CSS cascade depends on it.
 CSS_FILES = ['base.css', 'tabs.css', 'journal.css', 'sprachen.css', 'chronik.css']
 
+# Order = load dependency: util.js first (app.js/commit.js use dsaShowIndicator), session.js before dice.js.
+# Every new static/*.js must be listed here (a test enforces it).
+JS_FILES = ['util.js', 'app.js', 'session.js', 'dice.js', 'tabs.js', 'steigern.js',
+            'inventar.js', 'zauberspeicher.js', 'journal.js', 'chronik.js', 'commit.js']
+
 
 def obsidian_uri(wiki_path: str, vault_name: str = 'DSA-Vault') -> str:
     if not wiki_path:
@@ -53,6 +58,10 @@ def css_bundle() -> str:
     return ''.join((STATIC_DIR / name).read_text(encoding='utf-8') for name in CSS_FILES)
 
 
+def js_files() -> list[tuple[str, str]]:
+    return [(name, (STATIC_DIR / name).read_text(encoding='utf-8')) for name in JS_FILES]
+
+
 def make_env() -> jinja2.Environment:
     loader = jinja2.FileSystemLoader(str(TEMPLATES_DIR))
     env = jinja2.Environment(loader=loader, autoescape=False,
@@ -61,17 +70,23 @@ def make_env() -> jinja2.Environment:
     env.filters['format_ap'] = format_ap
     env.filters['obsidian'] = obsidian_uri
     env.globals['css_bundle'] = css_bundle
+    env.globals['js_files'] = js_files
     return env
 
 
 def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
-                  chronik_bild_prefix: str = CHRONIK_BILD_PREFIX_STATIC) -> dict:
-    """Template context shared by the live server and the static render."""
+                  chronik_bild_prefix: str = CHRONIK_BILD_PREFIX_STATIC,
+                  inline_js: bool = False) -> dict:
+    """Template context shared by the live server and the static render.
+
+    inline_js=True (static file:// render) embeds the JS and shows the "not saved" hint.
+    """
     return {
         'held': load_held(vault_root, slug),
         'kampagne': load_kampagne(vault_root, KAMPAGNE_SLUG),
         'chronik': load_chronik(vault_root),
         'chronik_bild_prefix': chronik_bild_prefix,
+        'inline_js': inline_js,
         'slug': slug,
         'kampagne_slug': KAMPAGNE_SLUG,
     }

@@ -248,6 +248,22 @@ body::before{
 .banner-meta strong{ color:var(--ink); font-weight:700; font-family:var(--subhead); }
 .banner-meta .sep{ color:var(--ink-dim); }
 
+/* ---- Static-render hint (only emitted with inline_js; hidden in print via .screen-only) ---- */
+.static-hinweis{
+  margin-bottom:var(--gap);
+  padding:8px 14px;
+  background:var(--bg-inset);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent-gold);
+  border-radius:var(--r-card);
+  font-family:var(--subhead);
+  font-size:13px;
+  line-height:1.4;
+  color:var(--ink-mute);
+}
+.static-hinweis strong{ color:var(--ink); }
+.static-hinweis code{ font-family:var(--mono); font-size:12px; color:var(--accent-cold); overflow-wrap:anywhere; }
+
 /* ---- Vitals ---- */
 .vitals{ display:flex; flex-direction:column; gap:14px; }
 .vital{

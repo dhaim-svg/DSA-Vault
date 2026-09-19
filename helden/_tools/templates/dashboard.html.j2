@@ -59,6 +59,12 @@
 {% set first_name = name_parts[:-1] | join(' ') %}
 {% set last_name = name_parts[-1] %}
 
+{% if inline_js %}
+<div id="static-hinweis" class="static-hinweis screen-only" role="note">
+  <span>📄 Statische Ansicht (file://) — Änderungen (Steigern, Inventar, Zauberspeicher, Wunden, Session-Notizen) werden <strong>nicht gespeichert</strong>.
+  Zum Bearbeiten: <code>python helden\_tools\render-held.py serve {{ slug | e }} --open</code></span>
+</div>
+{% endif %}
 <!-- ============================================================
      IDENTITY BANNER (Seite 1 im Print)
      ============================================================ -->
@@ -228,16 +234,14 @@ window.DSA = {
 };
 </script>
 <!-- util.js must remain first — app.js + commit.js depend on window.dsaShowIndicator -->
-<script src="/static/util.js"></script>
-<script src="/static/app.js"></script>
-<script src="/static/session.js"></script>
-<script src="/static/dice.js"></script>
-<script src="/static/tabs.js"></script>
-<script src="/static/steigern.js"></script>
-<script src="/static/inventar.js"></script>
-<script src="/static/zauberspeicher.js"></script>
-<script src="/static/journal.js"></script>
-<script src="/static/chronik.js"></script>
-<script src="/static/commit.js"></script>
+{% for name, source in js_files() %}
+{% if inline_js %}
+<script>/* {{ name }} */
+{{ source }}
+</script>
+{% else %}
+<script src="/static/{{ name }}"></script>
+{% endif %}
+{% endfor %}
 </body>
 </html>

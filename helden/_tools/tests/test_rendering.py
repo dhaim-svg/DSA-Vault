@@ -1,4 +1,4 @@
-"""Tests for CSS bundling in rendering.py."""
+"""Tests for CSS/JS bundling and static vs. server rendering in rendering.py."""
 import re
 import sys
 from pathlib import Path
@@ -11,8 +11,8 @@ import pytest
 import rendering
 import server
 from rendering import (
-    CHRONIK_BILD_PREFIX_SERVER, CHRONIK_BILD_PREFIX_STATIC, CSS_FILES, STATIC_DIR, VAULT_ROOT,
-    build_context, css_bundle, make_env, render_dashboard,
+    CHRONIK_BILD_PREFIX_SERVER, CHRONIK_BILD_PREFIX_STATIC, CSS_FILES, JS_FILES, STATIC_DIR, VAULT_ROOT,
+    build_context, css_bundle, js_files, make_env, render_dashboard,
 )
 
 
@@ -181,3 +181,67 @@ def test_render_chronik_tab_server():
     assert len(re.findall(r'class="card chronik-abend"', html)) == len(ctx['chronik']['spielabende'])
     assert '/chronik-bild/' + BILD in html
     assert '<script src="/static/chronik.js"></script>' in html
+
+
+def test_every_static_js_file_is_listed():
+    on_disk = {p.name for p in STATIC_DIR.glob('*.js')}
+    assert on_disk == set(JS_FILES)
+
+
+def test_js_files_have_no_duplicates():
+    assert len(JS_FILES) == len(set(JS_FILES))
+
+
+def test_no_static_js_contains_script_end_tag():
+    for name in JS_FILES:
+        text = (STATIC_DIR / name).read_text(encoding='utf-8')
+        assert '</script' not in text.lower(), f'{name} enthaelt </script — Einbettung inline waere kaputt'
+
+
+def test_js_files_is_env_global_in_order():
+    assert make_env().globals['js_files'] is js_files
+    assert js_files() == [(n, (STATIC_DIR / n).read_text(encoding='utf-8')) for n in JS_FILES]
+
+
+def test_build_context_inline_js_flag():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    assert build_context('illaen-baernhold')['inline_js'] is False
+    assert build_context('illaen-baernhold', inline_js=True)['inline_js'] is True
+
+
+@pytest.fixture(scope='module')
+def static_js_html():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    return render_dashboard(build_context('illaen-baernhold', inline_js=True))
+
+
+def test_static_render_inlines_each_js_file_once_in_order(static_js_html):
+    assert '<script src=' not in static_js_html
+    positions = []
+    for name in JS_FILES:
+        marker = f'<script>/* {name} */'
+        assert static_js_html.count(marker) == 1, f'{name}: Inline-Block fehlt oder doppelt'
+        positions.append(static_js_html.index(marker))
+    assert positions == sorted(positions)
+    for name, text in js_files():
+        assert text in static_js_html, f'{name}: Quelltext nicht eingebettet'
+
+
+def test_server_render_links_each_js_file_in_order():
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    html = server._render_dashboard('illaen-baernhold')
+    tags = re.findall(r'<script src="/static/([^"]+)"></script>', html)
+    assert tags == list(JS_FILES) and len(tags) == 11
+    assert not re.search(r'/\* \w+\.js \*/', html)
+
+
+def test_static_hinweis_banner_only_in_static_render(static_js_html):
+    assert static_js_html.count('id="static-hinweis"') == 1
+    assert 'nicht gespeichert' in static_js_html
+    if not LIVE_HELD.exists():
+        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
+    assert 'id="static-hinweis"' not in server._render_dashboard('illaen-baernhold')
+    assert 'id="static-hinweis"' not in render_dashboard(build_context('illaen-baernhold'))
