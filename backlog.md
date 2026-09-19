@@ -16,7 +16,6 @@ _(keine)_
 | ID    | Kat.  | Titel                                                                                                   | Effort |
 |-------|-------|---------------------------------------------------------------------------------------------------------|--------|
 | B-013 | wiki  | Zauberartikel-Frontmatter reparieren: 103/268 mit ungültigem YAML (unquotiertes `: `), s. `wiki-luecken.md` L22; danach Fallback-Parser im Dashboard entfernen | M |
-| B-014 | tooling | `/sprint-wrap`-Kommando (`.claude/commands/sprint-wrap.md`) reparieren: (1) Phase 2 ruft `render-held.py` ohne Slug auf (Z. 32) und bricht mit Usage-Fehler ab — `python render-held.py <slug>`; (2) Phase 5 „Sprint-Nr. erhöhen“ (`{NNN}` → `{NNN+1}`) ist mehrdeutig und widerspricht `/sprint-plan` Phase 2d (N = NNN−1) und der Praxis: CLAUDE.md-Sprint-Nr. = zuletzt abgeschlossener Sprint (Wrap 019 → 19); Wortlaut klären | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
@@ -38,6 +37,7 @@ _(keine)_
 | B-010 | meta      | Backlog-System einführen: backlog.md + CLAUDE.md                                     | S      | 2026-05-16 |
 | B-011 | held+dash | Spontane Modifikationen: Referenztabelle + Dashboard-Card                            | S      | 2026-05-16 |
 | B-012 | dashboard | Interaktives Dashboard Phase 1: Flask-Server, PATCH-API, LeP/AsP/AuP-Steppers, session.js | L | 2026-05-30 |
+| B-014 | tooling   | `/sprint-wrap` repariert: Render-Aufruf mit Helden-Slug, Sprint-Nr.-Wortlaut („= zuletzt abgeschlossener Sprint“, nicht erhöhen), Phase 3a entfernt EPICs aus `## In Progress` | S | 2026-09-19 |
 
 ---
 

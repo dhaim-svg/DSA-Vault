@@ -1,7 +1,8 @@
 # /sprint-wrap
 
 Schließt den laufenden Dashboard-Sprint ab:
-Verifikation → BACKLOG.md updaten → handoff.md schreiben → Sprint-Nr. erhöhen.
+Verifikation → BACKLOG.md updaten → handoff.md schreiben → CLAUDE.md-Sprint-Nr. auf den
+soeben abgeschlossenen Sprint setzen.
 
 ---
 
@@ -27,11 +28,14 @@ enthalten sind.
    ```
    Ergebnis (Anzahl bestanden / Anzahl gesamt) notieren — geht ins Handoff.
 
-2. **Static-Render** prüfen:
+2. **Static-Render** prüfen — `render-held.py` braucht den Helden-Slug als Pflichtargument
+   (Ordnername unter `helden/`, ohne `_tools`; aktuell nur `illaen-baernhold`), sonst bricht
+   es mit einem Usage-Fehler ab:
    ```bash
-   cd helden/_tools && python render-held.py 2>&1
+   cd helden/_tools && python render-held.py illaen-baernhold 2>&1
    ```
-   Exit-Code 0 = ok. Fehlermeldungen notieren und melden.
+   Exit-Code 0 = ok; erzeugt `output/illaen-baernhold-dashboard.html`. Fehlermeldungen
+   notieren und melden.
 
 Falls Verifikation fehlschlägt → User informieren. Wrap-up kann trotzdem
 fortgesetzt werden, aber Handoff muss den Fehlstatus dokumentieren.
@@ -45,7 +49,8 @@ Bearbeite `helden/_tools/BACKLOG.md`:
 ### 3a. Erledigte EPICs umziehen
 
 Für jeden in diesem Sprint abgeschlossenen EPIC:
-- Zeile aus `## Backlog` entfernen
+- Zeile aus `## In Progress` entfernen (dorthin verschiebt `/sprint-plan` Phase 6 die
+  Sprint-EPICs; ein EPIC, der nie umgezogen wurde, steht noch in `## Backlog`)
 - Zeile in `## Done`-Tabelle eintragen:
   `| D-NNN | [Title] | [Effort] | {NNN} |`
 
@@ -110,17 +115,17 @@ Er wird dort als erstes gelesen und als vorrangige Kandidaten behandelt.
 
 ---
 
-## Phase 5: CLAUDE.md — Sprint-Nr. erhöhen
+## Phase 5: CLAUDE.md — Sprint-Nr. auf den abgeschlossenen Sprint setzen
 
-In `CLAUDE.md` die Zeile:
+Die Zeile `**Laufende Sprint-Nr.:**` in `CLAUDE.md` führt den **zuletzt abgeschlossenen**
+Sprint (nicht den nächsten). `/sprint-plan` Phase 2d erwartet dort `N = NNN−1` und plant
+dann Sprint `N+1`. Setze sie deshalb auf die Nummer des Sprints, den du **gerade abschließt**
+(ohne führende Nullen):
 ```
 - **Laufende Sprint-Nr.:** {NNN}
 ```
-auf:
-```
-- **Laufende Sprint-Nr.:** {NNN+1}
-```
-ändern.
+Beispiel: Wrap von Sprint 019 → `19` (Sprint 020 wird danach mit `/sprint-plan` geplant).
+**Nicht** um 1 erhöhen.
 
 ---
 
