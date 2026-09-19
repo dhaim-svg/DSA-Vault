@@ -5,17 +5,17 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-038 | Bug: `session.js` läuft nie (`const IS_SERVED` doppelt deklariert in app.js + session.js) — Zustände-Chips, Wunden-Overlay, Zustand-aware Wurf-Modifikator wirkungslos | S | in-progress | 016 |
-| D-035 | /session-compile Kommando (ruft Import D-030 zuerst) + Aufräumen (User-Freigabe nötig) | M | in-progress | 016 |
+_(keine)_
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
-| D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | blocked | Chronik-Modus-Plan 16.09.2026 (Blocked by D-035) |
+| D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | ready | Chronik-Modus-Plan 16.09.2026 |
+| D-040 | Mobile 400 px: horizontaler Überlauf in Zauber-/Steigern-/Inventar-/Profil-Tab | S | ready | Browser-Check D-039, 19.09.2026 |
+| D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
+| D-042 | Chronik-Parser: `Datum: 13. Phex -> Start`-Zeile als IG-Datum erkennen | S | ready | /session-compile-Praxistest, 19.09.2026 |
 
 ### Gestrichen
 
@@ -34,19 +34,25 @@ Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, 
 **D-033 / D-034 — Quick-Capture & Ereignis-Auto-Log — *entfallen 19.09.2026***
 Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im Vault voraus. Da Drive Quelle bleibt (D-030-Fallback, Junction-Ansatz gescheitert), gibt es keinen Live-Schreibpfad mehr, in den das Dashboard schreiben könnte, ohne beim nächsten Import überschrieben zu werden. Ersatzlos gestrichen — der User schreibt weiterhin direkt in Google Drive, keine Dashboard-Interaktion während des Spiels vorgesehen.
 
-**D-035 — /session-compile + Aufräumen**
-Neues Kommando `.claude/commands/session-compile.md`. Ruft zuerst den Import (D-030, `chronik_import.py`) auf, um den aktuellen Stand aus Drive zu holen, dann: nimmt einen Spielabend aus `chronik.md`, erzeugt strukturierte Session-Datei nach `abenteuer/_abenteuer.md`-Konvention, verlinkt ins Wiki, aktualisiert `_drachenchronik.md`, trägt Wiki-Lücken ein. Rohchronik bleibt unangetastet. Aufräumen (**braucht explizite User-Freigabe**, `abenteuer/` ist User-Domäne): Platzhalter `2025-10-04-session-01.md` löschen (Testdaten), `_drachenchronik.md` Status/Sessions-Tabelle korrigieren.
-
 **D-036 — NSC-/Orts-Register**
-Aus den per D-035 kompilierten Sessions extrahiert (`nsc.md`, `orte.md`), plus Suche im Chronik-Tab. Mehrwert gegenüber flacher MD-Datei — die Chronik nennt allein in vier Spielabenden ~15 NSCs und ~8 Orte. Braucht D-035.
+Aus den per D-035 kompilierten Sessions extrahiert (`nsc.md`, `orte.md`), plus Suche im Chronik-Tab. Mehrwert gegenüber flacher MD-Datei — die Chronik nennt allein in vier Spielabenden ~15 NSCs und ~8 Orte. D-035 ist erledigt (Sprint 016): die vier Spielabende liegen als Session-Dateien vor (`abenteuer/drachenchronik/2026-*-session-0N.md`, Abschnitte „Neue NSCs / Orte").
 
-**D-038 — Bug: `session.js` wird nie ausgeführt**
-`static/app.js:7` und `static/session.js:9` deklarieren beide top-level `const IS_SERVED`. Klassische Skripte teilen sich den globalen Lexical-Scope → `session.js` bricht beim Parsen mit `SyntaxError: Identifier 'IS_SERVED' has already been declared` ab, `window.DSASession` bleibt `undefined`. Folge: Zustände-Chips, Wunden-Overlay **und** der Zustand-aware Wurf-Modifikator (Sprint 013, `dice.js:205` liest `window.DSASession && …` still-defensiv) wirken im Browser nicht — die Python-Tests zur Würfelmathe laufen trotzdem grün, weil sie die Logik isoliert prüfen. Verifiziert 19.09.2026 per Headless-Chrome-Smoke (`typeof window.DSASession === 'undefined'`, 7 Konsolenfehler über den Lauf). Vorhanden seit der Einführung beider Dateien (Mai 2026); Sprint 015 hat sie nicht berührt. Fix-Skizze: doppelte Deklaration in `session.js` entfernen (oder das Skript in eine IIFE kapseln — `commit.js`/`journal.js` machen es vor). **Vorsicht:** damit wachen bisher tote Codepfade auf (Chips/Wunden-PATCH/Roll-Modifikator) — danach gezielt im Browser gegenprüfen, mit Chrome-Konsole offen; ggf. weitere latente Fehler.
+**D-040 — Mobile 400 px: horizontaler Überlauf**
+Beim Browser-Check zu D-039 (Static-Render unter `file://`, 400 px Breite) scrollt die Seite in vier Tabs horizontal: Zauber (1019 px, `.wirkung`/`.wirkung-cell`), Steigern (442 px, `.steiger-table`), Inventar (485 px, `.inv-add-btn`), Profil (450 px, `SECTION.card`). Kampf/Talente/Chronik/Sprachen bleiben ≤ 400 px. Rein CSS, im Server-Modus identisch; vorher unter `file://` nur unsichtbar, weil dort nie ein Tab angezeigt wurde. Zusätzlich bekannt (Sprint 015): bei 400 px überlappen Banner-Titel und die feste Fußleiste. Fix-Skizze: `overflow-wrap`/`min-width:0` bzw. Tabellen in `overflow-x:auto`-Container, danach per Headless-Chrome `scrollWidth ≤ 400` je Tab prüfen.
+
+**D-041 — Wundregel-/Zustände-Audit**
+`static/session.js:29` trägt seit Mai 2026 ein `TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds)`. Aktuell: −2 je Wunde (`computeWundPenalty`), Zustands-Mali fest (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2), und das Overlay zieht pauschal von **allen** `[data-attr]`-Werten ab (203 Stück, auch dort, wo die Regel es nicht verlangt). Nichts davon ist gegen DSA 4.1 geprüft — erst mit D-038 (Sprint 016) läuft der Code überhaupt im Browser. Umfang: Wundregeln/Zustände im Wiki nachlesen (`wiki/dsa-4.1/grundregeln/`), Abweichungen auflisten, Werte/Geltungsbereich korrigieren, Python-Würfelmathe und JS-Spiegel (`dice.js`) angleichen, ggf. `wiki-luecken.md`-Eintrag.
+
+**D-042 — Chronik-Parser: `Datum:`-Zeile**
+Der 04.06.2026-Abend beginnt mit `Datum: 13. Phex -> Start`. `parsers/chronik.py::IG_DATUM_RE` erkennt nur fette Zeilen der Form `**17. Phex**`; die `Datum:`-Zeile landet daher als Textblock in einem IG-Tag **ohne** Datum (verifiziert 19.09.2026: erster IG-Tag `ig_datum=None`). Betrifft die Roh-Ansicht im Chronik-Tab. Fix-Skizze: zusätzliches Muster `^Datum:\s*(\d{1,2}\.\s+<Monat>)(?:\s*->\s*(.+))?$`, Zusatz („Start") als Suffix; Test mit der echten Zeile. Design-Frage: Leerer IG-Tag (Überschrift ohne Inhalt) wird weiterhin verworfen.
 
 ## Done
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-039 | Static-Render interaktiv: JS wird eingebettet (`JS_FILES`/`js_files()`/`inline_js`), Hinweis-Banner `#static-hinweis`, README — Tabs/Würfel unter `file://` | S | 016 |
+| D-038 | Bug: `session.js` lief nie (`IS_SERVED`-Kollision) → IIFE + Top-Level-Kollisionstest, Browser-Gegenprüfung 9/9 | S | 016 |
+| D-035 | `/session-compile`-Kommando + 4 Spielabende kompiliert (Session 1–4), Platzhalter-Session entfernt | M | 016 |
 | D-037 | dashboard.html.j2 in Partials + eigenes CSS zerlegen (CSS → static/*.css, zur Render-Zeit eingebettet; 8 Tab-Partials; geteilter Render-Kontext) | L | 015 |
 | D-032 | Chronik-Tab (📜, Roh/Kompiliert-Umschalter, read-only Roh-Ansicht, /chronik-bild-Route, Parser-Fix Bild+Text) | M | 015 |
 | D-031 | parsers/chronik.py (Spielabend/IG-Tag/Szenen-Parser, verifiziert gegen echte Chronik) | M | 014 |
