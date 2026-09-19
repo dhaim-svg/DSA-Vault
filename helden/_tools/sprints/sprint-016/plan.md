@@ -11,6 +11,7 @@
 | T4 | **D-035b** Kommando für alle 4 Spielabende ausführen (04.06. / 27.06. / 18.07. / 22.08.2026) → 4 Session-Dateien. Jede Datei vor dem Commit dem User zeigen | ✅ done | abenteuer/drachenchronik/2026-*-session-0N.md (neu, User-Domäne) |
 | T5 | **D-035c** Aufräumen: Platzhalter `2025-10-04-session-01.md` löschen, `_drachenchronik.md` (Status, Sessions-Tabelle, Kurz-Synopse, Offene Fäden) und `abenteuer/_abenteuer.md` (Sessions-Zähler) auf echten Stand | ✅ done | abenteuer/drachenchronik/_drachenchronik.md, abenteuer/_abenteuer.md, Platzhalter-Datei |
 | T6 | Verifikation (Testsuite, Static-Render, Browser-Smoke inkl. Kompiliert-Ansicht) + Final-Review + `/sprint-wrap` | ✅ done | — |
+| T7 | **D-039** (Nachtrag, User-Meldung): Static-Render bettet JS inline ein (`JS_FILES`/`js_files()`/`inline_js`), Hinweis-Banner `#static-hinweis` nur im Static-Render, README, 8 neue Tests | ✅ done | rendering.py, dashboard.html.j2, render-held.py, static/base.css, tests/test_rendering.py, README.md |
 
 ## Key Design Decisions
 
@@ -33,3 +34,5 @@
 ## Stand am Sprint-Ende
 
 - T4/T5-Ergebnisse (4 Session-Dateien, `_drachenchronik.md`, `_abenteuer.md`, `wiki-luecken.md` L17–L21, gelöschter Platzhalter) + regenerierter Static-Render liegen **uncommittet** im Arbeitsbaum — Commit erst nach User-Sichtung (`abenteuer/` ist User-Domäne).
+- **Nachtrag T7 / D-039** (Commits d3265bf, 678a94e): Static-Render war seit dem 5-Tab-Layout nie interaktiv (`/static/*.js` absolut → file:// ins Leere, kein Tab vorab aktiv). Server-HTML unverändert bis auf 16 Banner-CSS-Zeilen im gemeinsamen Bundle.
+- **Für `/sprint-wrap` vormerken (BACKLOG):** D-038 + D-035 + D-039 → Done (Sprint 016); neue Kandidaten: **D-040** Mobile-Overflow bei 400 px (Zauber 1019 px, Steigern 442, Inventar 485, Profil 450 — vorbestehend, durch D-039 erst sichtbar), **D-041** Wundregel-/Zustände-Audit gegen Wiki (`session.js:28` TODO), **D-042?** `parsers/chronik.py` erkennt `Datum:`-Zeilen nicht als IG-Datum (T3-Implementer-Hinweis, ungeprüft; betrifft nur den 04.06.-Abend im Chronik-Tab).
