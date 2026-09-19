@@ -424,6 +424,10 @@ body::before{
 .spell .wirkung { font-size:11px; color:var(--ink-mute); font-style:italic; line-height:1.4; display:block; }
 /* Artikelvorschau (D-018): letztes Kind der .spell-Zeile, ueber die volle Zeilenbreite */
 .spell .artikel-details{ grid-column:1 / -1; min-width:0; }
+/* D-050: dieselbe Vorschau in der SF-Zeile (Grid 14px Symbol | 1fr Text): letztes Kind des li, in der Textspalte;
+   der Zeilenabstand (gap 10px) schrumpft nur bei Vorschau auf 4px, damit sie an der Beschreibung haengt. */
+.sf-list li .artikel-details{ grid-column:2; min-width:0; }
+.sf-list li:has(> .artikel-details){ row-gap:4px; }
 .artikel-details summary.artikel-toggle{
   list-style:none; font-family:var(--mono); font-size:10px; padding:2px 0;
   color:var(--ink-dim); cursor:pointer; letter-spacing:.04em;
@@ -740,8 +744,9 @@ body::before{
   box-shadow:0 0 0 1px rgba(0,0,0,.5),0 12px 28px -8px rgba(0,0,0,.7),0 0 50px -6px rgba(95,195,228,.7);
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
+/* D-049: das offene Wuerfelpanel (fixed, z-index 200) verdeckte die Leiste -> sie steigt um die von dice.js gepflegte Panelhoehe. */
 #footer-bar{
-  position:fixed; bottom:28px; right:28px;
+  position:fixed; bottom:calc(28px + var(--dice-panel-h, 0px)); right:28px;
   display:flex; gap:8px; align-items:center;
   z-index:100;
 }
@@ -868,6 +873,7 @@ body::before{
   .spell{ break-inside:avoid; }
   /* Zeile mit aufgeklapptem Artikel darf umbrechen; ohne :has()-Support bleibt es bei avoid */
   .spell:has(.artikel-details[open]){ break-inside:auto; }
+  .sf-list li:has(.artikel-details[open]){ break-inside:auto; }
   .story p{ orphans:3; widows:3; }
   .talent-grp h4,.vn-grp h4{ color:var(--paper-ink) !important; border-color:var(--paper-ink) !important; }
   .talent-row,.spell,.vn-list li,.sf-list li,.inv-list li{ border-color:var(--paper-rule) !important; }
@@ -3348,11 +3354,68 @@ body { padding-top: 46px; }
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Astrale%20Meditation">Astrale Meditation</a></span>
         <span class="sf-desc">AsP-Regeneration beschleunigen; Voraussetzung für Große Meditation</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Astrale Meditation</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Astrale%20Meditation">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> IN 13 · <strong>Kosten:</strong> 100 AP · <strong>Verbreitung:</strong> 6 (vor allem bei Vollzauberern)</p>
+<p>Wer diese Sonderfertigkeit beherrscht, kann durch reine Willensanstrengung LeP in AsP umwandeln.</p>
+<p><strong>Durchführung:</strong></p>
+<ul>
+<li>Benötigt Ruhe und Abgeschiedenheit (Nebenraum oder einige Schritte vom Lagerfeuer entfernt)</li>
+<li>Probe auf <strong>IN/CH/KO</strong>, erleichtert um den halben Ritualkenntniswert (RkW); Elfen/Schelme nutzen stattdessen den halben TaW Musizieren/Selbstbeherrschung</li>
+<li>Einmalig 1 AsP aufwenden, um den Prozess in Gang zu setzen</li>
+<li>Pro Spielrunde: 1 LeP → 1 AsP</li>
+<li>Nach Abschluss: Verlust von nochmals <strong>1W3–1 LeP</strong> (Erschöpfung des Prozesses)</li>
+</ul>
+<p><strong>Erleichterung durch Thonnys</strong> (seltenes Kraut, ZBA S. 269):</p>
+<ul>
+<li>Keine Startkosten von 1 AsP nötig</li>
+<li>Probe um 3 Punkte erleichtert</li>
+<li>Kein abschließender LeP-Verlust</li>
+<li>Ohne SF: maximal 2W6+2 LeP umwandelbar pro Portion (7 Blätter)</li>
+</ul>
+<p><strong>Synergien:</strong> <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Konzentrationsst%C3%A4rke">Konzentrationsstärke</a> erleichtert die Probe um zusätzlich 2 Punkte.</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Gro%C3%9Fe%20Meditation">Große Meditation</a></span>
         <span class="sf-desc">Erweiterte Form der Astralen Meditation; stärkere AsP-Regeneration</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Große Meditation</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Gro%C3%9Fe%20Meditation">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> Z (nur Vollzauberer) · <strong>Voraussetzungen:</strong> KL 12, IN 12 · <strong>Verbreitung:</strong> 6</p>
+<p><strong>Kosten:</strong></p>
+<ul>
+<li>Erlernen: 100 AP</li>
+<li>Jede Durchführung: 400 AP + 1 Monat Vorbereitung und innere Einkehr</li>
+</ul>
+<p><strong>Effekt:</strong> Erlaubt es Vollzauberern, ihren AE-Grundwert dauerhaft zu steigern.</p>
+<p><strong>Ablauf:</strong></p>
+<ul>
+<li>Mindestens 1 Monat Rückzug (ohne Abenteuer)</li>
+<li>Probe auf <strong>KL/IN/KL</strong> auf die Ritualkenntnis; bei Gelingen: Leiteigenschaft/3 + RkP*/10 AsP hinzugewonnen</li>
+<li>Kann nur <strong>einmal pro Jahr</strong> durchgeführt werden (mind. &quot;ein Jahr und ein Tag&quot; Abstand zwischen Durchführungen)</li>
+<li>Standard-Orte: besondere, magisch aufgeladene Stätten; mit SF <strong>Gefäß der Sterne</strong> beliebiger Ort möglich</li>
+</ul>
+<p><strong>Voraussetzung für Durchführung:</strong> Alle eventuell verlorenen pAsP (permanente Astralpunkte) müssen zuerst zurückgekauft werden.</p>
+<p><strong>Variante mit SF Gefäß der Sterne</strong> (Voraussetzungen CH 15, IN 13; 250 AP):</p>
+<ul>
+<li>AE-Basis berechnet sich als (MU+IN+CH+CH)/2 (CH doppelt gewichtet)</li>
+<li>Bei der Großen Meditation kann wahlweise CH/3 als Leiteigenschaft gewählt werden → Probe auf MU/CH/CH</li>
+<li>Ritual kann an beliebigem Ort durchgeführt werden</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name">Astrale Regeneration I</span>
         <span class="sf-desc">+1 Asp pro Regenerationsphase</span>
@@ -3364,58 +3427,460 @@ body { padding-top: 46px; }
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Meisterliche%20Regeneration">Meisterliche Regeneration</a></span>
         <span class="sf-desc">Regeneration Leiteigenschaft + 3 ASP anstatt Würfel (KL+3 Asp)</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Meisterliche Regeneration</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Meisterliche%20Regeneration">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> SF Regeneration II · <strong>Kosten:</strong> 200 AP (400 AP für Halbzauberer) · <strong>Verbreitung:</strong> 3</p>
+<p>Der Zauberer hat seine Konzentrationstechniken zur nächtlichen Regeneration so weit vervollkommnet, dass der <strong>W6-Wurf entfällt</strong> und durch einen festen Wert ersetzt wird.</p>
+<p><strong>Effekt:</strong></p>
+<ul>
+<li>Pro Ruhephase (mind. 6 Stunden): <strong>Leiteigenschaft/3 + 3 AsP</strong> regeneriert (statt W6 + Boni aus Regeneration I/II)</li>
+<li>Bei Gelingen einer IN-Probe vor dem Einschlafen: zusätzlich +1 AsP</li>
+<li>Die +2-AsP-Boni aus SF Regeneration I und II sind in dem Bonus von +3 bereits enthalten (nicht kumulativ)</li>
+<li>Plus/minus Modifikatoren aus Vor- und Nachteil Astrale Regeneration bzw. Astraler Block</li>
+<li>Schlafort-Modifikatoren (Komfort, Wetter, Wache etc.) gelten weiterhin</li>
+</ul>
+<p><strong>Beispiel:</strong> Magier mit KL 15 und Meisterlicher Regeneration: KL/3 = 5; 5+3 = <strong>mindestens 8 AsP</strong> pro Ruhephase.</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Konzentrationsst%C3%A4rke">Konzentrationsstärke</a></span>
         <span class="sf-desc">Erleichterte Selbstbeherrschungs-Proben beim Zaubern unter Druck</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Konzentrationsstärke</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Konzentrationsst%C3%A4rke">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH(V) · <strong>Voraussetzungen:</strong> MU 15 · <strong>Kosten:</strong> 100 AP · <strong>Verbreitung:</strong> 5</p>
+<p>Schutz der Zauberwirkung gegen äußere Störungen.</p>
+<p><strong>Effekt:</strong></p>
+<ul>
+<li>Wird der Zauberer beim Wirken gestört, ist üblicherweise eine erschwerte Selbstbeherrschungs-Probe nötig — für Kenner dieser SF ist sie um <strong>7 Punkte erleichtert</strong></li>
+<li>Gilt auch für die Konzentration bei <strong>Ritualen</strong></li>
+<li>Erleichtert die Probe für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Astrale%20Meditation">Astrale Meditation</a> und die AsP-Steigernprobe bei der <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Gro%C3%9Fe%20Meditation">Großen Meditation</a> um je <strong>2 Punkte</strong></li>
+<li>Einige ausgebildete Viertelzauberer können diese SF erlernen</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Kraftkontrolle">Kraftkontrolle</a></span>
         <span class="sf-desc">AsP-Kosten senken bei niedrigem Zauberwert</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Kraftkontrolle</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Kraftkontrolle">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZHV · <strong>Voraussetzungen:</strong> IN 12, CH 13 · <strong>Kosten:</strong> 300 AP (150 AP bei Merkmalskenntnis Kraft) · <strong>Verbreitung:</strong> 3 (vor allem Druiden, Gildenmagier, Geoden, Schamanen)</p>
+<p><strong>Effekt:</strong> Durch schiere Konzentration kann bei <strong>jedem Zauberspruch oder Ritual</strong> ein Astralpunkt eingespart werden.</p>
+<p><strong>Bedingungen:</strong></p>
+<ul>
+<li>Einsatz bringt <strong>1 Punkt Erschöpfung</strong> und erfordert <strong>1 zusätzliche Aktion</strong> Zauberdauer</li>
+<li>Jeder Zauber kostet weiterhin mindestens 1 AsP</li>
+<li>Eventuelle permanente AsP-Kosten sind <strong>nicht</strong> betroffen</li>
+<li><strong>Wirkt nicht</strong> bei Zaubersprüchen in elfischer, kristallomantischer oder schelmischer Repräsentation (diese sind bereits &quot;kostenoptimiert&quot;)</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
-        <span class="sf-name">[[wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Merkmalskenntnis [einzelnes Merkmal]|Merkmalskenntnis: Eigenschaften]]</span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Merkmalskenntnis%20%5Beinzelnes%20Merkmal%5D">Merkmalskenntnis: Eigenschaften</a></span>
         <span class="sf-desc">Merkmalsgebundene SF; Eigenschaften-Zauber günstiger modifizierbar</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Merkmalskenntnis [einzelnes Merkmal]</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Merkmalskenntnis%20%5Beinzelnes%20Merkmal%5D">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> Spruchzauberer; skalierend nach Anzahl der bereits bekannten Merkmale · <strong>Verbreitung:</strong> 1–5 je nach Merkmal</p>
+<p>Der Zauberer hat besondere Einblicke in ein spezifisches Zaubermerkmal erhalten und kann alle Zauber mit diesem Merkmal <strong>eine Spalte leichter erlernen</strong>.</p>
+<p><strong>Voraussetzungen für Erwerb weiterer Merkmale:</strong></p>
+<ul>
+<li><ol>
+<li>Merkmal: meist in der Profession integriert (bei Magiern, Hexen, Druiden, Geoden, Kristallomanten, Scharlatanen)</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Merkmal: Leiteigenschaft 13</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>Merkmal: Leiteigenschaft 15</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Merkmal: Leiteigenschaft 16</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Merkmal: Leiteigenschaft 17</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>Merkmal: Leiteigenschaft 18</li>
+</ol>
+</li>
+</ul>
+<p><strong>Kosten:</strong></p>
+<ul>
+<li>Stufe I-Merkmale: <strong>100 AP</strong></li>
+<li>Stufe II-Merkmale: <strong>200 AP</strong></li>
+<li>Stufe III-Merkmale: <strong>300 AP</strong></li>
+</ul>
+<p><strong>Merkmal-Stufen:</strong></p>
+<table>
+<thead>
+<tr>
+  <th>Stufe</th>
+  <th>Merkmale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>I</td>
+  <td>Dämonisch (einzelne Domäne), Elementar (einzelnes Element), Geisterwesen, Heilung, Herbeirufung, Illusion, Schaden, Telekinese, Verständigung</td>
+</tr>
+<tr>
+  <td>II</td>
+  <td>Antimagie, Beschwörung, Eigenschaften, Einfluss, Form, Hellsicht, Herrschaft, <strong>Kraft</strong>, Objekt, Umwelt</td>
+</tr>
+<tr>
+  <td>III</td>
+  <td>Dämonisch (gesamt), Elementar (gesamt), Limbus, <strong>Metamagie</strong>, Temporal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Spielrelevante Wechselwirkungen:</strong></p>
+<ul>
+<li>Merkmalskenntnis <strong>Kraft</strong>: halbe AP-Kosten für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Kraftkontrolle">Kraftkontrolle</a> (150 statt 300 AP) und SF Matrixregeneration II</li>
+<li>Merkmalskenntnis <strong>Metamagie</strong>: halbe AP-Kosten für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Zauber%20bereithalten">Zauber bereithalten</a>, Zauber unterbrechen und Zauber vereinigen</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
-        <span class="sf-name">[[wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Merkmalskenntnis [einzelnes Merkmal]|Merkmalskenntnis: Schaden]]</span>
+        <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Merkmalskenntnis%20%5Beinzelnes%20Merkmal%5D">Merkmalskenntnis: Schaden</a></span>
         <span class="sf-desc">Merkmalsgebundene SF; Schaden-Zauber günstiger modifizierbar</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Merkmalskenntnis [einzelnes Merkmal]</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Merkmalskenntnis%20%5Beinzelnes%20Merkmal%5D">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> Spruchzauberer; skalierend nach Anzahl der bereits bekannten Merkmale · <strong>Verbreitung:</strong> 1–5 je nach Merkmal</p>
+<p>Der Zauberer hat besondere Einblicke in ein spezifisches Zaubermerkmal erhalten und kann alle Zauber mit diesem Merkmal <strong>eine Spalte leichter erlernen</strong>.</p>
+<p><strong>Voraussetzungen für Erwerb weiterer Merkmale:</strong></p>
+<ul>
+<li><ol>
+<li>Merkmal: meist in der Profession integriert (bei Magiern, Hexen, Druiden, Geoden, Kristallomanten, Scharlatanen)</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Merkmal: Leiteigenschaft 13</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>Merkmal: Leiteigenschaft 15</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Merkmal: Leiteigenschaft 16</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Merkmal: Leiteigenschaft 17</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>Merkmal: Leiteigenschaft 18</li>
+</ol>
+</li>
+</ul>
+<p><strong>Kosten:</strong></p>
+<ul>
+<li>Stufe I-Merkmale: <strong>100 AP</strong></li>
+<li>Stufe II-Merkmale: <strong>200 AP</strong></li>
+<li>Stufe III-Merkmale: <strong>300 AP</strong></li>
+</ul>
+<p><strong>Merkmal-Stufen:</strong></p>
+<table>
+<thead>
+<tr>
+  <th>Stufe</th>
+  <th>Merkmale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>I</td>
+  <td>Dämonisch (einzelne Domäne), Elementar (einzelnes Element), Geisterwesen, Heilung, Herbeirufung, Illusion, Schaden, Telekinese, Verständigung</td>
+</tr>
+<tr>
+  <td>II</td>
+  <td>Antimagie, Beschwörung, Eigenschaften, Einfluss, Form, Hellsicht, Herrschaft, <strong>Kraft</strong>, Objekt, Umwelt</td>
+</tr>
+<tr>
+  <td>III</td>
+  <td>Dämonisch (gesamt), Elementar (gesamt), Limbus, <strong>Metamagie</strong>, Temporal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Spielrelevante Wechselwirkungen:</strong></p>
+<ul>
+<li>Merkmalskenntnis <strong>Kraft</strong>: halbe AP-Kosten für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Kraftkontrolle">Kraftkontrolle</a> (150 statt 300 AP) und SF Matrixregeneration II</li>
+<li>Merkmalskenntnis <strong>Metamagie</strong>: halbe AP-Kosten für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Zauber%20bereithalten">Zauber bereithalten</a>, Zauber unterbrechen und Zauber vereinigen</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Repr%C3%A4sentation">Repräsentation: Magier</a></span>
         <span class="sf-desc">Zaubern in Rüstung, Grundlage für die meisten Gildenmagier-Zauber</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Repräsentation</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Repr%C3%A4sentation">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Verbreitung:</strong> 7 (bei der jeweiligen Tradition)</p>
+<p>Die Kenntnis der Zauberstrukturen, Rituale, Denkhilfen und Gewohnheiten einer Zaubertradition. Ermöglicht, Zauber in der entsprechenden Repräsentation gemäß ihrer Grundschwierigkeit (Komplexität) zu erlernen.</p>
+<p><strong>Bekannte Repräsentationen in Aventurien:</strong> Achaz-Kristallomantisch, Borbaradianisch, Druidisch, Elfisch, Geodisch, Gildenmagisch, Hexisch, Scharlatanisch, Schelmisch.</p>
+<p><strong>Erste Repräsentation:</strong> automatisch durch Profession/Kultur (Gildenmagier erhalten Gildenmagie).</p>
+<p><strong>Zweite und weitere Repräsentationen:</strong></p>
+<table>
+<thead>
+<tr>
+  <th></th>
+  <th>2. Repräsentation</th>
+  <th>3. Repräsentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Voraussetzungen</td>
+  <td>KL 15, IN 15; 50 ZfP in der fremden Repräsentation</td>
+  <td>KL 18; 50 ZfP in der fremden Repräsentation</td>
+</tr>
+<tr>
+  <td>Vollzauberer</td>
+  <td>2.000 AP</td>
+  <td>4.000 AP</td>
+</tr>
+<tr>
+  <td>Halbzauberer</td>
+  <td>3.000 AP</td>
+  <td>nicht möglich</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Zeitaufwand:</strong> Mindestens 1 Jahr intensives Studium (kein Abenteuer); Lehrmeister erforderlich.</p>
+<p><strong>Kostenvergünstigungen beim Fremdspracherwerb:</strong></p>
+<ul>
+<li>Gildenmagier lernen borbaradianische Repräsentation zu 3/4 der Kosten</li>
+<li>Gildenmagier lernen scharlatanische Repräsentation zu 1/2 der Kosten</li>
+<li>Scharlatane lernen gildenmagische Repräsentation zu 3/4 der Kosten</li>
+<li>Druiden ↔ Geoden jeweils 3/4 der Kosten</li>
+</ul>
+<p><strong>Konsequenz für Fremdrepräsentationen:</strong> Zauber in einer fremden Repräsentation werden um 2 Spalten schwieriger erlernt. Spontane Modifikationen sind nur in Repräsentationen möglich, die man selbst beherrscht (Ausnahme: SF Matrixverständnis).</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Ritualkenntnis%20%28Gildenmagie%29">Ritualkenntnis: Gildenmagie</a></span>
         <span class="sf-desc">Voraussetzung für alle Stabzauber; Wert 11</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Ritualkenntnis (Gildenmagie)</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Ritualkenntnis%20%28Gildenmagie%29">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> Z (Vollzauberer) · <strong>Startwert:</strong> 3</p>
+<p>Ritualkenntnis (RK) ist das Wissen um die Regeln und Fertigkeiten einer magischen Tradition zur Ritualdurchführung. Jede Tradition hat ihre eigene RK (Gildenmagie, Hexenmagie, Scharlatanerie etc.).</p>
+<p><strong>Erwerb:</strong></p>
+<ul>
+<li>Alle Vollzauberer außer Elfen erhalten die passende Ritualkenntnis automatisch als Teil ihrer Profession (ohne zusätzliche AP).</li>
+<li>Ritualkenntnis einer Fremdrepräsentation: <strong>250 AP Aktivierungskosten</strong> (erfordert Meistererlaubnis).</li>
+<li>Steigerung: wie ein gewöhnliches Talent — eigene RK nach Spalte E, fremde nach Spalte G; stets mit Lehrmeister (oder qualitativem Zauberbuch, bei Gildenmagiern).</li>
+</ul>
+<p><strong>Anwendung:</strong></p>
+<ul>
+<li>Rituale werden wie eine Zauberprobe mit dem Ritualkenntniswert (RkW) als Zauberfertigkeit abgelegt.</li>
+<li>Eigenschaften für die Probe: bei den einzelnen Ritualen angegeben (Traditions- und Objektrituale) oder durch die RK festgelegt (Schamanenrituale).</li>
+<li>Kostet unabhängig vom Ausgang die vollen AsP (kein halber Einsatz bei Misslingen wie bei Spruchzauberei).</li>
+</ul>
+<p><strong>Private Ausbildung (Lehrmeister statt Akademie):</strong> Gildenmagier erhalten RK (Gildenmagie), Repräsentation (Gildenmagie) und Große Meditation automatisch als Teil der Grundausbildung (bei Vollzauberer-Vorteil).</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Verbotene%20Pforten">Verbotene Pforten</a></span>
         <span class="sf-desc">Sondermerkmal / eingeschränkter Zugriff auf bestimmte Zaubersphären</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Verbotene Pforten</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Verbotene%20Pforten">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH(V) · <strong>Voraussetzungen:</strong> MU 12 · <strong>Kosten:</strong> 100 AP · <strong>Verbreitung:</strong> 4</p>
+<p>Die Kenntnis der rituellen Technik, die eigene Lebensenergie zur Bezahlung von Zauberkosten einzusetzen (niedrigste Form der Magica Sanguina, per Konventsbeschluss von 743 BF und Codex V/27 genehmigt).</p>
+<p><strong>Durchführung:</strong></p>
+<ol>
+<li>Vor dem Zauber <strong>1 Aktion konzentrieren</strong></li>
+<li>Probe auf <strong>Selbstbeherrschung + 10</strong> muss gelingen</li>
+<li>Anschließender Zauber ist um <strong>2 Punkte erschwert</strong></li>
+<li>Können die AsP-Kosten während des Zauberns nicht vollständig mit AsP bezahlt werden, ist <strong>Bezahlung mit LeP im Verhältnis 1:1</strong> möglich</li>
+</ol>
+<p><strong>Zusatzkosten pro Zauber:</strong></p>
+<ul>
+<li>Einmalig <strong>1W3 LeP</strong> zusätzlich verbraucht (unabhängig von den eigentlichen Kosten)</li>
+<li><strong>1 Punkt Erschöpfung</strong></li>
+</ul>
+<p><strong>Gefahr bei sehr niedrigen LeP:</strong></p>
+<ul>
+<li>Sinkt die LE durch Verbrauch unter 5, verliert der Zauberer <strong>permanent</strong> so viele LeP, wie seine LE weniger als 5 beträgt</li>
+<li>Die LE kann bis auf <strong>–KO</strong> sinken; darunter ist der Zauberer innerlich ausgebrannt (Seele und Astralleib aufgebraucht, keine Wiederweckung möglich)</li>
+</ul>
+<p><strong>Einige ausgebildete Viertelzauberer</strong> können diese SF erlernen.</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauber%20bereithalten">Zauber bereithalten</a></span>
         <span class="sf-desc">Zauber vorbereiten ohne sofortige Wirkung (spätere Auslösung)</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Zauber bereithalten</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauber%20bereithalten">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> Spruchzauberer; MU 12, KL 12; SF Zauberkontrolle · <strong>Kosten:</strong> 300 AP (150 AP bei Merkmalskenntnis Metamagie) · <strong>Verbreitung:</strong> 3</p>
+<p><strong>Effekt:</strong> Einen Zauberspruch wirken, dann bis zu <strong>MU Aktionen</strong> warten, bevor er losgeschickt wird.</p>
+<p><strong>Ablauf:</strong></p>
+<ul>
+<li>Zauber normal wirken</li>
+<li>Während der Bereithaltungszeit: keine Probe nötig, wenn der Zauberer <strong>nichts tut außer Schritt</strong></li>
+<li>Führt er andere Aktionen aus: pro Aktion Probe auf <strong>Selbstbeherrschung</strong>, erschwert um die halben AsP des gespeicherten Spruchs</li>
+<li>Bei misslingender Probe: Zauber geht unkontrolliert los und trifft <strong>das nächststehende gültige Ziel</strong> (angefangen beim Zauberer selbst, falls der Zauber dies zulässt)</li>
+</ul>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">✦</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauberkontrolle">Zauberkontrolle</a></span>
         <span class="sf-desc">Präzisere Steuerung von Zaubern (Wirkungsbereich / Stärke)</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Zauberkontrolle</span>
+<span class="artikel-quelle">WdZ</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten.md#Zauberkontrolle">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> ZH · <strong>Voraussetzungen:</strong> Spruchzauberer; KL 12 · <strong>Kosten:</strong> 100 AP · <strong>Verbreitung:</strong> 5</p>
+<p><strong>Effekte:</strong></p>
+<ul>
+<li>Kann jeden selbst gesprochenen Spruch <strong>während seiner Wirkungsdauer aufheben</strong> (auch Sprüche, die normalerweise nicht aufrechterhalten werden)</li>
+<li>Kann das Ergebnis der Zauberprobe einschätzen und damit bestimmen, ob ein Zauber gelungen ist, an den eigenen Fähigkeiten gescheitert oder durch MR/Störfaktoren vereitelt wurde</li>
+<li>Bemerkt bereits <strong>nach einer Aktion</strong>, ob der Zauber gelingen wird (unabhängig vom ZfW)</li>
+</ul>
+<p><strong>Basis für Folge-SF:</strong> Zauberkontrolle ist Voraussetzung für <a href="obsidian://open?vault=DSA-Vault&amp;file=magische-sonderfertigkeiten.md#Zauber%20bereithalten">Zauber bereithalten</a>, Meisterliche Zauberkontrolle I, Meisterliche Zauberkontrolle II, Zauberroutine und Zauber unterbrechen.</p>
+<p><strong>Sonderregel für Elfen:</strong> Elfen beherrschen von Natur aus eine eingeschränkte Version dieser SF (nur für elfische Repräsentation). Diese zählt als Zauberkontrolle für den Erwerb höherer SF, solange die verwendeten Zauber in elfischer Repräsentation gesprochen werden. Erwerb der vollständigen SF kostet Elfen nur 50 AP.</p>
+</div>
+      </div>
+    </details></li>
     </ul>
     <h4 style="font-family:var(--display);font-size:10px;letter-spacing:.22em;color:var(--accent-gold);margin:18px 0 8px;text-transform:uppercase">Allgemeine SF</h4>
     <ul class="sf-list general">
       <li><span class="ico">◈</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Aufmerksamkeit">Aufmerksamkeit</a></span>
         <span class="sf-desc">Erleichterte Sinnenschärfe-Proben / Wahrnehmung</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Aufmerksamkeit</span>
+<span class="artikel-quelle">WdH</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Aufmerksamkeit">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> Kampf-SF (steht im Kapitel &quot;Kampf-Sonderfertigkeiten&quot;, S. 277)
+<strong>Voraussetzungen:</strong> IN 12
+<strong>Verbreitung:</strong> 5
+<strong>Kosten:</strong> 200 AP (4 GP)</p>
+<p>Ein Held mit dieser Fähigkeit benötigt nur eine Aktion (anstatt zweier), um sich im Kampf Orientierung (die gleichnamige längerfristige Handlung) zu verschaffen und seinen INI-Wert auf das mögliche Maximum anzuheben; er muss hierzu auch keine IN-Probe ablegen.</p>
+<p>Die IN-Probe, um Überraschung zu verhindern oder bei einem Hinterhalt schnell zu reagieren, ist von vornherein um 4 Punkte erleichtert.</p>
+<p>Ein Held mit Aufmerksamkeit hat genügend Übersicht, um sich nicht in Reichweite eines Passierschlags zu bringen oder diesen vorauszuahnen: Gegen ihn ist ein Passierschlag um zusätzliche 4 Punkte erschwert.</p>
+<p>Außerdem muss er nicht zu Beginn einer Kampfrunde ankündigen, ob er eine Angriffsaktion in eine Abwehraktion umwandeln will oder umgekehrt, sondern erst unmittelbar bevor er seine erste eigene Angriffs- oder Abwehraktion in dieser Kampfrunde ausführt.</p>
+<p><em>Voraussetzung für:</em> Distanzkampf (SF), Formation (SF), Kampfgespür (SF; IN 15, SF Aufmerksamkeit und Kampfreflexe).</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">◈</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Kulturkunde%20%28Mittelreich%29">Kulturkunde (Mittelreich)</a></span>
         <span class="sf-desc">Soziale Interaktion im Mittelreich erleichtert</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Kulturkunde (Mittelreich)</span>
+<span class="artikel-quelle">WdH</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Kulturkunde%20%28Mittelreich%29">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> Allgemeine SF
+<strong>Voraussetzungen:</strong> KL und IN mindestens 10; Kenntnis der Sprache der Kultur mindestens 5
+<strong>Verbreitung:</strong> 7; kann ohne Lehrmeister erlernt werden
+<strong>Kosten:</strong></p>
+<ul>
+<li>0 AP (kostenlos) für die Kulturkunde der eigenen Kultur</li>
+<li>150 AP (3 GP) für jede weitere Kultur</li>
+<li>Verbilligt auf 75 AP (2 GP) für Helden mit dem Vorteil Soziale Anpassungsfähigkeit bzw. der SF Nandusgefälliges Wissen</li>
+</ul>
+<p>Proben auf Gesellschaftliche und bestimmte Wissens-Talente sind außerhalb der eigenen Kultur meist erschwert (um mindestens 3, eher 7, teilweise auch bis zu 15 Punkten). Die SF Kulturkunde erlaubt es, diese Erschwernisse zu ignorieren. (Zuschläge, die auch ein Mitglied der entsprechenden Kultur betreffen würden — etwa SO-Differenz — werden hierdurch nicht beeinflusst.)</p>
+<p><strong>Lernweg:</strong> Kulturkunde wird in erster Linie durch den Aufenthalt unter Wesen der betreffenden Kultur erworben (mindestens ein Jahr; dabei dann jedoch kein weiterer Zeitaufwand). Es ist aber auch möglich, genügend über eine Kultur aus Reiseberichten, Schriftwechseln oder von einem Lehrmeister aus der entsprechenden Kultur zu erfahren (was einen den AP entsprechenden Zeitaufwand mit sich bringt).</p>
+<p><strong>Wählbare Kulturen (Auswahl):</strong> Mittelreich, Almada, Andergast und Nostria, Bornland, Svellttal, Nordlande, Horasreich, Zyklopeninseln, Amazonen, Aranien, Tulamidenlande, Novadi, Ferkina, Zahori, Thorwal, Gjalskerländer, Fjarninger, Waldmenschen, Tocamuyac, Maraskan, Südaventurien, Bukanier, Nivesen, Norbarden, Trollzacker, Schwarze Lande, Ambosszwerge, Brillantzwerge, Erzzwerge, Hügelzwerge, Brobim, Auelfen, Waldelfen, Firnelfen, Steppenelfen, Orks, Goblins, Archaische Achaz, Stammes-Achaz, Trolle, Grolme sowie evtl. weitere bei der Entdeckung &quot;neuer&quot; Kulturen.</p>
+</div>
+      </div>
+    </details></li>
       <li><span class="ico">◈</span><span>
         <span class="sf-name"><a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Ortskenntnis%20%28Stadtteil%20/%20Kleinstadt%29">Ortskenntnis (Stadtteil/Kleinstadt)</a></span>
         <span class="sf-desc">Navigation + soziale Proben in bekanntem Stadtgebiet</span>
-      </span></li>
+      </span>    <details class="artikel-details">
+      <summary class="artikel-toggle">▸ Artikel</summary>
+      <div class="artikel-panel">
+        <div class="artikel-kopf">
+          <span class="artikel-titel">Ortskenntnis (Stadtteil / Kleinstadt)</span>
+<span class="artikel-quelle">WdH</span>          <a class="artikel-obsidian" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten.md#Ortskenntnis%20%28Stadtteil%20/%20Kleinstadt%29">↗ Obsidian</a>
+        </div>
+        <div class="artikel-body"><p><strong>Typ:</strong> Allgemeine SF
+<strong>Voraussetzungen:</strong> Längerer Aufenthalt am gewünschten Ort oder häufigere Reisen entlang der Strecke (Meisterentscheid; bei &quot;Aufenthalt&quot; jedoch nicht unter einem halben Jahr); kein weiterer Lernzeitaufwand erforderlich.
+<strong>Verbreitung:</strong> 7; aus der Praxis heraus
+<strong>Kosten:</strong></p>
+<ul>
+<li>150 AP (3 GP) pro bekannter Örtlichkeit / Strecke für die erste Ortskenntnis</li>
+<li>100 AP (2 GP) für alle folgenden</li>
+</ul>
+<p>Der Held hat Kenntnis eines bestimmten Gebiets, seiner Weghindernisse, Wetterverhältnisse, Straßenbedingungen, wilden Tiere und dergleichen. Das Gebiet sollte nicht größer als 100 Rechtmeilen (Quadratkilometer) sein, kann aber auch (im Falle eines Flusses oder einer Küste) eine Strecke von 100 mal 1 Meile oder gar eine Straße und deren nächste Umgebung (also etwa 250 Schritt mal 400 Meilen) sein.</p>
+<p><strong>Skalenregel:</strong></p>
+<ul>
+<li>Kleinstadt: Kenntnis der ganzen Stadt, ihrer Abkürzungen, Kanalisationsanlagen, des Verhaltens der Garde usw.</li>
+<li>Großstadt (ab ca. 10.000 Einwohner): Ortskenntnis gilt nur für einen einzelnen Stadtteil.</li>
+</ul>
+<p>Die SF kann mehrfach gewählt werden (z.B. für benachbarte Stadtteile, den Verlauf des Großen Flusses usw.).</p>
+<p><strong>Spieltechnisch</strong> erlaubt diese SF, bis zu 7 Punkte aus Probenzuschlägen auf passende Talente (Wildnisleben und Orientierung in der freien Natur, Gassenwissen und Orientierung in Städten) zu ignorieren, wenn sich der Held am passenden Ort aufhält.</p>
+</div>
+      </div>
+    </details></li>
     </ul>
   </section>
 </div>
@@ -6143,7 +6608,8 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   // D-047: das Panel ist position:fixed (Hoehe variiert mit Modus/Ergebnis) -> die offene Hoehe steht als --dice-panel-h auf <html>;
-  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben.
+  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben
+  // (D-049: ausserhalb davon, am Desktop, nutzt #footer-bar sie als bottom-Versatz).
   function syncPanelReserve() {
     if (!panel) return;
     var open = !panel.classList.contains('hidden');
