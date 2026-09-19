@@ -1,0 +1,50 @@
+# Sprint 018 Handoff — Zauber-Block: Artikelvorschau + Sortierung im Kompaktlayout
+
+## Fertig (alle Tasks abgeschlossen)
+
+- ✅ T0: Sprint scaffold (BACKLOG.md D-018/D-043 → in-progress, plan.md) — `dda1dd0`
+- ✅ T1 (**D-043**): ZfW-Sortierung aus dem Inline-`<script>` (`dashboard.html.j2`) nach `static/zauber-sort.js` (IIFE, `JS_FILES` nach `zauberspeicher.js`); Toolbar-Button `[data-spell-sort]` über der Liste, in beiden Layouts sichtbar (Kompaktlayout: 44 px hoch), Zyklus Standard → ZfW ↓ → ZfW ↑ → Standard (stabil, Ursprungsreihenfolge wird gemerkt), Kopfzeilenklick als Zusatz; Zeilen liegen in `<div class="spell-list" data-spell-list>` — `a4cfae6`
+- ✅ T2 (**D-018a**): `parsers/wikiartikel.py::load_zauber_artikel(vault_root, wiki_paths, link_fn)` — liest Wiki-Artikel, mistune (`escape=True`, Tabellen-Plugin), `[[wikilinks]]` → `obsidian://`, Pfad-Whitelist `wiki/dsa-4.1/`, Fallback-Parser für kaputtes Frontmatter-YAML; `zauber_artikel` als Top-Level-Key in `build_context`; `mistune>=3.0` in `requirements.txt` — `c6639a4`, `658b094`
+- ✅ T3 (**D-018b**): `<details class="artikel-details">` als letztes Kind jeder `.spell`-Zeile (Titel, Quelle, Meta-Chips, Body, `↗ Obsidian`), Styles für Desktop-Grid / Kompaktlayout / Druck — `d4d740d`
+- ✅ T4: Verifikation (Suite, Static-Render, Browser served + Static über `http.server`) + Gesamt-Review (Opus: „With fixes"); Review-Fixes `51780bf` (Artikel-Render-Fehler pro Artikel isoliert, Live-Test entkoppelt), `8e82c70` (Druck: geschlossene Vorschauen drucken nichts, Label-in-Name am Sortier-Button), `bd59ad7` (Regression: Tabellenspalte kollabierte bei 400 px); Static-Render `95cc6a3`; Tracker (wiki-luecken L22, backlog B-013) `68c0895`; plan.md `3f6007c`
+- Commits liegen **lokal** auf `master`, **nichts gepusht** (`origin/master` steht weiter bei `0351829`).
+
+## Was funktioniert
+
+- **Zauber-Tab, Artikelvorschau** (neu): jede Zauberzeile hat „▸ Artikel" — Aufklappen zeigt den Wiki-Artikel (H2-Abschnitte, Listen, Tabellen) direkt im Dashboard; `↗`-Link am Zaubernamen und `↗ Obsidian` im Panel-Kopf bleiben. Reines Markup, **kein JS**, gleicher Codepfad in served und Static-Render (funktioniert ohne Backend). Klick auf Summary/Panel öffnet kein Würfelpanel (`dice.js:592`-Guard, per Test festgenagelt), Klick auf die Zelle daneben weiterhin schon. 25 von 25 Helden-Zaubern haben eine Vorschau; Zauber ohne Wiki-Artikel bekämen keine Aufklappzeile.
+- **Zauber-Tab, Sortierung** (neu): Button „Sortierung: Standard / ZfW ↓ / ZfW ↑" (Tastatur: Enter/Space; `aria-label` beginnt mit dem sichtbaren Text); offene Vorschau wandert mit ihrer Zeile; Legende bleibt hinter der Liste (Bestandsfehler behoben).
+- **Druck:** Toolbar und `↗ Obsidian` ausgeblendet, geschlossene Vorschauen drucken nichts, offene hell auf Papier (≈ 14:1); Zeilen mit offenem Artikel dürfen umbrechen (`:has()`, Chrome ≥ 105 / Safari ≥ 15.4 / Firefox ≥ 121).
+- **Mobile 400 px:** alle 8 Tabs ohne Überlauf (`scrollWidth == clientWidth == 385`), auch mit allen 25 Artikeln offen (kleinster Abstand zur Karte 33 px); Artikel-Tabellen (3 Artikel) behalten lesbare Spalten.
+- Alle Features aus Sprint 013–017 unverändert (Chronik Roh/Kompiliert/Register, Eigenschafts-Leiste, Inline-Werte, Zauberspeicher, Aussehen, Würfel, Steigern, Inventar, Sprachen, Zustände/Wunden, Static-Render mit eingebettetem JS).
+- Der Wiki-Artikel-Loader arbeitet **read-only** auf `wiki/dsa-4.1/`; geschrieben wird dort nichts.
+
+## Verifikation
+
+- **Test Suite:** 333/333 bestanden, auch mit `-W error` (Baseline 243 → +90: T1 +6, T2 +76 [`test_wikiartikel.py` 74 neu, 2 Render-Tests], T3 +6, Review-Fixes +2 [Isolationstest, Label-in-Name], Druckregel-/Tabellen-Assertions in bestehenden Tests).
+- **Static Render:** `output/illaen-baernhold-dashboard.html` erfolgreich generiert (exit 0), identisch zum committeten Stand; 434 KB (+55 KB gegenüber 379 KB; 25 eingebettete Artikel ≈ 29 KB HTML); 25× `artikel-details`, 0× `<script src>`, alter Inline-Sortierblock weg, `zauber-sort.js` 1× eingebettet, Hinweis-Banner 1×.
+- **Browser (Playwright, `innerWidth === 400` verifiziert):** served 1280 / 1071 / 400 px + Static über `http.server` — Klick-Guard, Sortier-Zyklus inkl. Tastatur, alle Artikel offen ohne Überstand (−33 px zur Karte bei 400/1280, −9 px bei 1071), 8/8 Tabs `scrollWidth == clientWidth`, Konsole nur `favicon.ico 404`, ausschließlich GET-Requests, Repo danach unverändert. Print-Emulation: geschlossene Vorschau `display:none`, Toolbar `none`, Text `rgb(26,18,8)` auf Papier.
+- **Domänen-Grenze:** `git diff --name-only dda1dd0..HEAD` berührt nur `helden/_tools/`, `output/`, `requirements.txt`, `backlog.md`, `wiki-luecken.md`; nichts unter `abenteuer/`, `wiki/`, `helden/illaen-baernhold/`.
+- **Gesamt-Review (Opus):** 0 Critical; 2 Important (beide behoben), Kern: Escaping End-to-End, Pfad-Whitelist inkl. Symlinks, Cross-Task-Integration bestätigt.
+
+## Als nächstes (Sprint 019)
+
+- **D-041** (Wundregel-/Zustände-Audit, M) — steht jetzt an der Backlog-Spitze; Regelarbeit gegen DSA 4.1, `session.js:29` trägt seit Mai 2026 ein offenes TODO, der Code läuft seit D-038 im Browser, die Werte sind nie geprüft.
+- **D-044** (Mobile/Touch-Feinschliff, S) — inzwischen mit Punkt (5): Summary „▸ Artikel" im Kompaktlayout nur ≈ 18 px hoch; passt fachlich zu D-046 (Zauber-Tab/Mobile).
+- **D-045** (Chronik-Druck, S) — Ansichten-Konsistenz und Register-Filter im Druck.
+- **D-046** (Zauberliste: Druck-Kontrast + Grid-Überstand 1071 px, S) — neu aus dem Browser-Check zu D-018; beide Punkte bestanden schon vor Sprint 018.
+- **B-013** (Vault-`backlog.md`, wiki, M) — Frontmatter der Zauberartikel reparieren (103/268 ungültiges YAML, `wiki-luecken.md` L22); danach den Fallback-Parser in `parsers/wikiartikel.py` entfernen (~20 Zeilen) und die Warn-/Debug-Pfade prüfen. Liegt außerhalb des Dashboard-Trackers, hängt aber direkt am Loader.
+- (Reihenfolge = Empfehlung, nicht Pflicht; BACKLOG.md-Reihenfolge ist die Priorität.)
+
+## Bekannte Einschränkungen (bewusst ausgeklammert)
+
+- **Wiki-Frontmatter kaputt bei 103/268 Zauberartikeln:** unquotiertes `: ` in `kosten:`/`zauberdauer:` (z. B. `(Ach: 3 AsP)`). Der Loader umgeht das mit einem zeilenweisen Fallback-Parser (nur `debug`-Log, Warnung nur bei nicht lesbaren/nicht UTF-8-Dateien oder fehlendem schließenden `---`) — ohne ihn fehlte die Vorschau bei 10 von 25 Zaubern. Der Fallback greift **nur** bei `yaml.YAMLError` bzw. Nicht-Mapping-Frontmatter; ein YAML-Konstruktor-`ValueError` (z. B. `seite: 2023-13-45`) führt zu Warnung + keine Vorschau (im Live-Vault derzeit 0 Fälle).
+- **Wikilinks in Code-Spans/Codeblöcken** der Artikel werden ebenfalls in Links umgewandelt (für Zauberartikel harmlos); Wikilinks verweisen per `obsidian://`, nicht auf andere Vorschauen.
+- **Vorschau nur für Zauber:** Rituale/Stabzauber und Sonderfertigkeiten (`↗`-Links auf Wiki-Artikel) haben keine Inline-Vorschau — Mechanik wäre übertragbar (`load_zauber_artikel` ist pfadgenerisch bis auf den Namen), bewusst nicht in D-018.
+- **Zauberliste bei exakt 1071 px:** Artikel-Panel (`grid-column:1/-1`) und die letzte Zelle geschlossener Zeilen ragen 14 px aus der `.spell`-Box (feste Spaltenbreiten 958 px > 934 px); bleibt in der Karte, `scrollWidth` unauffällig (Rect-Vergleich nötig). 1072–~1130 px nicht durchgemessen — D-046.
+- **Druck-Kontrast (Bestand):** `.spell .nlink`, `.zfw-num`, `.zd`, `.kosten` sind im Druck hell auf Papier — D-046. `:has()`-Regel (`break-inside:auto`) fehlt in älteren Browsern; dort bleibt `break-inside:avoid`, sehr lange offene Artikel würden nicht umbrechen.
+- **Summary-Tap-Ziel** „▸ Artikel" ≈ 18 px im Kompaktlayout — D-044 (5). Sortier-Button hat 44 px.
+- **Kein JS-Test-Runner:** `zauber-sort.js` per `node --check`, Fake-DOM-Wegwerf-Test des Implementierers (nicht committet) und Browser-Check geprüft; Struktur-/Escaping-/Guard-Tests laufen als Python-String-/`html.parser`-Scans (u. a. `dice.js`-Guard-Slice `js[start:start+400]` formatierungsempfindlich).
+- **Deferred Minors aus den Task-Reviews** (kein Merge-Blocker, im Gesamt-Review trianguliert): T1 `aria-live`/`aria-pressed` fehlt (Zustandswechsel nur über Label am fokussierten Button), Zeilenliste wird einmalig beim Laden gesnapshottet, veralteter Kommentar am Header-Test, `live_html.index('class="legend-row"')` ohne Startoffset, formatierungsabhängiger Media-Query-Regex; T2 Test-Nits (Überschneidung zweier Quelle-Tests, `f`-Strings ohne Platzhalter, `import yaml` im Testkörper); T3 Test zählt `== 1` am ersten Live-`wiki_path` (bricht bei doppeltem Pfad), Dice-Guard-Slice.
+- **`file://` direkt nicht im Browser geprüft** (Playwright-MCP blockt `file:`): Static-Render lief über `http.server`; die Vorschau braucht weder JS noch Protokoll-Check, die Sortierung keinen. Über `http:` behandeln die JS-Dateien die Static-Seite als „served" (4× `/api/held/…/mtime` 404, harmlos, nur GET).
+- **Process-Notizen:** `task-brief`/`sdd-workspace` passen nicht zu `plan.md`-Tabellen und dem Basename `plan` (Kollision zwischen Sprints) — Briefs wurden von Hand in `.superpowers/sdd/sprint-018/` geschrieben (Workspace danach gelöscht); der T1-Commit trägt die `Claude-Session`-Trailerzeile, obwohl sie im Briefing fehlte; `.playwright-mcp/` entstand bei den Browser-Läufen im Vault-Root und wurde jeweils gelöscht (`.gitignore`-Zeile weiterhin offen); `.claude/settings.json` bleibt untracked (User entscheidet).
+- **Aus Sprint 017 unverändert offen:** Register hängt am Session-Format (`## Neue NSCs / Orte`, `- **Name** — …`); Register-Filter bleibt im Druck (D-045); `Verlauf`-Speichern in der Kompiliert-Ansicht nie im Browser angeklickt (schreibt in `abenteuer/`); inhaltliche Sichtung der vier Sessions steht aus (47 `(?)`-Stellen); Kommando-Mängel #5/#6/#8/#9/#11/#12 von `/session-compile`; Static-Render-Schreibaktionen liefern unter `file://` Fake-Erfolg; Chronik-Parser-Kleinigkeiten (`Datum: 1. Namenloser Tag`, leerer `->`-Zusatz); `.journal-readonly`-Kontrast ~3,3:1; Sprint-013-Erbe (Kampf-Header-Wortlaut, AT/PA ohne Wund-Overlay, `.talent-row`-Grid, Portrait-Plumbing, Python/JS-Würfel-Mathe-Mirror ohne Drift-Check — D-041 berührt den Mirror).

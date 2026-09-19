@@ -5,10 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Quelle |
-|------|-------|--------|-------|--------|
-| D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) — Sprint 018: `<details>`-Aufklappzeile, Artikel zur Render-Zeit eingebettet (mistune) | L | in-progress | Manual-Test 01.06.2026 |
-| D-043 | Zauber: ZfW-Sortierung im Kompaktlayout (≤ 1070 px) erreichbar machen — Sprint 018 | S | in-progress | Review D-040, 19.09.2026 |
+_(keine)_
 
 ## Backlog
 
@@ -17,6 +14,7 @@
 | D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
 | D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | ready | Browser-Check D-040, 19.09.2026 |
 | D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
+| D-046 | Zauberliste: Bestandsränder — Druck-Kontrast (Name-Link, ZfW, ZD, Kosten hell auf Papier) + Grid-Überstand bei 1071–~1130 px | S | ready | Browser-Check D-018, 19.09.2026 |
 
 ### Gestrichen
 
@@ -29,28 +27,27 @@ Details siehe Beschreibung unten (D-033/D-034 wurden nicht einfach vergessen —
 
 ### Beschreibungen
 
-**D-018 — Zauber: Inline-Vorschau**
-Klick auf Link öffnet Obsidian (gut). Gewünscht: kleine Ansicht im Dashboard, die den Artikel direkt anzeigt; `↗`-Obsidian-Link bleibt. Heute: nur `obsidian://`-URI via `rendering.py:obsidian_uri()`; kein Read-Endpoint. Umfang: neuer Flask-Endpoint liest Zauber-`.md` + rendert HTML; Inline-Panel/Modal im Zauber-Tab (`templates/partials/zauber.j2`, seit Sprint 015); Klick-Guard in `static/dice.js:520-532` beachten. Seit Sprint 012 günstiger: `popover` + CSS Anchor Positioning sind seit Firefox 147 (Jan. 2026) Baseline — spart die JS-Positionierung; `@position-try` (Flip bei Overflow) braucht noch einen sinnvollen Fallback (Safari 18.4+).
-
 **D-033 / D-034 — Quick-Capture & Ereignis-Auto-Log — *entfallen 19.09.2026***
 Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im Vault voraus. Da Drive Quelle bleibt (D-030-Fallback, Junction-Ansatz gescheitert), gibt es keinen Live-Schreibpfad mehr, in den das Dashboard schreiben könnte, ohne beim nächsten Import überschrieben zu werden. Ersatzlos gestrichen — der User schreibt weiterhin direkt in Google Drive, keine Dashboard-Interaktion während des Spiels vorgesehen.
 
 **D-041 — Wundregel-/Zustände-Audit**
 `static/session.js:29` trägt seit Mai 2026 ein `TODO: verify exact rules in wiki/dsa-4.1/ (zones, thresholds)`. Aktuell: −2 je Wunde (`computeWundPenalty`), Zustands-Mali fest (Schmerz −2, Furcht −2, Betäubt −4, Verwirrt −2, Erschöpft −2), und das Overlay zieht pauschal von **allen** `[data-attr]`-Werten ab (203 Stück, auch dort, wo die Regel es nicht verlangt). Nichts davon ist gegen DSA 4.1 geprüft — erst mit D-038 (Sprint 016) läuft der Code überhaupt im Browser. Umfang: Wundregeln/Zustände im Wiki nachlesen (`wiki/dsa-4.1/grundregeln/`), Abweichungen auflisten, Werte/Geltungsbereich korrigieren, Python-Würfelmathe und JS-Spiegel (`dice.js`) angleichen, ggf. `wiki-luecken.md`-Eintrag.
 
-**D-043 — Zauber: ZfW-Sortierung im Kompaktlayout**
-Die ZfW-Sortierung hängt an der Kopfzeile (`.spell:first-child`, Inline-JS in `templates/dashboard.html.j2` ab Zeile ~158: Klick → „Nach ZfW sortieren"). D-040 blendet diese Kopfzeile unterhalb von 1070 px aus (`.spell.spell-head{display:none}` in `static/base.css`), damit das Kompaktlayout lesbar bleibt — damit ist die Sortierung dort unerreichbar. Betrifft nicht nur Handys, sondern auch kleine Laptop-Fenster. Fix-Skizze: im Kompaktlayout ein schmales Sortier-Bedienelement (Button oder Select) statt der Spaltenköpfe sichtbar lassen; beim Anfassen das Inline-Skript nach `static/` (IIFE, `JS_FILES`) verlagern.
-
 **D-044 — Mobile/Touch-Feinschliff**
-Beim Browser-Check zu D-040 (Sprint 017) offen geblieben: (1) Banner-Titel „ILLAEN BAERNHOLD" ist bei 400 px rechts abgeschnitten; (2) Footer-Leiste (`#footer-bar`, `position:fixed`) hat ~33-px-Buttons (< 44 px Touch-Ziel) und verdeckt ~82 px Viewport — Alternative `position:static` unter 480 px; (3) Steigern-Tabelle scrollt ≤ 600 px im Container ohne `tabindex="0"` (per Tastatur nicht scrollbar), und der „auswählen"-Hinweis ist erst nach dem Scrollen sichtbar; (4) `.inv-add-input:first-child` hängt an der DOM-Reihenfolge — besser eine Klasse. Messmethode wie in D-040: `scrollWidth`/Rects bei verifiziertem `innerWidth === 400` (Playwright im served-Modus).
+Beim Browser-Check zu D-040 (Sprint 017) offen geblieben: (1) Banner-Titel „ILLAEN BAERNHOLD" ist bei 400 px rechts abgeschnitten; (2) Footer-Leiste (`#footer-bar`, `position:fixed`) hat ~33-px-Buttons (< 44 px Touch-Ziel) und verdeckt ~82 px Viewport — Alternative `position:static` unter 480 px; (3) Steigern-Tabelle scrollt ≤ 600 px im Container ohne `tabindex="0"` (per Tastatur nicht scrollbar), und der „auswählen"-Hinweis ist erst nach dem Scrollen sichtbar; (4) `.inv-add-input:first-child` hängt an der DOM-Reihenfolge — besser eine Klasse. (5) Zauber-Tab: Summary „▸ Artikel" der Artikelvorschau (Sprint 018) hat im Kompaktlayout nur ≈ 18 px Tap-Höhe (< 44 px), Sortier-Button hat bereits 44 px. Messmethode wie in D-040: `scrollWidth`/Rects bei verifiziertem `innerWidth === 400` (Playwright im served-Modus).
 
 **D-045 — Chronik-Druck**
 Der Print-Block in `static/chronik.css` druckt Roh und Kompiliert immer (`.chronik-view{display:block !important}`), das Register nur wenn es aktiv ist. Ein aktiver Register-Filter bleibt im Druck bestehen (`entry.hidden`), während Suchfeld und Umschalter ausgeblendet sind — der Ausdruck zeigt still eine Teilmenge. Zu klären: nur die aktive Ansicht drucken oder alle drei; Filter bei `beforeprint` zurücksetzen (analog zum `<details>`-Handling in `chronik.js`).
+
+**D-046 — Zauberliste: Bestandsränder**
+Beim Browser-Check zu D-018 (Sprint 018) gefunden, beide **vor** Sprint 018 vorhanden: (1) Druck: `.spell .nlink` und `.zfw-num` berechnen sich im Print-Block auf `--ink` (rgb 232,220,195) auf Papier rgb(236,228,208) — Kontrast ≈ 1,1:1; `.zd` (rgb 95,107,122) und `.kosten`/`.wirkung` (rgb 154,166,180) ebenfalls zu hell. `tabs.css`-Print-Block überschreibt nur `.spell .merk, .spell .probe`. (2) Bei exakt 1071 px (Desktop-Grid) ragt die letzte Zelle geschlossener Zeilen — und die Artikelvorschau (`grid-column:1/-1`) — 14 px aus der `.spell`-Box (feste Spaltenbreiten 958 px > 934 px Inhaltsbreite), bleibt aber in der Karte; 1072–1130 px nicht durchgemessen. Fix-Skizze: Print-Farben ergänzen; Breakpoint neu messen (Rect-Vergleich, nicht `scrollWidth`) oder Spalten als `minmax`.
 
 ## Done
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-043 | Zauber: ZfW-Sortierung im Kompaktlayout erreichbar — Toolbar-Button (Standard → ZfW ↓ → ↑, Tastatur/ARIA, ≥ 44 px), `static/zauber-sort.js` statt Inline-Skript, Zeilen-Wrapper `[data-spell-list]` (Legende bleibt hinter der Liste) | S | 018 |
+| D-018 | Zauber: Artikelvorschau als `<details>` in der Zauberzeile — 25 Artikel zur Render-Zeit eingebettet (`parsers/wikiartikel.py`, mistune `escape=True`, Wikilinks → `obsidian://`), Fallback-Parser für 103/268 Artikel mit ungültigem Frontmatter-YAML; Static-Render 379 → 434 KB | L | 018 |
 | D-042 | Chronik-Parser erkennt `Datum: 13. Phex -> Start` als IG-Datum (`13. Phex (Start)`), 5 Tests | S | 017 |
 | D-040 | Mobile 400 px: Überlauf in Zauber/Steigern/Inventar/Profil beseitigt — alle 8 Tabs ≤ 400 px, Zauber-Kompaktlayout ≤ 1070 px, Footer-Leiste umbricht | S | 017 |
 | D-036 | NSC-/Orts-Register: `parsers/register.py`, 3. Ansicht „Register" im Chronik-Tab (55 Einträge), clientseitige Suche, zur Render-Zeit generiert | M | 017 |
