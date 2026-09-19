@@ -418,6 +418,10 @@ body { padding-top: 46px; }
 .sg-cart-status.over { color: var(--accent-blood); }
 .sg-cart-commit { margin-left: auto; padding: 6px 14px; font-size: 13px; }
 .sg-cart-commit:disabled { opacity: .4; cursor: default; }
+/* Schmalansicht: Tabelle scrollt im eigenen Container statt die Seite aufzuweiten */
+@media screen and (max-width: 600px) {
+  .steiger-table { display: block; overflow-x: auto; }
+}
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
 .inv-coin-label { font-family: var(--subhead); color: var(--ink-mute); font-size: 13px; }
@@ -428,8 +432,12 @@ body { padding-top: 46px; }
 .inv-coin-total { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); border-top: 1px solid var(--rule-soft); padding-top: 8px; margin-top: 2px; text-align: right; }
 .inv-weight-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); margin-top: 8px; letter-spacing: .05em; }
 .inv-add-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
-.inv-add-input { flex: 1; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
+.inv-add-input { flex: 1; min-width: 0; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
 .inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
 .inv-add-btn:hover { background: var(--bg-elev); }
+@media screen and (max-width: 480px) {
+  .inv-add-form { flex-wrap: wrap; }
+  .inv-add-input:first-child { flex-basis: 100%; }
+}
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }

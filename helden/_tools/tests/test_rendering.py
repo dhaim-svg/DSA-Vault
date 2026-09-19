@@ -192,6 +192,13 @@ def test_render_has_register_view_exactly_once(live_html):
     assert live_html.count('id="chronik-view-register"') == 1
 
 
+def test_render_zauber_header_row_has_spell_head_class(live_html):
+    # Kopfzeile teilt .spell mit den Datenzeilen (Sortier-JS: .spell:first-child); die
+    # Zusatzklasse ist der Haken, mit dem die Schmalansicht sie ausblendet (D-040).
+    assert live_html.count('class="spell spell-head"') == 1
+    assert '.spell.spell-head{ display:none; }' in css_bundle()
+
+
 def test_render_chronik_tab_server():
     if not LIVE_HELD.exists():
         pytest.skip('Live-Vault ohne helden/illaen-baernhold')
