@@ -1,5 +1,8 @@
 """Tests for CSS/JS bundling and static vs. server rendering in rendering.py."""
+import json
 import re
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -398,7 +401,7 @@ def _css_rules(css):
 
 
 PRINT_SPELL_SELECTORS = (
-    '.spell .name .nlink', '.spell .name .nlink::after', '.spell .name .haus', '.zfw-num',
+    '.spell .name .nlink', '.spell .name .nlink::after', '.spell .name .haus', '.spell .zfw-num',
     '.spell .zd', '.spell .kosten', '.spell .wirkung', '.spell .submeta',
     # Browser-Messung Sprint 019: Kopfzeile (Inline-color) 1,95:1, Modifikations-Details 4,28:1 im Druck
     '.spell.spell-head', '.spell.spell-head *', '.mods-details summary.mods-toggle', '.mods-details .mods-list',
@@ -743,9 +746,7 @@ def test_steigern_js_wraps_tables_in_focusable_scroll_region():
     section = js[js.index('function addSection'):]
     section = section[:section.index('/* Eigenschaften */')]
     assert "className = 'steiger-scroll'" in section
-    assert re.search(r"setAttribute\('tabindex',\s*'0'\)", section)
-    assert re.search(r"setAttribute\('role',\s*'region'\)", section)
-    assert re.search(r"setAttribute\('aria-label',\s*title\)", section)
+    # tabindex/role/aria-label setzt seit D-047 nur syncScrollOverflow (bei echtem Ueberlauf, s. Abschnitt D-047)
     assert not re.search(r"table\.setAttribute\('role'", section)
     assert re.search(r'\.appendChild\(table\)', section)
     assert section.index('.appendChild(table)') < section.index('list.appendChild(wrap')
@@ -755,7 +756,7 @@ def test_steigern_js_wraps_tables_in_focusable_scroll_region():
     assert section.index('sg-scroll-hint') < section.index('list.appendChild(wrap')
 
 
-def test_css_steigern_scroll_wrapper_and_hint_only_at_600px():
+def test_css_steigern_scroll_wrapper_and_hint_base():
     css = css_bundle()
     screen = _strip_print_blocks(css)
     top = _css_rules(re.sub(r'@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}', '', screen))
@@ -764,10 +765,9 @@ def test_css_steigern_scroll_wrapper_and_hint_only_at_600px():
     assert any(re.search(r'outline\s*:\s*2px\s+solid\s+var\(--accent-cold\)', d) for d in _decls(top, '.steiger-scroll:focus-visible'))
     assert not any(re.search(r'display\s*:', d) for d in _decls(_css_rules(screen), '.steiger-table'))
     assert not any(re.search(r'overflow', d) for d in _decls(_css_rules(screen), '.steiger-table'))
-    # Hinweis: sonst aus, nur <= 600 px sichtbar, gedaempft
+    # Hinweis: sonst aus, gedaempft (Einblenden bei Ueberlauf: D-047, Abschnitt am Dateiende)
     base = ' '.join(_decls(top, '.sg-scroll-hint'))
     assert re.search(r'display\s*:\s*none', base) and 'var(--ink-mute)' in base
-    assert any(re.search(r'display\s*:\s*block', d) for d in _decls(_screen_rules(css, 600), '.sg-scroll-hint'))
 
 
 def _inv_add_input(html, input_id):
@@ -839,3 +839,132 @@ def test_render_register_druckfilter_is_hidden_and_outside_register_tools(live_h
     assert 'register-druckfilter' not in tools, 'register-tools wird im Druck ausgeblendet'
     view = live_html.index('id="chronik-view-register"')
     assert view < tag.start() < live_html.index('<section class="card register-gruppe"', view)
+
+
+# -- D-047: Touch-Ziele & Mobile-Restposten bei 400 px ------------------------
+
+def _toplevel_rules(css):
+    """Flache Regeln ausserhalb jedes @media-Blocks (Desktop-/Basis-Layout)."""
+    stripped = re.sub(r'@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}', '', re.sub(r'/\*.*?\*/', '', css, flags=re.S))
+    return _css_rules(stripped)
+
+
+def test_css_inventar_add_controls_touch_sized_only_at_480px():
+    # D-047: Eingaben + "+ Hinzufuegen" waren bei 400 px je 30 px hoch. Nur im <= 480-px-Block, Desktop unveraendert.
+    css = css_bundle()
+    narrow = _screen_rules(css, 480)
+    for sel in ('.inv-add-input', '.inv-add-btn'):
+        assert any(re.search(r'min-height\s*:\s*44px', d) for d in _decls(narrow, sel)), sel
+        assert not any('min-height' in d for d in _decls(_toplevel_rules(css), sel)), f'{sel}: min-height auch ausserhalb des Blocks'
+
+
+def test_css_zustand_chip_touch_sized_only_at_480px():
+    # D-047: Chips waren 25 px hoch; inline-flex + align-items:center zentriert das Label in der 44-px-Flaeche.
+    css = css_bundle()
+    decl = ' '.join(_decls(_screen_rules(css, 480), '.zustand-chip'))
+    assert re.search(r'min-height\s*:\s*44px', decl)
+    assert re.search(r'display\s*:\s*inline-flex', decl) and re.search(r'align-items\s*:\s*center', decl)
+    assert not any('min-height' in d for d in _decls(_toplevel_rules(css), '.zustand-chip'))
+
+
+def _js_function(src, name):
+    """Quelltext von 'function <name>(...) { ... }' (Klammer-Zaehlung; nur fuer klammerneutrale Funktionskoerper)."""
+    start = src.index('function %s(' % name)
+    depth, j = 0, src.index('{', start)
+    while True:
+        depth += {'{': 1, '}': -1}.get(src[j], 0)
+        j += 1
+        if depth == 0:
+            return src[start:j]
+
+
+def test_css_body_reserves_dice_panel_height_at_480px():
+    # D-047: das fixe Wuerfelpanel (~190 px bei 400 px) verdeckte Footer-Leiste und letzte Zeilen. Reserve = gemessene Panelhoehe
+    # (--dice-panel-h, von dice.js gepflegt), auf <body> (die Footer-Leiste liegt ausserhalb von .codex). Nur <= 480 px.
+    css = css_bundle()
+    assert any(
+        re.search(r'padding-bottom\s*:\s*var\(\s*--dice-panel-h\s*(?:,\s*0(?:px)?\s*)?\)', d)
+        for d in _decls(_screen_rules(css, 480), 'body')
+    )
+    assert not any('--dice-panel-h' in d for _, d in _toplevel_rules(css)), 'Reserve nur im schmalen Block'
+
+
+def test_dice_js_publishes_open_panel_height_as_css_variable():
+    js = (STATIC_DIR / 'dice.js').read_text(encoding='utf-8')
+    body = _js_function(js, 'syncPanelReserve')
+    assert re.search(r"setProperty\(\s*'--dice-panel-h'", body)
+    # geschlossen (.hidden bleibt nur per transform aus dem Bild) => 0px, sonst gemessene Hoehe
+    assert "classList.contains('hidden')" in body and "'0px'" in body and 'offsetHeight' in body
+    # bei jedem Oeffnen/Schliessen und bei Hoehenaenderung (Modus-/Ergebnis-Umschaltung) neu setzen
+    assert 'ResizeObserver' in js
+    assert re.search(r"panel\.classList\.remove\('hidden'\);\s*syncPanelReserve\(\)", js)
+    assert re.search(r"panel\.classList\.add\('hidden'\);\s*syncPanelReserve\(\)", js)
+
+
+def test_css_print_zfw_num_is_scoped_to_spell():
+    # D-047: der Druck-Selektor war nackt (.zfw-num), die Geschwister (.spell .zd, .spell .kosten) sind gescoped.
+    selectors = [s for s, _ in _print_rules()]
+    assert '.spell .zfw-num' in selectors
+    assert '.zfw-num' not in selectors
+
+
+def test_steigern_js_scroll_region_only_on_real_overflow():
+    # D-047: tabindex/role/aria-label und der Hinweis nur bei scrollWidth > clientWidth (sonst Extra-Tab-Stop ohne Nutzen).
+    js = _steigern_js()
+    section = js[js.index('function addSection'):]
+    section = section[:section.index('/* Eigenschaften */')]
+    assert not re.search(r"wrap\.setAttribute\('(?:tabindex|role|aria-label)'", section), 'Attribute nicht mehr bedingungslos'
+    body = _js_function(js, 'syncScrollOverflow')
+    assert 'scrollWidth' in body and 'clientWidth' in body
+    for attr in ('tabindex', 'role', 'aria-label'):
+        assert re.search(r"setAttribute\('%s'" % attr, body) and re.search(r"removeAttribute\('%s'\)" % attr, body), attr
+    # Neubewertung bei Groessenaenderung (Tab-Wechsel display:none -> sichtbar, Resize)
+    assert 'ResizeObserver' in js and re.search(r"addEventListener\('resize'", js)
+    assert re.search(r'syncScrollOverflow\(wrap,\s*scrollHint,\s*title\)', section)
+
+
+needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
+
+_NODE_OVERFLOW_RUNNER = """
+function el(cw, sw) {
+  var a = {}, c = {};
+  return {clientWidth: cw, scrollWidth: sw, a: a, c: c,
+    setAttribute: function (k, v) { a[k] = v; }, removeAttribute: function (k) { delete a[k]; },
+    classList: {toggle: function (n, f) { if (f) c[n] = 1; else delete c[n]; return !!f; }}};
+}
+var out = {};
+function run(name, cw, sw) {
+  var wrap = el(cw, sw), hint = el(0, 0);
+  syncScrollOverflow(wrap, hint, 'Zauber');
+  out[name] = {attrs: wrap.a, hint: Object.keys(hint.c)};
+}
+run('overflow', 283, 340);
+run('fits', 283, 283);
+run('hidden_tab', 0, 340);
+var w = el(283, 340), h = el(0, 0);
+syncScrollOverflow(w, h, 'Zauber');
+w.scrollWidth = 283;              // Fenster wird breiter -> Tabelle passt
+syncScrollOverflow(w, h, 'Zauber');
+out.widened = {attrs: w.a, hint: Object.keys(h.c)};
+console.log(JSON.stringify(out));
+"""
+
+
+@needs_node
+def test_steigern_sync_scroll_overflow_behaviour():
+    src = _js_function(_steigern_js(), 'syncScrollOverflow')
+    res = subprocess.run(['node', '-e', src + _NODE_OVERFLOW_RUNNER], capture_output=True, text=True, timeout=30)
+    assert res.returncode == 0, res.stderr
+    out = json.loads(res.stdout)
+    assert out['overflow'] == {'attrs': {'tabindex': '0', 'role': 'region', 'aria-label': 'Zauber'}, 'hint': ['sg-scroll-hint--on']}
+    assert out['fits'] == {'attrs': {}, 'hint': []}
+    assert out['hidden_tab'] == {'attrs': {}, 'hint': []}, 'clientWidth 0 (display:none) ist kein Ueberlauf'
+    assert out['widened'] == {'attrs': {}, 'hint': []}, 'Attribute muessen wirklich entfernt werden'
+
+
+def test_css_steigern_scroll_hint_follows_overflow_state_not_media_query():
+    css = css_bundle()
+    screen = _strip_print_blocks(css)
+    assert any(re.search(r'display\s*:\s*none', d) for d in _decls(_toplevel_rules(screen), '.sg-scroll-hint'))
+    assert any(re.search(r'display\s*:\s*block', d) for d in _decls(_css_rules(screen), '.sg-scroll-hint.sg-scroll-hint--on'))
+    assert not _decls(_screen_rules(css, 600), '.sg-scroll-hint'), 'Sichtbarkeit haengt nicht mehr an der Media-Query'

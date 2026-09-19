@@ -85,7 +85,7 @@
   .inv-list li,.inv-list li .qty{ color:var(--paper-ink) !important; }
   /* Zauberliste (D-046): eigene Bildschirm-color-Regeln (hell auf Papier, Kontrast ~1,1:1) fallen sonst durch;
      das !important auf .spell .name vererbt sich nicht auf den Namenslink */
-  .spell .name .nlink,.spell .name .haus,.zfw-num,
+  .spell .name .nlink,.spell .name .haus,.spell .zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
   .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
   /* Kopfzeile (Inline-color ink-mute, 1,95:1) und Modifikations-Details (ink-dim, 4,28:1) — im Druck ist das Desktop-Grid aktiv,
@@ -204,6 +204,10 @@
    gestrichelter Außenrand die Kennzeichnung weiter an. */
 .zustand-chip.hausregel { border-style: dashed; }
 .zustand-chip.hausregel.active { outline: 1.5px dashed var(--accent, #8b7355); outline-offset: 2px; }
+/* Touch-Ziel (D-047): bei 400 px waren die Chips 25 px hoch; inline-flex zentriert das Label in der 44-px-Flaeche */
+@media screen and (max-width: 480px) {
+  .zustand-chip { min-height: 44px; display: inline-flex; align-items: center; }
+}
 .zustand-legend {
   font-size: 0.78rem;
   line-height: 1.35;
@@ -454,9 +458,10 @@ body { padding-top: 46px; }
    display:table und ihre Semantik behaelt; der Wrapper ist per Tastatur fokussier- und scrollbar). */
 .steiger-scroll { overflow-x: auto; }
 .steiger-scroll:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: 2px; }
+/* Hinweis nur bei echtem Ueberlauf (D-047): steigern.js setzt --on, wenn scrollWidth > clientWidth (unabhaengig von der Viewportbreite) */
 .sg-scroll-hint { display: none; margin: 0 0 4px; font-size: 11px; line-height: 1.4; color: var(--ink-mute); }
-@media screen and (max-width: 600px) {
-  .sg-scroll-hint { display: block; }
+@media screen {
+  .sg-scroll-hint.sg-scroll-hint--on { display: block; }
 }
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
@@ -475,6 +480,8 @@ body { padding-top: 46px; }
 @media screen and (max-width: 480px) {
   .inv-add-form { flex-wrap: wrap; }
   .inv-add-input--name { flex-basis: 100%; }
+  /* Touch-Ziele (D-047): Eingaben + Button waren bei 400 px je 30 px hoch */
+  .inv-add-input, .inv-add-btn { min-height: 44px; box-sizing: border-box; }
 }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }

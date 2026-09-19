@@ -390,6 +390,34 @@
   }
 
   /* ── Tab renderer ─────────────────────────────────────────────────────── */
+  /* Scroll-Wrapper (D-044/D-047): Fokus-Stopp (tabindex/role/aria-label) und sichtbarer Hinweis nur, wenn die Tabelle wirklich
+     seitlich scrollt. clientWidth 0 = Tab per display:none ausgeblendet -> kein Ueberlauf annehmen (Neubewertung beim Einblenden).
+     role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+  function syncScrollOverflow(wrap, hint, title) {
+    var over = wrap.clientWidth > 0 && wrap.scrollWidth > wrap.clientWidth;
+    if (over) {
+      wrap.setAttribute('tabindex', '0');
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', title);
+    } else {
+      wrap.removeAttribute('tabindex');
+      wrap.removeAttribute('role');
+      wrap.removeAttribute('aria-label');
+    }
+    hint.classList.toggle('sg-scroll-hint--on', over);
+  }
+
+  /* Neubewertung bei Groessenaenderung (Resize, Tab-Wechsel, Zeilenumbau); Fallback ohne ResizeObserver: window-resize. */
+  function watchScrollOverflow(targets, sync) {
+    if (typeof ResizeObserver === 'function') {
+      var ro = new ResizeObserver(sync);
+      targets.forEach(function (el) { ro.observe(el); });
+    } else {
+      window.addEventListener('resize', sync);
+    }
+    sync();
+  }
+
   var EIG_ORDER = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK'];
   var EIG_FULL = {
     MU: 'Mut', KL: 'Klugheit', IN: 'Intuition', CH: 'Charisma',
@@ -489,8 +517,7 @@
       h.textContent = title;
       list.appendChild(h);
 
-      /* Schmalansicht (D-044): sichtbarer Scroll-Hinweis (nur <= 600 px per CSS) + fokussierbarer Scroll-Wrapper.
-         role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+      /* Scroll-Hinweis + fokussierbarer Scroll-Wrapper: nur bei echtem Ueberlauf aktiv (syncScrollOverflow, D-047). */
       var scrollHint = document.createElement('p');
       scrollHint.className = 'sg-scroll-hint';
       scrollHint.setAttribute('aria-hidden', 'true');
@@ -499,9 +526,6 @@
 
       var wrap = document.createElement('div');
       wrap.className = 'steiger-scroll';
-      wrap.setAttribute('tabindex', '0');
-      wrap.setAttribute('role', 'region');
-      wrap.setAttribute('aria-label', title);
 
       var table = document.createElement('table');
       table.className = 'steiger-table';
@@ -524,6 +548,7 @@
 
       wrap.appendChild(table);
       list.appendChild(wrap);
+      watchScrollOverflow([wrap, table], function () { syncScrollOverflow(wrap, scrollHint, title); });
     }
 
     /* Eigenschaften */

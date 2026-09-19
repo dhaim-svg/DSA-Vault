@@ -547,6 +547,14 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   // ------------------------------------------------------------------
   // Public API
   // ------------------------------------------------------------------
+  // D-047: das Panel ist position:fixed (Hoehe variiert mit Modus/Ergebnis) -> die offene Hoehe steht als --dice-panel-h auf <html>;
+  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben.
+  function syncPanelReserve() {
+    if (!panel) return;
+    var open = !panel.classList.contains('hidden');
+    document.documentElement.style.setProperty('--dice-panel-h', open ? panel.offsetHeight + 'px' : '0px');
+  }
+
   window.Dice.openPanel = function (config) {
     currentConfig = config;
     isManual = false;
@@ -560,6 +568,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     var rolls = autoRoll();
     render(rolls);
     panel.classList.remove('hidden');
+    syncPanelReserve();
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
@@ -572,7 +581,9 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
     document.getElementById('dp-close').addEventListener('click', function () {
       panel.classList.add('hidden');
+      syncPanelReserve();
     });
+    if (typeof ResizeObserver === 'function') new ResizeObserver(syncPanelReserve).observe(panel);
 
     document.getElementById('dp-auto').addEventListener('click', function () {
       isManual = false;
