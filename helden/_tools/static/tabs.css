@@ -191,6 +191,18 @@
   background: var(--accent, #8b7355);
   color: var(--bg, #fdf6e3);
 }
+/* Hausregel-Chips (D-041c): gestrichelter Rand; aktiv (Füllung = Randfarbe) zeigt ein
+   gestrichelter Außenrand die Kennzeichnung weiter an. */
+.zustand-chip.hausregel { border-style: dashed; }
+.zustand-chip.hausregel.active { outline: 1.5px dashed var(--accent, #8b7355); outline-offset: 2px; }
+.zustand-legend {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-mute);
+  overflow-wrap: anywhere;
+  margin-bottom: 4px;
+}
+@media print { .zustand-legend { color: var(--paper-ink); } }
 @media (max-width: 900px) {
   .vitals-sticky {
     position: sticky;

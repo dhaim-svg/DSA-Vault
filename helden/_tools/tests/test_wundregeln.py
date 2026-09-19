@@ -181,3 +181,56 @@ def test_dice_get_wund_mod_delegates_to_session_probe_mod_except_schaden():
     out = _get_wund_mod(_PROBEN, session=True)
     assert out['seen'] == ['AT', 'PA', 'GE', 'MU', 'talent', 'zauber']
     assert out['res'] == [-7] * 6 + [0, 0, 0]
+
+
+# -- Zustands-Chips: Hausregel-Kennzeichnung (D-041c) --
+
+def _zustaende_block(src):
+    m = re.search(r'const ZUSTAENDE = \[(.*?)\n\s*\];', src, re.S)
+    assert m, 'ZUSTAENDE fehlt'
+    return m.group(1)
+
+
+def test_all_five_zustaende_are_marked_hausregel_with_regel_text():
+    entries = re.findall(r'\{[^{}]*\}', _zustaende_block(SESSION_JS.read_text(encoding='utf-8')))
+    assert [re.search(r"key: '(\w+)'", e).group(1) for e in entries] == [
+        'schmerz', 'furcht', 'betaeubt', 'verwirrt', 'erschoepft']
+    for e in entries:
+        assert 'hausregel: true' in e, e
+        regel = re.search(r"regel: '([^']+)'", e)
+        assert regel, e
+        assert regel.group(1).startswith('Regelwerk:') and len(regel.group(1)) <= 90
+    # Werte unveraendert
+    assert re.findall(r'mod: (-\d)', _zustaende_block(SESSION_JS.read_text(encoding='utf-8'))) == [
+        '-2', '-2', '-4', '-2', '-2']
+
+
+def test_zustand_chip_title_and_class_carry_hausregel():
+    src = SESSION_JS.read_text(encoding='utf-8')
+    _, body = _function_body(src, 'renderZustandChips')
+    assert "'hausregel'" in body or "' hausregel'" in body
+    assert 'z.hausregel' in body
+    assert "(Hausregel) — '" in body and 'z.regel' in body
+
+
+def test_badge_marks_hausregel_only_on_zustand_branch():
+    src = SESSION_JS.read_text(encoding='utf-8')
+    _, body = _function_body(src, 'updateEigLeisteBadge')
+    body = re.sub(r'//[^\n]*', '', body)  # Kommentare zaehlen nicht
+    assert body.count('(Hausregel)') == 1
+    zustand_branch, wunden_branch = body.split("' ×'")
+    assert '(Hausregel)' in zustand_branch and 'e.hausregel' in zustand_branch
+    assert 'Hausregel' not in wunden_branch
+
+
+def test_zustand_effects_carry_hausregel_flag_wunden_do_not():
+    src = SESSION_JS.read_text(encoding='utf-8')
+    _, body = _function_body(src, 'computeActiveEffects')
+    assert re.search(r"label: z\.label, alle: true, mod: z\.mod, hausregel: true", body)
+    assert 'hausregel' not in body.split('ZUSTAENDE.forEach')[0]
+
+
+def test_session_has_no_stale_verify_rules_comment():
+    src = SESSION_JS.read_text(encoding='utf-8')
+    assert not re.search(r'verify exact|TODO|FIXME', src, re.I)
+    assert 'Hausregel' in src.split('function initSession')[1].split('const ZUSTAENDE')[0]

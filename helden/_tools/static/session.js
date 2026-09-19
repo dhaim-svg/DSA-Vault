@@ -24,8 +24,9 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    // Wundregel (WdS S. 57): wundregeln.js (DSAWundregeln) ist die einzige Quelle —
+    // Wunden: WdS S. 57 → wundregeln.js (DSAWundregeln) ist die einzige Quelle —
     // pro Wunde AT/PA/FK/INI/GE -2, GS -1, sonst nichts.
+    // Zustände: Hausregel (kein fester Probenmalus im Regelwerk, s. wiki/dsa-4.1/grundregeln/zustaende.md).
     const Wund = window.DSAWundregeln;
 
     // ── Wunden widget ──────────────────────────────────────────────────
@@ -79,12 +80,18 @@
     }
 
     // ── Zustände chips (transient localStorage only) ───────────────────
+    // hausregel/regel: Kennzeichnung im Tooltip + Badge (Wert und Wirkung unverändert).
     const ZUSTAENDE = [
-      { key: 'schmerz',    label: 'Schmerz',   mod: -2 },
-      { key: 'furcht',     label: 'Furcht',     mod: -2 },
-      { key: 'betaeubt',   label: 'Betäubt',    mod: -4 },
-      { key: 'verwirrt',   label: 'Verwirrt',   mod: -2 },
-      { key: 'erschoepft', label: 'Erschöpft',  mod: -2 },
+      { key: 'schmerz',    label: 'Schmerz',   mod: -2, hausregel: true,
+        regel: 'Regelwerk: nur optionale SB-Probe nach Wunde (WdS S. 82)' },
+      { key: 'furcht',     label: 'Furcht',     mod: -2, hausregel: true,
+        regel: 'Regelwerk: nur Ängste als Schlechte Eigenschaft (WdH S. 268)' },
+      { key: 'betaeubt',   label: 'Betäubt',    mod: -4, hausregel: true,
+        regel: 'Regelwerk: nur Betäubungsschlag/Bewusstlosigkeit (WdS S. 61, 86)' },
+      { key: 'verwirrt',   label: 'Verwirrt',   mod: -2, hausregel: true,
+        regel: 'Regelwerk: kein Zustand (nicht belegt)' },
+      { key: 'erschoepft', label: 'Erschöpft',  mod: -2, hausregel: true,
+        regel: 'Regelwerk: Überanstrengung wirkt über BE/KO/Wundschwelle (WdS S. 139)' },
     ];
 
     function renderZustandChips() {
@@ -92,9 +99,10 @@
       if (!container) return;
       const active = new Set((loadState().zustaende) || []);
       container.innerHTML = ZUSTAENDE.map(z =>
-        '<button class="zustand-chip' + (active.has(z.key) ? ' active' : '') + '" ' +
+        '<button class="zustand-chip' + (z.hausregel ? ' hausregel' : '') +
+        (active.has(z.key) ? ' active' : '') + '" ' +
         'data-key="' + z.key + '" type="button" ' +
-        'title="' + z.label + ': ' + z.mod + ' auf Proben">' +
+        'title="' + z.label + ': −' + Math.abs(z.mod) + ' auf Proben (Hausregel) — ' + z.regel + '">' +
         z.label + '</button>'
       ).join('');
       container.querySelectorAll('.zustand-chip').forEach(btn => {
@@ -115,8 +123,8 @@
     //   { label, mods: { ZIEL: <=0, ... }, wunden }  Wunden: nur die genannten Ziele
     //        (AT/PA/FK/INI/GE/GS, aus DSAWundregeln.wundMod). Wirkt auf Proben (AT, PA, GE)
     //        UND Basiswert-Anzeigen (AT/PA/FK/INI/GS).
-    //   { label, alle: true, mod: <=0 }               Zustand: wirkt auf jede Probe, nie auf
-    //        Basiswert-Anzeigen und nie auf Schadenswürfe.
+    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt auf jede Probe,
+    //        nie auf Basiswert-Anzeigen und nie auf Schadenswürfe.
     function computeActiveEffects() {
       const effects = [];
       const wundenAnchor = document.querySelector('[data-wunden]');
@@ -129,7 +137,7 @@
 
       const active = new Set((loadState().zustaende) || []);
       ZUSTAENDE.forEach(z => {
-        if (active.has(z.key)) effects.push({ label: z.label, alle: true, mod: z.mod });
+        if (active.has(z.key)) effects.push({ label: z.label, alle: true, mod: z.mod, hausregel: true });
       });
       return effects;
     }
@@ -165,9 +173,9 @@
       const effects = computeActiveEffects();
 
       // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles.
-      // e.g. "Wunden ×2: GE −4 · Schmerz −2"; leer ohne aktive Effekte.
+      // e.g. "Wunden ×2: GE −4 · Schmerz −2 (Hausregel)"; leer ohne aktive Effekte.
       const text = effects.map(e => e.alle
-        ? e.label + ' −' + Math.abs(e.mod)
+        ? e.label + ' −' + Math.abs(e.mod) + (e.hausregel ? ' (Hausregel)' : '')
         : e.label + ' ×' + e.wunden + ': GE −' + Math.abs(e.mods.GE)
       ).join(' · ');
       document.querySelectorAll('.eig-leiste-mods').forEach(badge => { badge.textContent = text; });

@@ -530,3 +530,34 @@ def test_render_kampf_tab_wund_hooks_keep_click_handlers_on_base_values(live_htm
     kampf = _kampf_tab(live_html)
     assert re.search(r'<div class="minor" data-at="\d+">', kampf)
     assert re.search(r'<div class="minor" data-pa="\d+">', kampf)
+
+
+# -- Zustands-Chips als Hausregel gekennzeichnet (D-041c) --
+
+def test_render_kampf_tab_has_one_zustand_legend_below_chips(live_html):
+    kampf = _kampf_tab(live_html)
+    assert kampf.count('class="zustand-legend"') == 1
+    chips_at = kampf.index('id="zustand-chips"')
+    legend = re.search(r'<div class="zustand-legend">(.*?)</div>', kampf, re.S)
+    assert legend and legend.start() > chips_at
+    text = legend.group(1)
+    assert 'Hausregel' in text
+    assert 'WdS S. 57' in text
+    assert 'kein fester Probenmalus' in text
+
+
+def test_render_zustand_legend_links_to_wiki_article_without_double_md(live_html):
+    legend = re.search(r'<div class="zustand-legend">(.*?)</div>', _kampf_tab(live_html), re.S).group(1)
+    hrefs = re.findall(r'href="([^"]+)"', legend)
+    assert hrefs == ['obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md']
+    assert (VAULT_ROOT / 'wiki' / 'dsa-4.1' / 'grundregeln' / 'zustaende.md').exists()
+
+
+def test_css_bundle_styles_hausregel_chip_and_legend():
+    css = _strip_print_blocks(css_bundle())
+    assert re.search(r'\.zustand-chip\.hausregel\s*\{[^}]*dashed', css)
+    assert re.search(r'\.zustand-chip\.hausregel\.active\s*\{', css)
+    legend = re.search(r'\.zustand-legend\s*\{([^}]*)\}', css)
+    assert legend and 'overflow-wrap' in legend.group(1)
+    for _sel, body in re.findall(r'(\.zustand-(?:chip\.hausregel|legend)[^{]*)\{([^}]*)\}', css):
+        assert not re.search(r'#[0-9a-fA-F]{3,8}', re.sub(r'var\([^)]*\)', '', body)), 'keine neuen Hex-Werte'

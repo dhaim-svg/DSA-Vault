@@ -32,16 +32,16 @@ Das Regelwerk kennt **keine allgemeine Liste von „Zuständen" mit festen Probe
 
 | Zustand | Regelstatus | Wirkung laut Regelwerk | Quelle | Dashboard-Wert heute |
 |---------|-------------|------------------------|--------|----------------------|
-| **Wunden** | Basiswert-Abzug (kein Probenmalus) | Pro Wunde AT/PA/FK/INI-Basis und GE −2, GS −1; kumulativ | WdS S. 57 | −2 pro Wunde auf alles |
-| **Schmerz** | andere Mechanik (optional) | Bei Wunde Selbstbeherrschungs-Probe (erschwert um die SP über der Wundschwelle), sonst 1W6+3 KR am Boden, keine Aktion möglich | WdS S. 82 | −2 |
-| **Furcht** | andere Mechanik | Angst = Schlechte Eigenschaft (Startwert 5–12): Talentproben unter ihrem Einfluss um den Wert erschwert, Eigenschaftsproben um den halben Wert — *oder* Probe auf die Eigenschaft; Gift Angstgift: Furcht vor dem ersten erblickten Wesen (7 SR), abgeschwächt „leichte Furcht" (alle Ängste +2, MU −2) | WdH S. 268; WdS S. 148 | −2 |
-| **Betäubung** | andere Mechanik | Nur als Manöver: Betäubungsschlag verursacht TP(A); übersteigt der AU-Verlust die Wundschwelle → KO-Probe, sonst 1W6 SR bewusstlos; AU-Verlust > KO → automatisch bewusstlos | WdS S. 61, 86 | −4 |
-| **Verwirrung** | nicht belegt | Kein Zustand. Nur Spezialfälle: Überraschung im Kampf („herrscht erst einmal Verwirrung"), Patzer-Folge „Desorientierung" | WdS S. 78, 85 | −2 |
-| **Erschöpfung** | andere Mechanik (optional, Ressource) | Punkte bis KO ohne Folgen; darüber „Überanstrengung": +1 BE je Punkt, eff. KO gesenkt, KO-Proben +1 je Punkt, je 2 Punkte Wundschwelle −1, bei Überanstrengung = KO Zusammenbruch | WdS S. 139 | −2 |
+| **Wunden** | Basiswert-Abzug (kein Probenmalus) | Pro Wunde AT/PA/FK/INI-Basis und GE −2, GS −1; kumulativ | WdS S. 57 | AT/PA/FK/INI/GE −2, GS −1 je Wunde (seit Sprint 019 regelkonform) |
+| **Schmerz** | andere Mechanik (optional) | Bei Wunde Selbstbeherrschungs-Probe (erschwert um die SP über der Wundschwelle), sonst 1W6+3 KR am Boden, keine Aktion möglich | WdS S. 82 | Hausregel −2 |
+| **Furcht** | andere Mechanik | Angst = Schlechte Eigenschaft (Startwert 5–12): Talentproben unter ihrem Einfluss um den Wert erschwert, Eigenschaftsproben um den halben Wert — *oder* Probe auf die Eigenschaft; Gift Angstgift: Furcht vor dem ersten erblickten Wesen (7 SR), abgeschwächt „leichte Furcht" (alle Ängste +2, MU −2) | WdH S. 268; WdS S. 148 | Hausregel −2 |
+| **Betäubung** | andere Mechanik | Nur als Manöver: Betäubungsschlag verursacht TP(A); übersteigt der AU-Verlust die Wundschwelle → KO-Probe, sonst 1W6 SR bewusstlos; AU-Verlust > KO → automatisch bewusstlos | WdS S. 61, 86 | Hausregel −4 |
+| **Verwirrung** | nicht belegt | Kein Zustand. Nur Spezialfälle: Überraschung im Kampf („herrscht erst einmal Verwirrung"), Patzer-Folge „Desorientierung" | WdS S. 78, 85 | Hausregel −2 |
+| **Erschöpfung** | andere Mechanik (optional, Ressource) | Punkte bis KO ohne Folgen; darüber „Überanstrengung": +1 BE je Punkt, eff. KO gesenkt, KO-Proben +1 je Punkt, je 2 Punkte Wundschwelle −1, bei Überanstrengung = KO Zusammenbruch | WdS S. 139 | Hausregel −2 |
 | **Niedrige LE** | Probenmalus (optional) | LE < ½ Grund-LE: Eigenschaftsproben (inkl. AT/PA) +1, Talent-/Zauberproben +3; < ⅓: +2/+6; < ¼: +3/+9; GS −1/−2/−3 (min. 1) | WdS S. 57 | — |
 | **Niedrige AU** | Probenmalus (optional) | AU < ⅓: Eigenschaftsproben +1, Talent-/Zauberproben +3; < ¼: +2/+6; AU 0: kampfunfähig; kumulativ mit dem LE-Malus | WdS S. 83 | — |
 
-- *Dashboard-Wert heute* = feste Mali der Zustands-Chips in `helden/_tools/static/session.js` (Stand Sprint 019, vor Korrektur).
+- *Dashboard-Wert heute* = Stand nach Sprint 019: Wunden wirken regelkonform (`wundregeln.js`); die fünf Chips sind Hausregel-Schalter in `helden/_tools/static/session.js`, bewusst beibehalten (Sprint 019).
 - Die Zeilen **Niedrige LE/AU** sind die einzigen im Regelwerk gefundenen Probenmali, die einem „Zustand" nahekommen. Beide sind **optionale** Regeln und hängen an den *aktuellen Werten* (LE/AU), nicht an einem Chip. Kampfrausch/Blutrausch ignorieren die LE-Einbußen (WdS S. 57); für die AU-Einbußen ist das nicht belegt.
 
 ## Erschöpfung und Überanstrengung (Ressource)
