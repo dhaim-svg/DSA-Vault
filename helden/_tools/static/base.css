@@ -444,7 +444,7 @@ body::before{
 .artikel-body th, .artikel-body td{ padding:3px 8px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; overflow-wrap:normal; } /* inherited "anywhere" would shrink columns to 1 char; the table scrolls instead */
 .artikel-body th{ font-family:var(--mono); font-size:10px; color:var(--ink-mute); font-weight:600; }
 /* Das 6-Spalten-Grid braucht gerechnet 878 px Zeilenbreite (Spaltenminima 160+240+38+80+90+200 = 808, 5 Gaps à 10,
-   20 px Padding); bei 1071 px Viewport ist die Zeile ~934 px breit (Sprint-018-Messung), Reserve also ~56 px.
+   20 px Padding); bei 1071 px Viewport ist die Zeile ~934 px breit (Sprint-018-Messung; konservativ inkl. Padding verglichen), Reserve also mind. ~56 px.
    Der Breakpoint bleibt bei 1070 px (Reserve statt Kante, Seitenrand der Karte) — darunter Kompaktlayout:
    Name volle Breite, Probe/ZfW/ZD/Kosten als umbrechende Zeile, Wirkung volle Breite. */
 @media screen and (max-width:1070px){

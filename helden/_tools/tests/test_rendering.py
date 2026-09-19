@@ -450,7 +450,7 @@ def _top_level_tokens(value):
 
 
 def _spell_grid_min_width(css):
-    """Mindestbreite der Desktop-Zeile (.spell, Bildschirm, ohne Media-Bloecke):
+    """Mindestbreite der Desktop-Zeile (.spell, Bildschirm; nur Print-Bloecke entfernt, die kompakte .spell-Regel setzt kein grid-template-columns):
     Summe der Spaltenminima (feste Spalte = ihr Wert, minmax(a,b) = a) + (Spalten-1) * column-gap + horizontales Padding."""
     screen = _strip_print_blocks(css)
     decl = next(d for s, d in _css_rules(screen) if s == '.spell' and 'grid-template-columns' in d)

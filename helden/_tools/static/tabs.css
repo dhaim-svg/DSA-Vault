@@ -87,7 +87,7 @@
      das !important auf .spell .name vererbt sich nicht auf den Namenslink */
   .spell .name .nlink,.spell .name .haus,.zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
-  .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1; }
+  .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }
