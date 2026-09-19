@@ -5,16 +5,17 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-038 | Bug: `session.js` läuft nie (`const IS_SERVED` doppelt deklariert in app.js + session.js) — Zustände-Chips, Wunden-Overlay, Zustand-aware Wurf-Modifikator wirkungslos | S | in-progress | 016 |
+| D-035 | /session-compile Kommando (ruft Import D-030 zuerst) + Aufräumen (User-Freigabe nötig) | M | in-progress | 016 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
-| D-038 | Bug: `session.js` läuft nie (`const IS_SERVED` doppelt deklariert in app.js + session.js) — Zustände-Chips, Wunden-Overlay, Zustand-aware Wurf-Modifikator wirkungslos | S | ready | Browser-Smoke Sprint 015, 19.09.2026 |
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
-| D-035 | /session-compile Kommando (ruft Import D-030 zuerst) + Aufräumen (User-Freigabe nötig) | M | ready | Chronik-Modus-Plan 16.09.2026 |
-| D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | ready | Chronik-Modus-Plan 16.09.2026 |
+| D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | blocked | Chronik-Modus-Plan 16.09.2026 (Blocked by D-035) |
 
 ### Gestrichen
 
