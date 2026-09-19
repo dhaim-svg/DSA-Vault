@@ -5,17 +5,18 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-042 | Chronik-Parser: `Datum: 13. Phex -> Start`-Zeile als IG-Datum erkennen | S | in-progress | 017 |
+| D-036 | NSC-/Orts-Register aus kompilierten Sessions (generiert zur Render-Zeit, 3. Ansicht im Chronik-Tab, clientseitige Suche; keine Dateien in `abenteuer/`) | M | in-progress | 017 |
+| D-040 | Mobile 400 px: horizontaler Überlauf in Zauber-/Steigern-/Inventar-/Profil-Tab | S | in-progress | 017 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
 | D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
-| D-036 | NSC-/Orts-Register aus kompilierten Sessions | M | ready | Chronik-Modus-Plan 16.09.2026 |
-| D-040 | Mobile 400 px: horizontaler Überlauf in Zauber-/Steigern-/Inventar-/Profil-Tab | S | ready | Browser-Check D-039, 19.09.2026 |
 | D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
-| D-042 | Chronik-Parser: `Datum: 13. Phex -> Start`-Zeile als IG-Datum erkennen | S | ready | /session-compile-Praxistest, 19.09.2026 |
 
 ### Gestrichen
 
