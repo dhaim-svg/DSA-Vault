@@ -5,17 +5,17 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (`backlog.md` B-013 + `BACKLOG.md` D-049/D-050 → in-progress, plan.md anlegen) | ✅ done | backlog.md, BACKLOG.md, sprints/sprint-021/plan.md |
-| T1 | **B-013a** — Frontmatter reparieren: 103 Zauber + 1 goetter-Datei quoten, Konvention dokumentieren, Verifizierer anlegen | ⬜ todo | wiki/dsa-4.1/zauber/*.md, wiki/dsa-4.1/goetter/bund-wahren-glaubens.md, raw/pdf-extracted/EXTRACTION-PLAN.md, raw/pdf-extracted/_tools/check-frontmatter.py, wiki-luecken.md |
-| T2 | **B-013b** — Fallback-Parser + zugehörige Tests entfernen | ⬜ todo | parsers/wikiartikel.py, tests/test_wikiartikel.py |
-| T3 | **D-049** — Desktop-Footer über dem offenen Würfelpanel | ⬜ todo | static/base.css, tests/test_rendering.py |
-| T4 | **D-050** — Artikelvorschau für Sonderfertigkeiten (inkl. `WIKILINK_RE`-Fix für `[…]`-Anker) | ⬜ todo | parsers/wikiartikel.py, parsers/held.py, rendering.py, templates/partials/zauber.j2, templates/partials/_artikel.j2 (neu), static/*.css, tests/test_wikiartikel.py, tests/test_held.py, tests/test_rendering.py |
-| T5 | Verifikation (Suite ×2 inkl. `-W error`, Static-Render, Browser-Runde, Gesamt-Review) + `/sprint-wrap` | ⬜ todo | sprints/sprint-021/verification.md, output/ |
+| T1 | **B-013a** — Frontmatter reparieren: 103 Zauber + 1 goetter-Datei quoten, Konvention dokumentieren, Verifizierer anlegen | ✅ done | wiki/dsa-4.1/zauber/*.md, wiki/dsa-4.1/goetter/bund-wahren-glaubens.md, raw/pdf-extracted/EXTRACTION-PLAN.md, raw/pdf-extracted/_tools/check-frontmatter.py, wiki-luecken.md |
+| T2 | **B-013b** — Fallback-Parser + zugehörige Tests entfernen | ✅ done | parsers/wikiartikel.py, tests/test_wikiartikel.py |
+| T3 | **D-049** — Desktop-Footer über dem offenen Würfelpanel | ✅ done | static/base.css, tests/test_rendering.py |
+| T4 | **D-050** — Artikelvorschau für Sonderfertigkeiten (inkl. `WIKILINK_RE`-Fix für `[…]`-Anker; Fix-Runde T4d: Zeilenregeln `.sf-list > li`) | ✅ done | parsers/wikiartikel.py, parsers/held.py, rendering.py, templates/partials/zauber.j2, templates/partials/_artikel.j2 (neu), static/*.css, tests/test_wikiartikel.py, tests/test_held.py, tests/test_rendering.py |
+| T5 | Verifikation (Suite ×2 inkl. `-W error`, Static-Render, Browser-Runde, Gesamt-Review) (`/sprint-wrap` folgt separat) | ✅ done | sprints/sprint-021/verification.md, output/ |
 
 **Reihenfolge:** T1 → T2 → T4 strikt sequenziell (T2 entfernt in `wikiartikel.py`, was T4 verallgemeinert; T1 muss vor T2 liegen, sonst verlieren 10 von 25 Helden-Zaubern zwischenzeitlich ihre Vorschau). **T3 ist unabhängig** (nur CSS + Test) und darf parallel zu T1/T2 laufen.
 
 ## Key Design Decisions
 
-**Ausgangslage (gemessen 19.09.2026):** `wiki/dsa-4.1/zauber/` 268 mit Frontmatter, 165 gültig, **103 ungültig**; `goetter/bund-wahren-glaubens.md:7` 1 weiterer; `liturgien/` 267/267 gültig. 114 betroffene Zeilen (`kosten` 99, `wirkungsdauer` 9, `reichweite` 3, `zielobjekt` 2, `zauberdauer` 1) — alle einzeilige Top-Level-Skalare, keine Block-Scalars, keine Wikilinks, kein `#`.
+**Ausgangslage (gemessen 19.09.2026):** `wiki/dsa-4.1/zauber/` 268 mit Frontmatter, 165 gültig, **103 ungültig**; `goetter/bund-wahren-glaubens.md:7` 1 weiterer; `liturgien/` 267/267 gültig. 114 betroffene Zeilen (`kosten` 98, `wirkungsdauer` 9, `reichweite` 3, `zielobjekt` 2, `zauberdauer` 1, `kirchenstruktur` 1 — Ruling R2) — alle einzeilige Top-Level-Skalare, keine Block-Scalars, keine Wikilinks, kein `#`.
 
 **T1 — Reparatur**
 - Rezept je Zeile im Frontmatter-Block: `^(key): (.+)$`, **nur** nicht eingerückte Zeilen (`merkmale:`-Liste und `repräsentationen:`-Map bleiben unberührt). Wert enthält `": "` und ist **nicht bereits quotiert** → in doppelte Quotes.
@@ -53,3 +53,22 @@
 - **Zustände: optionale LE-/AU-Mali** — vom User zweimal abgewählt.
 - **Echter `PATCH`-Pfad / echte Druckvorschau** — Verifikation bleibt Static + `http.server` und `emulate_media: print`.
 - Rituale haben generell **kein Frontmatter** (13 Dateien) — eigenes Thema, nicht B-013.
+
+## Ergebnis & Rulings (Stand Wrap)
+
+Alle Tasks ✅; 429 Tests (Baseline 403), Suite auch mit `-W error` bei frischem Bytecode grün; Details `verification.md`.
+
+**Abweichungen vom Plan (Rulings, Ledger `.superpowers/sdd/sprint-021/progress.md`):**
+- **R1** Verifizierer-Soll = 682 Artikel mit Frontmatter (Plan nannte 415 — Gegenmessung am Korpus).
+- **R2** 114 Zeilen = `kosten` 98 + `wirkungsdauer` 9 + `reichweite` 3 + `zielobjekt` 2 + `zauberdauer` 1 + `kirchenstruktur` 1 (Plan: „kosten 99").
+- **R3** T3 lief nicht parallel zu T1/T2 (SDD: nie mehrere Implementierer parallel) — Reihenfolge T1 → T2 → T3 → T4.
+- **R4** `check-frontmatter.py` prüft ganz `wiki/` rekursiv, Frontmatter-Split exakt wie `parse_frontmatter`, Exit 1 bei ≥ 1 Fehler.
+- **R5** Bei `pfad#anker`: Titel = Anker, Body = `##`-Abschnitt (ohne Überschrift, `###` bleibt, abschließendes `---` entfällt), `meta` leer, `quelle` aus Datei-Frontmatter, kein `_split_title`.
+- **R6** Round-Trip-Abweichung `aspekte`/`farben` (`goetter/bund-wahren-glaubens.md`, YAML-Flow-Listen statt Strings) akzeptiert — Dashboard liest beide nie.
+- **R7** `_read_article(file)` ohne ungenutzten `wiki_path`-Parameter.
+- **R8** Test `test_key_is_original_wiki_path_including_anchor` inhaltlich angepasst (Zauber-Pfad mit Anker lädt Abschnitt statt Ganzdatei; die 25 echten Zauber-Pfade haben keinen Anker).
+- **R9** Final-Review-Minors (`WIKILINK_RE` gegen ungeschlossenes `[[` härten; Live-Vault-Kopplung der Rendertests) nicht nachgezogen → Handoff.
+
+**Zusatz-Task T4d (Fix-Runde 1/5, nicht im Plan):** Die Browser-Verifikation fand, dass `.sf-list li{display:grid;grid-template-columns:14px 1fr…}` auch die `<li>` der Aufzählungen im Artikeltext traf (Text in 14-px-Spalte, 14 von 15 SF-Vorschauen unlesbar, längster Artikel 7 841 px). Unit-Tests und alle Reviews hatten es nicht gesehen (rein strukturell). Fix `e16d175` + Invariante gegen Nachfahren-`li`-Regeln unter `.sf-list`; Recheck: längster Artikel 808 px, 97/97 verschachtelte `li` normal.
+
+**Prozess-Erkenntnisse:** (1) Wer fertig gerenderten Markdown in eine Komponente einbettet, muss Bare-Element-Regeln (`li`, `td`, `p`) der Komponente mit dem Kind-Selektor `>` begrenzen und im Browser prüfen — Diff-Reviews und CSS-String-Tests sehen das nicht. (2) `pytest -W error` ist bei gecachtem `.pyc` blind für Compile-Warnungen: vor dem Gate `__pycache__` löschen.
