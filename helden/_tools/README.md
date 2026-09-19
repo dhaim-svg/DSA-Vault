@@ -26,7 +26,7 @@ python helden\_tools\render-held.py illaen-baernhold
 # Statischer Render + Browser öffnen
 python helden\_tools\render-held.py illaen-baernhold --open
 
-# Live-Reload: Dashboard aktualisiert sich automatisch bei Dateiänderungen
+# Live-Reload (statischer Render, wird bei Dateiänderungen automatisch neu erzeugt)
 python helden\_tools\render-held.py illaen-baernhold --watch --open
 ```
 

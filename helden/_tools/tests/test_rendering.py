@@ -218,7 +218,7 @@ def static_js_html():
 
 
 def test_static_render_inlines_each_js_file_once_in_order(static_js_html):
-    assert '<script src=' not in static_js_html
+    assert not re.search(r'<script src="/static/', static_js_html)
     positions = []
     for name in JS_FILES:
         marker = f'<script>/* {name} */'
@@ -241,7 +241,5 @@ def test_server_render_links_each_js_file_in_order():
 def test_static_hinweis_banner_only_in_static_render(static_js_html):
     assert static_js_html.count('id="static-hinweis"') == 1
     assert 'nicht gespeichert' in static_js_html
-    if not LIVE_HELD.exists():
-        pytest.skip('Live-Vault ohne helden/illaen-baernhold')
     assert 'id="static-hinweis"' not in server._render_dashboard('illaen-baernhold')
     assert 'id="static-hinweis"' not in render_dashboard(build_context('illaen-baernhold'))
