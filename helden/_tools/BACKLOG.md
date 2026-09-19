@@ -5,15 +5,16 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Quelle |
+|------|-------|--------|-------|--------|
+| D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) — Sprint 018: `<details>`-Aufklappzeile, Artikel zur Render-Zeit eingebettet (mistune) | L | in-progress | Manual-Test 01.06.2026 |
+| D-043 | Zauber: ZfW-Sortierung im Kompaktlayout (≤ 1070 px) erreichbar machen — Sprint 018 | S | in-progress | Review D-040, 19.09.2026 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Quelle |
 |------|-------|--------|-------|--------|
-| D-018 | Zauber: Inline-Vorschau des Artikels (Obsidian-Link bleibt) | L | ready | Manual-Test 01.06.2026 |
 | D-041 | Wundregel-/Zustände-Audit gegen das Wiki (Wund-Mali, Schwellen, Zustandswerte) | M | ready | Browser-Check D-038, 19.09.2026 |
-| D-043 | Zauber: ZfW-Sortierung im Kompaktlayout (≤ 1070 px) erreichbar machen | S | ready | Review D-040, 19.09.2026 |
 | D-044 | Mobile/Touch-Feinschliff: Banner-Titel bei 400 px, Footer-Leiste, Scroll-Container-Zugänglichkeit | S | ready | Browser-Check D-040, 19.09.2026 |
 | D-045 | Chronik-Druck: Ansichten-Konsistenz + Register-Filter im Druck | S | ready | Review D-036, 19.09.2026 |
 
