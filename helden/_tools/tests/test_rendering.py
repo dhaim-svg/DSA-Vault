@@ -656,3 +656,125 @@ def test_css_bundle_styles_hausregel_chip_and_legend():
     assert legend and 'overflow-wrap' in legend.group(1)
     for _sel, body in re.findall(r'(\.zustand-(?:chip\.hausregel|legend)[^{]*)\{([^}]*)\}', css):
         assert not re.search(r'#[0-9a-fA-F]{3,8}\b', re.sub(r'var\([^)]*\)', '', body)), 'keine neuen Hex-Werte'
+
+
+# ---- D-044: Mobile/Touch-Feinschliff (Sprint 019, Task 5) ----
+
+def _screen_rules(css, max_width):
+    """Flache Regeln aller '@media screen and (max-width:<max_width>px)'-Bloecke."""
+    return _css_rules(''.join(_media_blocks(css, r'@media\s+screen\s+and\s+\(max-width:\s*%dpx\)' % max_width)))
+
+
+def _decls(rules, selector):
+    return [d for s, d in rules if s == selector]
+
+
+def test_css_banner_narrow_layout_at_600px():
+    # D-044: bei 400 px war "BAERNHOLD" (44 px Cinzel) rechts abgeschnitten (.banner overflow:hidden).
+    rules = _screen_rules(css_bundle(), 600)
+    assert any(re.search(r'padding\s*:\s*24px\s+16px\s+20px', d) for d in _decls(rules, '.banner'))
+    assert any(
+        re.search(r'grid-template-columns\s*:\s*(?:minmax\(\s*0\s*,\s*1fr\s*\)|1fr)\s*(?:;|$)', d)
+        for d in _decls(rules, '.banner-inner')
+    )
+    assert any(re.search(r'font-size\s*:\s*clamp\(', d) for d in _decls(rules, '.title-block h1'))
+    assert any(re.search(r'flex-wrap\s*:\s*wrap', d) for d in _decls(rules, '.identity-stats'))
+    # Desktop-Grid bleibt dreispaltig (Regel ausserhalb der Media-Bloecke)
+    assert re.search(r'\.banner-inner\s*\{[^}]*grid-template-columns\s*:\s*auto\s+1fr\s+auto', css_bundle())
+
+
+def test_css_banner_longest_word_fits_at_400px():
+    # Rechnung: Cinzel Bold ~0,75 em/Zeichen + 0,04 em Laufweite -> konservativ 0,83 em (Brief: 44 px ~ 330 px fuer 9 Zeichen).
+    # Innenbreite bei Viewport 400 px = 400 - 2*28 (.codex-Padding) - 2 (Banner-Rahmen) - 2*horizontales Banner-Padding.
+    rules = _screen_rules(css_bundle(), 600)
+    pad = next(re.search(r'padding\s*:\s*[\d.]+px\s+([\d.]+)px', d) for d in _decls(rules, '.banner') if 'padding' in d)
+    inner = 400 - 2 * 28 - 2 - 2 * float(pad.group(1))
+    h1 = next(d for d in _decls(rules, '.title-block h1') if 'clamp(' in d)
+    vw = float(re.search(r'clamp\(\s*[\d.]+px\s*,\s*([\d.]+)vw', h1).group(1))
+    word = 9 * 0.83 * (400 * vw / 100)
+    assert word <= inner - 40, f'BAERNHOLD braucht ~{word:.0f} px von {inner:.0f} px (mind. 40 px Reserve)'
+    assert re.search(r'overflow-wrap\s*:\s*anywhere', h1)
+
+
+def test_css_footer_bar_static_and_touch_sized_at_480px():
+    # D-044: Leiste verdeckte ~82 px Viewport, Buttons schrumpften auf ~33 px -> statisch am Seitenende, >= 44 px hoch.
+    css = css_bundle()
+    block = ''.join(_media_blocks(css, r'@media\s+screen\s+and\s+\(max-width:\s*480px\)'))
+    assert 'position:fixed' not in block.replace(' ', '')
+    rules = _css_rules(block)
+    bar = ' '.join(_decls(rules, '#footer-bar'))
+    assert re.search(r'position\s*:\s*static', bar)
+    assert not re.search(r'(?<![-\w])(?:left|right|bottom)\s*:', bar)
+    for sel in ('#footer-bar .print-btn', '#footer-bar .commit-input'):
+        assert any(re.search(r'min-height\s*:\s*44px', d) for d in _decls(rules, sel)), sel
+    # Desktop-Regel unveraendert (schwebend unten rechts)
+    assert re.search(r'#footer-bar\s*\{\s*position\s*:\s*fixed;\s*bottom\s*:\s*28px;\s*right\s*:\s*28px;', css)
+
+
+def _steigern_js():
+    return (STATIC_DIR / 'steigern.js').read_text(encoding='utf-8')
+
+
+def test_steigern_js_wraps_tables_in_focusable_scroll_region():
+    # D-044: Wrapper-div statt role auf <table> (role=region wuerde die Tabellensemantik zerstoeren).
+    js = _steigern_js()
+    section = js[js.index('function addSection'):]
+    section = section[:section.index('/* Eigenschaften */')]
+    assert "className = 'steiger-scroll'" in section
+    assert re.search(r"setAttribute\('tabindex',\s*'0'\)", section)
+    assert re.search(r"setAttribute\('role',\s*'region'\)", section)
+    assert re.search(r"setAttribute\('aria-label',\s*title\)", section)
+    assert not re.search(r"table\.setAttribute\('role'", section)
+    assert re.search(r'\.appendChild\(table\)', section)
+    assert section.index('.appendChild(table)') < section.index('list.appendChild(wrap')
+    # sichtbarer Hinweis vor der Tabelle, fuer Screenreader ausgeblendet (der Wrapper hat schon einen Namen)
+    assert "className = 'sg-scroll-hint'" in section
+    assert re.search(r"setAttribute\('aria-hidden',\s*'true'\)", section)
+    assert section.index('sg-scroll-hint') < section.index('list.appendChild(wrap')
+
+
+def test_css_steigern_scroll_wrapper_and_hint_only_at_600px():
+    css = css_bundle()
+    screen = _strip_print_blocks(css)
+    top = _css_rules(re.sub(r'@media[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}', '', screen))
+    # Scrollen wandert von der Tabelle auf den Wrapper; die Tabelle bleibt display:table
+    assert any(re.search(r'overflow-x\s*:\s*auto', d) for d in _decls(top, '.steiger-scroll'))
+    assert any(re.search(r'outline\s*:\s*2px\s+solid\s+var\(--accent-cold\)', d) for d in _decls(top, '.steiger-scroll:focus-visible'))
+    assert not any(re.search(r'display\s*:', d) for d in _decls(_css_rules(screen), '.steiger-table'))
+    assert not any(re.search(r'overflow', d) for d in _decls(_css_rules(screen), '.steiger-table'))
+    # Hinweis: sonst aus, nur <= 600 px sichtbar, gedaempft
+    base = ' '.join(_decls(top, '.sg-scroll-hint'))
+    assert re.search(r'display\s*:\s*none', base) and 'var(--ink-mute)' in base
+    assert any(re.search(r'display\s*:\s*block', d) for d in _decls(_screen_rules(css, 600), '.sg-scroll-hint'))
+
+
+def _inv_add_input(html, input_id):
+    return re.search(r'<input[^>]*id="%s"[^>]*>' % input_id, html).group(0)
+
+
+def test_render_inventar_add_inputs_use_modifier_classes(live_html):
+    name, anzahl = _inv_add_input(live_html, 'inv-add-name'), _inv_add_input(live_html, 'inv-add-anzahl')
+    assert re.search(r'class="inv-add-input inv-add-input--name"', name)
+    assert re.search(r'class="inv-add-input inv-add-input--anzahl"', anzahl)
+    assert 'style=' not in name and 'style=' not in anzahl
+    assert 'placeholder="Gegenstand"' in name and 'placeholder="Anzahl"' in anzahl
+    assert live_html.count('id="inv-add-name"') == 1 and live_html.count('id="inv-add-anzahl"') == 1
+
+
+def test_css_inventar_add_inputs_do_not_depend_on_dom_order():
+    css = css_bundle()
+    assert '.inv-add-input:first-child' not in css
+    assert any(re.search(r'flex-basis\s*:\s*100%', d) for d in _decls(_screen_rules(css, 480), '.inv-add-input--name'))
+    assert any(re.search(r'max-width\s*:\s*80px', d) for d in _decls(_css_rules(_strip_print_blocks(css)), '.inv-add-input--anzahl'))
+
+
+def test_css_artikel_toggle_is_touch_sized_only_in_compact_layout():
+    # D-044: Summary "Artikel" war ~18 px hoch; Ziel 44 px, aber nur im Kompaktlayout (Desktop-Grid unveraendert).
+    css = css_bundle()
+    compact = _decls(_screen_rules(css, 1070), 'summary.artikel-toggle')
+    assert any(
+        re.search(r'display\s*:\s*flex', d) and re.search(r'align-items\s*:\s*center', d) and re.search(r'min-height\s*:\s*44px', d)
+        for d in compact
+    )
+    base = ' '.join(_decls(_css_rules(_strip_print_blocks(css)), '.artikel-details summary.artikel-toggle'))
+    assert 'min-height' not in base

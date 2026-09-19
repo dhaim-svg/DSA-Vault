@@ -489,6 +489,20 @@
       h.textContent = title;
       list.appendChild(h);
 
+      /* Schmalansicht (D-044): sichtbarer Scroll-Hinweis (nur <= 600 px per CSS) + fokussierbarer Scroll-Wrapper.
+         role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+      var scrollHint = document.createElement('p');
+      scrollHint.className = 'sg-scroll-hint';
+      scrollHint.setAttribute('aria-hidden', 'true');
+      scrollHint.textContent = '← Tabelle seitlich scrollen: Kosten, Aktion, „auswählen“ →';
+      list.appendChild(scrollHint);
+
+      var wrap = document.createElement('div');
+      wrap.className = 'steiger-scroll';
+      wrap.setAttribute('tabindex', '0');
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', title);
+
       var table = document.createElement('table');
       table.className = 'steiger-table';
 
@@ -508,7 +522,8 @@
       });
       table.appendChild(tbody);
 
-      list.appendChild(table);
+      wrap.appendChild(table);
+      list.appendChild(wrap);
     }
 
     /* Eigenschaften */

@@ -445,9 +445,13 @@ body { padding-top: 46px; }
 .sg-cart-status.over { color: var(--accent-blood); }
 .sg-cart-commit { margin-left: auto; padding: 6px 14px; font-size: 13px; }
 .sg-cart-commit:disabled { opacity: .4; cursor: default; }
-/* Schmalansicht: Tabelle scrollt im eigenen Container statt die Seite aufzuweiten */
+/* Schmalansicht: Tabelle scrollt im eigenen Wrapper statt die Seite aufzuweiten (D-044: Wrapper-div, damit die Tabelle
+   display:table und ihre Semantik behaelt; der Wrapper ist per Tastatur fokussier- und scrollbar). */
+.steiger-scroll { overflow-x: auto; }
+.steiger-scroll:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: 2px; }
+.sg-scroll-hint { display: none; margin: 0 0 4px; font-size: 11px; line-height: 1.4; color: var(--ink-mute); }
 @media screen and (max-width: 600px) {
-  .steiger-table { display: block; overflow-x: auto; }
+  .sg-scroll-hint { display: block; }
 }
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
@@ -460,11 +464,12 @@ body { padding-top: 46px; }
 .inv-weight-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); margin-top: 8px; letter-spacing: .05em; }
 .inv-add-form { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
 .inv-add-input { flex: 1; min-width: 0; background: var(--bg-inset); border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font-size: 13px; padding: 5px 10px; font-family: var(--subhead); }
+.inv-add-input--anzahl { max-width: 80px; }
 .inv-add-btn { padding: 5px 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg-inset); color: var(--ink); cursor: pointer; font-size: 12px; white-space: nowrap; font-family: var(--display); letter-spacing: .05em; }
 .inv-add-btn:hover { background: var(--bg-elev); }
 @media screen and (max-width: 480px) {
   .inv-add-form { flex-wrap: wrap; }
-  .inv-add-input:first-child { flex-basis: 100%; }
+  .inv-add-input--name { flex-basis: 100%; }
 }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
