@@ -42,7 +42,13 @@ def roh_view(html):
 
 
 def kompiliert_view(html):
-    return html[html.index('id="chronik-view-kompiliert"'):]
+    start = html.index('id="chronik-view-kompiliert"')
+    end = html.find('id="chronik-view-register"', start)
+    return html[start:] if end == -1 else html[start:end]
+
+
+def register_view(html):
+    return html[html.index('id="chronik-view-register"'):html.index('<!-- end tab-chronik -->')]
 
 
 def test_empty_chronik_shows_empty_state_without_details():
