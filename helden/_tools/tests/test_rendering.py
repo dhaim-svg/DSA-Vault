@@ -95,6 +95,15 @@ def test_journal_partial_is_sub_partial_of_chronik():
     assert "{% include 'partials/journal.j2' %}" not in _dashboard_source()
 
 
+def test_register_partial_is_sub_partial_of_chronik():
+    register = (PARTIALS_DIR / 'register.j2').read_text(encoding='utf-8')
+    assert not register.lstrip().startswith('<div class="tab-content"')
+    assert 'id="tab-register"' not in register
+    chronik = (PARTIALS_DIR / 'chronik.j2').read_text(encoding='utf-8')
+    assert chronik.count("{% include 'partials/register.j2' %}") == 1
+    assert "{% include 'partials/register.j2' %}" not in _dashboard_source()
+
+
 def test_missing_css_file_fails_loudly(monkeypatch):
     monkeypatch.setattr(rendering, 'CSS_FILES', ['gibt-es-nicht.css'])
     with pytest.raises(FileNotFoundError):
@@ -179,6 +188,10 @@ def test_render_chronik_tab_static(live_html):
     assert '/chronik-bild/' not in live_html
 
 
+def test_render_has_register_view_exactly_once(live_html):
+    assert live_html.count('id="chronik-view-register"') == 1
+
+
 def test_render_chronik_tab_server():
     if not LIVE_HELD.exists():
         pytest.skip('Live-Vault ohne helden/illaen-baernhold')
@@ -194,6 +207,10 @@ def test_render_chronik_tab_server():
 def test_every_static_js_file_is_listed():
     on_disk = {p.name for p in STATIC_DIR.glob('*.js')}
     assert on_disk == set(JS_FILES)
+
+
+def test_register_js_follows_chronik_js():
+    assert JS_FILES.index('register.js') == JS_FILES.index('chronik.js') + 1
 
 
 def test_js_files_have_no_duplicates():
@@ -242,7 +259,7 @@ def test_server_render_links_each_js_file_in_order():
         pytest.skip('Live-Vault ohne helden/illaen-baernhold')
     html = server._render_dashboard('illaen-baernhold')
     tags = re.findall(r'<script src="/static/([^"]+)"></script>', html)
-    assert tags == list(JS_FILES) and len(tags) == 11
+    assert tags == list(JS_FILES) and len(tags) == len(JS_FILES)
     assert not re.search(r'/\* \w+\.js \*/', html)
 
 

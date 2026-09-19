@@ -1,0 +1,42 @@
+{% if register.nscs or register.orte %}
+<div class="register">
+  <div class="register-tools">
+    <input type="search" class="register-suche" placeholder="NSC oder Ort suchen &hellip;" aria-label="Register durchsuchen" autocomplete="off">
+    <span class="register-zaehler" aria-live="polite"></span>
+  </div>
+  {% for gruppe, titel, eintraege in [('nsc', 'NSCs', register.nscs), ('ort', 'Orte', register.orte)] %}
+  {% if eintraege %}
+  <section class="card register-gruppe" data-gruppe="{{ gruppe }}">
+    <h3 class="card-title">{{ titel }} <span class="register-count">{{ eintraege | length }}</span></h3>
+    <div class="register-liste">
+      {% for e in eintraege %}
+      <article class="register-eintrag" data-such="{{ e.such | e }}">
+        <h4 class="register-name">{{ e.name | e }}{% if e.unsicher %} <span class="register-unsicher" title="unsichere Lesart">(?)</span>{% endif %}</h4>
+        {% if e.qualifier %}
+        <p class="register-qualifier">{{ e.qualifier | e }}</p>
+        {% endif %}
+        {% if e.sessions %}
+        <div class="register-sessions">
+          {% for nr in e.sessions %}
+          <span class="register-chip">S{{ nr | e }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% if e.erwaehnungen | selectattr('text') | list %}
+        <ul class="register-erwaehnungen">
+          {% for er in e.erwaehnungen if er.text and (er.text | trim) %}
+          <li>{% if er.nr %}<span class="register-nr">S{{ er.nr | e }}</span> {% endif %}{{ er.text | e }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% endfor %}
+  <p class="register-leer" hidden>Keine Treffer.</p>
+</div>
+{% else %}
+<section class="card"><p class="register-empty">Noch kein Register vorhanden &mdash; Sessions mit <code>/session-compile</code> kompilieren.</p></section>
+{% endif %}

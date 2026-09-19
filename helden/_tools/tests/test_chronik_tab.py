@@ -29,10 +29,13 @@ SESSION = {
 }
 
 
-def render(chronik, sessions=None, prefix=PREFIX):
+def render(chronik, sessions=None, prefix=PREFIX, register=None):
     tpl = make_env().get_template('partials/chronik.j2')
-    return tpl.render(chronik=chronik, chronik_bild_prefix=prefix,
-                      kampagne={'sessions': sessions if sessions is not None else []})
+    ctx = {'chronik': chronik, 'chronik_bild_prefix': prefix,
+           'kampagne': {'sessions': sessions if sessions is not None else []}}
+    if register is not None:
+        ctx['register'] = register
+    return tpl.render(**ctx)
 
 
 def roh_view(html):
@@ -197,3 +200,132 @@ def test_partial_wrapper_and_header():
     assert html.lstrip().startswith('<div class="tab-content" id="tab-chronik">')
     assert '<h2>📜 Chronik</h2>' in html
     assert html.rstrip().endswith('</div><!-- end tab-chronik -->')
+
+
+def _eintrag(name, unsicher=False, qualifier='', sessions=None, erwaehnungen=None, such=None):
+    erwaehnungen = erwaehnungen if erwaehnungen is not None else []
+    return {
+        'name': name, 'unsicher': unsicher, 'qualifier': qualifier,
+        'sessions': sessions if sessions is not None else [],
+        'erwaehnungen': erwaehnungen,
+        'such': such if such is not None else ' '.join([name, qualifier] + [e['text'] for e in erwaehnungen]).lower(),
+    }
+
+
+REGISTER = {
+    'nscs': [
+        _eintrag('Richesa Bolongaro', qualifier='Händlerin', sessions=['1', '3'],
+                 erwaehnungen=[{'nr': '1', 'text': 'Traf uns am Tor.'}, {'nr': '3', 'text': 'Wieder da.'}],
+                 such='richesa bolongaro handlerin traf uns am tor. wieder da.'),
+        _eintrag('Unklarer Kerl', unsicher=True, sessions=['2'],
+                 erwaehnungen=[{'nr': '', 'text': 'Ohne Nummer.'}, {'nr': '2', 'text': ''}]),
+    ],
+    'orte': [_eintrag('Havena', sessions=['1'], erwaehnungen=[{'nr': '1', 'text': 'Hafenstadt.'}])],
+}
+
+
+def test_switch_has_three_buttons_in_order():
+    html = render(_chronik(), register=REGISTER)
+    assert re.findall(r'<button[^>]*data-view="(\w+)"', html) == ['roh', 'kompiliert', 'register']
+    btn = re.search(r'<button[^>]*data-view="register"[^>]*>', html).group(0)
+    assert 'role="tab"' in btn and 'aria-selected="false"' in btn
+    assert 'aria-controls="chronik-view-register"' in btn
+    assert 'chronik-switch-btn--active' not in btn
+
+
+def test_register_button_count_is_nscs_plus_orte():
+    html = render(_chronik(), register=REGISTER)
+    btn = re.search(r'<button[^>]*data-view="register"[^>]*>(.*?)</button>', html, re.S).group(1)
+    assert re.search(r'Register\s*<span class="chronik-switch-count">3</span>', btn)
+
+
+def test_register_view_panel_follows_kompiliert_and_is_inactive():
+    html = render(_chronik(), register=REGISTER)
+    assert html.index('id="chronik-view-kompiliert"') < html.index('id="chronik-view-register"')
+    tag = re.search(r'<div[^>]*id="chronik-view-register"[^>]*>', html).group(0)
+    assert 'data-view="register"' in tag and 'role="tabpanel"' in tag
+    assert 'chronik-view--active' not in tag
+    assert html.count('id="chronik-view-register"') == 1
+
+
+def test_register_view_renders_entries():
+    reg = register_view(render(_chronik(), register=REGISTER))
+    assert '<input type="search" class="register-suche"' in reg
+    assert 'aria-label="Register durchsuchen"' in reg
+    assert 'class="register-zaehler"' in reg and 'aria-live="polite"' in reg
+    assert len(re.findall(r'<section class="card register-gruppe"', reg)) == 2
+    assert 'data-gruppe="nsc"' in reg and 'data-gruppe="ort"' in reg
+    assert len(re.findall(r'<article class="register-eintrag"', reg)) == 3
+    assert '<h4 class="register-name">Richesa Bolongaro' in reg
+    assert 'Händlerin' in reg
+    assert 'data-such="richesa bolongaro handlerin traf uns am tor. wieder da."' in reg
+    assert len(re.findall(r'class="register-chip"', reg)) == 4
+    assert 'S1' in reg and 'S3' in reg
+    assert 'Traf uns am Tor.' in reg and 'Hafenstadt.' in reg
+    assert re.search(r'<p class="register-leer" hidden>Keine Treffer\.</p>', reg)
+
+
+def test_register_group_counts_are_totals():
+    reg = register_view(render(_chronik(), register=REGISTER))
+    counts = re.findall(r'<span class="register-count">(\d+)</span>', reg)
+    assert counts == ['2', '1']
+
+
+def test_register_unsicher_badge_only_for_unsichere_eintraege():
+    reg = register_view(render(_chronik(), register=REGISTER))
+    assert reg.count('class="register-unsicher"') == 1
+    assert re.search(r'<span class="register-unsicher" title="unsichere Lesart">\(\?\)</span>', reg)
+    unsicher_pos = reg.index('register-unsicher')
+    assert reg.index('Unklarer Kerl') < unsicher_pos < reg.index('Havena')
+
+
+def test_register_erwaehnungen_skip_empty_text_and_omit_empty_nr():
+    reg = register_view(render(_chronik(), register=REGISTER))
+    kerl = reg[reg.index('Unklarer Kerl'):reg.index('Havena')]
+    assert len(re.findall(r'<li\b', kerl)) == 1
+    assert 'Ohne Nummer.' in kerl
+    assert not re.search(r'<li[^>]*>\s*S\s*Ohne', kerl)
+    richesa = reg[reg.index('Richesa'):reg.index('Unklarer Kerl')]
+    assert len(re.findall(r'<li\b', richesa)) == 2
+    assert re.search(r'<li[^>]*>\s*(?:<[^>]+>)?S3(?:</[^>]+>)?\s*Wieder da\.', richesa)
+
+
+def test_register_user_content_is_escaped():
+    evil = '<script>alert(1)</script>'
+    reg_data = {
+        'nscs': [_eintrag(evil, unsicher=True, qualifier=evil, sessions=[evil],
+                          erwaehnungen=[{'nr': evil, 'text': evil}],
+                          such='x" onmouseover="y')],
+        'orte': [_eintrag('Ort', qualifier='<b>q</b>', such=evil)],
+    }
+    html = render(_chronik(), register=reg_data)
+    assert '<script' not in html
+    assert '&lt;script&gt;alert(1)&lt;/script&gt;' in html
+    assert '<b>q' not in html
+    assert '" onmouseover="' not in html
+    assert 'data-such="x&#34; onmouseover=&#34;y"' in html
+    assert 'data-such="&lt;script&gt;' in html
+
+
+def test_render_without_register_shows_empty_state():
+    html = render(_chronik())
+    reg = register_view(html)
+    assert 'register-suche' not in reg and 'register-eintrag' not in reg
+    assert 'session-compile' in reg
+    assert 'None' not in html
+    assert re.search(r'Register\s*<span class="chronik-switch-count">0</span>', html)
+
+
+def test_render_with_empty_register_shows_empty_state():
+    reg = register_view(render(_chronik(), register={'nscs': [], 'orte': []}))
+    assert 'register-suche' not in reg
+    assert 'session-compile' in reg
+
+
+def test_kompiliert_view_does_not_leak_register():
+    html = render(_chronik(), sessions=[SESSION], register=REGISTER)
+    komp = kompiliert_view(html)
+    assert 'register-suche' not in komp
+    assert 'register-eintrag' not in komp
+    assert 'journal-session' in komp
+    assert 'register-suche' not in roh_view(html)

@@ -1,10 +1,12 @@
 <div class="tab-content" id="tab-chronik">
+{% set register = register | default({'nscs': [], 'orte': []}, true) %}
 
 <div class="sec-head"><h2>📜 Chronik</h2><span class="rule"></span></div>
 
 <div class="chronik-switch" role="tablist" aria-label="Chronik-Ansicht">
   <button type="button" class="chronik-switch-btn chronik-switch-btn--active" data-view="roh" role="tab" aria-selected="true" aria-controls="chronik-view-roh">Roh <span class="chronik-switch-count">{{ chronik.spielabende | length }}</span></button>
   <button type="button" class="chronik-switch-btn" data-view="kompiliert" role="tab" aria-selected="false" aria-controls="chronik-view-kompiliert">Kompiliert <span class="chronik-switch-count">{{ kampagne.sessions | length }}</span></button>
+  <button type="button" class="chronik-switch-btn" data-view="register" role="tab" aria-selected="false" aria-controls="chronik-view-register">Register <span class="chronik-switch-count">{{ (register.nscs | length) + (register.orte | length) }}</span></button>
 </div>
 
 <div class="chronik-view chronik-view--active" id="chronik-view-roh" data-view="roh" role="tabpanel">
@@ -48,6 +50,10 @@
 
 <div class="chronik-view" id="chronik-view-kompiliert" data-view="kompiliert" role="tabpanel">
 {% include 'partials/journal.j2' %}
+</div>
+
+<div class="chronik-view" id="chronik-view-register" data-view="register" role="tabpanel">
+{% include 'partials/register.j2' %}
 </div>
 
 </div><!-- end tab-chronik -->

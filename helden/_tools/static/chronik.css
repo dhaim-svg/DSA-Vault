@@ -36,9 +36,31 @@
 .chronik-meta { margin-top: var(--gap); }
 .chronik-meta-text { white-space: pre-wrap; font-family: var(--mono); font-size: 12px; color: var(--ink-mute); overflow-wrap: anywhere; }
 
+/* ---- Register view ---- */
+.register [hidden] { display: none !important; }  /* the hidden attribute must beat any display set below */
+.register-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 var(--gap); }
+.register-suche { flex: 1 1 14rem; min-width: 0; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 3px; background: var(--bg-inset); color: var(--ink); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; }
+.register-suche::placeholder { color: var(--ink-dim); }
+.register-suche:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: -1px; }
+.register-zaehler { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-mute); }
+.register-gruppe { margin-bottom: var(--gap); }
+.register-count { margin-left: auto; font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .12em; color: var(--ink-mute); }
+.register-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: 10px; }
+.register-eintrag { min-width: 0; padding: 10px 12px; border: 1px solid var(--rule); border-radius: var(--r-card); background: rgba(11,17,22,.35); overflow-wrap: anywhere; }
+.register-name { margin: 0 0 2px; font-family: var(--subhead); font-size: 16px; font-weight: 600; color: var(--ink); }
+.register-unsicher { margin-left: 4px; font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--accent-gold); cursor: help; }
+.register-qualifier { margin: 0 0 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--ink-mute); }
+.register-sessions { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 6px; }
+.register-chip { padding: 1px 6px; border: 1px solid var(--rule-soft); border-radius: 3px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--accent-cold); }
+.register-erwaehnungen { margin: 0; padding: 0; list-style: none; font-family: var(--body); font-size: 14px; color: var(--ink); }
+.register-erwaehnungen li { margin: 0 0 3px; }
+.register-nr { font-family: var(--mono); font-size: 10.5px; letter-spacing: .04em; color: var(--accent-cold); }
+.register-leer,
+.register-empty { margin: 0; padding: 2rem 0; text-align: center; color: var(--ink-dim); }
+
 @media (max-width: 480px) {
   .chronik-switch { display: flex; }
-  .chronik-switch-btn { flex: 1; padding: 8px 10px; }
+  .chronik-switch-btn { flex: 1 1 auto; min-width: 0; padding: 8px 6px; }
   .chronik-sum-datum { font-size: 15px; }
 }
 
@@ -50,6 +72,12 @@
   .chronik-sum-datum, .chronik-sum-meta, .chronik-szene, .chronik-text, .chronik-bullet, .chronik-meta-text { color: var(--paper-ink); }
   .chronik-igtag-datum { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
   .chronik-bild img { border-color: var(--paper-rule); max-height: 60mm; width: auto; }
+  /* Register: only when it is the active view (the rule above forces roh/kompiliert visible), no search UI */
+  .chronik-view[data-view="register"]:not(.chronik-view--active) { display: none !important; }
+  .register-tools { display: none !important; }
+  .register-eintrag { break-inside: avoid; background: transparent; border-color: var(--paper-rule); }
+  .register-name, .register-erwaehnungen, .register-qualifier, .register-count, .register-nr, .register-unsicher { color: var(--paper-ink); }
+  .register-chip { color: var(--paper-ink); border-color: var(--paper-rule); }
   .chronik-abend { break-inside: auto; }
   .chronik-igtag-datum, .chronik-szene { break-inside: avoid; }
   .chronik-igtag-datum, .chronik-szene { break-after: avoid; }

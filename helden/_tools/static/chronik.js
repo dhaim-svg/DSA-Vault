@@ -1,10 +1,10 @@
-/* chronik.js — Roh/Kompiliert view switcher for the Chronik tab */
+/* chronik.js — Roh/Kompiliert/Register view switcher for the Chronik tab */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'dsa-chronik-view';
   var DEFAULT_VIEW = 'roh';
-  var VIEWS = ['roh', 'kompiliert'];
+  var VIEWS = ['roh', 'kompiliert', 'register'];
 
   function switchView(view) {
     document.querySelectorAll('.chronik-view').forEach(function (el) {
