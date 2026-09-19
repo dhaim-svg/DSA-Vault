@@ -517,7 +517,7 @@ def test_css_print_sf_row_with_open_article_may_break_across_columns():
 
 
 # Nachfahren-li direkt unter .sf-list: '.sf-list li', '.sf-list.general li', '.sf-list li:last-child', '.sf-list li:has(...)'
-SF_DESCENDANT_LI_RE = re.compile(r'\.sf-list(?:\.[\w-]+)*\s+li(?::[\w-]+(?:\([^()]*\))?)*$')
+SF_DESCENDANT_LI_RE = re.compile(r'\.sf-list(?:\.[\w-]+)*\s+li(?::{1,2}[\w-]+(?:\([^()]*\))?)*$')
 
 
 def test_css_sf_row_rules_only_hit_direct_li_children():
