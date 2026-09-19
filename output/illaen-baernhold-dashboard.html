@@ -760,6 +760,7 @@ body::before{
    D-044: schwebend verdeckte sie ~82 px Viewport und die Buttons schrumpften auf ~33 px -> statisch am Seitenende, Touch-Ziele >= 44 px. */
 @media screen and (max-width:480px){
   .codex{ padding-bottom:36px; } /* die 120 px Reserve galten der schwebenden Leiste */
+  body{ padding-bottom:var(--dice-panel-h, 0px); } /* D-047: offenes Wuerfelpanel (fixed) verdeckt sonst Footer-Leiste + letzte Zeilen; Hoehe setzt dice.js */
   #footer-bar{ position:static; margin:16px 8px; flex-wrap:wrap; justify-content:flex-end; }
   #footer-bar .print-btn{ padding:8px 10px; font-size:11px; letter-spacing:.12em; min-height:44px; }
   #save-group{ flex:1 1 100%; }
@@ -877,7 +878,7 @@ body::before{
   .inv-list li,.inv-list li .qty{ color:var(--paper-ink) !important; }
   /* Zauberliste (D-046): eigene Bildschirm-color-Regeln (hell auf Papier, Kontrast ~1,1:1) fallen sonst durch;
      das !important auf .spell .name vererbt sich nicht auf den Namenslink */
-  .spell .name .nlink,.spell .name .haus,.zfw-num,
+  .spell .name .nlink,.spell .name .haus,.spell .zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
   .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
   /* Kopfzeile (Inline-color ink-mute, 1,95:1) und Modifikations-Details (ink-dim, 4,28:1) — im Druck ist das Desktop-Grid aktiv,
@@ -996,6 +997,10 @@ body::before{
    gestrichelter Außenrand die Kennzeichnung weiter an. */
 .zustand-chip.hausregel { border-style: dashed; }
 .zustand-chip.hausregel.active { outline: 1.5px dashed var(--accent, #8b7355); outline-offset: 2px; }
+/* Touch-Ziel (D-047): bei 400 px waren die Chips 25 px hoch; inline-flex zentriert das Label in der 44-px-Flaeche */
+@media screen and (max-width: 480px) {
+  .zustand-chip { min-height: 44px; display: inline-flex; align-items: center; }
+}
 .zustand-legend {
   font-size: 0.78rem;
   line-height: 1.35;
@@ -1246,9 +1251,10 @@ body { padding-top: 46px; }
    display:table und ihre Semantik behaelt; der Wrapper ist per Tastatur fokussier- und scrollbar). */
 .steiger-scroll { overflow-x: auto; }
 .steiger-scroll:focus-visible { outline: 2px solid var(--accent-cold); outline-offset: 2px; }
+/* Hinweis nur bei echtem Ueberlauf (D-047): steigern.js setzt --on, wenn scrollWidth > clientWidth (unabhaengig von der Viewportbreite) */
 .sg-scroll-hint { display: none; margin: 0 0 4px; font-size: 11px; line-height: 1.4; color: var(--ink-mute); }
-@media screen and (max-width: 600px) {
-  .sg-scroll-hint { display: block; }
+@media screen {
+  .sg-scroll-hint.sg-scroll-hint--on { display: block; }
 }
 /* Inventar Tab */
 .inv-coin-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 10px; align-items: center; margin-bottom: 14px; }
@@ -1267,6 +1273,8 @@ body { padding-top: 46px; }
 @media screen and (max-width: 480px) {
   .inv-add-form { flex-wrap: wrap; }
   .inv-add-input--name { flex-basis: 100%; }
+  /* Touch-Ziele (D-047): Eingaben + Button waren bei 400 px je 30 px hoch */
+  .inv-add-input, .inv-add-btn { min-height: 44px; box-sizing: border-box; }
 }
 .inv-reise-note { font-family: var(--mono); font-size: 10px; color: var(--ink-dim); letter-spacing: .05em; margin-bottom: 8px; }
 #inventar-list li { grid-template-columns: auto 1fr auto auto; }
@@ -1335,6 +1343,7 @@ body { padding-top: 46px; }
 
 /* ---- Register view ---- */
 .register [hidden] { display: none !important; }  /* the hidden attribute must beat any display set below */
+.register-druckfilter { display: none; }  /* print-only header for an active filter (D-045) */
 .register-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0 0 var(--gap); }
 .register-suche { flex: 1 1 14rem; min-width: 0; padding: 7px 10px; border: 1px solid var(--rule); border-radius: 3px; background: var(--bg-inset); color: var(--ink); font-family: var(--mono); font-size: 12px; letter-spacing: .04em; }
 .register-suche::placeholder { color: var(--ink-dim); }
@@ -1363,15 +1372,16 @@ body { padding-top: 46px; }
 
 @media print {
   .chronik-switch { display: none !important; }
-  .chronik-view { display: block !important; }
+  /* Nur die aktive Ansicht drucken; nicht aktive bleiben ueber die Basisregel .chronik-view{display:none} ausgeblendet */
+  .chronik-view--active { display: block !important; }
   .chronik-abend > summary { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
   .chronik-abend > summary::before { display: none; }
   .chronik-sum-datum, .chronik-sum-meta, .chronik-szene, .chronik-text, .chronik-bullet, .chronik-meta-text { color: var(--paper-ink); }
   .chronik-igtag-datum { color: var(--paper-ink); border-bottom-color: var(--paper-rule); }
   .chronik-bild img { border-color: var(--paper-rule); max-height: 60mm; width: auto; }
-  /* Register: only when it is the active view (the rule above forces roh/kompiliert visible), no search UI */
-  .chronik-view[data-view="register"]:not(.chronik-view--active) { display: none !important; }
+  /* Register: no search UI; an active filter is stated in the print header instead (:not([hidden]) so [hidden] still wins) */
   .register-tools { display: none !important; }
+  .register-druckfilter:not([hidden]) { display: block !important; margin: 0 0 var(--gap); font-family: var(--mono); font-size: 12px; color: var(--paper-ink); }
   .register-eintrag { break-inside: avoid; background: transparent; border-color: var(--paper-rule); }
   .register-name, .register-erwaehnungen, .register-qualifier, .register-count, .register-nr, .register-unsicher { color: var(--paper-ink); }
   .register-chip { color: var(--paper-ink); border-color: var(--paper-rule); }
@@ -1509,7 +1519,7 @@ body { padding-top: 46px; }
     </div>
     <div data-wunden="0"></div>
     <div id="zustand-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;margin-bottom:4px"></div>
-    <div class="zustand-legend"><span class="zustand-legend-chips">Zustände = Hausregel-Schalter (im Regelwerk kein fester Probenmalus).</span> Wunden wirken regelkonform: AT/PA/FK/INI/GE −2, GS −1 je Wunde (WdS S. 57). <a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md">Details →</a></div>
+    <div class="zustand-legend"><span class="zustand-legend-chips">Zustände = Hausregel-Schalter (im Regelwerk kein fester Probenmalus): Sie ändern nur die Probe (Würfelpanel-Modifikator), nicht die angezeigten Attribut- und Basiswerte. </span>Wunden wirken regelkonform: AT/PA/FK/INI/GE −2, GS −1 je Wunde (WdS S. 57). <a href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/grundregeln/zustaende.md">Details →</a></div>
     <div class="minor-stats">
       <div class="minor"><span class="v">5</span><span class="k">MR</span></div>
       <div class="minor"><span class="v" data-wund-stat="INI" data-wund-base="10">10</span><span class="k">INI</span></div>
@@ -4473,6 +4483,7 @@ Es fehlen Tabea und Peter
     <input type="search" class="register-suche" placeholder="NSC oder Ort suchen &hellip;" aria-label="Register durchsuchen" autocomplete="off">
     <span class="register-zaehler" aria-live="polite"></span>
   </div>
+  <p class="register-druckfilter" hidden></p>
   <section class="card register-gruppe" data-gruppe="nsc">
     <h3 class="card-title">NSCs <span class="register-count">24</span></h3>
     <div class="register-liste">
@@ -5440,15 +5451,17 @@ function initDashboard() {
     // hook is a class (not an id) — both instances are updated in lockstep.
 
     // Active mali (Wunden + Zustand-Chips), the single source of truth for the badge text,
-    // the probe overlay (applyWundModsToProben), the base-value overlay
-    // (applyWundModsToStats) and dice.js's panel modifier (probeMod).
+    // the attribute-value overlay (applyWundModsToProben, via attrMod), the base-value overlay
+    // (applyWundModsToStats, via statMod) and dice.js's panel modifier (probeMod).
     //
     // Effect shape — the "Geltungsbereich" is one of two fields:
     //   { label, mods: { ZIEL: <=0, ... }, wunden }  Wunden: nur die genannten Ziele
     //        (AT/PA/FK/INI/GE/GS, aus DSAWundregeln.wundMod). Wirkt auf Proben (AT, PA, GE)
     //        UND Basiswert-Anzeigen (AT/PA/FK/INI/GS).
-    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt auf jede Probe,
-    //        nie auf Basiswert-Anzeigen und nie auf Schadenswürfe.
+    //   { label, alle: true, mod: <=0, hausregel: true }  Zustand (Hausregel): wirkt nur über die
+    //        Vorbelegung des Würfelpanel-Modifikators (probeMod → dice.js) auf jede Probe; nie als
+    //        Overlay auf Eigenschaftswerte (D-048: sonst doppelt gezählt), nie auf Basiswert-Anzeigen,
+    //        nie auf Schadenswürfe. Das Badge nennt sie nur als Information.
     function computeActiveEffects() {
       const effects = [];
       const wundenAnchor = document.querySelector('[data-wunden]');
@@ -5466,7 +5479,7 @@ function initDashboard() {
       return effects;
     }
 
-    // Ziele einer Probe (Würfelpanel / Eigenschaftswert-Overlay) bzw. einer Basiswert-Anzeige.
+    // Ziele einer Probe (Würfelpanel-Modifikator) bzw. einer Basiswert-Anzeige.
     const PROBE_ZIELE = new Set(['AT', 'PA', 'MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK', 'talent', 'zauber']);
     const STAT_ZIELE = new Set(['AT', 'PA', 'FK', 'INI', 'GS']);
 
@@ -5509,7 +5522,8 @@ function initDashboard() {
     function updateEigLeisteBadge() {
       const effects = computeActiveEffects();
 
-      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles.
+      // Wunden wirken auf Talente/Zauber nur über die GE; Zustände auf alles (nur via Panel-Modifikator,
+      // das Badge nennt sie ohne Zahlen-Overlay).
       // e.g. "Wunden ×2: GE −4 · Schmerz −2 (Hausregel)"; leer ohne aktive Effekte.
       const text = effects.map(e => e.alle
         ? e.label + ' −' + Math.abs(e.mod) + (e.hausregel ? ' (Hausregel)' : '')
@@ -5523,14 +5537,16 @@ function initDashboard() {
 
     // Annotates every rendered attribute value in probe_eig's output
     // (data-attr spans, Talent-/Zauber-/Spontane-Mod-Proben) with the
-    // effective value when a malus applies to that attribute, e.g. "GE 13→11".
-    // Wunden treffen nur die GE; reverts to the base value once the malus clears.
+    // effective value when a Wunden-malus applies to that attribute, e.g. "GE 13→11".
+    // Wunden treffen nur die GE (attrMod); Zustand-Chips nie — sie wirken nur über den
+    // Panel-Modifikator (probeMod), ein Overlay hier würde sie doppelt zählen (D-048).
+    // Reverts to the base value once the malus clears.
     function applyWundModsToProben(effects) {
       document.querySelectorAll('[data-attr]').forEach(el => {
         const abbr = el.dataset.attr;
         const base = parseInt(el.dataset.base, 10);
         if (isNaN(base)) return;
-        const mod = probeMod(abbr, effects);
+        const mod = attrMod(abbr, effects);
         el.textContent = mod !== 0 ? (abbr + ' ' + base + '→' + (base + mod)) : (abbr + ' ' + base);
       });
     }
@@ -6126,6 +6142,14 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     }
   }
 
+  // D-047: das Panel ist position:fixed (Hoehe variiert mit Modus/Ergebnis) -> die offene Hoehe steht als --dice-panel-h auf <html>;
+  // base.css reserviert sie bei <= 480 px als body-padding-bottom, damit Footer-Leiste und letzte Zeilen erreichbar bleiben.
+  function syncPanelReserve() {
+    if (!panel) return;
+    var open = !panel.classList.contains('hidden');
+    document.documentElement.style.setProperty('--dice-panel-h', open ? panel.offsetHeight + 'px' : '0px');
+  }
+
   // ------------------------------------------------------------------
   // Public API
   // ------------------------------------------------------------------
@@ -6142,6 +6166,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     var rolls = autoRoll();
     render(rolls);
     panel.classList.remove('hidden');
+    syncPanelReserve();
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
@@ -6154,7 +6179,9 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
     document.getElementById('dp-close').addEventListener('click', function () {
       panel.classList.add('hidden');
+      syncPanelReserve();
     });
+    if (typeof ResizeObserver === 'function') new ResizeObserver(syncPanelReserve).observe(panel);
 
     document.getElementById('dp-auto').addEventListener('click', function () {
       isManual = false;
@@ -6702,6 +6729,34 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   }
 
   /* ── Tab renderer ─────────────────────────────────────────────────────── */
+  /* Scroll-Wrapper (D-044/D-047): Fokus-Stopp (tabindex/role/aria-label) und sichtbarer Hinweis nur, wenn die Tabelle wirklich
+     seitlich scrollt. clientWidth 0 = Tab per display:none ausgeblendet -> kein Ueberlauf annehmen (Neubewertung beim Einblenden).
+     role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+  function syncScrollOverflow(wrap, hint, title) {
+    var over = wrap.clientWidth > 0 && wrap.scrollWidth > wrap.clientWidth;
+    if (over) {
+      wrap.setAttribute('tabindex', '0');
+      wrap.setAttribute('role', 'region');
+      wrap.setAttribute('aria-label', title);
+    } else {
+      wrap.removeAttribute('tabindex');
+      wrap.removeAttribute('role');
+      wrap.removeAttribute('aria-label');
+    }
+    hint.classList.toggle('sg-scroll-hint--on', over);
+  }
+
+  /* Neubewertung bei Groessenaenderung (Resize, Tab-Wechsel, Zeilenumbau); Fallback ohne ResizeObserver: window-resize. */
+  function watchScrollOverflow(targets, sync) {
+    if (typeof ResizeObserver === 'function') {
+      var ro = new ResizeObserver(sync);
+      targets.forEach(function (el) { ro.observe(el); });
+    } else {
+      window.addEventListener('resize', sync);
+    }
+    sync();
+  }
+
   var EIG_ORDER = ['MU', 'KL', 'IN', 'CH', 'FF', 'GE', 'KO', 'KK'];
   var EIG_FULL = {
     MU: 'Mut', KL: 'Klugheit', IN: 'Intuition', CH: 'Charisma',
@@ -6801,8 +6856,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       h.textContent = title;
       list.appendChild(h);
 
-      /* Schmalansicht (D-044): sichtbarer Scroll-Hinweis (nur <= 600 px per CSS) + fokussierbarer Scroll-Wrapper.
-         role/aria-label liegen auf dem Wrapper, nicht auf der <table> (role=region wuerde die Tabellensemantik zerstoeren). */
+      /* Scroll-Hinweis + fokussierbarer Scroll-Wrapper: nur bei echtem Ueberlauf aktiv (syncScrollOverflow, D-047). */
       var scrollHint = document.createElement('p');
       scrollHint.className = 'sg-scroll-hint';
       scrollHint.setAttribute('aria-hidden', 'true');
@@ -6811,9 +6865,6 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
       var wrap = document.createElement('div');
       wrap.className = 'steiger-scroll';
-      wrap.setAttribute('tabindex', '0');
-      wrap.setAttribute('role', 'region');
-      wrap.setAttribute('aria-label', title);
 
       var table = document.createElement('table');
       table.className = 'steiger-table';
@@ -6836,6 +6887,7 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
 
       wrap.appendChild(table);
       list.appendChild(wrap);
+      watchScrollOverflow([wrap, table], function () { syncScrollOverflow(wrap, scrollHint, title); });
     }
 
     /* Eigenschaften */
@@ -7497,12 +7549,14 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
     if (!input) { return; }  // empty register: nothing to search
     var counter = document.querySelector('.register-zaehler');
     var empty = document.querySelector('.register-leer');
+    var druckfilter = document.querySelector('.register-druckfilter');  // print-only header naming the active filter
     var groups = document.querySelectorAll('.register-gruppe');
 
     function apply() {
       var tokens = fold(input.value).split(/\s+/).filter(Boolean);
       var active = tokens.length > 0;
       var total = 0;
+      var all = 0;
       groups.forEach(function (group) {
         var entries = group.querySelectorAll('.register-eintrag');
         var visible = 0;
@@ -7516,9 +7570,14 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
         var count = group.querySelector('.register-count');
         if (count) { count.textContent = active ? visible + '/' + entries.length : String(entries.length); }
         total += visible;
+        all += entries.length;
       });
       if (counter) { counter.textContent = active ? total + ' Treffer' : ''; }
       if (empty) { empty.hidden = !(active && total === 0); }
+      if (druckfilter) {
+        druckfilter.hidden = !active;
+        druckfilter.textContent = active ? 'Gefiltert nach: "' + input.value.trim() + '" — ' + total + '/' + all + ' Einträge' : '';
+      }
     }
 
     input.addEventListener('input', apply);
