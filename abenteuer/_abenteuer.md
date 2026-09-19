@@ -6,7 +6,7 @@ Spielerdaten-Bereich des Vaults — Kampagnen und Spielsitzungen. **User-Domäne
 
 | Kampagne | System | SL | Held(en) | Sessions | Status |
 |----------|--------|-----|----------|----------|--------|
-| [[abenteuer/drachenchronik/_drachenchronik\|Drachenchronik]] | DSA 4.1 | — | [[helden/illaen-baernhold/_illaen\|Illaen]] | 0 | in Vorbereitung |
+| [[abenteuer/drachenchronik/_drachenchronik\|Drachenchronik]] | DSA 4.1 | — | [[helden/illaen-baernhold/_illaen\|Illaen]] | 4 | läuft |
 
 ---
 

@@ -138,3 +138,51 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 - **Nicht behoben (User-Domäne, außerhalb Wiki-Scope):** `helden/illaen-baernhold/rituale.md` nennt zwei Stabzauber abweichend vom Wiki — „Stabzauber: Fackel" (Wiki: „Ewige Flamme") und „Stabzauber: Stabverlängerung" (deckt sich funktional mit „Doppeltes Maß"). Datei ist bereits mit eigenem Hinweis dazu versehen (Z. 30); keine Umbenennung ohne explizite User-Freigabe.
 
 ---
+
+## 2026-09-19 — /session-compile 04.06.2026 (ausgelöst durch Spielabend 04.06.2026)
+
+### L17: Ort-/Regionsartikel für Punin, Yaquir-Gegend und Briglo fehlen
+
+- **Wiki-Datei:** fehlt (vorgeschlagen: neuer Ordner oder Artikel für Aventurien-Orte/Regionen; Pfad noch offen)
+- **Befund:** Session 01 (Fundstelle: „Sightseeing in Punin“, „Wissensaufbau im Hesindetempel“, „Punin Akademie am 15. Phex“) spielt komplett in Punin und nennt den Yaquir mit seinen Dörfern und Städten sowie Briglo (Austragungsort der 2. Dämonenkriege). Das Wiki hat dazu keinen Ort-/Regionsartikel (Glob und Grep über `wiki/dsa-4.1`); Punin und der Yaquir kommen nur als Nebenbemerkung in Fließtexten anderer Artikel vor (z. B. `goetter/hesinde.md`, `geographie/fortbewegung.md`).
+- **Vorschlag:** Regionalbeschreibung Punin und Yaquir-Region anlegen (Stadt, Akademie, Hesindetempel, Flusslauf bis Briglo). Quellbuch nicht geprüft.
+
+---
+
+### L18: Wüstenwissen (Khôm) — Fauna und Oasen nur als Stichwort
+
+- **Wiki-Datei:** `wiki/dsa-4.1/geographie/terraintypen.md`, Abschnitt „Wüste (S. 36–38)“
+- **Befund:** Session 01 (Fundstelle: „Infos generell zu Wüste“) nennt Khormasbestien, Skorpione (Faustformel „je kleiner desto gefährlicher“; Stiefel am Morgen ausleeren) sowie Oasen und deren Distanzen. `terraintypen.md` erwähnt Skorpione und Oasen nur als Stichwort in der Liste der Bewohner (Z. 227); „Khormasbestie“ hat im gesamten `wiki/dsa-4.1` keinen Treffer.
+- **Vorschlag:** Wüsten-Fauna (Khormasbestie, Skorpione mit Gefahrenregel) und Oasen-Distanzen als eigenen Abschnitt bzw. Artikel ergänzen. Quellbuch nicht geprüft.
+
+---
+
+## 2026-09-19 — /session-compile 27.06.2026 (ausgelöst durch Spielabend 27.06.2026)
+
+### L19: Reichshof und Reichsämter 1025 BF (Kumrath, Königin Rohaya, Reichskanzler, Reichs(erz)marschall)
+
+- **Wiki-Datei:** fehlt (vorgeschlagen: Hintergrundartikel zu Reichshof/Reichsämtern, Pfad noch offen)
+- **Befund:** Session 02 (Fundstelle: „19. Phex“) — Empfang in Kumrath durch Reichskanzler (Name=Rafik), Königin (Rohaya) und Reichs(erz)marschall im Heraldiksaal, Anreden „Eure königliche Hoheit“ / „Eure allerdurchlauchteste Hoheit“ bzw. „Eure Excellenz“. Zusätzlich Omlad („zurückeroberte Stadt“) und Bactrinn als Stationen der Flussfahrt. Dazu gibt es im Wiki keinen Treffer (Grep auf Kumrath, Cumrat, Rohaya, Reichskanzler, Reichsmarschall, Omlad, Bactrinn); `grundregeln/sozialstatus.md` und `goetter/religion-alltag.md` enthalten keine Anredeformen für diese Ämter.
+- **Vorschlag:** Hintergrundartikel zu Reichshof und Ämtern (Personen, Sitz, Anredeformen) sowie Kurzbeschreibung der Flussstationen Omlad und Bactrinn. Quellbuch nicht geprüft.
+
+---
+
+## 2026-09-19 — /session-compile 18.07.2026 (ausgelöst durch Spielabend 18.07.2026)
+
+### L20: Brig-Lo — Schlachtfeld, Tempel der Vier und Grabanlage der Leonore von Berg
+
+- **Wiki-Datei:** fehlt (vorgeschlagen: Ortsartikel Brig-Lo; Pfad noch offen)
+- **Befund:** Session 03 (Fundstelle: „22. Phex — Brig-Lo“) beschreibt Brig-Lo ausführlich: Schlachtfeld mit Geistern und grauen, toten Feldern, Tempel der 4 (Praios, Rondra, Efferd, Ingerimm; später von einer Praios-Geweihten geschleift), Mausoleum der Leonore von Berg, Garnison in der Baronie Südpforte am Fluss Brigella. Im Wiki kommt Brig-Lo nur als Nebenbemerkung vor: `goetter/kor.md` Z. 71 (Heiliger Ort) und `goetter/bund-wahren-glaubens.md` Z. 87 (Diamant von Brig-Lo). Die „2. Dämonenkriege“ (Session 01) haben ebenfalls keinen eigenen Artikel.
+- **Vorschlag:** Ortsartikel Brig-Lo (Schlacht, Tempel der Vier, Baronie/Garnison) samt Einordnung der 2. Dämonenkriege. Quellbuch nicht geprüft.
+
+---
+
+## 2026-09-19 — /session-compile 22.08.2026 (ausgelöst durch Spielabend 22.08.2026)
+
+### L21: Novadis als Volk sowie Amhallah
+
+- **Wiki-Datei:** `wiki/dsa-4.1/kulturen/tulamidisch-kulturen.md` (bzw. neuer Ortsartikel Amhallah)
+- **Befund:** Session 04 (Fundstellen: „Novadi Lager“, „Zurück nach Brig-Lo“) — Novadi-Lager mit ca. 20 Personen, Herkunft Amhallah, Mittelsmann ist der Besitzer des Teehauses der Koramsbestie; nächstes Reiseziel der Gruppe ist Amhallah. Das Wiki kennt Novadis nur als Kultur-Charakteroption (Novadi Männer/Frauen in `tulamidisch-kulturen.md`) und über den Rastullah-Glauben, aber nicht als Volk mit Stämmen und Siedlungsweise. Zu Amhallah gibt es nur die Profession „al-Halan / Farisim von Amhallah“ in `professionen/schwertgeselle.md`, keinen Ortsartikel.
+- **Vorschlag:** Ortsartikel Amhallah anlegen und die Novadis als Volk (Stämme, Lager, Gebräuche) ergänzen. Quellbuch nicht geprüft.
+
+---
