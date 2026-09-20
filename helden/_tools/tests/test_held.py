@@ -7,7 +7,8 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from parsers.held import WIKILINK_RE, extract_wiki_path, parse_md_table, strip_wikilink
+from parsers.held import WIKILINK_RE, extract_wiki_path, load_held, parse_md_table, strip_wikilink
+from tests.heldfixtures import MINI_SLUG, write_mini_held
 
 MK_PFAD = 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Merkmalskenntnis [einzelnes Merkmal]'
 # One backslash before the pipe, exactly as in the markdown table (Obsidian escapes | inside tables).
@@ -126,3 +127,42 @@ def test_sf_table_rows_with_bracket_anchor_get_wiki_path():
     assert [strip_wikilink(r['Sonderfertigkeit']) for r in rows] == [
         'Merkmalskenntnis: Eigenschaften', 'Merkmalskenntnis: Schaden', 'Aufmerksamkeit',
     ]
+
+
+# --- Stabzauber-Zeilen mit Anker-Link (Sprint 023 T6, L25(b)) ----------------------------------------------------
+# Der Heldenbogen verlinkt die Stabzauber-Namen mit Anker auf stabzauber.md; die Dashboard-Daten dürfen sich dadurch
+# nicht ändern: load_held muss den Link über strip_wikilink auf den Anzeigetext zurückführen. Synthetisch, kein Live-Bogen.
+
+STABZAUBER_KOPF = """## Stabzauber (2 Rituale)
+
+Alle Stabzauber sind an den gebundenen Magierstab geknüpft.
+
+| Stabzauber | Erschaffungsprobe | AsP | Vol | Effekt (Kurzform) |
+|---|---|---|---|---|
+"""
+STABZAUBER_ZEILE = '| {name} | KL / KL / FF (+4) | 23 | 2 | Stab leuchtet auf Kommando |\n'
+STABZAUBER_LEERE_ZEILE = '| {name} |  |  | ? | Stab verlängert sich auf Befehl |\n'
+FACKEL_LINK = r'[[wiki/dsa-4.1/rituale/stabzauber#Ewige Flamme\|Stabzauber: Fackel]]'
+VERLAENGERUNG_LINK = r'[[wiki/dsa-4.1/rituale/stabzauber#Doppeltes Maß\|Stabzauber: Stabverlängerung]]'
+
+
+def _mini_rituale(tmp_path, fackel, verlaengerung):
+    text = (STABZAUBER_KOPF + STABZAUBER_ZEILE.format(name=fackel)
+            + STABZAUBER_LEERE_ZEILE.format(name=verlaengerung))
+    return load_held(write_mini_held(tmp_path, rituale=text), MINI_SLUG)['rituale']
+
+
+def test_stabzauber_anchor_link_keeps_display_name_and_all_other_fields(tmp_path):
+    rituale = _mini_rituale(tmp_path, FACKEL_LINK, VERLAENGERUNG_LINK)
+    assert rituale['stabzauber'] == [
+        {'name': 'Stabzauber: Fackel', 'erschaffungsprobe': 'KL / KL / FF (+4)', 'asp': '23', 'vol': '2',
+         'effekt': 'Stab leuchtet auf Kommando'},
+        {'name': 'Stabzauber: Stabverlängerung', 'erschaffungsprobe': '', 'asp': '', 'vol': '?',
+         'effekt': 'Stab verlängert sich auf Befehl'},
+    ]
+
+
+def test_stabzauber_anchor_link_gives_the_same_rituale_dict_as_plain_name(tmp_path):
+    verlinkt = _mini_rituale(tmp_path / 'verlinkt', FACKEL_LINK, VERLAENGERUNG_LINK)
+    schlicht = _mini_rituale(tmp_path / 'schlicht', 'Stabzauber: Fackel', 'Stabzauber: Stabverlängerung')
+    assert verlinkt == schlicht

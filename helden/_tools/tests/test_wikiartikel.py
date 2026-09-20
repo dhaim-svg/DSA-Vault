@@ -10,7 +10,7 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from parsers.held import split_sections
+from parsers.held import WIKILINK_RE, split_sections
 from parsers.wikiartikel import _MARKDOWN, load_wiki_artikel
 from rendering import VAULT_ROOT, obsidian_uri
 
@@ -843,3 +843,29 @@ def test_rohsternchen_datei_zeigt_kein_woertliches_doppelsternchen(datei):
 def test_stabzauber_anchor_quelle_comes_from_the_quote_block(name):
     pfad = f'{STABZAUBER_DATEI}#{name}'
     assert load_wiki_artikel(VAULT_ROOT, [pfad], _link)[pfad]['quelle'].startswith('WdZ')
+
+
+# --- Anker-Links des Heldenbogens <-> Stabzauber-Überschriften (Sprint 023 T6, L25(b)) ----------------------------
+# Läuft BEWUSST gegen den echten Bogen (helden/illaen-baernhold/rituale.md): der Test soll die Drift zwischen den
+# Wiki-Überschriften und den Anker-Links im Bogen erkennen (zweiter bewusst live gekoppelter Test nach
+# test_build_context_wiki_artikel_smoke_live_vault in test_rendering.py). Er pinnt weder Spielwerte noch eine Anzahl.
+
+HELD_RITUALE = VAULT_ROOT / 'helden' / 'illaen-baernhold' / 'rituale.md'
+
+
+def test_held_stabzauber_anchor_links_hit_a_section_of_the_wiki_article(stabzauber_sections):
+    if not HELD_RITUALE.is_file():
+        pytest.skip(f'{HELD_RITUALE} fehlt')
+    text = HELD_RITUALE.read_text(encoding='utf-8')
+    anker = [m.group(1).split('#', 1)[1] for m in WIKILINK_RE.finditer(text)
+             if m.group(1).startswith(STABZAUBER_DATEI + '#')]
+    if not anker:
+        # kein Anker-Link mehr im Bogen = Entscheidung des Users, nicht rot; nur ein kaputter Extraktor wäre ein Fehler
+        assert STABZAUBER_DATEI + '#' not in text, 'Anker-Links vorhanden, aber nicht extrahiert'
+        pytest.skip('Heldenbogen enthält keinen Stabzauber-Anker-Link mehr')
+    for name in anker:
+        assert name in stabzauber_sections, f'kein "## {name}" in stabzauber.md'
+        pfad = f'{STABZAUBER_DATEI}#{name}'
+        res = load_wiki_artikel(VAULT_ROOT, [pfad], _link)
+        assert pfad in res, f'load_wiki_artikel lädt {pfad} nicht'
+        assert res[pfad]['html'].strip(), pfad
