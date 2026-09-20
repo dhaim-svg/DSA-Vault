@@ -97,6 +97,33 @@
      das Kompaktlayout gilt nur @media screen; Inline-Styles schlaegt nur !important. */
   .spell.spell-head,.spell.spell-head *,
   .mods-details summary.mods-toggle,.mods-details .mods-list{ color:var(--paper-ink) !important; }
+  /* --- Zauber-Tab (D-052) --- */
+  /* Kontrast: Browser-Messung Sprint 025 (Papier #ece4d0) — 20 Selektor-Gruppen lagen mit 1,04 bis 4,28:1 unter 4,5:1. Ein Kind mit eigener
+     Bildschirm-color erbt das !important am Eltern (.card, .card-title, .sf-name, .sec-head h2) nicht, Inline-Styles (zauber.j2:7/95/124/189/210)
+     schlaegt nur !important mit passendem Selektor. Ueberschriften/Meta-Zeilen mit Inline-color auf #tab-zauber begrenzt (gleiche Klassen
+     stehen in anderen, nicht vermessenen Tabs). Slot-Klassen ab .slot-mods-row: vorsorglich (im Ist-Render alle 3 Slots leer). */
+  .slot-zauber,.slot-num,.slot-asp,.speicher-title,.speicher-summary,#tab-zauber .card p.meta,
+  .slot-mods-row,.slot-mods-label,.slot-erneuerung-label,.speicher-slot.leer .slot-header,
+  .mod-row .mod-name,.mod-row .mod-zfp,.mod-row .mod-probe,.mod-row .mod-zd,.mod-row.header > span,.mod-footer-link,
+  .legend-row,.legend-row span,.legend-row span b,
+  #tab-zauber .card-title .meta,.sf-list li .sf-name .meta,.vol-badge,#tab-zauber .sec-head h2 span,
+  #tab-zauber .card > h4{ color:var(--paper-ink) !important; }
+  /* Nicht-Text: Badge/Speicherkasten (Rahmen 1,08:1, Grund 1,03-1,04:1) als Kasten mit sichtbarem Rand (--paper-rule = 3,4:1);
+     gepunkteter Link-Unterstrich rgba(95,195,228,.25) = 1,13:1 */
+  .vol-badge{ background:transparent !important; border-color:var(--paper-rule) !important; }
+  .speicher-box{ background:transparent !important; border:1px solid var(--paper-rule) !important; }
+  .spell .name .nlink,.sf-list li .sf-name a{ border-bottom-color:var(--paper-ink) !important; }
+  /* Bedienelemente des Zauberspeichers (Ruling R9): "+ Befuellen" stand mit 1,47:1 im Druck */
+  .slot-befuellen-toggle,.slot-befuellen-area,.slot-befuellen-form,.slot-entleeren-btn,.slot-ausloesen-btn{ display:none !important; }
+  /* Ueberlauf: das Bildschirm-Grid (base.css) loest zu 160+240+38+80+90+200 px Minima + 5 Gaps a 10 px = 858 px auf; verfuegbar sind auf A4 nur
+     186 mm = 703 px - 26 px Karte - 20 px Zeilen-Padding = 657 px (Emulation 794 px: 733 px). Druck-Grid ohne px-Minimum: die vier variablen Spalten
+     sind minmax(0,Xfr) und damit durch Konstruktion nie breiter als der Container; fest sind nur ZfW 28 + ZD 40 = 68 px, dazu 5 Gaps a 8 px = 40 px
+     (108 px). Der Rest (657 - 108 = 549 px) verteilt sich auf 6,4 fr (1 fr = 86 px): Zauber 1,8 (154 px), Probe 1,4 (120 px), Kosten 1 (86 px),
+     Wirkung 2,2 (189 px). Kopfzeile (10 px, Grossbuchstaben, .18em): "WIRKUNG" ~55 px, "ZFW" ~23 px < 28 px; "mind." (ZD) ~35 px < 40 px.
+     Die Probe ("KL 14 / IN 15 / CH 13", 21 Zeichen ~148 px) bricht bei Bedarf an den Leerzeichen um (base.css:406 setzt nowrap). */
+  .spell{ grid-template-columns:minmax(0,1.8fr) minmax(0,1.4fr) 28px 40px minmax(0,1fr) minmax(0,2.2fr); gap:4px 8px; }
+  .spell > *{ min-width:0; overflow-wrap:anywhere; }
+  .spell .probe{ white-space:normal; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
   .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }

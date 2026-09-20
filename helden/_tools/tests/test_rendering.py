@@ -938,6 +938,118 @@ def test_css_print_sf_and_ritual_name_link_is_paper_ink_and_arrow_fully_opaque()
     assert any(re.search(r'opacity\s*:\s*1\s*!important', d) for d in arrow), arrow
 
 
+# Zauber-Tab im Druck (D-052, Sprint 025 T2-Messung im Browser, Papier #ece4d0): 20 Selektor-Gruppen lagen mit 1,04 bis 4,28 : 1
+# unter 4,5 : 1. Ursache: ein Kind mit eigener Bildschirm-color erbt das !important am Eltern (.card, .card-title, .sf-name,
+# .sec-head h2) nicht, und Inline-Styles (zauber.j2:7/95/124/189/210) schlaegt nur !important mit passendem Selektor.
+# Die Ueberschriften/Meta-Zeilen mit Inline-color sind auf #tab-zauber begrenzt (gleiche Klassen stehen in anderen, nicht
+# vermessenen Tabs).
+PRINT_ZAUBERTAB_SELECTORS = (
+    # Zauberspeicher (T2: .slot-zauber 1,04 / .slot-num 1,54 / .speicher-title, -summary 1,90 / .slot-asp, p.meta 4,16)
+    '.slot-zauber', '.slot-num', '.slot-asp', '.speicher-title', '.speicher-summary', '#tab-zauber .card p.meta',
+    # vorsorglich: im Ist-Render sind alle 3 Slots leer (base.css:503-505,523)
+    '.slot-mods-row', '.slot-mods-label', '.slot-erneuerung-label', '.speicher-slot.leer .slot-header',
+    # Spontane Modifikationen (T2: .mod-name 1,07 / .mod-zfp 1,74 / Kopf, .mod-probe, Link 1,95 / .mod-zd 4,28)
+    '.mod-row .mod-name', '.mod-row .mod-zfp', '.mod-row .mod-probe', '.mod-row .mod-zd', '.mod-row.header > span',
+    '.mod-footer-link',
+    # Legende (1,74 / 1,95)
+    '.legend-row', '.legend-row span', '.legend-row span b',
+    # Kartenkopf, Badges, Ueberschriften mit Inline-color (1,95 / 4,28 / 4,12 / 4,19 / 1,74)
+    '#tab-zauber .card-title .meta', '.sf-list li .sf-name .meta', '.vol-badge', '#tab-zauber .sec-head h2 span',
+    '#tab-zauber .card > h4',
+)
+PRINT_SLOT_BUTTON_SELECTORS = (
+    '.slot-befuellen-toggle', '.slot-befuellen-area', '.slot-befuellen-form', '.slot-entleeren-btn', '.slot-ausloesen-btn',
+)
+
+
+def _print_rules():
+    return _css_rules(''.join(_media_blocks(css_bundle(), r'@media\s+print')))
+
+
+def test_css_print_zauber_tab_colors_are_paper_ink():
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_ZAUBERTAB_SELECTORS
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+
+
+def test_css_print_zauber_tab_non_text_rules():
+    # T2: .vol-badge (Rahmen 1,08:1, Grund 1,04:1), .speicher-box (Rahmen 1,08:1, Grund 1,03:1) und der gepunktete Unterstrich
+    # der Namenslinks (rgba(95,195,228,.25) = 1,13:1) sind auf Papier praktisch unsichtbar.
+    rules = _print_rules()
+    for sel in ('.vol-badge', '.speicher-box'):
+        decls = ' '.join(_decls(rules, sel))
+        assert re.search(r'(?<![-\w])background\s*:\s*transparent\s*!important', decls), (sel, decls)
+        assert re.search(r'border(?:-color)?\s*:[^;]*var\(--paper-rule\)\s*!important', decls), (sel, decls)
+    for sel in ('.spell .name .nlink', '.sf-list li .sf-name a'):
+        decls = ' '.join(_decls(rules, sel))
+        assert re.search(r'border-bottom-color\s*:\s*var\(--paper-ink\)\s*!important', decls), (sel, decls)
+
+
+def test_css_print_hides_zauberspeicher_slot_buttons():
+    # T2 (Ruling R9): "+ Befuellen" stand im Druck sichtbar (1,47:1); Entleeren/Ausloesen/Formular sind reine Bedienelemente.
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_SLOT_BUTTON_SELECTORS
+        if not any(s == sel and re.search(r'display\s*:\s*none\s*!important', decl) for s, decl in rules)
+    ]
+    assert not missing, f'im Druck nicht ausgeblendet: {missing}'
+
+
+def _print_spell_grid_decl():
+    decls = [d for d in _decls(_print_rules(), '.spell') if 'grid-template-columns' in d]
+    assert len(decls) == 1, decls
+    return decls[0]
+
+
+def test_css_print_spell_grid_has_six_columns_and_cannot_overflow():
+    # T2: das Bildschirm-Grid loest im Druck zu 858 px auf (Minima 160+240+38+80+90+200 + 5 Gaps) gegen 733 px Innenbreite
+    # (Emulation) bzw. ca. 657 px auf echtem A4 (186 mm): der Ueberlauf kam aus der letzten Spalte (Wirkung, right 881 > 779).
+    decl = _print_spell_grid_decl()
+    cols = _top_level_tokens(re.search(r'grid-template-columns\s*:\s*([^;]+?)\s*(?:!important\s*)?(?:;|$)', decl).group(1))
+    assert len(cols) == 6, cols
+    fixed = 0.0
+    for col in cols:
+        m = re.fullmatch(r'minmax\(\s*([^,\s]+)\s*,\s*([^)]+?)\s*\)', col)
+        if m:
+            # kein px-Minimum: nur 0 als Minimum ist "durch Konstruktion" nie breiter als der Container
+            assert m.group(1) == '0', f'minmax mit Minimum {m.group(1)}: {col}'
+        elif col.endswith('px'):
+            fixed += _px_list(col)[0]
+        else:
+            raise AssertionError(f'unerwartete Spalte {col}: nur minmax(0,Xfr) oder feste px-Spalte erlaubt')
+    gap = re.search(r'(?<![-\w])gap\s*:\s*([^;]+)', decl).group(1).split()
+    column_gap = _px_list(gap[-1])[0]
+    assert fixed <= 120, fixed
+    assert fixed + 5 * column_gap <= 120, (fixed, column_gap)
+
+
+def test_css_print_spell_cells_may_shrink_and_probe_wraps():
+    # base.css:406 setzt .spell .probe auf white-space:nowrap (sprengt die Probe-Spalte); Grid-Items brauchen min-width:0
+    rules = _print_rules()
+    assert any(re.search(r'(?<![-\w])min-width\s*:\s*0\b', d) for d in _decls(rules, '.spell > *')), _decls(rules, '.spell > *')
+    assert any(re.search(r'overflow-wrap\s*:\s*anywhere', d) for d in _decls(rules, '.spell > *'))
+    assert any(re.search(r'white-space\s*:\s*normal', d) for d in _decls(rules, '.spell .probe'))
+
+
+def test_css_zauber_tab_print_fix_leaves_screen_css_untouched():
+    # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-052 nicht aendern; alle neuen Regeln stehen im Druckblock.
+    screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
+    new_selectors = set(PRINT_ZAUBERTAB_SELECTORS) | set(PRINT_SLOT_BUTTON_SELECTORS) | {
+        '.vol-badge', '.speicher-box', '.spell .name .nlink', '.sf-list li .sf-name a', '.spell > *',
+    }
+    leaked = [(s, d) for s, d in screen_rules if s in new_selectors and re.search(r'paper-(?:ink|rule)|!important', d)]
+    assert not leaked, leaked
+    spell_grid = [d for s, d in screen_rules if s == '.spell' and 'grid-template-columns' in d]
+    assert spell_grid and all('minmax(0' not in d for d in spell_grid), spell_grid
+    assert not [d for s, d in screen_rules if s == '.spell .probe' and 'white-space:normal' in d.replace(' ', '')]
+
+
 def test_css_has_no_dead_merk_selector():
     # .merk kommt in keinem Template/JS mehr vor (heute .spell .submeta); der Druck-Selektor war tot.
     assert '.merk' not in css_bundle()
