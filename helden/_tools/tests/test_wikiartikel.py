@@ -632,7 +632,7 @@ def test_obsidian_link_survives_harmful_protocol_filter(vault):
 STABZAUBER_DATEI = 'wiki/dsa-4.1/rituale/stabzauber'
 STABZAUBER_NAMEN = [
     'Bindung des Stabes', 'Doppeltes Maß', 'Ewige Flamme', 'Flammenschwert', 'Hammer des Magus', 'Kraftfokus',
-    'Merkmalsfokus', 'Modifikationsfokus', 'Schuppenhaut', 'Seil des Adepten', 'Zauberspeicher',
+    'Merkmalsfokus', 'Modifikationsfokus', 'Schuppenhaut', 'Seil des Adepten', 'Zauberspeicher', 'Apport',
 ]
 
 
