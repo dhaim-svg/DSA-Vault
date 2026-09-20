@@ -5,9 +5,7 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Blocked by | Sprint |
-|------|-------|--------|-------|------------|--------|
-| D-051 | Ritual-Artikelvorschau: Stabzauber- (9) und Apport-Zeile im Zauber-Tab zeigen ihren `##`-Abschnitt aus `stabzauber.md` als `<details>` (Makro `partials/_artikel.j2`, wie SF/Zauber); Parser ergänzt `wiki_path` für Ritual-Zeilen, `build_context` bettet die 10 Artikel ein, Apport-Namenszelle im Bogen erhält Anker-Link (einmalige User-Freigabe); Browser-Runde | M | in-progress | — | 024 |
+_(keine)_
 
 ## Backlog
 
@@ -35,6 +33,7 @@ Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-051 | Ritual-Artikelvorschau: Stabzauber- (9) und Apport-Zeile im Zauber-Tab zeigen ihren `##`-Abschnitt aus `stabzauber.md` als `<details>` (Makro `partials/_artikel.j2`, geteilt mit SF/Zauber); Parser liefert `wiki_path` je Ritual-Zeile (nur Namensspalte), `build_context` bettet die 10 Artikel ein, Apport-Namenszelle im Bogen als Anker-Link (einmalige User-Freigabe); Browser-Fund: Namenslink im Druck 1,07 : 1 (eigene Bildschirm-`color` erbt die Druckfarbe von `.sf-name` nicht) → `tabs.css` 14,62 : 1, bessert auch die 15 SF-Links; Static-Render 481 641 → 508 457 B, 40 → 50 Vorschauen, längster Artikel 962 px @1280 | M | 024 |
 | D-050 | Artikelvorschau für Sonderfertigkeiten: 15 von 17 SF-Zeilen zeigen nur ihren `##`-Abschnitt (`load_wiki_artikel`, Anker → `split_sections`, Warnung bei fehlendem/leerem Abschnitt), `<details>`-Block als Makro `partials/_artikel.j2` geteilt mit Zauber, `WIKILINK_RE` erlaubt einzelnes `]` (Merkmalskenntnis-Anker); Browser-Fund: SF-Zeilenregeln trafen auch `li` im Artikeltext → `.sf-list > li` + Invariante (längster Artikel 7 841 → 808 px); Static-Render 450 → 481 KB, 40 Vorschauen | M | 021 |
 | D-049 | Desktop-Footer über dem offenen Würfelpanel: `#footer-bar{bottom:calc(28px + var(--dice-panel-h,0px))}` (Panel z-index 200 verdeckte die Leiste, −277 px @ 1280 → Abstand 28 px); ≤ 480 px unberührt | S | 021 |
 | D-048 | Zustands-Chips wirken nur noch über die Panel-Vorbelegung: `applyWundModsToProben` nutzt `attrMod` statt `probeMod` (kein Attribut-Overlay mehr auf 203 `[data-attr]`-Spans, Wund-Overlay bleibt), Legende präzisiert; Chip-Werte bleiben Hausregel (User-Entscheidung 19.09.2026) | S | 020 |
