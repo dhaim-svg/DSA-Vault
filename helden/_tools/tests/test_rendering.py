@@ -699,6 +699,145 @@ def test_css_sf_row_rules_only_hit_direct_li_children():
     assert any(sel.endswith(':last-child') for sel in direct)
 
 
+# -- D-051: Artikelvorschau fuer Ritual-Zeilen (Stabzauber & Rituale) ----------
+
+RIT_A = 'wiki/dsa-4.1/rituale/stabzauber#Alfa'
+RIT_C = 'wiki/dsa-4.1/rituale/stabzauber#Charlie'
+RIT_D = 'wiki/dsa-4.1/rituale/stabzauber#Delta'
+
+# heutiges Markup der Zeilen OHNE Link/Artikel (Stabzauber mit Badge+Meta, andere schlicht): darf sich nicht aendern
+RIT_ROW_B = ('<li><span class="ico">❖</span><span><span class="sf-name">Bravo<span class="vol-badge">II</span>'
+             '<span class="meta">MU/IN/CH · 3 AsP</span></span><span class="sf-desc">Effekt-B</span></span></li>')
+RIT_ROW_E = ('<li><span class="ico">❖</span><span><span class="sf-name">Echo</span>'
+             '<span class="sf-desc">Effekt-E</span></span></li>')
+
+
+@pytest.fixture
+def ritual_context(synth_vault):
+    """Fabrik (wiki_artikel) -> frischer Kontext des synthetischen Vaults mit fuenf Ritual-Zeilen: Stabzauber Alfa
+    (Anker-Link, Vol + Erschaffungsprobe), Bravo (kein Link), Charlie (Link ohne geladenen Artikel); andere Delta
+    (Link), Echo (kein Link). Dazu ein belegter Zauberspeicher-Slot fuer die Abgrenzung der Speicher-Box."""
+    def make(wiki_artikel):
+        ctx = build_context(SYNTH_SLUG, synth_vault)
+        ctx['held']['rituale'] = {
+            'stabzauber': [
+                {'name': 'Alfa', 'wiki_path': RIT_A, 'vol': 'I', 'erschaffungsprobe': 'KL/FF/KK', 'asp': '7',
+                 'effekt': 'Effekt-A'},
+                {'name': 'Bravo', 'wiki_path': None, 'vol': 'II', 'erschaffungsprobe': 'MU/IN/CH', 'asp': '3',
+                 'effekt': 'Effekt-B'},
+                {'name': 'Charlie', 'wiki_path': RIT_C, 'vol': '', 'erschaffungsprobe': '', 'asp': '',
+                 'effekt': 'Effekt-C'},
+            ],
+            'andere': [
+                {'name': 'Delta', 'wiki_path': RIT_D, 'effekt': 'Effekt-D'},
+                {'name': 'Echo', 'wiki_path': None, 'effekt': 'Effekt-E'},
+            ],
+            'zauberspeicher_slots': [
+                {'slot': 1, 'asp': '5', 'zauber': 'Ignifaxius', 'mods': '—', 'erneuerung': '—'},
+            ],
+            'stabzauber_regel': '',
+        }
+        ctx['wiki_artikel'] = wiki_artikel
+        return ctx
+    return make
+
+
+def _ritual_card(html):
+    start = html.find('<h3 class="card-title">Stabzauber &amp; Rituale')
+    assert start != -1, 'Ritual-Karte fehlt im Render'
+    end = html.find('</section>', start)
+    assert end != -1, 'Ritual-Karte ist nicht geschlossen'
+    return html[start:end]
+
+
+def _ritual_li(card, name):
+    """<li>…</li> der Zeile mit diesem Namen (der Artikelinhalt enthaelt kein </li>, solange die Fixture-HTML keine Liste hat)."""
+    start = card.find(f'>{name}<')
+    assert start != -1, f'Zeile {name} fehlt in der Ritual-Karte'
+    start = card.rfind('<li>', 0, start)
+    end = card.find('</li>', start)
+    assert end != -1, f'Zeile {name} ist nicht geschlossen'
+    return card[start:end + len('</li>')]
+
+
+def test_render_ritual_artikel_details_inside_their_own_li_with_title_source_and_body(ritual_context):
+    html = render_dashboard(ritual_context({RIT_A: _sf_artikel('Titel A', '<p>Body A</p>'),
+                                            RIT_D: _sf_artikel('Titel D', '<p>Body D</p>')}))
+    items = _sf_items(_ritual_card(html))
+    assert [i['details'] for i in items] == [['li'], [], [], ['li'], []]  # Alfa, Bravo, Charlie, Delta, Echo
+    assert 'Alfa' in items[0]['text'] and 'Titel A' in items[0]['text'] and 'Body A' in items[0]['text']
+    assert 'Titel D' in items[3]['text'] and 'Body D' in items[3]['text'] and 'Body A' not in items[3]['text']
+    for i in (1, 2, 4):  # Bravo (kein Link), Charlie (Link ohne Artikel), Echo (kein Link)
+        assert 'Body' not in items[i]['text'] and 'Titel' not in items[i]['text']
+    assert html.count('class="artikel-details"') == 2  # keine Zauber/SF im Kontext geladen
+    block = re.search(r'<details class="artikel-details">.*?</details>', _ritual_card(html), re.S).group(0)
+    assert '<span class="artikel-quelle">WdZ</span>' in block
+    assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', block)
+
+
+def test_render_ritual_artikel_details_follow_the_description(ritual_context):
+    card = _ritual_card(render_dashboard(ritual_context({RIT_A: _sf_artikel(), RIT_D: _sf_artikel()})))
+    for name, effekt in (('Alfa', 'Effekt-A'), ('Delta', 'Effekt-D')):
+        li = _ritual_li(card, name)
+        assert effekt in li, f'Effekt fehlt in der {name}-Zeile'
+        assert 'class="artikel-details"' in li, f'Details fehlen in der {name}-Zeile'
+        assert re.search(effekt + r'.*class="artikel-details"', li, re.S), f'Details stehen vor dem Effekt ({name})'
+
+
+def test_render_ritual_name_links_wrap_only_the_name_text(ritual_context):
+    card = _ritual_card(render_dashboard(ritual_context({RIT_A: _sf_artikel(), RIT_D: _sf_artikel()})))
+    alfa = _ritual_li(card, 'Alfa')
+    assert re.search(r'<span class="sf-name"><a href="obsidian://[^"]+">Alfa</a><span class="vol-badge">I</span>'
+                     r'<span class="meta">KL/FF/KK · 7 AsP</span></span>', alfa)
+    for link in re.findall(r'<a href="obsidian://[^"]*">.*?</a>', card, re.S):
+        assert 'vol-badge' not in link and 'meta' not in link  # sonst wird die Badge zum Link (↗ aus .sf-name a::after)
+    # Link haengt an wiki_path, nicht am Artikel: Charlie hat keinen Artikel und behaelt den Link
+    assert re.search(r'<span class="sf-name"><a href="obsidian://[^"]+">Charlie</a></span>', _ritual_li(card, 'Charlie'))
+    assert re.search(r'<span class="sf-name"><a href="obsidian://[^"]+">Delta</a></span>', _ritual_li(card, 'Delta'))
+    for name in ('Bravo', 'Echo'):  # ohne wiki_path: kein <a> im Namen
+        li = _ritual_li(card, name)
+        assert '<a ' not in li[:li.find('class="sf-desc"')], f'{name} hat einen Link im Namen'
+
+
+def test_render_ritual_rows_without_wiki_path_keep_their_exact_markup(ritual_context):
+    for artikel in ({}, {RIT_A: _sf_artikel(), RIT_D: _sf_artikel()}):
+        card = _ritual_card(render_dashboard(ritual_context(artikel)))
+        assert RIT_ROW_B in card
+        assert RIT_ROW_E in card
+
+
+def test_render_ritual_without_article_has_no_details_and_keeps_its_rows(ritual_context):
+    ctx = ritual_context({RIT_A: _sf_artikel()})
+    unveraendert = _ritual_card(render_dashboard(ritual_context({})))
+    assert 'artikel-details' not in unveraendert
+    ctx['wiki_artikel'] = {}
+    assert _ritual_card(render_dashboard(ctx)) == unveraendert
+    del ctx['wiki_artikel']
+    assert _ritual_card(render_dashboard(ctx)) == unveraendert
+    for name in ('Alfa', 'Bravo', 'Charlie', 'Delta', 'Echo'):
+        assert name in unveraendert
+    assert unveraendert.count('<a href="obsidian://') == 3  # Alfa, Charlie, Delta: Namenslinks bleiben ohne Artikel
+
+
+def test_render_ritual_artikel_escapes_text_fields_but_not_html(ritual_context):
+    art = {'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [], 'html': '<p>ok</p>'}
+    html = render_dashboard(ritual_context({RIT_A: art}))
+    block = re.search(r'<details class="artikel-details">.*?</details>', _ritual_card(html), re.S).group(0)
+    for roh in ('<b>T</b>', 'Q<i>'):
+        assert roh not in block
+    for escaped in ('&lt;b&gt;T&lt;/b&gt;', 'Q&lt;i&gt;'):
+        assert escaped in block
+    assert '<div class="artikel-body"><p>ok</p></div>' in block
+
+
+def test_render_ritual_zauberspeicher_box_has_no_article_details(ritual_context):
+    card = _ritual_card(render_dashboard(ritual_context({RIT_A: _sf_artikel(), RIT_D: _sf_artikel()})))
+    box = card[card.find('<div class="speicher-box">'):]
+    assert 'Zauberspeicher-Inhalt' in box and 'Ignifaxius' in box, 'Speicher-Box fehlt im Render'
+    assert 'artikel-details' not in box
+    assert card.count('class="artikel-details"') == 2  # beide Vorschauen stehen vor der Box (in den Ritual-Zeilen)
+
+
 def test_dice_js_click_guard_ignores_clicks_inside_details():
     js = (STATIC_DIR / 'dice.js').read_text(encoding='utf-8')
     start = js.index("querySelectorAll('.spell[data-probe]')")

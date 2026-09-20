@@ -95,10 +95,18 @@
     {% if held.rituale.stabzauber_regel %}<p class="meta" style="margin:0 0 0.4em;font-style:italic;color:var(--ink-dim)">{{ held.rituale.stabzauber_regel | e }}</p>{% endif %}
     <ul class="sf-list">
       {% for r in held.rituale.stabzauber %}
-      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}{% if r.erschaffungsprobe %}<span class="meta">{{ r.erschaffungsprobe | e }} · {{ r.asp | e }} AsP</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">{% if r.wiki_path %}<a href="{{ r.wiki_path | obsidian }}">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}{% if r.vol %}<span class="vol-badge">{{ r.vol }}</span>{% endif %}{% if r.erschaffungsprobe %}<span class="meta">{{ r.erschaffungsprobe | e }} · {{ r.asp | e }} AsP</span>{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span>
+      {%- set art = (wiki_artikel | default({})).get(r.wiki_path) if r.wiki_path else none %}
+      {%- if art %}
+{{ artikel_details(art, r.wiki_path | obsidian) }}
+      {%- endif %}</li>
       {% endfor %}
       {% for r in held.rituale.andere %}
-      <li><span class="ico">❖</span><span><span class="sf-name">{{ r.name }}</span><span class="sf-desc">{{ r.effekt }}</span></span></li>
+      <li><span class="ico">❖</span><span><span class="sf-name">{% if r.wiki_path %}<a href="{{ r.wiki_path | obsidian }}">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}</span><span class="sf-desc">{{ r.effekt }}</span></span>
+      {%- set art = (wiki_artikel | default({})).get(r.wiki_path) if r.wiki_path else none %}
+      {%- if art %}
+{{ artikel_details(art, r.wiki_path | obsidian) }}
+      {%- endif %}</li>
       {% endfor %}
     </ul>
     {% if held.rituale.zauberspeicher_slots %}
