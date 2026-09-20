@@ -29,7 +29,7 @@ Alle Stabzauber sind an Illaens gebundenen Magierstab geknüpft. Aktivierung = f
 
 *Hinweis: Im Heldendokument „Stabzauber: Fackel" — in stabzauber.md heißt das Ritual „Ewige Flamme". Hier die Bezeichnung aus dem Heldendokument übernommen.*
 
-*Hinweis: „Stabzauber: Stabverlängerung" hat im Wiki-Artikel keinen exakten Namenstreffer. Bestätigt (Sprint 023, `wiki-luecken.md` L25(c)): identisch mit „Doppeltes Maß" (KL/FF/GE (+4), 19 AsP — „Zauberstab kann auf das Doppelte seiner Länge anwachsen"). Erschaffungsprobe/AsP hier bewusst offen gelassen, bis das im Spiel geklärt ist.*
+*Hinweis: „Stabzauber: Stabverlängerung" hat im Wiki-Artikel keinen exakten Namenstreffer. Zuordnung bestätigt (Sprint 023, `wiki-luecken.md` L25(c); semantisch, kein Buchname): entspricht „Doppeltes Maß" (KL/FF/GE (+4), 19 AsP — „Zauberstab kann auf das Doppelte seiner Länge anwachsen"). Erschaffungsprobe/AsP hier bewusst offen gelassen, bis das im Spiel geklärt ist.*
 
 ### Zauberspeicher-Inhalt
 

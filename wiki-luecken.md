@@ -34,7 +34,7 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 ### L6: Stabzauber-Detailregeln (Kraftfokus, Merkmalsfokus, Modifikationsfokus) ✅ *behoben 2026-05-15*
 
 - **Geänderte Datei:** `wiki/dsa-4.1/rituale/stabzauber.md` — neuer Abschnitt `## Detail-Regeln: Fokus-Stabzauber` mit vollständigem Regeltext für alle drei. *(Sprint 022 T4: Sammelabschnitt aufgelöst — die Foki stehen jetzt als eigene `## Kraftfokus` / `## Merkmalsfokus` / `## Modifikationsfokus`, siehe L25.)*
-- **Erkenntnisse:** Kraftfokus gilt immer automatisch, min. 1 AsP/Zauber. Merkmalsfokus: Merkmal bei Erschaffung fest gewählt; erleichtert Probe (nicht ZfP*). Modifikationsfokus: stapelbar; erster Fokus erlaubt bereits Stab als Berührungsersatz.
+- **Erkenntnisse:** Kraftfokus gilt immer automatisch, min. 1 AsP/Zauber. Merkmalsfokus: Merkmal bei Erschaffung fest gewählt; erleichtert die Zauberprobe „um einen Punkt“ (Buchwortlaut; die frühere Auslegung „nicht ZfP\*“ ist im Artikel entfernt, Sprint 023). Modifikationsfokus: stapelbar; erster Fokus erlaubt bereits Stab als Berührungsersatz.
 - **Neu entdeckte Lücken in stabzauber.md** (außerhalb Scope — als neue Einträge vermerkt → L8/L9/L10).
 
 ### L8: Stabzauber Zauberspeicher — Detailregeln ✅ *behoben 2026-05-15*

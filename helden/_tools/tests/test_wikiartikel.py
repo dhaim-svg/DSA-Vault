@@ -1,5 +1,5 @@
 """Tests for parsers.wikiartikel — wiki article/section loader (synthetic vault only)."""
-import html
+import html as html_lib
 import logging
 import re
 import sys
@@ -164,6 +164,11 @@ def test_quelle_only_without_seite(vault):
 def test_quelle_missing_gives_empty_string(vault):
     _write(vault, f'{ZAUBER}/x', '---\nname: X\nseite: 12\n---\n# X\n')
     assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == ''
+
+
+def test_empty_frontmatter_quelle_falls_back_to_the_quote_block(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nname: X\nquelle:\nseite: 12\n---\n# X\n\n> **Quelle:** WdZ S. 3\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == 'WdZ S. 3'
 
 
 def test_seite_as_int_and_string(vault):
@@ -761,6 +766,11 @@ def test_flammenschwert_misslingens_table_lists_every_w6_result():
     # Buch (WdZ S. 110): vier Ergebniszeilen, die zusammen alle sechs W6-Werte abdecken
     labels = [re.sub(r'<[^>]+>', '', re.search(r'<td[^>]*>(.*?)</td>', r, re.S).group(1)).strip() for r in zeilen]
     assert labels == ['1–3', '4', '5', '6']
+    # die Effektzellen tragen die Buchwerte (Ausschnitte statt Volltext: robust gegen Umformulierungen)
+    effekte = [re.sub(r'<[^>]+>', '', re.findall(r'<td[^>]*>(.*?)</td>', r, re.S)[1]) for r in zeilen]
+    for erwartet, effekt in zip(['1W20', '7 Punkte Volumen', 'nicht wiederholt', 'Bruchfaktor'], effekte):
+        assert erwartet in effekt, (erwartet, effekt)
+    assert 'sieben Wochen' in effekte[0]
 
 
 @pytest.mark.parametrize('name', STABZAUBER_NAMEN)
@@ -817,7 +827,7 @@ def _rohstern_html(zeile):
 
 
 def _sichtbarer_text(rendered):
-    return html.unescape(re.sub(r'<[^>]+>', '', rendered))
+    return html_lib.unescape(re.sub(r'<[^>]+>', '', rendered))
 
 
 @pytest.mark.parametrize('datei, ausschnitt, erwartet', ROHSTERN_ZEILEN)
@@ -832,7 +842,8 @@ def test_rohsternchen_am_fettrand_rendert_als_strong_mit_literalem_stern(datei, 
 @pytest.mark.parametrize('datei', ROHSTERN_DATEIEN)
 def test_rohsternchen_datei_zeigt_kein_woertliches_doppelsternchen(datei):
     rendered = _MARKDOWN((VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8'))
-    assert '**' not in _sichtbarer_text(rendered)
+    betroffen = [z for z in _sichtbarer_text(rendered).split('\n') if '**' in z]
+    assert not betroffen, betroffen[:3]
 
 
 # --- Quelle der Stabzauber-Vorschau (Sprint 023 T4, B-022) -------------------------

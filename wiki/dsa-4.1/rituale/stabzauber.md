@@ -23,7 +23,7 @@ Traditionsrituale der Gildenmagier. Der **Stab** und die **Kristallkugel** sind 
 | arkan | **Kraftfokus** | KL / IN / CH (+7) | 27 | 3 | –1 AsP auf jeden Zauber |
 | arkan | **Modifikationsfokus** | KL / KL / IN (+9) | 27 | 3 | +1 zusätzliche Spontane Modifikation pro Zauber; Voraussetzung: Kraftfokus |
 | arkan | **Zauberspeicher** | KL / KL / IN (+11) | 31 | 1 pro 20 AsP (max. 5) | Speichert Zauber zur späteren Auslösung; Voraussetzung: Kraftfokus |
-| arkan | **Merkmalsfokus** | KL / IN / IN (+9) | 23 | 5 | –1 auf alle Proben eines gewählten Merkmals; Voraussetzung: Kraftfokus |
+| arkan | **Merkmalsfokus** | KL / IN / IN (+9) | 23 | 5 | erleichtert Zauberproben eines gewählten Merkmals um 1 Punkt; Voraussetzung: Kraftfokus |
 | esoterisch | **Flammenschwert** | MU / KL / IN (+7) | 31 | 7 | Stab als Flammenschwert; benötigt Kraftfokus + Ewige Flamme |
 | esoterisch | **Schuppenhaut** | MU / IN / CH (+7) | 24 | 5 | Stab wird zu Chamäleon (Tarnung) oder Speikobra (Giftangriff); Form bei der Erschaffung festgelegt |
 
@@ -57,7 +57,7 @@ Allgemeine Ritualregel (WdZ S. 105): die meisten gebundenen Kräfte müssen vom 
 | Schuppenhaut | MU / IN / KO | 3 AsP | beliebig (Aktivierungsdauer 5 Aktionen) |
 | Zauberspeicher | **MU / IN / KL** (+ Mod.: erschwert um die Komplexität des Zaubers, A = +1, B = +2 usw.; bei mehreren Speichern um die Anzahl noch gespeicherter Zauber) | keine AsP | bis zur nächsten Sommersonnenwende (Aktivierungsdauer 1 Aktion) |
 
-Beim **Zauberspeicher** ist die Aktivierung selbst eine riskante Probe (Misslingen = Zauber verpufft; Patzer = weitere gespeicherte Zauber lösen aus). Ohne Probe, aber mit je **1 AsP** pro Aktivierung: Ewige Flamme, Seil des Adepten, Doppeltes Maß. Die **Bindung** hat keine Aktivierung, die drei **Foki** sind dauerhaft passiv. Ist keine Aktivierungsdauer genannt, beträgt sie 1 Aktion (S. 106/108).
+Beim **Zauberspeicher** ist die Aktivierung selbst eine riskante Probe (Misslingen = Zauber verpufft; Patzer = evtl. weitere gespeicherte Zauber lösen aus). Ohne Probe, aber mit je **1 AsP** pro Aktivierung: Ewige Flamme, Seil des Adepten, Doppeltes Maß. Die **Bindung** hat keine Aktivierung, die drei **Foki** sind dauerhaft passiv. Ist keine Aktivierungsdauer genannt, beträgt sie 1 Aktion (S. 106/108).
 
 *Quelle: WdZ S. 105–111 (`raw/pdf-extracted/wege-der-zauberei/kapitel-09-rituale.txt`).*
 
@@ -86,7 +86,7 @@ Beim **Zauberspeicher** ist die Aktivierung selbst eine riskante Probe (Missling
 **Regeln:**
 - **Wirkung:** Geistiges Band zwischen Magier und Stab; es ermöglicht **nur dem Magier**, später weitere Zauber auf den Stab zu legen.
 - **Unzerbrechlich:** Der Stab ist nur noch durch mächtige Magie (mindestens den darauf spezialisierten DESTRUCTIBO) oder extrem heißes Feuer (heißer als IGNIFAXIUS oder Drachenodem) zerstörbar — nicht mehr durch mechanische Einwirkung oder einfache Zauber (z. B. DESINTEGRATUS, HARTES SCHMELZE).
-- **Grenzen der Unzerbrechlichkeit:** Der Stab bleibt minimal biegbar und gilt weiterhin als „in der Hand gehaltener Gegenstand“ (z. B. für die Erweiterte Aura eines Elementaren Leibes). Das Reptil der Schuppenhaut ist nicht unzerstörbar (S. 108); in allen übrigen Formen ist der Stab so unzerstörbar wie in der Grundform.
+- **Grenzen der Unzerbrechlichkeit:** Der Stab bleibt minimal biegbar und gilt weiterhin als „in der Hand gehaltener Gegenstand“ (z. B. für die Erweiterte Aura eines Elementaren Leibes). Von dem Reptil der Schuppenhaut abgesehen ist der Stab in allen Formen so unzerstörbar wie in der Grundform (S. 108).
 - **Magische Waffe:** Der gebundene Stab gilt als magische Waffe und kann auch viele Wesen verletzen, die gegen profane Waffen resistent oder immun sind.
 - **Keine Fremdbindung:** Mit APPLICATUS oder ARCANOVI lassen sich keine weiteren Sprüche an den Stab binden.
 - **Fassungsvermögen:** Für je 3 zusätzliche pAsP, die der Magier in die Bindung investiert, steigt das Fassungsvermögen des Stabes um 1 Punkt.
@@ -333,7 +333,7 @@ Beispiele aus dem Regelwerk:
 - **Erschaffungskosten:** 31 AsP
 - **Volumen:** 1 Punkt pro 20 speicherbare AsP; maximal 5 Volumenpunkte (= max. 100 AsP speicherbar). Das Volumen kann auch in kleineren Schritten aufgeteilt werden (z.B. 12+5+23 AsP = insgesamt 2 Vol-Punkte, aber drei separate Erschaffungsrituale und -proben).
 
-**Wirkung:** Der Magier richtet einen Teil des Stab-Fassungsvermögens als Speicherkammer ein. In diese Kammer kann er Zauber vorbereitet hinterlegen und später ohne erneute Probe aktivieren.
+**Wirkung:** Der Magier richtet einen Teil des Stab-Fassungsvermögens als Speicherkammer ein. In diese Kammer kann er Zauber vorbereitet hinterlegen und später ohne erneutes Sprechen (nur mit der Aktivierungsprobe, s. Auslösung) aktivieren.
 
 ### Speichervorgang (Ritual)
 - Dauert **doppelt so lange** wie das normale Sprechen des Zaubers.
@@ -348,7 +348,7 @@ Beispiele aus dem Regelwerk:
 - **Komplexität:** Die Aktivierungsprobe ist um die **Komplexität des gespeicherten Zaubers** erschwert (Komplexität A = +1, B = +2 usw.; WdZ S. 111).
 - Bei Zaubern, bei denen Zauber- und Wirkungsdauer gekoppelt sind (z.B. BALSAM: 1 SR bis Einsetzen), gilt der längere Zeitraum.
 - **Misslingen** → gespeicherter Zauber verpufft wirkungslos.
-- **Patzer** → weitere im Stab gespeicherte Zauber werden ebenfalls ausgelöst.
+- **Patzer** → evtl. weitere im Stab gespeicherte Zauber werden ebenfalls ausgelöst.
 - **Gelingen** → Zauber aktiviert ohne weitere Kosten.
 
 ### Aufrechtzuhaltende Zauber (A)
