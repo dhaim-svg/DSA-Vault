@@ -7,7 +7,7 @@ from typing import Callable, Iterable
 import mistune
 import yaml
 
-from .held import WIKILINK_RE, parse_frontmatter, split_sections
+from .held import WIKILINK_RE, parse_frontmatter, split_sections, strip_wikilink
 
 log = logging.getLogger(__name__)
 
@@ -19,6 +19,7 @@ META_FIELDS = [('probe', 'Probe'), ('kosten', 'Kosten'),
 
 _H1_RE = re.compile(r'^#[ \t]+(?P<titel>.+?)(?:[ \t]+#+)?[ \t]*$', re.M)
 _QUELLE_LINE_RE = re.compile(r'\s*>\s*\*\*Quelle')
+_QUELLE_TEXT_RE = re.compile(r'\s*>\s*\*\*Quelle:?\*\*:?(?P<text>.*)')
 
 # escape=True is mandatory: templates run with autoescape=False, so raw wiki HTML must not pass through.
 _MARKDOWN = mistune.create_markdown(escape=True, plugins=['table'])
@@ -73,10 +74,26 @@ def _link_wikilinks(body: str, link_fn: Callable[[str], str]) -> str:
     return WIKILINK_RE.sub(repl, body)
 
 
-def _quelle(fm: dict) -> str:
+def _head_quelle(body: str) -> str:
+    """Text of the first '> **Quelle:** …' line before the first '## ' heading, else ''.
+
+    Only the head block counts (the quote under the H1); a Quelle line inside a later section is ordinary text.
+    The line is cleaned for display: wikilinks reduced to their text, markdown asterisks and backticks removed.
+    """
+    for line in body.split('\n'):
+        if line.startswith('## '):
+            break
+        m = _QUELLE_TEXT_RE.match(line)
+        if m:
+            return re.sub(r'[*`]', '', strip_wikilink(m.group('text'))).strip()
+    return ''
+
+
+def _quelle(fm: dict, body: str) -> str:
+    """Frontmatter quelle (+ seite) wins; without one, the head-block line (which carries its page itself)."""
     quelle, seite = _text(fm.get('quelle')), _text(fm.get('seite'))
     if not quelle:
-        return ''
+        return _head_quelle(body)
     return f'{quelle} S. {seite}' if seite else quelle
 
 
@@ -128,6 +145,7 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     except (OSError, UnicodeDecodeError, ValueError, yaml.YAMLError) as exc:
         log.warning('Wiki-Artikel %s nicht lesbar: %s', wiki_path, _short(exc))
         return None
+    quelle = _quelle(fm, body)  # before the section cut: the source sits in the head block, not in the section
     anchor = wiki_path.partition('#')[2].strip()
     if anchor:
         section = _section(body, anchor)
@@ -149,7 +167,7 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
                 for key, label in META_FIELDS if _text(fm.get(key))]
     return {
         'titel': _text(titel) or _fallback_title(fm, wiki_path),
-        'quelle': _quelle(fm),
+        'quelle': quelle,
         'meta': meta,
         'html': html,
     }

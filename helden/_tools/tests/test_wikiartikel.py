@@ -189,6 +189,60 @@ def test_text_values_are_raw_not_escaped(vault):
     assert art['meta'] == [{'label': 'Probe', 'wert': 'KL<IN & FF'}]
 
 
+# --- Quelle-Fallback aus dem Zitatblock (Sprint 023 T4, B-022) --------------------
+# Kapitelartikel ohne Frontmatter (u. a. alle Rituale) tragen die Quelle nur als '> **Quelle:** …' unter der H1.
+# Gelesen wird sie vor dem Abschnittsschnitt, aber nur aus dem Kopfblock (vor der ersten '## '-Überschrift).
+
+KAPITEL = ('# Kapitel\n\n> **Quelle:** WdZ S. 108–114\n\nEinleitung.\n\n'
+           '## Erster\n\nText ALPHA.\n\n---\n\n## Zweiter\n\nText BETA.\n')
+QUELLE_SPAETER = '# Kapitel\n\n> Hinweis\n\nText.\n\n## Abschnitt\n\n> **Quelle:** WdZ S. 9\n\nText.\n'
+
+
+def test_quelle_falls_back_to_quote_block_without_frontmatter(vault):
+    _write(vault, f'{ZAUBER}/k', KAPITEL)
+    assert _load(vault, [f'{ZAUBER}/k'])[f'{ZAUBER}/k']['quelle'] == 'WdZ S. 108–114'
+
+
+def test_quelle_fallback_reads_the_head_block_on_anchor_load(vault):
+    _write(vault, f'{ZAUBER}/k', KAPITEL)
+    art = _load(vault, [f'{ZAUBER}/k#Zweiter'])[f'{ZAUBER}/k#Zweiter']
+    assert art['quelle'] == 'WdZ S. 108–114'
+    assert 'BETA' in art['html'] and 'ALPHA' not in art['html'] and 'Quelle' not in art['html']
+
+
+def test_frontmatter_quelle_wins_over_quote_block_line(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nquelle: LC\nseite: 15\n---\n# X\n\n> **Quelle:** WdZ S. 1\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == 'LC S. 15'
+
+
+def test_fallback_does_not_append_frontmatter_seite(vault):
+    _write(vault, f'{ZAUBER}/x', '---\nseite: 12\n---\n# X\n\n> **Quelle:** WdZ S. 108–114\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == 'WdZ S. 108–114'
+
+
+@pytest.mark.parametrize('anker', ['', '#Abschnitt'])
+def test_quelle_line_in_a_later_section_is_not_used(vault, anker):
+    _write(vault, f'{ZAUBER}/k', QUELLE_SPAETER)
+    assert _load(vault, [f'{ZAUBER}/k{anker}'])[f'{ZAUBER}/k{anker}']['quelle'] == ''
+
+
+def test_fallback_takes_only_the_first_line_of_the_quote_block(vault):
+    _write(vault, f'{ZAUBER}/x', '# X\n\n> **Quelle:** WdZ S. 1  \n> zweite Zeile\n\nText.\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == 'WdZ S. 1'
+
+
+@pytest.mark.parametrize('zeile, erwartet', [
+    ('> **Quelle:** **WdZ** `S. 9` – [[wiki/dsa-4.1/buecher/wege-der-zauberei|Wege der Zauberei]]',
+     'WdZ S. 9 – Wege der Zauberei'),
+    ('> **Quelle:** siehe [[wiki/dsa-4.1/buecher/liber-cantiones]]', 'siehe liber cantiones'),
+    ('> **Quelle**: WdZ S. 9', 'WdZ S. 9'),
+    ('> **Quelle:**', ''),
+])
+def test_fallback_strips_markup_for_display(vault, zeile, erwartet):
+    _write(vault, f'{ZAUBER}/x', f'# X\n\n{zeile}\n\nText.\n')
+    assert _load(vault, [f'{ZAUBER}/x'])[f'{ZAUBER}/x']['quelle'] == erwartet
+
+
 # --- Wikilinks ------------------------------------------------------------
 
 def test_wikilink_with_text_uses_link_fn(vault):
@@ -779,3 +833,13 @@ def test_rohsternchen_am_fettrand_rendert_als_strong_mit_literalem_stern(datei, 
 def test_rohsternchen_datei_zeigt_kein_woertliches_doppelsternchen(datei):
     rendered = _MARKDOWN((VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8'))
     assert '**' not in _sichtbarer_text(rendered)
+
+
+# --- Quelle der Stabzauber-Vorschau (Sprint 023 T4, B-022) -------------------------
+# Bewusst gegen die echte Wiki-Datei (LLM-Domäne, Vorbild der Stabzauber-Tests oben): stabzauber.md hat kein Frontmatter
+# (Ordner-Konvention rituale/), die Quelle steht nur im Zitatblock unter der H1 – die Anker-Vorschau braucht sie von dort.
+
+@pytest.mark.parametrize('name', STABZAUBER_NAMEN)
+def test_stabzauber_anchor_quelle_comes_from_the_quote_block(name):
+    pfad = f'{STABZAUBER_DATEI}#{name}'
+    assert load_wiki_artikel(VAULT_ROOT, [pfad], _link)[pfad]['quelle'].startswith('WdZ')
