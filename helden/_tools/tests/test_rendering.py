@@ -1269,6 +1269,11 @@ def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
     # ALLE Regeln (auch Bildschirm-CSS ohne Druckkontext), (b) eine Druckregel position:static OHNE !important galt
     # als Neutralisierung, obwohl Fix-Runde 1 an .sg-erf bewiesen hat, dass eine spaetere Bildschirm-Regel mit
     # gleicher Spezifitaet dann gewinnt. Beide Zweige jetzt auf Druckregeln MIT !important beschraenkt.
+    #
+    # Bewusst verbliebene Heuristik (Re-Review-Empfehlung: dokumentieren statt Spezifitaets-Parser bauen): die
+    # Nachfahren-Pruefung vergleicht Selektor-Suffixe, nicht echte Spezifitaet. Eine Druck-!important-static-Regel
+    # in einem Ahnenkontext, den es gar nicht gibt (z. B. ".gibtsnicht .zz"), zaehlt darum weiter als Nachweis.
+    # Ausloeser waere eine wirkungslose !important-Druckregel — in diesem Projekt kein realer Fall.
     full_css = css_bundle()
     screen = _strip_print_blocks(full_css)
     sticky_fixed_selectors = set()
