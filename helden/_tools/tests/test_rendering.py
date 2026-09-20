@@ -1233,18 +1233,25 @@ def test_css_print_journal_kompiliert_view_colors_are_paper_ink():
     assert re.search(r'@media\s+print\s*\{[^@]*\.journal-readonly', journal_css)
 
 
-def test_css_print_journal_verlauf_textarea_is_readable_without_printed_background():
-    # Fix-Runde 2 (Re-Review, 1,072:1 gemessen): <textarea class="journal-verlauf"> behielt seinen Bildschirm-Look
-    # (dunkler --bg-inset-Hintergrund, heller --ink-Text). Ohne print-color-adjust:exact druckt Chromium farbige
-    # Hintergruende NICHT (belegt per page.pdf({printBackground:false}) an einer isolierten Testseite: der Kasten
-    # blieb weiss). Der Fix darf sich deshalb nicht auf einen gedruckten Hintergrund verlassen: Text muss auch bei
-    # transparentem/fehlendem Hintergrund lesbar sein.
+def test_css_print_journal_verlauf_textarea_is_hidden_and_replaced_by_a_readable_mirror():
+    # D-055 v2 (Final-Review Important): v1 kept the <textarea> itself visible in print (Fix-Runde 2 below fixed
+    # its screen-look colors), but even a correctly-colored <textarea> only prints its scrolled viewport — v1's
+    # scrollHeight-resize approach still lost ~17% of the text at normal desktop window widths (scrollHeight was
+    # measured at the wider SCREEN layout, not the narrower real print width). chronik.js now hides the textarea
+    # entirely in print and shows a plain flowed <pre class="journal-verlauf-print"> snapshot of the live value
+    # instead, so the browser's own print layout wraps it correctly. The mirror must stay readable without
+    # relying on a printed background (Fix-Runde 2 lesson still applies: Chromium doesn't print backgrounds
+    # without print-color-adjust:exact) — it sits inside .card, which tabs.css already resets to a transparent
+    # background + paper-ink text color in print, so the mirror only needs its own text/border colors.
     rules = _print_rules()
-    decls = ' '.join(_decls(rules, '.journal-verlauf'))
-    assert decls, '.journal-verlauf hat keine Druck-Regel'
-    assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decls), decls
-    assert re.search(r'background\s*:\s*transparent\s*!important', decls), decls
-    assert re.search(r'border-color\s*:\s*var\(--paper-rule\)\s*!important', decls), decls
+    hidden = ' '.join(_decls(rules, '.journal-verlauf'))
+    assert re.search(r'display\s*:\s*none\s*!important', hidden), hidden
+    mirror = ' '.join(_decls(rules, '.journal-verlauf-print'))
+    assert mirror, '.journal-verlauf-print hat keine Druck-Regel'
+    assert re.search(r'display\s*:\s*block\s*!important', mirror), mirror
+    assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)', mirror), mirror
+    assert re.search(r'border(?:-color)?\s*:[^;]*var\(--paper-rule\)', mirror), mirror
+    assert re.search(r'white-space\s*:\s*pre-wrap', mirror), mirror
 
 
 def test_css_print_hides_steigern_cart_bar():
