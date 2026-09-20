@@ -9,7 +9,7 @@ _(keine)_
 
 ## Backlog
 
-_(keine — Dashboard-Backlog leer; offen im Vault-`backlog.md`: B-019/B-020/B-021)_
+_(keine — Dashboard-Backlog leer; Sprint 023 arbeitet Vault-`backlog.md` B-019…B-022 ab; danach startklar: Ritual-Artikelvorschau, s. Sprint-023-Handoff)_
 
 ### Gestrichen
 

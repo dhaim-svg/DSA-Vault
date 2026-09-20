@@ -7,17 +7,18 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.  | Titel                                                                                                   | Effort |
+|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
+| B-019 | wiki | `wiki/dsa-4.1/rituale/stabzauber.md` gegen WdZ S. 106–111 neu aufsetzen (`wiki-luecken.md` L24, Final-Review Sprint 022): Apport ergänzen (12 Rituale, Gruppen Meta/profan/arkan/esoterisch; „13“ ist nicht belegt — auch in `rituale/_rituale.md`), Doppeltes Maß / Schuppenhaut / Bindung des Stabes korrigieren (Fassungsvermögen statt „Vol je Holzart“), die 7 knappen `##`-Abschnitte auf Buchwerte + Detailregeln nachziehen (L9/L10/L25), Quelle in Anker-Vorschauen über B-022 (Parser-Fallback auf die `> **Quelle:**`-Zeile) statt Frontmatter, Fettwert-Zeilen als Liste; Voraussetzung der Ritual-Vorschau (L25) | M |
+| B-020 | wiki | Rohsternchen `**…ZfP***` in `zauber/odem-arcanum.md` (Z. 35–38), `alchimie/alchimie-grundregeln.md` (Z. 123), `alchimie/artefakt-herstellung.md` (Z. 89), `magie/metamagie.md` (Z. 36, `**… ZfP***` mit `TaP*` im Fettbereich — Sprint 023 T3 ergänzt) escapen (Muster wie Horriphobus, Sprint 022: `**N ZfP\***`); danach Static-Render auf erwarteten Render-Diff prüfen, falls der Artikel im Bogen verlinkt ist | S |
+| B-021 | tooling | Test-Härtung / Restkopplung (Final-Review Sprint 022): `test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats` pinnt genau 1 Waffenkarte im echten Bogen, `test_steigerbar.py` 7× `load_held` live, `test_rendering.py` (~Z. 583) hängt an der Reihenfolge Zauberliste→SF-Karte (`ValueError` bei Umbau), `test_wikiartikel.py` (~Z. 868) `'---' not in lines[:-1]` lässt ein Rest-`---` als letzte Zeile durch; dazu `WIKILINK_RE`-Anzeigetext-Gruppe `([^\]]+)` akzeptiert weiterhin `[[` (im Korpus kein Fall) | S |
+| B-022 | tooling | Quelle-Fallback im Artikelparser (`parsers/wikiartikel.py`): fehlt `quelle` im Frontmatter, nutzt `_quelle` die `> **Quelle:** …`-Zeile des Artikels — Anker-Vorschauen von Kapitelartikeln (Stabzauber, 15 SF-Anker) zeigen sonst eine leere Quelle; `_split_title()` schneidet die Zeile schon heraus, wertet sie aber nie aus (Sprint 023 T4) | S |
 
 ---
 
 ## Backlog
 
-| ID    | Kat.  | Titel                                                                                                   | Effort |
-|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
-| B-019 | wiki | `wiki/dsa-4.1/rituale/stabzauber.md` gegen WdZ S. 106–111 neu aufsetzen (`wiki-luecken.md` L24, Final-Review Sprint 022): Apport ergänzen (12 Rituale, Gruppen Meta/profan/arkan/esoterisch; „13“ ist nicht belegt — auch in `rituale/_rituale.md`), Doppeltes Maß / Schuppenhaut / Bindung des Stabes korrigieren (Fassungsvermögen statt „Vol je Holzart“), die 7 knappen `##`-Abschnitte auf Buchwerte + Detailregeln nachziehen (L9/L10/L25), Frontmatter mit `quelle` ergänzen (sonst leere Quelle in Anker-Vorschauen), Fettwert-Zeilen als Liste; Voraussetzung der Ritual-Vorschau (L25) | M |
-| B-020 | wiki | Rohsternchen `**…ZfP***` in `zauber/odem-arcanum.md` (Z. 35–38), `alchimie/alchimie-grundregeln.md` (Z. 123), `alchimie/artefakt-herstellung.md` (Z. 89) escapen (Muster wie Horriphobus, Sprint 022: `**N ZfP\***`); danach Static-Render auf erwarteten Render-Diff prüfen, falls der Artikel im Bogen verlinkt ist | S |
-| B-021 | tooling | Test-Härtung / Restkopplung (Final-Review Sprint 022): `test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats` pinnt genau 1 Waffenkarte im echten Bogen, `test_steigerbar.py` 7× `load_held` live, `test_rendering.py` (~Z. 583) hängt an der Reihenfolge Zauberliste→SF-Karte (`ValueError` bei Umbau), `test_wikiartikel.py` (~Z. 868) `'---' not in lines[:-1]` lässt ein Rest-`---` als letzte Zeile durch; dazu `WIKILINK_RE`-Anzeigetext-Gruppe `([^\]]+)` akzeptiert weiterhin `[[` (im Korpus kein Fall) | S |
+_(keine — Sprint 023 hat B-019…B-022 aufgenommen)_
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
