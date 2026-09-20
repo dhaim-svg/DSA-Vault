@@ -795,6 +795,10 @@ body::before{
 @media print{
   .print-only{ display:block; }
   .screen-only{ display:none !important; }
+  /* Pfeil-Bindung (D-053, Ruling R2, Sprint 026 T2-Nachtrag): der Pfeil ↗ (::after, " ↗") stand bei 703 px bei
+     5 von 25 Zaubernamen allein in der Folgezeile. Geschuetztes Leerzeichen bindet ihn an den Namen; nur im
+     Druckblock, der Bildschirm bleibt unveraendert (dort ist kein Umbruch gemeldet). */
+  .spell .name .nlink::after,.sf-list li .sf-name a::after{ content:"\00a0↗"; }
 }
 
 /* ============================================================

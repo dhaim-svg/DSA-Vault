@@ -938,6 +938,27 @@ def test_css_print_sf_and_ritual_name_link_is_paper_ink_and_arrow_fully_opaque()
     assert any(re.search(r'opacity\s*:\s*1\s*!important', d) for d in arrow), arrow
 
 
+def test_css_print_name_link_arrow_is_bound_with_nbsp():
+    # D-053 Ruling R2 (Sprint 026 T2-Nachtrag): der Pfeil (::after, " ↗") stand bei 703 px bei 5 von 25
+    # Zaubernamen allein in der Folgezeile. Geschuetztes Leerzeichen bindet ihn an den Namen, nur im Druckblock
+    # (base.css:400/637 setzen " ↗" ausserhalb jeder Media Query, gelten also weiter fuer den Bildschirm).
+    rules = _print_rules()
+    for sel in ('.spell .name .nlink::after', '.sf-list li .sf-name a::after'):
+        decls = _decls(rules, sel)
+        # CSS-Escape fuer das geschuetzte Leerzeichen steht als literale Zeichenfolge \00a0 im Quelltext
+        # (der Browser interpretiert sie erst beim Rendern zu U+00A0); direkt vor dem Pfeilzeichen.
+        assert any(re.search(r'content\s*:\s*"\\00a0\u2197"', d) for d in decls), (sel, decls)
+
+
+def test_css_screen_name_link_arrow_keeps_plain_space():
+    # Regressionswaechter: der Bildschirm darf sich durch die Pfeil-Bindung nicht aendern.
+    screen = _css_rules(_strip_print_blocks(css_bundle()))
+    for sel in ('.spell .name .nlink::after', '.sf-list li .sf-name a::after'):
+        decls = _decls(screen, sel)
+        assert any(re.search(r'content\s*:\s*" ↗"', d) for d in decls), (sel, decls)
+        assert not any(' ' in d for d in decls), (sel, decls)
+
+
 # Zauber-Tab im Druck (D-052, Sprint 025 T2-Messung im Browser, Papier #ece4d0): 20 Selektor-Gruppen lagen mit 1,04 bis 4,28 : 1
 # unter 4,5 : 1. Ursache: ein Kind mit eigener Bildschirm-color erbt das !important am Eltern (.card, .card-title, .sf-name,
 # .sec-head h2) nicht, und Inline-Styles (zauber.j2:7/95/124/189/210) schlaegt nur !important mit passendem Selektor.
