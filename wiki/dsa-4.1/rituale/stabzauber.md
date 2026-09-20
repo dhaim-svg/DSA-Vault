@@ -60,12 +60,12 @@ Nur beim **Zauberspeicher** ist die Aktivierung selbst eine echte, gefährliche 
 **Erschaffungskosten:** 22 AsP
 **Volumen:** 1 pAsP
 **Effekt:** Grundbindung; erst dann weitere Stabzauber möglich
-**Vol-Angaben:** 24/18/15/27 — Vol je nach Holzart (Esche/Eiche/Ulme/Eibe o.ä.), siehe Abschnitt „Holzarten für Stäbe“ unten
+**Vol-Angaben:** 24/18/15/27 — Vol je nach Holzart (Esche/Eiche/Ulme/Eibe o.ä.; Tabelle „Holzarten für Stäbe“ im Artikel)
 **Aktivierungsprobe:** — (keine Probe)
 **Aktivierungskosten:** 1 AsP
 **Wirkungsdauer:** beliebig
 
-*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Volumen-Angaben (Volumen, Vol-Angaben) der Übersichtstabelle weichen laut L24 vom Buch ab (siehe [[wiki-luecken]]).*
 
 ## Doppeltes Maß
 
@@ -75,7 +75,7 @@ Nur beim **Zauberspeicher** ist die Aktivierung selbst eine echte, gefährliche 
 **Aktivierungsprobe:** Probe nötig zum Formwechsel (Details S. 108)
 **Wirkungsdauer:** beliebig; Rückverwandlung = freie Aktion, keine AsP
 
-*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Effekt-Angabe der Übersichtstabelle ist ungeprüft (siehe [[wiki-luecken]]).*
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Effekt-Angabe der Übersichtstabelle weicht laut L24 vom Buch ab (siehe [[wiki-luecken]]).*
 
 ## Ewige Flamme
 
@@ -178,7 +178,7 @@ Beispiele aus dem Regelwerk:
 **Aktivierungskosten:** 3 AsP
 **Wirkungsdauer:** beliebig (Aktivierungsdauer 5 Aktionen)
 
-*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Erschaffungsprobe der Übersichtstabelle ist ungeprüft (siehe [[wiki-luecken]]).*
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Erschaffungsprobe der Übersichtstabelle weicht laut L24 vom Buch ab (siehe [[wiki-luecken]]).*
 
 ## Seil des Adepten
 
