@@ -61,6 +61,42 @@ def test_unclosed_double_bracket_without_display_does_not_swallow_following_link
     assert matches[0].group(1) == 'c/d'
 
 
+@pytest.mark.parametrize('text', [
+    '[[a|x [[b]]',       # display text of the first link never closes; '[[' starts the real link
+    r'[[a\|x [[b]]',     # same with the table-escaped pipe
+    '[[a|x [[b]] Rest',
+])
+def test_unclosed_double_bracket_in_display_text_does_not_swallow_following_link(text):
+    matches = list(WIKILINK_RE.finditer(text))
+    assert [m.group(0) for m in matches] == ['[[b]]']
+    assert matches[0].group(1) == 'b'
+    assert matches[0].group(2) is None
+
+
+def test_unclosed_double_bracket_in_display_text_before_link_with_display():
+    matches = list(WIKILINK_RE.finditer('[[a|x [[b|B]] Rest'))
+    assert [(m.group(1), m.group(2)) for m in matches] == [('b', 'B')]
+
+
+def test_helpers_ignore_unclosed_display_text_before_real_link():
+    text = '[[a|x [[b]]'
+    assert extract_wiki_path(text) == 'b'
+    assert strip_wikilink(text) == '[[a|x b'
+
+
+@pytest.mark.parametrize('link, display', [
+    ('[[a|x [y]]', 'x [y'),      # single '[' stays part of the display text
+    ('[[a|[x]]', '[x'),
+    ('[[a|x[]]', 'x['),
+    (r'[[a\|x [y]]', 'x [y'),
+])
+def test_single_bracket_in_display_text_is_kept(link, display):
+    m = WIKILINK_RE.fullmatch(link)
+    assert m is not None
+    assert m.group(1) == 'a'
+    assert m.group(2) == display
+
+
 def test_unclosed_double_bracket_without_later_link_does_not_match():
     assert WIKILINK_RE.search('Text [[unfertig und nichts mehr') is None
     # no real link behind the stray '[[': the old regex swallowed 'a [[' up to the ']]' here
