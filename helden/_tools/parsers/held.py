@@ -4,8 +4,9 @@ import yaml
 from pathlib import Path
 
 # A single ']' is allowed inside the path (anchors like '#Merkmalskenntnis [einzelnes Merkmal]'),
-# as long as it is not followed by a second ']' — that pair closes the link.
-WIKILINK_RE = re.compile(r'\[\[((?:[^\]|\\]|\](?!\]))+)(?:[\\]?\|([^\]]+))?\]\]')
+# as long as it is not followed by a second ']' — that pair closes the link. Likewise a single '[' is fine,
+# but '[[' ends the path: an unclosed '[[' must not swallow the real link behind it.
+WIKILINK_RE = re.compile(r'\[\[((?:[^\]|\\\[]|\[(?!\[)|\](?!\]))+)(?:[\\]?\|([^\]]+))?\]\]')
 
 EIGENSCHAFT_MAP = {
     'Mut': 'MU', 'Klugheit': 'KL', 'Intuition': 'IN', 'Charisma': 'CH',

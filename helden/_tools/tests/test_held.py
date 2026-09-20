@@ -48,6 +48,30 @@ def test_link_without_display_stops_at_its_own_closing_brackets():
     assert [m.group(1) for m in WIKILINK_RE.finditer(text)] == ['a/b', 'c/d']
 
 
+def test_unclosed_double_bracket_does_not_swallow_following_link():
+    matches = list(WIKILINK_RE.finditer('Text [[unfertig und [[a/b|A]]'))
+    assert len(matches) == 1
+    assert matches[0].group(1) == 'a/b'
+    assert matches[0].group(2) == 'A'
+
+
+def test_unclosed_double_bracket_without_display_does_not_swallow_following_link():
+    matches = list(WIKILINK_RE.finditer('[[kaputt und [[c/d]] Rest'))
+    assert len(matches) == 1
+    assert matches[0].group(1) == 'c/d'
+
+
+def test_unclosed_double_bracket_without_later_link_does_not_match():
+    assert WIKILINK_RE.search('Text [[unfertig und nichts mehr') is None
+
+
+def test_helpers_ignore_unclosed_double_bracket_before_real_link():
+    text = '[[unfertig [[a/b|A]]'
+    assert extract_wiki_path(text) == 'a/b'
+    # The unclosed '[[' stays as plain text; only the real link is replaced by its display text.
+    assert strip_wikilink(text) == '[[unfertig A'
+
+
 def test_sf_table_rows_with_bracket_anchor_get_wiki_path():
     table = '\n'.join([
         '| Sonderfertigkeit | Beschreibung / Nutzen |',
