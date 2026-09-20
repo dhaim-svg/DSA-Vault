@@ -42,19 +42,23 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
 - **Geänderte Datei:** `wiki/dsa-4.1/rituale/stabzauber.md` — neuer Block `### Zauberspeicher — Vollständige Regeln` *(Sprint 022 T4: jetzt eigener Abschnitt `## Zauberspeicher`, siehe L25.)*
 - **Inhalt:** Speichervorgang (+2 Erschwernis, AsP beim Einlegen), Auslösung (MU/IN/KL 1 Aktion), Patzer-Kettenauslösung, Berührungspflicht bei (A)-Zaubern, Mehrfach-Speicher mit steigender Erschwernis, Volumensplit.
 
-### L9: Stabzauber Schuppenhaut — Risiko-Mechanik fehlt
+### L9: Stabzauber Schuppenhaut — Risiko-Mechanik fehlt ✅ *behoben 2026-09-20 (Sprint 023 T2)*
 
 - **Wiki-Datei:** `wiki/dsa-4.1/rituale/stabzauber.md`
 - **Befund:** Schuppenhaut hat eine W20-Würfelmechanik pro Runde mit Misslingenfolgen bis permanente Gefangenschaft im Stab — spielrelevant, fehlt im 1-Zeiler.
 - **Quelle:** WdZ, kapitel-09-rituale.txt Z. 461–489.
 - **Priorität:** niedrig (Illaen hat Schuppenhaut nicht).
+- **Behoben in Sprint 023 (T2):** `## Schuppenhaut` trägt jetzt die Buchregeln (WdZ S. 110–111): Chamäleon/Speikobra mit LeP 15 und RS RkP\*/2, Form bei Erschaffung fest, Ritual zweimal sprechbar (je 5 Vol), kein Zaubern in Tiergestalt, Körper wie unter PARALYSIS.
+- **Risiko-Mechanik (Behoben in Sprint 023):** W20 während der Verwandlung, bei 20 Ritualkenntnisprobe auf (MU/IN/KO) + 7, Misslingen = in der Reptiliengestalt gefangen (nur VERWANDLUNG BEENDEN befreit; Schuppenhaut danach 20 – RkW Monate unbenutzbar), Tod des Tieres = 4W6 SP und Stab für immer verloren. Der Buchtext lässt offen, ob je Spielrunde oder je RkP\* Runden gewürfelt wird; das Wiki gibt den Wortlaut wieder. Die Formulierung „permanente Gefangenschaft im Stab“ trifft das Buch nicht: der Magier ist im Tier gefangen und befreibar.
 
-### L10: Stabzauber Flammenschwert — Misslingens-Tabelle fehlt
+### L10: Stabzauber Flammenschwert — Misslingens-Tabelle fehlt ✅ *behoben 2026-09-20 (Sprint 023 T2)*
 
 - **Wiki-Datei:** `wiki/dsa-4.1/rituale/stabzauber.md`
 - **Befund:** Flammenschwert hat eine 1W6-Misslingens-Tabelle (6 Ergebnisse) und Wechsel-Mechanik zwischen schwebendem und gehaltenem Schwert — fehlt in der Tabelle.
 - **Quelle:** WdZ, kapitel-09-rituale.txt (Flammenschwert-Block).
 - **Priorität:** niedrig (Illaen hat Flammenschwert nicht).
+- **Behoben in Sprint 023 (T2):** `## Flammenschwert` enthält die 1W6-Misslingens-Tabelle (Buch: vier Ergebniszeilen 1–3 / 4 / 5 / 6, zusammen die sechs W6-Werte; WdZ S. 110) und den Wechsel zwischen gehaltenem und schwebendem Schwert (neue Aktivierungsprobe + Aktion, keine erneuten Umwandlungskosten).
+- **Ergänzend (Behoben in Sprint 023):** Basisschaden 1W6+4, RkP\*-Steigerung (TP, AT, Parade-Erschwernis, GS mit Grenzen), gehalten vs. dirigiert (AT 12, GS 3, DK HN, Davonlaufen, Einschränkungen des Magiers, Simultanzaubern), Anfälligkeit FEUERBANN / BEWEGUNG STÖREN, Varianten.
 
 ### L7: Vor-/Nachteile & Schlechte Eigenschaften — Detailtiefe für Live-Nachschlagen unzureichend *(niedrige Priorität)*
 
@@ -223,13 +227,13 @@ Format pro Eintrag: Datum · betroffene Wiki-Datei · Befund · Vorschlag.
   - Zählung **12** in vier Gruppen (Gruppen-Spalte in der Übersichtstabelle), **Apport** als 12. Zeile und eigener `## Apport`-Abschnitt; „13“ überall entfernt (auch `rituale/_rituale.md`).
   - Werte korrigiert: *Doppeltes Maß* (Vol 1, Effekt doppelte Länge, Variante Halbes Maß, Aktivierung 1 AsP ohne Probe), *Schuppenhaut* (Erschaffung MU / IN / CH (+7)), *Bindung des Stabes* (Vol 0; 22 AsP, davon 1 permanent; keine Aktivierung), außerdem *Hammer des Magus* (Aktivierung MU / CH / KK, 3 AsP, augenblicklich; Effekt Strukturschaden statt „erhöhte TP“), *Seil des Adepten* (Effekt) und die Aktivierungsprobe des *Zauberspeichers* (Komplexität des Zaubers).
   - „Vol je Holzart“ ersetzt durch Abschnitt „Fassungsvermögen & Eigenvolumen“ (24 / 18 / 15 / 27 je Stabform); die Holzarten-Tabelle entfernt (WdZ nennt keine, nur den Verweis SRD 117f.); die unbelegte Regel „Erschaffungsproben um die Zahl vorhandener Stabzauber erschwert“ entfernt; Fettwert-Zeilen als Listen, Sternchen-Markup im Merkmalsfokus korrigiert.
-- **Vorschlag (Rest):** Detailregeln der sieben knappen Abschnitte nachziehen (siehe L25a, Flammenschwert-Misslingens-Tabelle → L10, Schuppenhaut-Risiko → L9).
+- **Vorschlag (Rest):** Detailregeln der sieben knappen Abschnitte nachziehen (siehe L25a, Flammenschwert-Misslingens-Tabelle → L10, Schuppenhaut-Risiko → L9). *Erledigt in Sprint 023 T2.*
 
 ### L25: Ritual-Artikelvorschau — Voraussetzungen im Wiki und im Heldendokument
 
 - **Wiki-Dateien:** `wiki/dsa-4.1/rituale/stabzauber.md` (+ User-Domäne `helden/illaen-baernhold/rituale.md`, nur lesend betrachtet)
 - **Befund / Stand:**
-  - (a) **Wiki-Seite erledigt (Sprint 022 T4):** `stabzauber.md` hat je Stabzauber einen `##`-Abschnitt (11 Namen: Bindung des Stabes, Doppeltes Maß, Ewige Flamme, Flammenschwert, Hammer des Magus, Kraftfokus, Merkmalsfokus, Modifikationsfokus, Schuppenhaut, Seil des Adepten, Zauberspeicher), damit ein Anker-Link `[[…/stabzauber#<Name>]]` genau einen Abschnitt lädt. **Sieben** davon (alle außer den vier Foki/Zauberspeicher) enthalten nur Fakten aus den Tabellen des Artikels — die Detailregeln WdZ S. 108–114 fehlen (Flammenschwert-Misslingens-Tabelle → L10, Schuppenhaut-Risiko → L9).
+  - (a) **Wiki-Seite erledigt (Sprint 022 T4, Sprint 023 T1/T2):** `stabzauber.md` hat je Stabzauber einen `##`-Abschnitt (**12 Anker** inkl. Apport: Bindung des Stabes, Doppeltes Maß, Ewige Flamme, Flammenschwert, Hammer des Magus, Kraftfokus, Merkmalsfokus, Modifikationsfokus, Schuppenhaut, Seil des Adepten, Zauberspeicher, Apport), damit ein Anker-Link `[[…/stabzauber#<Name>]]` genau einen Abschnitt lädt. Die **sieben** zunächst knappen Abschnitte (alle außer den vier Foki/Zauberspeicher und dem Apport) tragen seit **Sprint 023 T2** die Buchregeln (WdZ S. 109–111; Flammenschwert-Misslingens-Tabelle → L10, Schuppenhaut-Risiko → L9, beide behoben); Foki, Zauberspeicher und Apport waren bereits ausgeführt.
   - (b) **Offen, User-Domäne:** `helden/illaen-baernhold/rituale.md` verlinkt `[[…/stabzauber]]` ohne Anker. Für die Vorschau bräuchte jede Stabzauber-Zeile einen Anker-Link der Form `[[wiki/dsa-4.1/rituale/stabzauber#<Name>\|<Anzeige>]]`. Kein Eingriff durch die Bibliothekarin — Änderung liegt beim User.
-  - (c) **Namensabgleich Held ↔ Wiki:** Held „Fackel“ = Wiki „Ewige Flamme“; „Stabverlängerung“ = vermutlich „Doppeltes Maß“ (unbestätigt, siehe L24); „Bindung“ = „Bindung des Stabes“; „Seil (des Adepten)“ = „Seil des Adepten“. Die Anker müssen den Wiki-Namen exakt tragen, Anzeigetext darf der Heldenname bleiben. **Prüfung Sprint 023 T1:** „Stabverlängerung“ = „Doppeltes Maß“ **bestätigt** — WdZ S. 108 nennt die Stabformen „verlängert oder zu einem Seil oder einer Fackel verwandelt“, und als einziger der 12 Stabzauber lässt das Doppelte Maß den Stab wachsen (S. 109: „auf das Doppelte seiner Länge … anwachsen“); der Name „Stabverlängerung“ steht selbst nicht im Buch.
-- **Vorschlag:** (b) und (c) beim nächsten Rituale-Pflegedurchgang des Users; Detailregeln der sieben knappen Abschnitte nachziehen, bevor die Vorschau produktiv genutzt wird.
+  - (c) **Namensabgleich Held ↔ Wiki:** Held „Fackel“ = Wiki „Ewige Flamme“; „Stabverlängerung“ = „Doppeltes Maß“ (siehe unten); „Bindung“ = „Bindung des Stabes“; „Seil (des Adepten)“ = „Seil des Adepten“. Die Anker müssen den Wiki-Namen exakt tragen, Anzeigetext darf der Heldenname bleiben. **Prüfung Sprint 023 T1:** „Stabverlängerung“ ist **kein Buchname**; die Zuordnung zum „Doppelten Maß“ ist eine semantische und gilt als **bestätigt** — WdZ S. 108 nennt die Stabformen „verlängert oder zu einem Seil oder einer Fackel verwandelt“, und als einziger der 12 Stabzauber lässt das Doppelte Maß den Stab wachsen (S. 109: „auf das Doppelte seiner Länge … anwachsen“).
+- **Vorschlag:** (b) und (c) beim nächsten Rituale-Pflegedurchgang des Users; die Detailregeln der sieben knappen Abschnitte sind seit Sprint 023 T2 nachgezogen.

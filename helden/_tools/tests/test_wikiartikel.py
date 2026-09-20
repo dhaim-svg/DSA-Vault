@@ -1,5 +1,6 @@
 """Tests for parsers.wikiartikel — wiki article/section loader (synthetic vault only)."""
 import logging
+import re
 import sys
 from pathlib import Path
 
@@ -669,3 +670,45 @@ def test_stabzauber_anchor_loads_only_its_section_without_warning(caplog, name, 
     assert art['titel'] == name and art['html'].strip()
     assert eigen in art['html'] and fremd not in art['html']
     assert not [r for r in caplog.records if r.levelno == logging.WARNING]
+
+
+# --- Detailregeln der sieben zunächst knappen Abschnitte (Sprint 023 T2) ----------
+# Bindung/Doppeltes Maß/Ewige Flamme/Flammenschwert/Hammer/Schuppenhaut/Seil tragen die Buchregeln und enden mit einer
+# Quellenzeile; Foki, Zauberspeicher und Apport waren schon ausgeführt und haben bewusst keine solche Schlusszeile.
+
+STABZAUBER_MIT_REGELN = [
+    'Bindung des Stabes', 'Doppeltes Maß', 'Ewige Flamme', 'Flammenschwert', 'Hammer des Magus', 'Schuppenhaut',
+    'Seil des Adepten',
+]
+
+
+def _stabzauber_html(name):
+    pfad = f'{STABZAUBER_DATEI}#{name}'
+    return load_wiki_artikel(VAULT_ROOT, [pfad], _link)[pfad]['html']
+
+
+@pytest.mark.parametrize('name', STABZAUBER_NAMEN)
+def test_stabzauber_section_has_no_detailregeln_placeholder_left(stabzauber_sections, name):
+    assert 'ausgearbeitet' not in stabzauber_sections[name]
+
+
+@pytest.mark.parametrize('name', STABZAUBER_MIT_REGELN)
+def test_stabzauber_section_with_rules_ends_with_source_line(stabzauber_sections, name):
+    lines = [ln.strip() for ln in stabzauber_sections[name].split('\n') if ln.strip() and ln.strip() != '---']
+    assert re.fullmatch(r'\*Quelle: WdZ S\. [^*]+\*', lines[-1]), lines[-1]
+
+
+def test_flammenschwert_misslingens_table_lists_every_w6_result():
+    html = _stabzauber_html('Flammenschwert')
+    tabellen = [t for t in re.findall(r'<table.*?</table>', html, re.S) if '1W6' in t]
+    assert len(tabellen) == 1
+    zeilen = [r for r in re.findall(r'<tr>(.*?)</tr>', tabellen[0], re.S) if '<td' in r]
+    # Buch (WdZ S. 110): vier Ergebniszeilen, die zusammen alle sechs W6-Werte abdecken
+    labels = [re.sub(r'<[^>]+>', '', re.search(r'<td[^>]*>(.*?)</td>', r, re.S).group(1)).strip() for r in zeilen]
+    assert labels == ['1–3', '4', '5', '6']
+
+
+@pytest.mark.parametrize('name', STABZAUBER_NAMEN)
+def test_stabzauber_anchor_html_text_has_no_literal_double_asterisk(name):
+    text = re.sub(r'<[^>]+>', '', _stabzauber_html(name))
+    assert '**' not in text
