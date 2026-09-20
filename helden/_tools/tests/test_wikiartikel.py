@@ -938,13 +938,23 @@ def _wiki_dateien():
 
 
 def test_korpus_stern_bilanz_quelle_gleich_html():
-    abweichend = []
+    abweichend, lecks = [], []
     for datei in _wiki_dateien():
         text = datei.read_text(encoding='utf-8')
         quelle = len(_QUELL_STERN_RE.findall(text))
-        if quelle and quelle != len(_HTML_STERN_RE.findall(render_markdown(text))):
-            abweichend.append(datei.relative_to(VAULT_ROOT).as_posix())
+        if not quelle:
+            continue
+        html = render_markdown(text)
+        name = datei.relative_to(VAULT_ROOT).as_posix()
+        if quelle != len(_HTML_STERN_RE.findall(html)):
+            abweichend.append(name)
+        # Ein Buchstern in einer Link-URL: mistune prozentkodiert U+E000 zu %EE%80%80, die Rückersetzung greift dort nicht.
+        # Im Markdown-Link kippt dabei die Bilanz, im Autolink bleibt der sichtbare Text bilanziert -- das Leck sähe die
+        # Bilanz allein nicht (Gesamt-Review Sprint 025, M1; heute 0 Vorkommen im Korpus).
+        if PLATZHALTER in html or '%EE%80%80' in html:
+            lecks.append(name)
     assert not abweichend, (len(abweichend), abweichend[:3])
+    assert not lecks, lecks[:3]
 
 
 def test_korpus_enthaelt_keinen_platzhalter():
