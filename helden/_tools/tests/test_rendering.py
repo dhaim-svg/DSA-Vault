@@ -1,8 +1,5 @@
 """Tests for CSS/JS bundling and static vs. server rendering in rendering.py."""
-import json
 import re
-import shutil
-import subprocess
 import sys
 from pathlib import Path
 
@@ -17,6 +14,7 @@ from rendering import (
     CHRONIK_BILD_PREFIX_SERVER, CHRONIK_BILD_PREFIX_STATIC, CSS_FILES, JS_FILES, STATIC_DIR, VAULT_ROOT,
     build_context, css_bundle, js_files, make_env, render_dashboard,
 )
+from tests.jsfixtures import js_function, needs_node, run_node
 
 
 def test_css_files_exist_and_nonempty():
@@ -1060,17 +1058,6 @@ def test_css_zustand_chip_touch_sized_only_at_480px():
     assert not any('min-height' in d for d in _decls(_toplevel_rules(css), '.zustand-chip'))
 
 
-def _js_function(src, name):
-    """Quelltext von 'function <name>(...) { ... }' (Klammer-Zaehlung; nur fuer klammerneutrale Funktionskoerper)."""
-    start = src.index('function %s(' % name)
-    depth, j = 0, src.index('{', start)
-    while True:
-        depth += {'{': 1, '}': -1}.get(src[j], 0)
-        j += 1
-        if depth == 0:
-            return src[start:j]
-
-
 def test_css_body_reserves_dice_panel_height_at_480px():
     # D-047: das fixe Wuerfelpanel (~190 px bei 400 px) verdeckte Footer-Leiste und letzte Zeilen. Reserve = gemessene Panelhoehe
     # (--dice-panel-h, von dice.js gepflegt), auf <body> (die Footer-Leiste liegt ausserhalb von .codex). Nur <= 480 px.
@@ -1100,7 +1087,7 @@ def test_css_footer_bar_rises_above_open_dice_panel_on_desktop():
 
 def test_dice_js_publishes_open_panel_height_as_css_variable():
     js = (STATIC_DIR / 'dice.js').read_text(encoding='utf-8')
-    body = _js_function(js, 'syncPanelReserve')
+    body = js_function(js, 'syncPanelReserve')
     assert re.search(r"setProperty\(\s*'--dice-panel-h'", body)
     # geschlossen (.hidden bleibt nur per transform aus dem Bild) => 0px, sonst gemessene Hoehe
     assert "classList.contains('hidden')" in body and "'0px'" in body and 'offsetHeight' in body
@@ -1123,17 +1110,15 @@ def test_steigern_js_scroll_region_only_on_real_overflow():
     section = js[js.index('function addSection'):]
     section = section[:section.index('/* Eigenschaften */')]
     assert not re.search(r"wrap\.setAttribute\('(?:tabindex|role|aria-label)'", section), 'Attribute nicht mehr bedingungslos'
-    body = _js_function(js, 'syncScrollOverflow')
+    body = js_function(js, 'syncScrollOverflow')
     assert 'scrollWidth' in body and 'clientWidth' in body
     for attr in ('tabindex', 'role', 'aria-label'):
         assert re.search(r"setAttribute\('%s'" % attr, body) and re.search(r"removeAttribute\('%s'\)" % attr, body), attr
     # Neubewertung bei Groessenaenderung (Tab-Wechsel display:none -> sichtbar, Resize)
-    watch = _js_function(js, 'watchScrollOverflow')
+    watch = js_function(js, 'watchScrollOverflow')
     assert 'ResizeObserver' in watch and re.search(r"addEventListener\('resize'", watch)
     assert re.search(r'syncScrollOverflow\(wrap,\s*scrollHint,\s*title\)', section)
 
-
-needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
 
 _NODE_OVERFLOW_RUNNER = """
 function el(cw, sw) {
@@ -1162,10 +1147,7 @@ console.log(JSON.stringify(out));
 
 @needs_node
 def test_steigern_sync_scroll_overflow_behaviour():
-    src = _js_function(_steigern_js(), 'syncScrollOverflow')
-    res = subprocess.run(['node', '-e', src + _NODE_OVERFLOW_RUNNER], capture_output=True, text=True, timeout=30)
-    assert res.returncode == 0, res.stderr
-    out = json.loads(res.stdout)
+    out = run_node(js_function(_steigern_js(), 'syncScrollOverflow') + _NODE_OVERFLOW_RUNNER)
     assert out['overflow'] == {'attrs': {'tabindex': '0', 'role': 'region', 'aria-label': 'Zauber'}, 'hint': ['sg-scroll-hint--on']}
     assert out['fits'] == {'attrs': {}, 'hint': []}
     assert out['hidden_tab'] == {'attrs': {}, 'hint': []}, 'clientWidth 0 (display:none) ist kein Ueberlauf'

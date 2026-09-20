@@ -4,18 +4,15 @@ Pro Wunde: AT/PA/FK/INI/GE -2, GS -1; Talent-/Zauber-/sonstige Eigenschaftsprobe
 Schadenswuerfe bekommen keinen Wundabzug. Einzige Regelquelle: static/wundregeln.js."""
 import json
 import re
-import shutil
-import subprocess
 
 import pytest
 
 from rendering import JS_FILES, STATIC_DIR
+from tests.jsfixtures import js_function, js_function_body, needs_node, run_node
 
 WUNDREGELN_JS = STATIC_DIR / 'wundregeln.js'
 SESSION_JS = STATIC_DIR / 'session.js'
 DICE_JS = STATIC_DIR / 'dice.js'
-
-needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
 
 # -0 wird als String '-0' ausgegeben (JSON.stringify(-0) waere '0').
 _NODE_RUNNER = """
@@ -34,12 +31,7 @@ process.stdout.write(JSON.stringify(out));
 
 def _run(*calls):
     """Ruft window.DSAWundregeln[fn](*args) fuer jedes (fn, *args) in node (ohne DOM) auf."""
-    proc = subprocess.run(
-        ['node', '-e', _NODE_RUNNER, str(WUNDREGELN_JS), json.dumps(calls)],
-        capture_output=True, text=True, encoding='utf-8', timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
-    return json.loads(proc.stdout)
+    return run_node(_NODE_RUNNER, WUNDREGELN_JS, json.dumps(calls))
 
 
 # -- Verhalten der Regeltabelle (node) ------------------------------------
@@ -98,19 +90,9 @@ def test_no_flat_wound_penalty_left(path):
     assert not re.search(r'\b(?:wunden|w)\s*\*\s*2\b', src), 'pauschales Wunden*2 darf nicht mehr vorkommen'
 
 
-def _function_body(src, name):
-    m = re.search(r'function\s+' + name + r'\s*\(([^)]*)\)\s*\{', src)
-    assert m, f'{name} fehlt'
-    depth, i = 1, m.end()
-    while depth:
-        depth += {'{': 1, '}': -1}.get(src[i], 0)
-        i += 1
-    return m.group(1), src[m.end():i - 1]
-
-
 def test_dice_get_wund_mod_is_scoped_by_probe_type():
     src = DICE_JS.read_text(encoding='utf-8')
-    params, body = _function_body(src, 'getWundMod')
+    params, body = js_function_body(src, 'getWundMod')
     assert params.strip(), 'getWundMod muss die Probenkonfiguration bekommen'
     assert 'probeMod(' in body and 'DSAWundregeln.wundMod(' in body
     for probe_type in ('at', 'pa', 'eigenschaft', 'talent', 'zauber'):
@@ -153,15 +135,8 @@ process.stdout.write(JSON.stringify({ res: cfgs.map(c => { const r = run(c); ret
 
 def _get_wund_mod(cfgs, session):
     src = DICE_JS.read_text(encoding='utf-8')
-    m = re.search(r'function getWundMod\s*\(', src)
-    params, body = _function_body(src, 'getWundMod')
-    fn = src[m.start():src.index(body, m.start()) + len(body) + 1]
-    proc = subprocess.run(
-        ['node', '-e', _DICE_RUNNER, str(WUNDREGELN_JS), fn, json.dumps(cfgs), 'session' if session else 'file'],
-        capture_output=True, text=True, encoding='utf-8', timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
-    return json.loads(proc.stdout)
+    return run_node(_DICE_RUNNER, WUNDREGELN_JS, js_function(src, 'getWundMod'), json.dumps(cfgs),
+                    'session' if session else 'file')
 
 
 _PROBEN = [
@@ -207,7 +182,7 @@ def test_all_five_zustaende_are_marked_hausregel_with_regel_text():
 
 def test_zustand_chip_title_and_class_carry_hausregel():
     src = SESSION_JS.read_text(encoding='utf-8')
-    _, body = _function_body(src, 'renderZustandChips')
+    _, body = js_function_body(src, 'renderZustandChips')
     assert "'hausregel'" in body or "' hausregel'" in body
     assert 'z.hausregel' in body
     assert "(Hausregel) — '" in body and 'z.regel' in body
@@ -215,7 +190,7 @@ def test_zustand_chip_title_and_class_carry_hausregel():
 
 def test_badge_marks_hausregel_only_on_zustand_branch():
     src = SESSION_JS.read_text(encoding='utf-8')
-    _, body = _function_body(src, 'updateEigLeisteBadge')
+    _, body = js_function_body(src, 'updateEigLeisteBadge')
     body = re.sub(r'//[^\n]*', '', body)  # Kommentare zaehlen nicht
     assert body.count('(Hausregel)') == 1
     zustand_branch, wunden_branch = body.split("' ×'")
@@ -225,7 +200,7 @@ def test_badge_marks_hausregel_only_on_zustand_branch():
 
 def test_zustand_effects_carry_hausregel_flag_wunden_do_not():
     src = SESSION_JS.read_text(encoding='utf-8')
-    _, body = _function_body(src, 'computeActiveEffects')
+    _, body = js_function_body(src, 'computeActiveEffects')
     assert re.search(r"label: z\.label, alle: true, mod: z\.mod, hausregel: true", body)
     assert 'hausregel' not in body.split('ZUSTAENDE.forEach')[0]
 
@@ -280,22 +255,10 @@ _ALL_PROBES = ['MU/KL/GE', 'IN/CH/FF', 'KO/KK/GE', 'MU/**/GE', 'KL/IN/CH', 'KK/K
 
 def _parse_probe(proto, wunden, zustaende=(), probes=_ALL_PROBES, attrs=()):
     src = DICE_JS.read_text(encoding='utf-8')
-    fns = _function_source(src, 'parseProbe') + '\n' + _function_source(src, 'wundAttrMod')
+    fns = js_function(src, 'parseProbe') + '\n' + js_function(src, 'wundAttrMod')
     spec = {'proto': proto, 'wunden': wunden, 'zustaende': list(zustaende), 'eig': _EIG,
             'probes': list(probes), 'attrs': list(attrs)}
-    proc = subprocess.run(
-        ['node', '-e', _PARSE_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec), fns],
-        capture_output=True, text=True, encoding='utf-8', timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
-    return json.loads(proc.stdout)
-
-
-def _function_source(src, name):
-    m = re.search(r'function\s+' + name + r'\s*\(', src)
-    assert m, f'{name} fehlt'
-    _params, body = _function_body(src, name)
-    return src[m.start():src.index(body, m.start()) + len(body) + 1]
+    return run_node(_PARSE_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec), fns)
 
 
 _EXPECT_2_WUNDEN = [[12, 13, 9], [14, 11, 10], [12, 15, 9], [12, None, 9], [13, 14, 11], [15, 12, 10]]
@@ -397,12 +360,7 @@ _BASE_SPANS = [f'{k} {v}' for k, v in _EIG.items()]
 
 def _overlay(wunden, zustaende=(), probes=()):
     spec = {'wunden': wunden, 'zustaende': list(zustaende), 'eig': _EIG, 'probes': list(probes)}
-    proc = subprocess.run(
-        ['node', '-e', _OVERLAY_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec)],
-        capture_output=True, text=True, encoding='utf-8', timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
-    return json.loads(proc.stdout)
+    return run_node(_OVERLAY_RUNNER, str(STATIC_DIR) + '/', json.dumps(spec))
 
 
 @needs_node
@@ -440,5 +398,5 @@ def test_wounds_alone_still_overlay_ge_span():
 
 def test_apply_wund_mods_to_proben_uses_wounds_only_attr_mod():
     src = SESSION_JS.read_text(encoding='utf-8')
-    _params, body = _function_body(src, 'applyWundModsToProben')
+    _params, body = js_function_body(src, 'applyWundModsToProben')
     assert 'attrMod(' in body and 'probeMod(' not in body

@@ -1,18 +1,15 @@
 """Tests for build_register — deduplicated NSC/Orte register from session sections."""
 import json
 import re
-import shutil
-import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 from parsers.register import build_register, fold
 from rendering import STATIC_DIR
+from tests.jsfixtures import needs_node, run_node
 
 SEKTION = 'Neue NSCs / Orte'
 
@@ -235,7 +232,6 @@ def test_orte_parsed_like_nscs():
 
 # -- D-045: Filter-Kopfzeile fuer den Druck (static/register.js) -------------
 REGISTER_JS = STATIC_DIR / 'register.js'
-needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht installiert')
 
 # Minimales Fake-DOM: 2 Gruppen, 3 Eintraege (such: alrik held / borbarad / cumrat stadt); innerHTML wirft.
 _NODE_RUNNER = """
@@ -276,12 +272,7 @@ process.stdout.write(JSON.stringify(out));
 
 
 def _run_register(steps, *flags):
-    proc = subprocess.run(
-        ['node', '-e', _NODE_RUNNER, str(REGISTER_JS), json.dumps(steps), *flags],
-        capture_output=True, text=True, encoding='utf-8', timeout=30,
-    )
-    assert proc.returncode == 0, proc.stderr
-    return json.loads(proc.stdout)
+    return run_node(_NODE_RUNNER, REGISTER_JS, json.dumps(steps), *flags)
 
 
 @needs_node
