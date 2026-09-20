@@ -89,6 +89,10 @@
   .spell .name .nlink,.spell .name .haus,.spell .zfw-num,
   .spell .zd,.spell .kosten,.spell .wirkung{ color:var(--paper-ink) !important; }
   .spell .name .nlink::after{ color:var(--paper-ink) !important; opacity:1 !important; }
+  /* Namenslink der SF-/Ritualzeilen (D-050/D-051): eigene Bildschirm-color (ink, 1,07:1 auf Papier), das !important
+     auf .sf-name vererbt sich nicht auf den Link; Pfeil ebenso (accent-cold, opacity .6) */
+  .sf-list li .sf-name a{ color:var(--paper-ink) !important; }
+  .sf-list li .sf-name a::after{ color:var(--paper-ink) !important; opacity:1 !important; }
   /* Kopfzeile (Inline-color ink-mute, 1,95:1) und Modifikations-Details (ink-dim, 4,28:1) — im Druck ist das Desktop-Grid aktiv,
      das Kompaktlayout gilt nur @media screen; Inline-Styles schlaegt nur !important. */
   .spell.spell-head,.spell.spell-head *,

@@ -926,6 +926,18 @@ def test_css_print_spell_name_link_arrow_is_fully_opaque():
     assert any(re.search(r'opacity\s*:\s*1\b', d) for d in decls)
 
 
+def test_css_print_sf_and_ritual_name_link_is_paper_ink_and_arrow_fully_opaque():
+    # D-050/D-051: `.sf-list li .sf-name a` hat eine eigene Bildschirm-color (var(--ink), 1,07:1 auf Papier); das
+    # !important auf .sf-name vererbt sich nicht auf den Link. Der Pfeil (::after, --accent-cold, opacity .6) ebenso.
+    prints = ''.join(_media_blocks(css_bundle(), r'@media\s+print'))
+    rules = _css_rules(prints)
+    link = _decls(rules, '.sf-list li .sf-name a')
+    assert any(re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', d) for d in link), link
+    arrow = _decls(rules, '.sf-list li .sf-name a::after')
+    assert any(re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', d) for d in arrow), arrow
+    assert any(re.search(r'opacity\s*:\s*1\s*!important', d) for d in arrow), arrow
+
+
 def test_css_has_no_dead_merk_selector():
     # .merk kommt in keinem Template/JS mehr vor (heute .spell .submeta); der Druck-Selektor war tot.
     assert '.merk' not in css_bundle()
