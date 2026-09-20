@@ -985,10 +985,16 @@ body::before{
      da beide Regeln dasselbe Element treffen und Wichtigkeit vor Spezifitaet geht); .sg-ap-label/.steiger-table th/
      .sg-select-hint 1,95:1. .sg-cap-warn (Komplexitaetsgrenze-Badge) bleibt aussen vor: im Ist-Render 0 Elemente,
      nicht Teil der T1-Messung. */
-  .sg-erf{ display:none !important; } /* Ruling R7: <select> druckt als voller schwarzer Kasten (Screenshot-Fund,
-     kein Kontrastwert) — Bedienelement wie die Zauberspeicher-Buttons oben. Die gewaehlte Erfahrungsstufe
-     (gut/schlecht) ist im Druck an dieser Stelle dann nicht mehr ablesbar; der dadurch veraenderte AP-Preis bleibt
-     in .sg-cost sichtbar. */
+  /* Ruling R7 (revidiert, Sprint 026 T2-Nachtrag 2): <select class="sg-erf"> druckte als voller schwarzer Kasten
+     (Screenshot-Fund) — das kam von der Bildschirm-Optik (Hintergrund/Rahmen/native Pfeilgrafik), nicht davon, dass
+     ein <select> grundsaetzlich nicht druckbar waere: der Browser rendert den gewaehlten <option>-Text. Statt
+     auszublenden (aeltere Fassung, verlor die gewaehlte Erfahrungsstufe ersatzlos — sie steht sonst nirgends im
+     Druck) wird der Select entkleidet: kein Bedienelement-Look, nur der Text bleibt. */
+  .sg-erf{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    background:transparent !important; color:var(--paper-ink) !important;
+    border:none !important; border-radius:0; padding:0; max-width:none;
+  }
 }
 
 /* ── Interactive vitals ──────────────────────────────────── */

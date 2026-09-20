@@ -1091,10 +1091,48 @@ def test_css_print_talente_zero_meets_contrast_threshold():
         assert ratio >= 4.5, (m.group(1), ratio)
 
 
-def test_css_print_hides_steigern_erfahrungs_select():
-    # Ruling R7: <select class="sg-erf"> druckt als voller schwarzer Kasten (Screenshot-Fund, kein Kontrastwert).
+def test_css_print_strips_steigern_erfahrungs_select_chrome():
+    # Ruling R7 (revidiert, Sprint 026 T2-Nachtrag 2): <select class="sg-erf"> druckte als voller schwarzer Kasten
+    # (Screenshot-Fund) — Ursache war die Bildschirm-Optik (Hintergrund/Rahmen/native Pfeilgrafik), nicht der
+    # <select> selbst; ausgeblendet verlor er die sonst nirgends im Druck stehende Erfahrungsstufe ersatzlos.
+    # Jetzt bleibt der gewaehlte <option>-Text sichtbar, der Select verliert nur seinen Bedienelement-Look.
     rules = _print_rules()
-    assert any(s == '.sg-erf' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules)
+    decls = _decls(rules, '.sg-erf')
+    assert decls, '.sg-erf hat keine Druck-Regel'
+    combined = ' '.join(decls)
+    assert re.search(r'(?<![-\w])appearance\s*:\s*none\b', combined), combined
+    assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', combined), combined
+    assert re.search(r'background\s*:\s*transparent\s*!important', combined), combined
+    assert re.search(r'border\s*:\s*none\s*!important', combined), combined
+    assert not re.search(r'display\s*:\s*none', combined), combined
+
+
+# Bekannte CSS-Variablen -> Hex (aus base.css :root), um die Druck-Farbe eines Selektors aufzuloesen, ohne einen
+# Browser zu brauchen. Nur die Werte, die in Druckregeln tatsaechlich als color vorkommen.
+CSS_VAR_HEX = {
+    'ink': 'e8dcc3', 'ink-mute': '9aa6b4', 'ink-dim': '5f6b7a', 'ink-probe': 'b8c4d0',
+    'accent-cold': '5fc3e4', 'accent-gold': 'd4a84b',
+    'paper': 'ece4d0', 'paper-ink': '1a1208', 'paper-rule': '8a7758',
+}
+
+
+def _resolve_color_rgb(decl):
+    """Farbwert eines color:-Deklarationsteils als RGB-Tupel — hex-Literal oder bekannte var(--...)."""
+    m = re.search(r'(?<![-\w])color\s*:\s*(#[0-9a-fA-F]{6}|var\(--([\w-]+)\))', decl)
+    assert m, decl
+    if m.group(1).startswith('#'):
+        return _hex_to_rgb(m.group(1))
+    return _hex_to_rgb(CSS_VAR_HEX[m.group(2)])
+
+
+def test_css_print_steigern_erfahrungs_select_meets_contrast_threshold():
+    # Wirkungstest statt Farbwert-Vergleich: egal welche Farbe/Variable im Druck-Block steht, sie muss auf Papier
+    # >= 4,5:1 erreichen (etablierter Wert waere var(--paper-ink) = 14,62:1, siehe PAPER_RGB).
+    rules = _print_rules()
+    decls = _decls(rules, '.sg-erf')
+    assert decls, '.sg-erf hat keine Druck-Regel'
+    ratio = _contrast_ratio(_resolve_color_rgb(' '.join(decls)), PAPER_RGB)
+    assert ratio >= 4.5, ratio
 
 
 PRINT_SPRACHEN_SELECTORS = ('.lang-table th', '.l-name', '.l-taw', '.l-kompl', '.lang-section-head')
