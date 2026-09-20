@@ -1294,6 +1294,17 @@ def test_css_print_vital_value_selectors_use_paper_ink():
         assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)', decls), (sel, decls)
 
 
+def test_css_print_vital_max_and_sep_reset_screen_opacity():
+    # Fix-Runde 1 (Review): tabs.css:243 setzt ".vital-sep, .vital-max { opacity: 0.7; }" unscoped (gilt auch im
+    # Druck). Die reine color:var(--paper-ink)-Regel von oben ueberschreibt das nicht — erst seit diesem Fix ist
+    # der Stepper im Druck ueberhaupt sichtbar, die verduennte Opazitaet greift also zum ersten Mal wirklich.
+    # Gleiches Muster wie .spell .name .nlink::after / .sf-list li .sf-name a::after (tabs.css:91/95).
+    rules = _print_rules()
+    for sel in ('.vital-max', '.vital-sep'):
+        decls = ' '.join(_decls(rules, sel))
+        assert re.search(r'opacity\s*:\s*1\s*!important', decls), (sel, decls)
+
+
 def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
     # Vollstaendigkeits-Check (Re-Review-Auftrag Punkt 2): jedes position:sticky/fixed im Bildschirm-CSS muss im
     # Druck entweder auf position:static/relative zurueckgesetzt, per display:none ausgeblendet, oder Nachfahre
