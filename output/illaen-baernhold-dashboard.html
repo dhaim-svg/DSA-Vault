@@ -8424,10 +8424,18 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
   });
 
   // Chrome does not print the body of a closed <details>; open them for printing.
+  // D-055: a <textarea> only prints its scrolled viewport, not its full scrollable content —
+  // grow it to its own scrollHeight for the duration of the print, then restore. Resizing the
+  // live element (instead of a server-rendered mirror) is correct by construction even for an
+  // unsaved edit; see task-2-brief.md for why a mirror was rejected.
   window.addEventListener('beforeprint', function () {
     document.querySelectorAll('details.chronik-abend').forEach(function (d) {
       if (d.dataset.wasOpen === undefined) { d.dataset.wasOpen = d.open ? '1' : ''; }
       d.open = true;
+    });
+    document.querySelectorAll('.journal-verlauf').forEach(function (t) {
+      if (t.dataset.wasHeight === undefined) { t.dataset.wasHeight = t.style.height || ''; }
+      t.style.height = t.scrollHeight + 'px';
     });
   });
 
@@ -8436,6 +8444,11 @@ window.Dice.calcSchaden = function(tpStr, bonusMod) {
       if (d.dataset.wasOpen === undefined) { return; }
       d.open = (d.dataset.wasOpen === '1');
       delete d.dataset.wasOpen;
+    });
+    document.querySelectorAll('.journal-verlauf').forEach(function (t) {
+      if (t.dataset.wasHeight === undefined) { return; }
+      t.style.height = t.dataset.wasHeight;
+      delete t.dataset.wasHeight;
     });
   });
 }());
