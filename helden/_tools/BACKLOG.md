@@ -5,11 +5,13 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by | Sprint |
+|------|-------|--------|-------|------------|--------|
+| D-051 | Ritual-Artikelvorschau: Stabzauber- (9) und Apport-Zeile im Zauber-Tab zeigen ihren `##`-Abschnitt aus `stabzauber.md` als `<details>` (Makro `partials/_artikel.j2`, wie SF/Zauber); Parser ergänzt `wiki_path` für Ritual-Zeilen, `build_context` bettet die 10 Artikel ein, Apport-Namenszelle im Bogen erhält Anker-Link (einmalige User-Freigabe); Browser-Runde | M | in-progress | — | 024 |
 
 ## Backlog
 
-_(keine — Dashboard-Backlog leer; Sprint 023 hat Vault-`backlog.md` B-019…B-022 erledigt; offen dort B-023/B-024; startklar, aber noch kein EPIC: Ritual-Artikelvorschau, s. Sprint-023-Handoff)_
+_(keine — Dashboard-Backlog leer; Vault-`backlog.md` B-024 läuft in Sprint 024 mit, offen dort B-023)_
 
 ### Gestrichen
 

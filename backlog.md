@@ -7,7 +7,9 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.    | Titel | Effort |
+|-------|---------|-------|--------|
+| B-024 | tooling | Test-Restkopplung II (Reviews Sprint 023 T5): `test_inventar_model.py::test_load_held_geld_integration` pinnt Live-Geldwerte (Dukaten 10, Silbertaler 64); `test_rendering.py` Fall „mit Waffe“ der Kampf-Wund-Hooks hängt nur am Live-Bogen (synthetisch per `write_mini_held(ausruestung=…)` möglich; `kampf.j2` rendert nur `waffen[0]`); `test_rendering.py` ~Z. 293–297 und ~939 noch rohes `.index` (ValueError bei Umbau) — **Sprint 024 T5** | S |
 
 ---
 
@@ -16,7 +18,6 @@ _(keine)_
 | ID    | Kat.    | Titel | Effort |
 |-------|---------|-------|--------|
 | B-023 | wiki    | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) werden von mistune zu `<em>` gepaart und rendern die Artikelvorschau falsch (Fund Sprint 023 T3): 113 Zeilen in 81 Wiki-Dateien + 5 Zeilen mit Kursiv um einen escapten Stern (4 Dateien); Trefferliste als Anlage im T3-Report (`.superpowers/`, lokal). Lösungsweg offen: Wiki-Massenedit (`\*`) vs. Vorbehandlung im Parser (`parsers/wikiartikel.py`) vor dem Markdown-Rendern; im Wiki ist der Stern absichtliche Buchnotation | M |
-| B-024 | tooling | Test-Restkopplung II (Reviews Sprint 023 T5): `test_inventar_model.py::test_load_held_geld_integration` pinnt Live-Geldwerte (Dukaten 10, Silbertaler 64); `test_rendering.py` Fall „mit Waffe“ der Kampf-Wund-Hooks hängt nur am Live-Bogen (synthetisch per `write_mini_held(ausruestung=…)` möglich; `kampf.j2` rendert nur `waffen[0]`); `test_rendering.py` ~Z. 293–297 und ~939 noch rohes `.index` (ValueError bei Umbau) | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
