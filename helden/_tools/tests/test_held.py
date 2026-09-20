@@ -63,6 +63,8 @@ def test_unclosed_double_bracket_without_display_does_not_swallow_following_link
 
 def test_unclosed_double_bracket_without_later_link_does_not_match():
     assert WIKILINK_RE.search('Text [[unfertig und nichts mehr') is None
+    # no real link behind the stray '[[': the old regex swallowed 'a [[' up to the ']]' here
+    assert WIKILINK_RE.search('x [[a [[]] y') is None
 
 
 def test_helpers_ignore_unclosed_double_bracket_before_real_link():

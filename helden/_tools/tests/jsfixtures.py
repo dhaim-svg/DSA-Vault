@@ -15,7 +15,8 @@ needs_node = pytest.mark.skipif(shutil.which('node') is None, reason='node nicht
 def _locate_function(src, name):
     """(Match der Kopfzeile, Endindex hinter der schliessenden Klammer) von 'function <name>(...) { ... }'.
 
-    Klammer-Zaehlung: nur fuer Funktionskoerper ohne '{'/'}' in Strings, Kommentaren oder Regex-Literalen."""
+    Klammer-Zaehlung: nur fuer Funktionskoerper ohne '{'/'}' in Strings, Kommentaren oder Regex-Literalen;
+    die Parameterliste darf kein ')' enthalten (z. B. keinen Default-Wert mit Aufruf)."""
     m = re.search(r'function\s+' + re.escape(name) + r'\s*\(([^)]*)\)\s*\{', src)
     assert m, f'{name} fehlt'
     depth, i = 1, m.end()
