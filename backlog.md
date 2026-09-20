@@ -7,7 +7,9 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.    | Titel | Effort |
+|-------|---------|-------|--------|
+| B-027 | tooling | Redundante Bedingung im Inventar-Parser: `parsers/held.py:539` prüft `gew_raw.strip() not in ('—','','-')`, obwohl `safe_int` (`held.py:171–177`) alle drei Werte selbst auf 0 abbildet — von Implementierer und Reviewer unabhängig nachgerechnet (Sprint 026 T4). Kein Verhaltensfehler, aber toter Schutz: eine Mutation der Bedingung lässt sich nicht durch einen Test fangen. Beim Entfernen mitziehen: die Docstring-Zeile in `tests/test_inventar_model.py`, die den Fallback beschreibt | S |
 
 
 ---
@@ -16,7 +18,6 @@ _(keine)_
 
 | ID    | Kat.    | Titel | Effort |
 |-------|---------|-------|--------|
-| B-027 | tooling | Redundante Bedingung im Inventar-Parser: `parsers/held.py:539` prüft `gew_raw.strip() not in ('—','','-')`, obwohl `safe_int` (`held.py:171–177`) alle drei Werte selbst auf 0 abbildet — von Implementierer und Reviewer unabhängig nachgerechnet (Sprint 026 T4). Kein Verhaltensfehler, aber toter Schutz: eine Mutation der Bedingung lässt sich nicht durch einen Test fangen. Beim Entfernen mitziehen: die Docstring-Zeile in `tests/test_inventar_model.py`, die den Fallback beschreibt | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 

@@ -5,17 +5,18 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-054 | **Die LeP/AsP/AuP-Zahlen fehlen im Ausdruck vollständig.** `tabs.css:275` setzt `.vital::after { content: attr(data-current) " / " attr(data-max) }`, aber `data-max` steht am verschachtelten `.vital-stepper` (`kampf.j2:21/35/49`) und **`data-current` existiert projektweit nicht** (Grep über `static/*.js`: kein Schreiber); `tabs.css:273` blendet den Stepper im Druck zusätzlich aus. Der Ausdruck zeigt Balken ohne Zahlen — hat nie funktioniert. Ruling (Sprint-027-Planung): Druck zeigt das Eingabefeld direkt statt eines JS-Sync auf `data-current` | S–M | in-progress | — |
+| D-055 | **Der Verlaufstext wird im Ausdruck zu 80–89 % abgeschnitten.** Das `<textarea>` `.journal-verlauf` druckt nur seinen sichtbaren Ausschnitt: über alle 4 Sessions gemessen clientHeight 140 px gegen scrollHeight 716–1244 px, also fehlen 30–58 von 39–67 Zeilen je Session. Ruling (Sprint-027-Planung): `beforeprint`/`afterprint` zieht die Textarea auf `scrollHeight` auf (Vorlage: `chronik.js` `<details>`-Logik) | S–M | in-progress | — |
+| D-056 | **Die getönte Papieroptik erscheint im echten Ausdruck weiß.** Die Konvention „Papier `#ece4d0`" aus Sprint 025/026 setzt einen gedruckten Hintergrund voraus; ohne `print-color-adjust:exact` (projektweit nirgends gesetzt) druckt Chromium Hintergründe bei Standardeinstellungen nicht — belegt per `page.pdf()` + `pdftoppm`, von Implementierer und Reviewer unabhängig reproduziert. **Kein Defekt:** gegen echtes Weiß wird jeder verwendete Wert besser (`--paper-ink` 18,52 statt 14,62 : 1, `--paper-rule` 4,32 statt 3,41 : 1). Ruling (Sprint-027-Planung): Weiß bleibt Zielzustand, kein `print-color-adjust:exact`, reine Dokumentationsaufgabe | S | in-progress | — |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-054 | **Die LeP/AsP/AuP-Zahlen fehlen im Ausdruck vollständig.** `tabs.css:275` setzt `.vital::after { content: attr(data-current) " / " attr(data-max) }`, aber `data-max` steht am verschachtelten `.vital-stepper` (`kampf.j2:21/35/49`) und **`data-current` existiert projektweit nicht** (Grep über `static/*.js`: kein Schreiber); `tabs.css:273` blendet den Stepper im Druck zusätzlich aus. Der Ausdruck zeigt Balken ohne Zahlen — hat nie funktioniert. **Die Falle:** der naheliegende Fix (Attribute auf `.vital` ausgeben) druckt auf der *servierten* Seite einen **veralteten** Wert, weil `.vital-input` live editierbar ist und nichts `data-current` nachführt — eine falsche Zahl ist schlechter als eine fehlende. Braucht eine Design-Entscheidung: führt JS den Wert nach, oder druckt der Druck das Eingabefeld statt des Pseudo-Elements? Gefunden in Sprint 026 T1 (nur im Screenshot sichtbar) | S–M | ready | — |
-| D-055 | **Der Verlaufstext wird im Ausdruck zu 80–89 % abgeschnitten.** Das `<textarea>` `.journal-verlauf` druckt nur seinen sichtbaren Ausschnitt: über alle 4 Sessions gemessen clientHeight 140 px gegen scrollHeight 716–1244 px, also fehlen 30–58 von 39–67 Zeilen je Session. Behebung verlangt eine Design-Entscheidung (im Druck `<pre>`/`<div>` statt `<textarea>` rendern) mit eigener Verifikation — kein Kontrastfall. Gefunden in Sprint 026, Fix-Runde 2, beim Kontrastfix desselben Elements | S–M | ready | — |
-| D-056 | **Die getönte Papieroptik erscheint im echten Ausdruck weiß.** Die Konvention „Papier `#ece4d0`" aus Sprint 025/026 setzt einen gedruckten Hintergrund voraus; ohne `print-color-adjust:exact` (projektweit nirgends gesetzt) druckt Chromium Hintergründe bei Standardeinstellungen nicht — belegt per `page.pdf()` + `pdftoppm`, von Implementierer und Reviewer unabhängig reproduziert. **Kein Defekt:** gegen echtes Weiß wird jeder verwendete Wert besser (`--paper-ink` 18,52 statt 14,62 : 1, `--paper-rule` 4,32 statt 3,41 : 1), und kein `@media print`-Block malt einen Hintergrund außer `var(--paper)`. Offen ist die Design-Frage, ob die getönte Optik gewollt ist (dann `print-color-adjust:exact` setzen und alle Werte gegen `#ece4d0` neu bewerten) oder der weiße Ausdruck der Zielzustand bleibt | S | ready | — |
 
-_(Vault-`backlog.md`: B-026 tooling läuft in Sprint 026 mit; Sprint 025 hat B-023 und B-025 erledigt.)_
+_(Vault-`backlog.md`: B-027 tooling läuft in Sprint 027 mit; Sprint 026 hat B-026 erledigt.)_
 
 ### Gestrichen
 
