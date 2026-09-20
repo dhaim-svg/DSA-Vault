@@ -25,6 +25,22 @@ _QUELLE_TEXT_RE = re.compile(r'\s*>\s*\*\*Quelle:?\*\*:?(?P<text>.*)')
 _MARKDOWN = mistune.create_markdown(escape=True, plugins=['table'])
 
 
+# Buchnotation `ZfP*`/`LkP*`/`RkP*`/`TaP*` (Stern = „nach Abzug"): mistune würde freistehende Sterne zu <em> paaren.
+# Platzhalter statt `\*`-Escape, weil so Code-Spans/Fences ohne Sonderbehandlung stimmen und ein umschließendes
+# `*…*` heil bleibt.
+# `(?!\*)`: ein Stern, dem ein weiterer folgt, ist Rand eines Fettbereichs (`**LkP**`), keine Buchnotation.
+_BOOK_STAR_RE = re.compile(r'(ZfP|LkP|RkP|TaP)\*(?!\*)')
+_STAR_PLACEHOLDER = chr(0xE000)  # Private-Use-Zeichen; ohne Backslash-Escape, damit es Werkzeug-Übergaben übersteht
+
+
+def render_markdown(text: str) -> str:
+    """Render wiki markdown to HTML; book-notation stars stay literal instead of turning into <em>."""
+    if _STAR_PLACEHOLDER in text:  # foreign U+E000 would wrongly become '*' below: render untouched
+        return _MARKDOWN(text)
+    protected = _BOOK_STAR_RE.sub(lambda m: m.group(1) + _STAR_PLACEHOLDER, text)
+    return _MARKDOWN(protected).replace(_STAR_PLACEHOLDER, '*')
+
+
 def _text(v) -> str:
     return '' if v is None else str(v).strip()
 
@@ -156,7 +172,7 @@ def _load_one(file: Path, wiki_path: str, link_fn: Callable[[str], str]) -> dict
     else:
         titel, body = _split_title(body)
     try:
-        html = _MARKDOWN(_link_wikilinks(body, link_fn))
+        html = render_markdown(_link_wikilinks(body, link_fn))
     except Exception as exc:  # one broken article must not take the whole dashboard down
         log.warning('Wiki-Artikel %s nicht renderbar: %s', wiki_path, _short(exc))
         return None

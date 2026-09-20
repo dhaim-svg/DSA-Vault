@@ -11,7 +11,7 @@ TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 from parsers.held import WIKILINK_RE, split_sections
-from parsers.wikiartikel import _MARKDOWN, load_wiki_artikel
+from parsers.wikiartikel import _MARKDOWN, load_wiki_artikel, render_markdown
 from rendering import VAULT_ROOT, obsidian_uri
 
 ZAUBER = 'wiki/dsa-4.1/zauber'
@@ -823,7 +823,7 @@ def _rohstern_html(zeile):
     if zeile.lstrip().startswith('|'):  # Tabellenzeile: ohne Kopf/Trennzeile würde sie als Absatz gerendert
         n = zeile.count('|') - 1
         zeile = '|' + ' a |' * n + '\n' + '|' + '---|' * n + '\n' + zeile
-    return _MARKDOWN(zeile)
+    return render_markdown(zeile)
 
 
 def _sichtbarer_text(rendered):
@@ -841,9 +841,117 @@ def test_rohsternchen_am_fettrand_rendert_als_strong_mit_literalem_stern(datei, 
 
 @pytest.mark.parametrize('datei', ROHSTERN_DATEIEN)
 def test_rohsternchen_datei_zeigt_kein_woertliches_doppelsternchen(datei):
-    rendered = _MARKDOWN((VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8'))
+    rendered = render_markdown((VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8'))
     betroffen = [z for z in _sichtbarer_text(rendered).split('\n') if '**' in z]
     assert not betroffen, betroffen[:3]
+
+
+# --- Buch-Sternchen (Sprint 025 T1, B-023) ---------------------------------------------------------------------
+# `ZfP*`/`LkP*`/`RkP*`/`TaP*` ist im Wiki absichtliche Buchnotation (Stern = „nach Abzug"). mistune paart solche Sterne
+# sonst zu <em>; render_markdown schützt sie per Platzhalter. Synthetische Texte belegen den Fehler, die Korpus-Tests
+# laufen BEWUSST gegen die echten Wiki-Dateien (LLM-Domäne) und sichern die Stern-Bilanz Quelle == HTML.
+
+BUCHKUERZEL = ['ZfP', 'LkP', 'RkP', 'TaP']
+PLATZHALTER = chr(0xE000)  # kein Backslash-Escape im Quelltext (Werkzeug-Übergaben machen daraus Steuerzeichen)
+BACKSLASH = chr(92)
+_KUERZEL_RE = '(?:ZfP|LkP|RkP|TaP)'
+# Quelle: `ZfP*` oder `ZfP<Backslash>*`; ein unmaskierter Stern vor weiterem Stern (`**LkP**`) ist Fettrand.
+_STERN_RE = re.escape('*')
+_QUELL_STERN_RE = re.compile(
+    _KUERZEL_RE + '(?:' + re.escape(BACKSLASH) + _STERN_RE + '|' + _STERN_RE + '(?!' + _STERN_RE + '))')
+_HTML_STERN_RE = re.compile(_KUERZEL_RE + _STERN_RE)
+WIKI_DIR = VAULT_ROOT / 'wiki'
+
+
+@pytest.mark.parametrize('kuerzel', BUCHKUERZEL)
+def test_buchstern_einzeln_bleibt_literal(kuerzel):
+    rendered = render_markdown(f'{kuerzel}* nach Abzug')
+    assert rendered == f'<p>{kuerzel}* nach Abzug</p>\n'
+
+
+@pytest.mark.parametrize('kuerzel', BUCHKUERZEL)
+def test_buchstern_zwei_vorkommen_in_einer_zeile_werden_nicht_zu_em(kuerzel):
+    rendered = render_markdown(f'{kuerzel}*/2 > {kuerzel}*')
+    assert rendered == f'<p>{kuerzel}*/2 &gt; {kuerzel}*</p>\n'
+
+
+def test_buchstern_in_umschliessender_kursivspanne_bleibt_sichtbar():
+    rendered = render_markdown('*TaP*-Schwellen sind SL-anpassbar. Verdecktes Würfeln möglich.*')
+    assert rendered == '<p><em>TaP*-Schwellen sind SL-anpassbar. Verdecktes Würfeln möglich.</em></p>\n'
+
+
+def test_echte_kursivschrift_neben_buchstern_bleibt_kursiv():
+    rendered = render_markdown('*kursiv* und ZfP* dazwischen *noch kursiv*')
+    assert rendered == '<p><em>kursiv</em> und ZfP* dazwischen <em>noch kursiv</em></p>\n'
+
+
+def test_bereits_escapter_buchstern_bleibt_ein_stern():
+    rendered = render_markdown(f'*kursiv* ZfP{BACKSLASH}*/2 > TaP{BACKSLASH}* *noch kursiv*')
+    assert rendered == '<p><em>kursiv</em> ZfP*/2 &gt; TaP* <em>noch kursiv</em></p>\n'
+
+
+def test_fettrand_vor_buchstern_wird_nicht_mit_notation_verwechselt():
+    # `**LkP**` schließt einen Fettbereich (Stern folgt auf Stern): darf nicht als `LkP*` geschützt werden.
+    rendered = render_markdown(f'**LkW** = Wert · **LkP** = Rest · **LkP{BACKSLASH}*** = im Sinne der ZfP*')
+    assert rendered == ('<p><strong>LkW</strong> = Wert · <strong>LkP</strong> = Rest · '
+                        '<strong>LkP*</strong> = im Sinne der ZfP*</p>\n')
+
+
+def test_buchstern_in_code_bleibt_literal_und_platzhalter_leckt_nicht():
+    fence = '```'
+    text = f'Bei `ZfP*/2 > ZfP*` gilt ZfP* nicht.\n\n{fence}\nZfP*/2 > ZfP*\n{fence}\n'
+    rendered = render_markdown(text)
+    assert '<code>ZfP*/2 &gt; ZfP*</code>' in rendered
+    assert '<pre><code>ZfP*/2 &gt; ZfP*\n</code></pre>' in rendered
+    assert PLATZHALTER not in rendered
+
+
+def test_buchstern_in_tabellenzelle_bleibt_literal():
+    rendered = render_markdown('| TaP* | Wert |\n|---|---|\n| ZfP*/2 > ZfP* | TaP* |\n')
+    assert '<th>TaP*</th>' in rendered
+    assert '<td>ZfP*/2 &gt; ZfP*</td>' in rendered
+    assert '<td>TaP*</td>' in rendered
+    assert '<em>' not in rendered
+
+
+def test_vorhandener_platzhalter_im_text_laesst_die_vorbehandlung_aus():
+    # Ein fremdes U+E000 dürfte nach der Rückersetzung nicht fälschlich zu '*' werden: dann läuft der Text unverändert.
+    text = f'Fremd {PLATZHALTER} und ZfP*/2 > ZfP*'
+    rendered = render_markdown(text)
+    assert rendered == _MARKDOWN(text)
+    assert PLATZHALTER in rendered
+
+
+def test_loader_rendert_buchstern_literal_ohne_em(vault):
+    text = ADLERAUGE.replace('Schärft den **Blick** des Zaubernden.', 'Bei ZfP*/2 > ZfP* gilt X.')
+    _write(vault, f'{ZAUBER}/sternchen', text)
+    html = _load(vault, [f'{ZAUBER}/sternchen'])[f'{ZAUBER}/sternchen']['html']
+    assert 'ZfP*/2 &gt; ZfP*' in html
+    assert '<em>' not in html
+    assert PLATZHALTER not in html
+
+
+def _wiki_dateien():
+    dateien = sorted(WIKI_DIR.rglob('*.md'))
+    assert dateien, f'keine Wiki-Dateien unter {WIKI_DIR}'
+    return dateien
+
+
+def test_korpus_stern_bilanz_quelle_gleich_html():
+    abweichend = []
+    for datei in _wiki_dateien():
+        text = datei.read_text(encoding='utf-8')
+        quelle = len(_QUELL_STERN_RE.findall(text))
+        if quelle and quelle != len(_HTML_STERN_RE.findall(render_markdown(text))):
+            abweichend.append(datei.relative_to(VAULT_ROOT).as_posix())
+    assert not abweichend, (len(abweichend), abweichend[:3])
+
+
+def test_korpus_enthaelt_keinen_platzhalter():
+    # Sichert die Annahme der Rückersetzung: kein Wiki-Text bringt U+E000 selbst mit.
+    mit_platzhalter = [d.relative_to(VAULT_ROOT).as_posix() for d in _wiki_dateien()
+                       if PLATZHALTER in d.read_text(encoding='utf-8')]
+    assert not mit_platzhalter, mit_platzhalter[:3]
 
 
 # --- Quelle der Stabzauber-Vorschau (Sprint 023 T4, B-022) -------------------------
