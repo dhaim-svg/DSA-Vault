@@ -30,7 +30,6 @@
 - **D-054 — LeP/AsP/AuP-Zahlen fehlen im Ausdruck vollständig.** In diesem Sprint gefunden und gemessen, bewusst nicht behoben: der naheliegende Fix druckt auf der servierten Seite einen veralteten Wert. Begründung unter „Funde für das Backlog".
 - **D-055 — Der Verlaufstext wird im Ausdruck zu 80–89 % abgeschnitten** (`<textarea>` druckt nur den sichtbaren Ausschnitt). Braucht eine Design-Entscheidung, nicht eine Kontrastregel.
 - **D-056 — Die getönte Papieroptik erscheint im echten Ausdruck weiß** (ohne `print-color-adjust:exact` druckt Chromium keine Hintergründe). Kein Defekt, aber eine offene Design-Frage; siehe Methodenbefund.
-- **`.sg-cap-warn` (`tabs.css:525`, 1,744 : 1) und `.register-leer`/`.register-empty` (`chronik.css:60`, 4,282 : 1)** — beide nur in Datenzuständen sichtbar, die der heutige Charakter nicht hat. *(Im Gesamt-Review gefunden; zusammen mit `.lang-cap-warn` in der Schluss-Fixwelle behoben — falls ein Fall doch offenbleibt, steht er hier.)*
 - **`#tab-profil table *` (`tabs.css:170`)** — Flächenschlag, der jede künftige Tabelle in diesem Tab miterfasst. Umbau hätte Regressionsrisiko, verschoben auf den nächsten Druck-Sprint.
 - **Probe-Spalte im Zauber-Tab** (bricht in 25/25 Zeilen zweizeilig, Spalte schmaler/einzeilig) — würde das in Sprint 025 frisch vermessene Druck-Grid erneut verschieben; geht als eigener S-EPIC ins `BACKLOG.md`. *(Die Pfeil-Bindung ↗ ist dagegen in T2 enthalten — 5 von 25 Namen @ 703 px.)*
 - **Echter Druckdialog / PDF**: die Print-Emulation kennt `@page`-Ränder nicht, die echte Seitenbreite (≈ 703 px) wird über einen 718-px-Viewport nachgestellt. Unverändert offen seit Sprint 020.
@@ -54,6 +53,8 @@
 - **R11 → R12 (zurückgenommen)** — `.journal-verlauf` wurde zunächst als reiner Kosmetikfall ausgelagert („dunkler Kasten, kein Kontrastverstoß"). Die unabhängige Messung des Re-Reviewers ergab **1,072 : 1** und widerlegte die Einstufung → zurück in den Sprint und gefixt (**18,52 : 1** gegen den echten weißen Druckgrund).
 - **R13** — Das `<textarea>` druckt nur ~11–20 % seines Inhalts (clientHeight 140 px gegen scrollHeight 716–1244 px, **80–89 % des Verlaufstexts fehlen**). Braucht eine Design-Entscheidung (im Druck `<pre>` statt `<textarea>`) → eigener EPIC **D-055**.
 - **R14** — Die Konvention „Papier #ece4d0" setzt einen gedruckten Hintergrund voraus, den es ohne `print-color-adjust:exact` nicht gibt; der echte Ausdruck wird weiß statt getönt. Kein Defekt (Kontrast wird dadurch nur besser) → Design-Frage, eigener EPIC **D-056**.
+- **R16** — Die Empfehlung des Gesamt-Reviews zu I1 wurde **weiter** gefasst: nicht nur `.lang-cap-warn`, sondern **alle drei** datenabhängigen Fälle (`.lang-cap-warn` 1,744 : 1, `.sg-cap-warn` 1,744 : 1, `.register-leer`/`.register-empty` 4,282 : 1) wurden gefixt. Grund: die halbe Konsequenz war genau sein Vorwurf an R6 — sie zur Hälfte zu wiederholen hätte nichts gelöst. Der Reviewer hat die Entscheidung im Re-Review bestätigt.
+- **R17** — Die Härtung des `sticky`/`fixed`-Wächters (Minor M1) wurde **nicht vertagt**, obwohl der Reviewer sie als Test-Item einstufte: ein Sicherheitsnetz, das sich durch eine beliebige Bildschirmregel stumm schalten lässt, ist keines. Beide von ihm reproduzierten Umgehungen sind geschlossen, mit eigenen Bypass-Konstruktionen belegt.
 - **R15** — `.sg-cart` überdeckte bei der echten PDF-Paginierung eine Tabellenzeile und druckte als schwarze Leiste. **Im Sprint gefixt**, obwohl kein Kontrastfall: ein Bedienelement, das im Ausdruck Inhalt verdeckt, trifft das Sprintziel, und der Fix ist ein Eintrag in eine bereits gepflegte Ausschlussliste — nicht der Design-Aufwand, der D-054/D-055/D-056 nach draußen verwies.
 
 ## Methodenbefund (sprintübergreifend)
@@ -68,6 +69,11 @@
 - **37 Kontrast-Gruppen / 495 Elemente** von 1503 geprüften Textknoten: steigern 10, inventar 10, profil 9, sprachen 6, talente 3, kampf 1, chronik 0. **Zauber-Tab 0** — der Sprint-025-Fix hält und dient als Regressions-Baseline.
 - **Überlauf: 0** bei 794/718/615 px in allen Tabs (`scrollWidth` = `innerWidth`). Die D-052-Grid-Ursache war zauber-spezifisch; die Plan-Option „Überlauf nach Befund fixen" entfällt damit ersatzlos.
 - Schlimmster Bereich: `steigern.j2` (Steigerungstabelle), nahezu aller Text bei ~1 : 1.
+
+## Zusätzlich gefixt (über den ursprünglichen Zuschnitt hinaus)
+
+- **Pfeil-Bindung ↗** im Druck (R2), **`.sg-erf` entkleidet statt ausgeblendet** (R9, ohne Informationsverlust), **`.journal-verlauf`** 1,072 → 18,52 : 1 (R12), **`.sg-cart`** verdeckte im echten PDF eine Tabellenzeile (R15), **die drei datenabhängigen Badges/Platzhalter** `.lang-cap-warn`, `.sg-cap-warn`, `.register-leer`/`.register-empty` (R16), **Chronik-Ansicht „Kompiliert"** mit 3 von T1 nie gemessenen Gruppen (R10).
+- **Neuer generischer Wächter**: jedes künftige `position:sticky`/`fixed`-Element wird automatisch gegen die Druck-Neutralisierung geprüft (dynamisch aus dem CSS abgeleitet, nicht gepinnt; nach R17 gehärtet).
 
 ## Funde für das Backlog
 

@@ -7,9 +7,8 @@
 
 ## In Progress
 
-| ID    | Kat.    | Titel | Effort | Sprint |
-|-------|---------|-------|--------|--------|
-| B-026 | tooling | Zweite Test-Replik im selben Modul (Fund Sprint 025 T4): `test_inventar_model.py::test_inventar_gewicht` bildet die Inventar-Gewichtsschleife aus `parsers/held.py:534–540` zeichengleich im Test nach und prüft die Kopie, nicht `load_held` — gleiches Muster wie B-025. Umstellen auf `load_held(write_mini_held(tmp_path, ausruestung=…))` (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`), Replik-Schleife streichen; Mutationsprobe am Parser | S | 026 |
+_(keine)_
+
 
 ---
 
@@ -27,6 +26,7 @@
 
 | ID    | Kat.      | Titel                                                                                | Effort | Erledigt   |
 |-------|-----------|--------------------------------------------------------------------------------------|--------|------------|
+| B-026 | tooling | Gewichts-Unittests pruefen `load_held` statt der Test-Replik: `test_inventar_gewicht` bildete die Schleife aus `parsers/held.py:533-544` zeichengleich nach und pruefte die Kopie. Ersetzt durch 3 Tests ueber `load_held(write_mini_held(ausruestung=…))` (Struktur, `—`/leer/`-` → 0, nicht-numerisch via `safe_int`); Mutationsprobe deckte auf, dass die Bedingung in `held.py:539` gegenueber `safe_int` **redundant** ist (Implementierer und Reviewer unabhaengig nachgerechnet) → B-027; +5 Tests (Sprint 026) | S | 2026-09-20 |
 | B-023 | wiki→tooling | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) rendern in der Artikelvorschau literal statt als `<em>`: **Wiki bleibt unberührt** (User-Entscheidung Parser statt Massenedit), `parsers/wikiartikel.py::render_markdown` ersetzt die Notation vor mistune durch U+E000 und danach zurück (Lookahead `(?!\*)` schützt `**LkP**`); Prototyp am Korpus widerlegte den ursprünglich geplanten Weg (mistune-Inline-Regel scheitert an umschließendem `*…*`); **Ganzdatei-Stern-Bilanz 82 → 0 Dateien** (Zeilen-Zählung des Pre-flights war ungenau), im Static-Render `<em>` 16 → 14 (die 2 falsch gepaarten Spannen in Lichtblitz/Antimagie); Korpus-Tests: Bilanz, kein Platzhalter im Wiki, kein Leck in Link-URLs; B-020-Tests auf `render_markdown` umgestellt; +18 Tests (Sprint 025; Polish ohne neuen Test) | M | 2026-09-20 |
 | B-025 | tooling | Geld-Unittests prüfen `load_held` statt der Test-Replik `_make_geld_dict` (gestrichen): Struktur, Kurs 1234, Fallback in 5 Fällen (fehlender Schlüssel/kein Frontmatter → erster Zweig; `geld:` null/skalar/Liste → `else`-Zweig), krumme Werte (`abc`→0, `"12"`→12, leer→0) — die Replik hatte `int` statt `safe_int` und den `else`-Zweig nie getroffen; Mutationsproben je Vertrag; Restmuster → B-026; +5 Tests (Sprint 025) | S | 2026-09-20 |
 | B-024 | tooling | Test-Restkopplung II: `test_load_held_geld_integration` auf synthetischen Mini-Helden (krumme Werte, Kurs 1000/100/10/1 aus dem Parser), Kampf-Wund-Hooks Fall „mit Waffe“ synthetisch und nicht-vakuös (`_weapon_cards == 1`; die drei Live-Tests bleiben, waren aber bei 0 Waffen vakuös), rohe `.index` an den zwei benannten Stellen durch `_pos()` mit lesbarer Meldung ersetzt (übrige ~14 `.index` bewusst unverändert); +4 Tests (Sprint 024) | S | 2026-09-20 |
