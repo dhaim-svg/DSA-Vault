@@ -187,10 +187,15 @@
      ein <select> grundsaetzlich nicht druckbar waere: der Browser rendert den gewaehlten <option>-Text. Statt
      auszublenden (aeltere Fassung, verlor die gewaehlte Erfahrungsstufe ersatzlos — sie steht sonst nirgends im
      Druck) wird der Select entkleidet: kein Bedienelement-Look, nur der Text bleibt. */
+  /* Fix-Runde 1 (Review): padding/border-radius/max-width standen ohne !important — dieselbe Spezifitaet wie die
+     Bildschirm-Regel tabs.css:523, die aber SPAETER im Quelltext steht und darum auch im Druck gewann (Reviewer-
+     Fund per getComputedStyle: alle drei Werte kamen aus Zeile 523, nicht von hier). Sichtbar war das im Ist-Render
+     nicht (kein Rahmen -> kein Radius sichtbar, alle drei Optionstexte passten unter 130px), aber bei laengeren
+     Optionstexten haette max-width:130px abgeschnitten. */
   .sg-erf{
     appearance:none; -webkit-appearance:none; -moz-appearance:none;
     background:transparent !important; color:var(--paper-ink) !important;
-    border:none !important; border-radius:0; padding:0; max-width:none;
+    border:none !important; border-radius:0 !important; padding:0 !important; max-width:none !important;
   }
 }
 

@@ -990,10 +990,15 @@ body::before{
      ein <select> grundsaetzlich nicht druckbar waere: der Browser rendert den gewaehlten <option>-Text. Statt
      auszublenden (aeltere Fassung, verlor die gewaehlte Erfahrungsstufe ersatzlos — sie steht sonst nirgends im
      Druck) wird der Select entkleidet: kein Bedienelement-Look, nur der Text bleibt. */
+  /* Fix-Runde 1 (Review): padding/border-radius/max-width standen ohne !important — dieselbe Spezifitaet wie die
+     Bildschirm-Regel tabs.css:523, die aber SPAETER im Quelltext steht und darum auch im Druck gewann (Reviewer-
+     Fund per getComputedStyle: alle drei Werte kamen aus Zeile 523, nicht von hier). Sichtbar war das im Ist-Render
+     nicht (kein Rahmen -> kein Radius sichtbar, alle drei Optionstexte passten unter 130px), aber bei laengeren
+     Optionstexten haette max-width:130px abgeschnitten. */
   .sg-erf{
     appearance:none; -webkit-appearance:none; -moz-appearance:none;
     background:transparent !important; color:var(--paper-ink) !important;
-    border:none !important; border-radius:0; padding:0; max-width:none;
+    border:none !important; border-radius:0 !important; padding:0 !important; max-width:none !important;
   }
 }
 
@@ -1377,6 +1382,18 @@ body { padding-top: 46px; }
 .journal-save-btn:hover { background: rgba(95,195,228,.25); }
 .journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
 .journal-save-ok { font-size: 11px; color: var(--accent-aup); }
+
+/* ---- Print (D-053, Sprint 026 T2, Fix-Runde 1) ----
+   journal.css hatte noch keinen eigenen @media print-Block. T1 mass fuer #tab-chronik 0 Verstoesse, aber nur die
+   Default-Ansicht "Roh" (chronik.css:2/3: .chronik-view{display:none}, nur .chronik-view--active ist sichtbar,
+   das Journal liegt in der Ansicht "Kompiliert"). Erst als eigener Nachtrag gemessen (Playwright, Print-Emulation,
+   718px, Ansicht per .chronik-switch-btn[data-view="kompiliert"].click() umgeschaltet — reine Bildschirm-Interaktion,
+   kein Schreibzugriff): 3 Gruppen zwischen 1,95 und 4,28:1. Diese Gruppen sind ZUSTANDSABHAENGIG — nur sichtbar,
+   wenn #tab-chronik auf "Kompiliert" steht (analog zur Kennzeichnung bei .weapon-card + div in tabs.css). */
+@media print {
+  .journal-section h4, .journal-section summary, .journal-readonly { color: var(--paper-ink) !important; }
+  /* .journal-section h4/summary 1,95:1 (ink-mute); .journal-readonly 4,28:1 (ink-dim) */
+}
 /* ---- Sprachen-Tab ---- */
 .lang-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .lang-table th { font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--ink-mute); font-weight: 600; padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); text-align: left; }

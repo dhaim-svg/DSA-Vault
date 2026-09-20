@@ -1135,6 +1135,18 @@ def test_css_print_steigern_erfahrungs_select_meets_contrast_threshold():
     assert ratio >= 4.5, ratio
 
 
+def test_css_print_steigern_erfahrungs_select_chrome_wins_the_cascade():
+    # Fix-Runde 1 (Review-Fund): padding/border-radius/max-width standen ohne !important im Druckblock. Die
+    # Bildschirm-Regel tabs.css:523 (gleiche Spezifitaet .sg-erf, aber SPAETER im Quelltext) gewann darum auch im
+    # Druck (Reviewer-Beleg per getComputedStyle: alle drei Werte kamen aus Zeile 523). Bei gleicher Spezifitaet
+    # entscheidet nicht die Media-Query-Zugehoerigkeit, sondern Reihenfolge + Wichtigkeit — !important ist die
+    # einzige verlaessliche Lösung, solange die Bildschirmregel spaeter im Bundle steht.
+    rules = _print_rules()
+    decls = ' '.join(_decls(rules, '.sg-erf'))
+    for prop in ('padding', 'border-radius', 'max-width'):
+        assert re.search(rf'(?<![-\w]){prop}\s*:[^;]*!important', decls), (prop, decls)
+
+
 PRINT_SPRACHEN_SELECTORS = ('.lang-table th', '.l-name', '.l-taw', '.l-kompl', '.lang-section-head')
 
 
@@ -1154,11 +1166,34 @@ def test_css_print_sprachen_colors_are_paper_ink():
     assert re.search(r'@media\s+print\s*\{[^@]*\.lang-table\s+th', sprachen_css)
 
 
+# Chronik "Kompiliert"-Ansicht (D-053, Sprint 026 T2, Fix-Runde 1 — Review-Fund): T1 mass fuer #tab-chronik 0
+# Verstoesse, aber nur die Default-Ansicht "Roh" (chronik.css: .chronik-view{display:none}, nur die aktive Ansicht
+# ist sichtbar; das Journal-Partial liegt in "Kompiliert"). Eigene Messung (Playwright, Print-Emulation, 718px,
+# Ansicht per .chronik-switch-btn[data-view="kompiliert"].click() umgeschaltet — Bildschirm-Interaktion, kein
+# Schreibzugriff im Vault): 3 Gruppen zwischen 1,95 und 4,28:1, alle ZUSTANDSABHAENGIG (nur in "Kompiliert" sichtbar).
+PRINT_JOURNAL_SELECTORS = ('.journal-section h4', '.journal-section summary', '.journal-readonly')
+
+
+def test_css_print_journal_kompiliert_view_colors_are_paper_ink():
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_JOURNAL_SELECTORS
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+    # der neue Block muss tatsaechlich in journal.css liegen (Ursprungsregel-Datei), nicht in tabs.css/chronik.css
+    journal_css = (STATIC_DIR / 'journal.css').read_text(encoding='utf-8')
+    assert re.search(r'@media\s+print\s*\{[^@]*\.journal-readonly', journal_css)
+
+
 def test_css_seven_tabs_print_fix_leaves_screen_css_untouched():
     # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-053 nicht aendern; alle neuen Regeln stehen
     # im Druckblock (Sprint-025-Vorbild: test_css_zauber_tab_print_fix_leaves_screen_css_untouched).
     screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
-    new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | {
+    new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | set(PRINT_JOURNAL_SELECTORS) | {
         '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta',
     }
     leaked = [(s, d) for s, d in screen_rules if s in new_selectors and re.search(r'paper-(?:ink|rule)|!important|display:\s*none', d)]

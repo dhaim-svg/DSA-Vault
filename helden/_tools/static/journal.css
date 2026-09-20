@@ -11,3 +11,15 @@
 .journal-save-btn:hover { background: rgba(95,195,228,.25); }
 .journal-save-btn:disabled { opacity: .5; cursor: not-allowed; }
 .journal-save-ok { font-size: 11px; color: var(--accent-aup); }
+
+/* ---- Print (D-053, Sprint 026 T2, Fix-Runde 1) ----
+   journal.css hatte noch keinen eigenen @media print-Block. T1 mass fuer #tab-chronik 0 Verstoesse, aber nur die
+   Default-Ansicht "Roh" (chronik.css:2/3: .chronik-view{display:none}, nur .chronik-view--active ist sichtbar,
+   das Journal liegt in der Ansicht "Kompiliert"). Erst als eigener Nachtrag gemessen (Playwright, Print-Emulation,
+   718px, Ansicht per .chronik-switch-btn[data-view="kompiliert"].click() umgeschaltet — reine Bildschirm-Interaktion,
+   kein Schreibzugriff): 3 Gruppen zwischen 1,95 und 4,28:1. Diese Gruppen sind ZUSTANDSABHAENGIG — nur sichtbar,
+   wenn #tab-chronik auf "Kompiliert" steht (analog zur Kennzeichnung bei .weapon-card + div in tabs.css). */
+@media print {
+  .journal-section h4, .journal-section summary, .journal-readonly { color: var(--paper-ink) !important; }
+  /* .journal-section h4/summary 1,95:1 (ink-mute); .journal-readonly 4,28:1 (ink-dim) */
+}
