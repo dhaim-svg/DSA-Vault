@@ -8,7 +8,7 @@
 | T1 | **D-053 Vermessung** (Browser, nur lesend): Print-Emulation über Static-`http.server` bei 794/718/615 px; je Tab (`profil`, `talente`, `kampf`, `steigern`, `inventar`, `sprachen`, `chronik`) WCAG-Sweep über alle Elemente mit eigenem Text, Gruppen nach Selektor-Signatur **mit Ursprungsregel Datei:Zeile**, dazu `docScrollWidth` je Tab und Bildschirm-Baseline als JSON. Kein Commit, keine Repo-Spuren | ⬜ todo | — (Messbericht unter `.superpowers/sdd/sprint-026/`) |
 | T2 | **D-053 Fix**: `@media print` in `static/tabs.css` (+ `base.css` / `chronik.css`, wo die Ursprungsregel liegt) — alle in T1 gemessenen Gruppen auf `var(--paper-ink)`; bekannte Anhaltspunkte `.card-title .meta` / `.card > h4` (1,59–1,95 : 1), AP-Zahlen der Zeile „AP & Steigerung", `.journal-readonly` (~3,3 : 1, Altbestand seit Sprint 017). Zusätzlich Pfeil ↗ des Namenslinks per geschütztem Leerzeichen an den Namen binden. Tests im Druckblock von `test_rendering.py` | ⬜ todo | `static/tabs.css`, ggf. `static/base.css`, `static/chronik.css`, Template der Namenszelle, `tests/test_rendering.py` |
 | T3 | **Browser-Nachmessung** im selben Agenten-Kontext (`SendMessage` an T1): 0 Kontrast-Restgruppen über alle 7 Tabs, `docScrollWidth` unverändert oder besser, Bildschirm-Gegenprobe 0 Abweichungen gegen die T1-Baseline | ⬜ todo | — |
-| T4 | **B-026**: `tests/test_inventar_model.py::test_inventar_gewicht` auf `load_held(write_mini_held(tmp_path, ausruestung=…))` umstellen (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`); Replik der Schleife aus `parsers/held.py:534–540` streichen; Mutationsprobe am Parser | ⬜ todo | `tests/test_inventar_model.py`, ggf. `tests/heldfixtures.py` |
+| T4 | **B-026**: `tests/test_inventar_model.py::test_inventar_gewicht` auf `load_held(write_mini_held(tmp_path, ausruestung=…))` umstellen (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`); Replik der Schleife aus `parsers/held.py:534–540` streichen; Mutationsprobe am Parser | ✅ done (`a0fbb8a`; 618 Tests, Review clean) | `tests/test_inventar_model.py`, ggf. `tests/heldfixtures.py` |
 | T5 | Verifikation + `/sprint-wrap` | ⬜ todo | `sprints/sprint-026/verification.md`, `handoff.md`, Tracker |
 
 ## Key Design Decisions
@@ -33,6 +33,12 @@
 
 ## Rulings
 
-*(werden während des Sprints ergänzt)*
-
 - **R1** — Kein Worktree; Commits direkt auf `master` (CLAUDE.md-Workflow, wie Sprint 023–025).
+- **R2** — Die Pfeil-Bindung ↗ passiert per `content:"\00a0↗"` im `@media print`-Block, **nicht im Template**: der Pfeil ist ein CSS-`::after` (`base.css:400`, `base.css:637`) und steht im Template gar nicht. Die Plan-Zeile „Template der Namenszelle" in T2 ist damit gegenstandslos. Druckblock statt `base.css`, damit der Bildschirm unverändert bleibt.
+- **R3** — `.journal-readonly` liegt in `static/journal.css:7` (Datei **ohne** `@media print`-Block), nicht in `chronik.css` wie im Plan vermutet. Gefixt wird, wo T1 die Ursprungsregel misst.
+- **R4** — T2 darf die `#tab-zauber`-Präfixe (`tabs.css:109/110`) entfernen, wenn T1 belegt, dass dieselben Klassen in allen Tabs denselben Fix brauchen. Bedingung: T3 misst den Zauber-Tab gegen die Sprint-025-Werte nach (0 Regressionen).
+- **R5** — T4 (B-026) lief parallel zu T1 (nur lesende Messung); disjunkte Dateien, beide Commits pfadbegrenzt.
+
+## Funde für das Backlog
+
+- `parsers/held.py:539` — die Bedingung `gew_raw.strip() not in ('—','','-')` ist gegenüber `safe_int` (`held.py:171–177`) redundant; `safe_int` bildet alle drei Werte selbst auf 0 ab. Von Implementierer **und** Reviewer unabhängig nachgerechnet (T4). Kein Verhaltensfehler — Cleanup-Kandidat.
