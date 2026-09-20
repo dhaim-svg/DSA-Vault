@@ -1176,15 +1176,18 @@ PRINT_CAP_WARN_FAMILY = ('.lang-cap-warn', '.register-leer', '.register-empty')
 
 
 def test_css_print_cap_warn_family_meets_contrast_threshold():
+    # Wirkungstest wie bei .sg-erf: die im Druck deklarierte Farbe muss auf Papier >= 4,5:1 erreichen, egal welche
+    # Variable dort steht. (Browser-Messung der Fixwelle: .sg-cap-warn/.register-* 14,617:1; .lang-cap-warn 13,496:1,
+    # weil das Badge seinen halbtransparenten Gold-Grund behaelt — dieser Grund wird hier nicht mitgerechnet, der
+    # Test prueft die Deklaration gegen Papier. Ohne gedruckten Hintergrund liegt der echte Wert hoeher, s. D-056.)
     rules = _print_rules()
-    missing = [
-        sel for sel in PRINT_CAP_WARN_FAMILY
-        if not any(
-            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
-            for s, decl in rules
-        )
-    ]
-    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+    for sel in PRINT_CAP_WARN_FAMILY + ('.sg-name > span',):
+        decls = _decls(rules, sel)
+        assert decls, f'{sel} hat keine Druck-Regel'
+        joined = ' '.join(decls)
+        assert re.search(r'(?<![-\w])color\s*:[^;]*!important', joined), (sel, joined)
+        ratio = _contrast_ratio(_resolve_color_rgb(joined), PAPER_RGB)
+        assert ratio >= 4.5, (sel, ratio)
     # .sg-cap-warn haengt nicht an einem eigenen Selektor, sondern wird von .sg-name > span mitgefangen, seit die
     # :not(.sg-cap-warn)-Ausnahme entfernt wurde (Wirkungstest statt Literalvergleich; Kommentare koennen die
     # Zeichenfolge weiterhin erwaehnen, daher Pruefung ueber die geparsten Selektoren, nicht den Rohtext).

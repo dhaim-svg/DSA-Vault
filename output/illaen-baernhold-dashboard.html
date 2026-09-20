@@ -1440,8 +1440,10 @@ body { padding-top: 46px; }
   /* Gesamt-Review-Fixwelle: .lang-cap-warn (sprachen.j2:24/53, "Grenze K…") zeigt sich nur, wenn taw >= komplexitaet
      ist — im Ist-Render 0 Elemente, ungemessen/zustandsabhaengig. Eigene accent-gold-Bildschirm-color, 1,744:1 auf
      Papier (gleicher Wert wie .sg-cap-warn/.sg-ap-val.avail). Rahmen/Hintergrund (rgba(212,168,75,...), ohnehin
-     schon unter 1,3:1 auf Papier, also praktisch unsichtbar) bleiben bewusst unangetastet, damit das Badge seine
-     Kastenform behaelt — nur die Textfarbe muss tragen. */
+     schon unter 1,3:1 auf Papier, also praktisch unsichtbar) bleiben unangetastet, weil sie folgenlos sind: ohne
+     print-color-adjust:exact druckt Chromium sie gar nicht mit (Methodenbefund Sprint 026, s. D-056). In der
+     Emulation tintet der Gold-Grund die Flaeche minimal — daher dort 13,496:1 statt 14,617:1, beides weit ueber
+     der Schwelle. Nur die Textfarbe muss tragen. */
   .lang-cap-warn{ color:var(--paper-ink) !important; }
 }
 /* ---- Chronik tab ---- */
