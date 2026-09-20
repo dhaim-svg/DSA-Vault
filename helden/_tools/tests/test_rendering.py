@@ -954,7 +954,8 @@ PRINT_ZAUBERTAB_SELECTORS = (
     # Legende (1,74 / 1,95)
     '.legend-row', '.legend-row span', '.legend-row span b',
     # Kartenkopf, Badges, Ueberschriften mit Inline-color (1,95 / 4,28 / 4,12 / 4,19 / 1,74)
-    '#tab-zauber .card-title .meta', '.sf-list li .sf-name .meta', '.vol-badge', '#tab-zauber .sec-head h2 span',
+    # Sprint 026 T2 (Ruling R4): Praefix entfernt, dieselbe Klasse wird jetzt auch in profil/inventar/kampf gebraucht
+    '.card-title .meta', '.sf-list li .sf-name .meta', '.vol-badge', '#tab-zauber .sec-head h2 span',
     '#tab-zauber .card > h4',
 )
 PRINT_SLOT_BUTTON_SELECTORS = (
@@ -999,6 +1000,110 @@ def test_css_print_hides_zauberspeicher_slot_buttons():
         if not any(s == sel and re.search(r'display\s*:\s*none\s*!important', decl) for s, decl in rules)
     ]
     assert not missing, f'im Druck nicht ausgeblendet: {missing}'
+
+
+# Uebrige 7 Tabs im Druck (D-053, Sprint 026 T2-Messung im Browser, Papier #ece4d0): 37 Selektor-Gruppen / 495 Elemente
+# lagen mit 1,07 bis 4,28 : 1 unter 4,5 : 1 — dieselbe Falle wie D-052 (Kind mit eigener Bildschirm-color erbt das
+# !important am Vorfahren nicht; Inline-Styles in inventar.j2:43/90 und profil.j2:84-93 schlaegt nur !important mit
+# passendem Selektor). .talent-row.zero (eigener Farbwert statt paper-ink) und sprachen.css (eigene Datei/eigener
+# Druckblock) haben eigene Tests unten.
+PRINT_SEVEN_TABS_PAPER_INK_SELECTORS = (
+    # Inventar (T1: 10 Gruppen)
+    '.equip-stat .k', '.equip-stat .v', '.inv-coin-label', '.inv-coin-val', '.inv-coin-total',
+    '.inv-weight-note', '.inv-reise-note', '.equip-stat + p', '.inv-list li > span',
+    # Profil (T1: 9 Gruppen)
+    '.aussehen-row dt', '.aussehen-row dd', '#tab-profil table', '#tab-profil table *', '.feed li small',
+    # Kampf: R6 (vorsorglich, ungemessen)
+    '.weapon-card + div', '.weapon-card + div *',
+    # Talente (T1: 3 Gruppen; .talent-row.zero siehe test_css_print_talente_zero_meets_contrast_threshold)
+    '.talent-grp h4 .skt',
+    # Steigern (T1: 10 Gruppen)
+    '.sg-section-head', '.sg-ap-label', '.sg-ap-val', '.sg-val', '.sg-cost', '.sg-select-hint',
+    '.sg-name > span:not(.sg-cap-warn)', '.steiger-table th',
+)
+
+
+def test_css_print_seven_tabs_colors_are_paper_ink():
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_SEVEN_TABS_PAPER_INK_SELECTORS
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+
+
+def _relative_luminance(rgb):
+    def lin(c):
+        c /= 255
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = rgb
+    return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+
+
+def _contrast_ratio(rgb1, rgb2):
+    l1, l2 = _relative_luminance(rgb1), _relative_luminance(rgb2)
+    lighter, darker = max(l1, l2), min(l1, l2)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
+def _hex_to_rgb(hexstr):
+    hexstr = hexstr.lstrip('#')
+    return tuple(int(hexstr[i:i + 2], 16) for i in (0, 2, 4))
+
+
+PAPER_RGB = (0xec, 0xe4, 0xd0)
+
+
+def test_css_print_talente_zero_meets_contrast_threshold():
+    # T1 mass den alten Fix (#7a6a4a) bei 4,156:1 — noch unter 4,5:1. Prueft die Wirkung (Kontrast), nicht die
+    # Schreibweise: welcher Hex-Wert es ist, ist egal, solange er den Zielwert erreicht.
+    rules = _print_rules()
+    decls = _decls(rules, '.talent-row.zero .t-name') + _decls(rules, '.talent-row.zero .t-zfw')
+    assert decls, 'keine Druck-Regel fuer .talent-row.zero .t-name/.t-zfw gefunden'
+    for decl in decls:
+        m = re.search(r'(?<![-\w])color\s*:\s*#([0-9a-fA-F]{6})\s*!important', decl)
+        assert m, decl
+        ratio = _contrast_ratio(_hex_to_rgb(m.group(1)), PAPER_RGB)
+        assert ratio >= 4.5, (m.group(1), ratio)
+
+
+def test_css_print_hides_steigern_erfahrungs_select():
+    # Ruling R7: <select class="sg-erf"> druckt als voller schwarzer Kasten (Screenshot-Fund, kein Kontrastwert).
+    rules = _print_rules()
+    assert any(s == '.sg-erf' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules)
+
+
+PRINT_SPRACHEN_SELECTORS = ('.lang-table th', '.l-name', '.l-taw', '.l-kompl', '.lang-section-head')
+
+
+def test_css_print_sprachen_colors_are_paper_ink():
+    # sprachen.css hatte noch keinen eigenen @media print-Block; T1 mass 6 Gruppen zwischen 1,07 und 1,95:1.
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_SPRACHEN_SELECTORS
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+    # der neue Block muss tatsaechlich in sprachen.css liegen, nicht in tabs.css
+    sprachen_css = (STATIC_DIR / 'sprachen.css').read_text(encoding='utf-8')
+    assert re.search(r'@media\s+print\s*\{[^@]*\.lang-table\s+th', sprachen_css)
+
+
+def test_css_seven_tabs_print_fix_leaves_screen_css_untouched():
+    # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-053 nicht aendern; alle neuen Regeln stehen
+    # im Druckblock (Sprint-025-Vorbild: test_css_zauber_tab_print_fix_leaves_screen_css_untouched).
+    screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
+    new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | {
+        '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta',
+    }
+    leaked = [(s, d) for s, d in screen_rules if s in new_selectors and re.search(r'paper-(?:ink|rule)|!important|display:\s*none', d)]
+    assert not leaked, leaked
 
 
 def _print_spell_grid_decl():

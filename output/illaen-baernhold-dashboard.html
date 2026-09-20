@@ -905,8 +905,10 @@ body::before{
   .slot-mods-row,.slot-mods-label,.slot-erneuerung-label,.speicher-slot.leer .slot-header,
   .mod-row .mod-name,.mod-row .mod-zfp,.mod-row .mod-probe,.mod-row .mod-zd,.mod-row.header > span,.mod-footer-link,
   .legend-row,.legend-row span,.legend-row span b,
-  #tab-zauber .card-title .meta,.sf-list li .sf-name .meta,.vol-badge,#tab-zauber .sec-head h2 span,
+  .card-title .meta,.sf-list li .sf-name .meta,.vol-badge,#tab-zauber .sec-head h2 span,
   #tab-zauber .card > h4{ color:var(--paper-ink) !important; }
+  /* .card-title .meta (Ruling R4, Sprint 026 T2): #tab-zauber-Praefix entfernt — dieselbe Klasse faellt in profil/
+     inventar/kampf mit demselben 1,95:1 an (span.meta, T1-Messung); eine Regel statt vier parallelen. */
   /* Nicht-Text: Badge/Speicherkasten (Rahmen 1,08:1, Grund 1,03-1,04:1) als Kasten mit sichtbarem Rand (--paper-rule = 3,4:1);
      gepunkteter Link-Unterstrich rgba(95,195,228,.25) = 1,13:1 */
   .vol-badge{ background:transparent !important; border-color:var(--paper-rule) !important; }
@@ -924,7 +926,9 @@ body::before{
   .spell > *{ min-width:0; overflow-wrap:anywhere; }
   .spell .probe{ white-space:normal; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
-  .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#7a6a4a !important; }
+  /* #7a6a4a (aelterer Fix) mass T1 zufolge nur 4,156:1 — noch unter 4,5:1; #6b5c3e = 5,14:1, haelt die gedaempfte
+     Optik der TaW-0-Zeile aber erreicht den Zielwert (Sprint 026 T2). */
+  .talent-row.zero .t-name,.talent-row.zero .t-zfw{ color:#6b5c3e !important; }
   .weapon-card{ background:transparent !important; border-color:var(--paper-ink) !important; }
   .weapon-card .w-name{ color:var(--paper-ink) !important; font-size:10pt; }
   .weapon-grid > div{ background:transparent !important; border-color:var(--paper-ink) !important; }
@@ -947,6 +951,40 @@ body::before{
   .story p{ font-size:10pt; line-height:1.5; color:var(--paper-ink); text-indent:0; margin:0 0 8px; }
   .story p + p{ text-indent:14pt; }
   .story p:first-of-type::first-letter{ font-family:'Cinzel',serif; font-size:32pt; float:left; line-height:.9; margin:2pt 6pt 0 0; color:var(--paper-ink); }
+  /* --- Uebrige 7 Tabs (D-053, Sprint 026 T2-Messung im Browser, Papier #ece4d0): 37 Selektor-Gruppen / 495 Elemente
+     lagen mit 1,07 bis 4,28:1 unter 4,5:1 — dieselbe D-052-Falle: ein Kind mit eigener Bildschirm-color erbt das
+     !important am Vorfahren (.card, .talent-grp h4, .weapon-card) nicht, Inline-Styles (inventar.j2:43/90,
+     profil.j2:84-93) schlaegt nur !important mit passendem Selektor. sprachen.css-Klassen (l-name, l-taw, ...)
+     stehen nicht hier, sondern in sprachen.css, das noch keinen eigenen Druckblock hatte. */
+  /* Inventar (T1: 10 Gruppen) */
+  .equip-stat .k,.equip-stat .v,.inv-coin-label,.inv-coin-val,.inv-coin-total,
+  .inv-weight-note,.inv-reise-note{ color:var(--paper-ink) !important; }
+  /* .k/.v 1,95:1 / 1,07:1; .inv-coin-label/-val 1,95:1 / 1,74:1; -total/-weight-note/-reise-note 4,28:1 */
+  .equip-stat + p{ color:var(--paper-ink) !important; } /* inventar.j2:43 Inline-color (ink-dim, 4,28:1), keine Klasse auf dem <p> */
+  .inv-list li > span{ color:var(--paper-ink) !important; } /* inventar.j2:90 Reise-Anmerkung, Inline-color ink-dim, 4,28:1 */
+  /* Profil (T1: 9 Gruppen) */
+  .aussehen-row dt,.aussehen-row dd{ color:var(--paper-ink) !important; } /* dt 1,95:1, dd 1,07:1 */
+  #tab-profil table,#tab-profil table *{ color:var(--paper-ink) !important; } /* profil.j2:84-93 Sessions-Tabelle,
+     Inline-color (ink-mute/ink) je Zelle; einzige <table> in #tab-profil, daher als ganze Tabelle gefasst */
+  .feed li small{ color:var(--paper-ink) !important; } /* Steigerungs-Log-Begruendung, Inline-color ink-dim, 4,28:1 */
+  /* Kampf (T1: 1 Gruppe span.meta, siehe .card-title .meta oben) + Ruling R6 (vorsorglich): kampf.j2:93-94 hat
+     dieselbe Inline-Style-Falle wie profil.j2:84-93, im Ist-Render von illaen-baernhold aber nicht getroffen (keine
+     Kampftechnik, die kt.stk setzt und auf die aktuelle Waffe passt) — per Grep gefunden, nicht gemessen. */
+  .weapon-card + div,.weapon-card + div *{ color:var(--paper-ink) !important; }
+  /* Talente (T1: 3 Gruppen; .talent-row.zero siehe oben) */
+  .talent-grp h4 .skt{ color:var(--paper-ink) !important; } /* 1,95:1, eigene Bildschirm-color auf base.css:565 */
+  /* Steigern (T1: 10 Gruppen) */
+  .sg-section-head,.sg-ap-label,.sg-ap-val,.sg-val,.sg-cost,.sg-select-hint,
+  .sg-name > span:not(.sg-cap-warn),.steiger-table th{ color:var(--paper-ink) !important; }
+  /* .sg-ap-val/.sg-name-Span/.sg-val 1,07:1; .sg-cost 1,49:1 (affordable) / 4,28:1 (expensive, hier vereinheitlicht);
+     .sg-section-head 1,59:1 (Akzent-Blau); .sg-ap-val.avail 1,74:1 (Gold, durch !important auf .sg-ap-val mitgefixt,
+     da beide Regeln dasselbe Element treffen und Wichtigkeit vor Spezifitaet geht); .sg-ap-label/.steiger-table th/
+     .sg-select-hint 1,95:1. .sg-cap-warn (Komplexitaetsgrenze-Badge) bleibt aussen vor: im Ist-Render 0 Elemente,
+     nicht Teil der T1-Messung. */
+  .sg-erf{ display:none !important; } /* Ruling R7: <select> druckt als voller schwarzer Kasten (Screenshot-Fund,
+     kein Kontrastwert) — Bedienelement wie die Zauberspeicher-Buttons oben. Die gewaehlte Erfahrungsstufe
+     (gut/schlecht) ist im Druck an dieser Stelle dann nicht mehr ablesbar; der dadurch veraenderte AP-Preis bleibt
+     in .sg-cost sichtbar. */
 }
 
 /* ── Interactive vitals ──────────────────────────────────── */
@@ -1341,6 +1379,16 @@ body { padding-top: 46px; }
 .lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
 .lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
 .lang-section-head--first { margin-top: 0; }
+
+/* ---- Print (D-053, Sprint 026 T2) ----
+   sprachen.css hatte noch keinen eigenen @media print-Block (die anderen Tab-CSS ohne eigene Datei stehen dafuer in
+   tabs.css). T1-Messung (Browser, Papier #ece4d0) fand 6 Selektor-Gruppen zwischen 1,07 und 1,95:1 — eigene
+   Bildschirm-color je Klasse, keine Inline-Styles. Block hier statt in tabs.css, weil die Ursprungsregeln in dieser
+   Datei stehen (Vorgabe: Fix an der Datei der Ursprungsregel). */
+@media print {
+  .lang-table th,.l-name,.l-taw,.l-kompl,.lang-section-head{ color:var(--paper-ink) !important; }
+  /* .l-name/.l-taw 1,07:1; .lang-table th/.l-kompl/.lang-section-head(--first) 1,95:1 */
+}
 /* ---- Chronik tab ---- */
 .chronik-view { display: none; }
 .chronik-view--active { display: block; }

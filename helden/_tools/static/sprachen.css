@@ -10,3 +10,13 @@
 .lang-cap-warn { display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; letter-spacing: .06em; background: rgba(212,168,75,.15); color: var(--accent-gold); border: 1px solid rgba(212,168,75,.35); vertical-align: middle; }
 .lang-section-head { font-size: 10px; text-transform: uppercase; letter-spacing: .18em; color: var(--ink-mute); margin: 16px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
 .lang-section-head--first { margin-top: 0; }
+
+/* ---- Print (D-053, Sprint 026 T2) ----
+   sprachen.css hatte noch keinen eigenen @media print-Block (die anderen Tab-CSS ohne eigene Datei stehen dafuer in
+   tabs.css). T1-Messung (Browser, Papier #ece4d0) fand 6 Selektor-Gruppen zwischen 1,07 und 1,95:1 — eigene
+   Bildschirm-color je Klasse, keine Inline-Styles. Block hier statt in tabs.css, weil die Ursprungsregeln in dieser
+   Datei stehen (Vorgabe: Fix an der Datei der Ursprungsregel). */
+@media print {
+  .lang-table th,.l-name,.l-taw,.l-kompl,.lang-section-head{ color:var(--paper-ink) !important; }
+  /* .l-name/.l-taw 1,07:1; .lang-table th/.l-kompl/.lang-section-head(--first) 1,95:1 */
+}
