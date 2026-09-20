@@ -1,4 +1,4 @@
-"""Tests for structured geld frontmatter (load_held) and inventar weight parsing (D-004, B-025)."""
+"""Tests for structured geld frontmatter (load_held) and inventar weight parsing (D-004, B-025, B-026)."""
 import sys
 from pathlib import Path
 
@@ -91,39 +91,63 @@ def test_geld_krumme_werte(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# test_inventar_gewicht
+# test_inventar_*
 # ---------------------------------------------------------------------------
 
-def test_inventar_gewicht():
-    """parse_md_table extracts Gewicht (Unzen) and sums correctly."""
-    from parsers.held import parse_md_table, strip_wikilink, safe_int
+INVENTAR_HEADER = (
+    "| Gegenstand | Anzahl | Gewicht (Unzen) |\n"
+    "|------------|--------|------------------|\n"
+)
 
-    table_md = (
-        "| Gegenstand | Anzahl | Gewicht (Unzen) |\n"
-        "|------------|--------|------------------|\n"
+
+def _inventar(tmp_path, tabelle: str) -> dict:
+    """Ruft den echten Parser: load_held auf einem Mini-Helden mit einer ## Inventar-Tabelle in ausruestung.md."""
+    from parsers.held import load_held
+    from tests.heldfixtures import MINI_SLUG, write_mini_held
+
+    root = write_mini_held(tmp_path, ausruestung=f'## Inventar\n{tabelle}')
+    return load_held(root, MINI_SLUG)['ausruestung']
+
+
+def test_inventar_structure(tmp_path):
+    """load_held liefert Inventar-Eintraege mit Schluessel 'gewicht'; '—' wird zu 0, Summe stimmt."""
+    tabelle = (
+        INVENTAR_HEADER +
         "| Magierstab | 1 | 90 |\n"
         "| Umhängetasche | 1 | 30 |\n"
         "| Dolch | 1 | — |\n"
     )
-
-    inventar: list[dict] = []
-    inventar_gewicht_unzen = 0
-    for row in parse_md_table(table_md):
-        name = strip_wikilink(row.get('Gegenstand', ''))
-        if name:
-            gew_raw = row.get('Gewicht (Unzen)', '')
-            gew = safe_int(gew_raw) if gew_raw.strip() not in ('—', '', '-') else 0
-            inventar_gewicht_unzen += gew
-            inventar.append({'name': name, 'anzahl': row.get('Anzahl', ''), 'gewicht': gew})
+    aus = _inventar(tmp_path, tabelle)
+    inventar = aus['inventar']
 
     assert len(inventar) == 3, f"Expected 3 items, got {len(inventar)}"
     assert inventar[0]['gewicht'] == 90
     assert inventar[1]['gewicht'] == 30
     assert inventar[2]['gewicht'] == 0, "— should map to 0"
-    assert inventar_gewicht_unzen == 120, f"Expected 120 Unzen total, got {inventar_gewicht_unzen}"
+    assert aus['inventar_gewicht_unzen'] == 120, f"Expected 120 Unzen total, got {aus['inventar_gewicht_unzen']}"
     # Verify all items have the 'gewicht' key
     for item in inventar:
         assert 'gewicht' in item, f"Missing 'gewicht' in {item}"
+
+
+@pytest.mark.parametrize('wert', [
+    pytest.param('', id='leer'),
+    pytest.param('-', id='bindestrich'),
+])
+def test_inventar_leerer_und_bindestrich_wert(tmp_path, wert):
+    """Leerer Gewichtswert und '-' laufen wie '—' in den 0-Zweig (Bedingung `not in ('—', '', '-')`)."""
+    tabelle = INVENTAR_HEADER + f"| Ohne Gewicht | 1 | {wert} |\n"
+    aus = _inventar(tmp_path, tabelle)
+    assert aus['inventar'][0]['gewicht'] == 0
+    assert aus['inventar_gewicht_unzen'] == 0
+
+
+def test_inventar_nicht_numerischer_wert(tmp_path):
+    """Ein nicht-numerischer Gewichtswert (nicht —/leer/-) laeuft durch safe_int und wird 0."""
+    tabelle = INVENTAR_HEADER + "| Amulett | 1 | abc |\n"
+    aus = _inventar(tmp_path, tabelle)
+    assert aus['inventar'][0]['gewicht'] == 0
+    assert aus['inventar_gewicht_unzen'] == 0
 
 
 # ---------------------------------------------------------------------------
