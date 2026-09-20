@@ -1256,6 +1256,44 @@ def test_css_print_hides_steigern_cart_bar():
     assert any(s == '.sg-cart' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules)
 
 
+def test_css_print_vital_input_is_not_hidden():
+    # D-054: .vital-input stand mit .vital-btn/#save-indicator/.vitals-sticky/.wunden-counter/#zustand-chips/
+    # .zustand-legend in einer gemeinsamen Ausblend-Regel. Anders als diese reinen Bedienelemente traegt das
+    # Eingabefeld den aktuellen LeP/AsP/AuP-Wert selbst (kein anderer Knoten zeigt ihn im Druck) — es bleibt sichtbar.
+    rules = _print_rules()
+    assert not any(
+        s == '.vital-input' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules
+    ), 'vital-input darf im Druck nicht ausgeblendet sein'
+
+
+def test_css_print_vital_stepper_has_no_display_none():
+    # Die Stepper-Ausblendung verdeckte auch ihre nicht ausblendungspflichtigen Kinder (Input, .vital-sep,
+    # .vital-max) komplett. .vital-btn (+/-) bleibt ueber seine eigene Regel (siehe oben) ausgeblendet.
+    rules = _print_rules()
+    assert not any(
+        s == '.vital-stepper' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules
+    ), '.vital-stepper darf im Druck keine display:none-Regel mehr haben'
+
+
+def test_css_print_vital_after_pseudo_element_is_gone():
+    # .vital::after konnte nie funktionieren: attr() liest kein data-current eines Nachfahren, und das
+    # Attribut wird im ganzen Code nirgends gesetzt (nur data-max existiert, auf .vital-stepper). Toter Code,
+    # ersetzt durch das jetzt sichtbare .vital-input + .vital-max.
+    rules = _print_rules()
+    assert not any(s == '.vital::after' for s, _ in rules), 'vital::after haette entfernt werden sollen'
+    assert '.vital::after' not in css_bundle(), 'vital::after darf auch ausserhalb des Druckblocks nicht mehr vorkommen'
+
+
+def test_css_print_vital_value_selectors_use_paper_ink():
+    # .vital-max/.vital-sep hatten am Bildschirm nur opacity:0.7 (keine eigene color) und waren im Druck bisher
+    # immer im ausgeblendeten Stepper versteckt — nie gegen Papier geprueft. .vital-input braucht dieselbe Farbe,
+    # jetzt wo es im Druck sichtbar bleibt.
+    rules = _print_rules()
+    for sel in ('.vital-max', '.vital-sep', '.vital-input'):
+        decls = ' '.join(_decls(rules, sel))
+        assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)', decls), (sel, decls)
+
+
 def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
     # Vollstaendigkeits-Check (Re-Review-Auftrag Punkt 2): jedes position:sticky/fixed im Bildschirm-CSS muss im
     # Druck entweder auf position:static/relative zurueckgesetzt, per display:none ausgeblendet, oder Nachfahre

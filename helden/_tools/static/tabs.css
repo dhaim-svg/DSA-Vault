@@ -320,13 +320,16 @@
 }
 @media (min-width: 901px) { .vitals-sticky { display: none; } }
 @media print {
-  .vital-btn, .vital-input, #save-indicator, .vitals-sticky,
+  .vital-btn, #save-indicator, .vitals-sticky,
   .wunden-counter, #zustand-chips, .zustand-legend { display: none !important; }
   /* #commit-msg hidden via #footer-bar.screen-only */
-  .vital-max { font-weight: 700; }
-  .vital-stepper { display: none !important; }
-  /* Show static value in print */
-  .vital::after { content: attr(data-current) " / " attr(data-max); font-weight: 700; }
+  /* D-054: .vital-input traegt den einzigen gedruckten LeP/AsP/AuP-Wert — bleibt sichtbar, als schlichter Text. */
+  .vital-input {
+    border: none; background: transparent; padding: 0 2px;
+    color: var(--paper-ink); font-weight: 700;
+  }
+  .vital-max { font-weight: 700; color: var(--paper-ink); }
+  .vital-sep { color: var(--paper-ink); }
 }
 /* ── Dice Panel ────────────────────────────────────────── */
 .dice-panel {
