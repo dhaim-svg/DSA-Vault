@@ -7,16 +7,16 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.    | Titel | Effort |
+|-------|---------|-------|--------|
+| B-023 | wiki    | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) werden von mistune zu `<em>` gepaart und rendern die Artikelvorschau falsch (Fund Sprint 023 T3). **Sprint-025-Pre-flight am Korpus:** real 123 render-relevante Zeilen in 85 Wiki-Dateien (Roh-Stern-Zeilen gesamt 1542 in 508 Dateien, der Rest rendert korrekt); im heutigen Static-Render stehen 2 falsch gepaarte `<em>` (Artikel `metamagie`, `zauberer-steigerung`, `flim-flam`, `gardianum`) — also nicht nur präventiv. Lösungsweg (User, 20.09.2026): Parser-Vorbehandlung in `parsers/wikiartikel.py` (mistune-Inline-Regel), Wiki bleibt buchtreu unberührt | M |
+| B-025 | tooling | Unit-Tests gegen Replik statt Parser (Review Sprint 024 T5): `test_inventar_model.py` `test_geld_structure`/`test_geld_fallback`/`test_gesamt_kreuzer_math` prüfen die Test-Replik `_make_geld_dict`, nicht den Parser `load_held` — nur `test_load_held_geld_integration` (seit Sprint 024 synthetisch) trifft den echten Geld-Code; vorbestehend. Umstellung auf `load_held` (Mini-Held per `write_mini_held(illaen=…)`), Replik streichen; dabei den echten `else`-Zweig (`geld` nicht-dict) und `safe_int` mit krummen Werten abdecken | S |
 
 ---
 
 ## Backlog
 
-| ID    | Kat.    | Titel | Effort |
-|-------|---------|-------|--------|
-| B-023 | wiki    | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) werden von mistune zu `<em>` gepaart und rendern die Artikelvorschau falsch (Fund Sprint 023 T3): 113 Zeilen in 81 Wiki-Dateien + 5 Zeilen mit Kursiv um einen escapten Stern (4 Dateien); Trefferliste als Anlage im T3-Report (`.superpowers/`, lokal). Lösungsweg offen: Wiki-Massenedit (`\*`) vs. Vorbehandlung im Parser (`parsers/wikiartikel.py`) vor dem Markdown-Rendern; im Wiki ist der Stern absichtliche Buchnotation | M |
-| B-025 | tooling | Unit-Tests gegen Replik statt Parser (Review Sprint 024 T5): `test_inventar_model.py` `test_geld_structure`/`test_geld_fallback`/`test_gesamt_kreuzer_math` prüfen die Test-Replik `_make_geld_dict`, nicht den Parser `load_held` — nur `test_load_held_geld_integration` (seit Sprint 024 synthetisch) trifft den echten Geld-Code; vorbestehend. Entweder auf `load_held` umstellen (Mini-Held per `write_mini_held(illaen=…)`) oder die Replik streichen | S |
+_(leer — B-023 und B-025 laufen in Sprint 025)_
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 

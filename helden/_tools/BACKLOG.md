@@ -5,15 +5,16 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-052 | Druck-Restposten der Zauber-Tab-Karten (Fund der Sprint-024-Browser-Runde, alle vorbestehend): `.meta` 1,95 : 1 und `.vol-badge` 4,12 : 1 der Stabzauber-Zeilen, `.speicher-box` 1,04 : 1 (seit Sprint 005) auf ≥ 4,5 : 1; Druck-Überlauf `docScrollWidth` 881 gegen 779 (Backlog-Zuordnung zu `wirkung-cell`/`mods-details` der Karte „Spontane Modifikationen“ ungeprüft — Sprint-025-Pre-flight vermutet das `.spell`-Grid, Minima-Summe 878 px; T2 misst zuerst); dotted Border-Unterstrich des Namenslinks im Druck blass; Grid-Stretch bleibt Out of Scope. Messung mit Print-Emulation über Static-`http.server` wie in Sprint 020/024 | S | in-progress | 025 |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-052 | Druck-Restposten der Zauber-Tab-Karten (Fund der Sprint-024-Browser-Runde, alle vorbestehend): `.meta` 1,95 : 1 und `.vol-badge` 4,12 : 1 der Stabzauber-Zeilen, `.speicher-box` 1,04 : 1 (seit Sprint 005) auf ≥ 4,5 : 1; Druck-Überlauf `docScrollWidth` 881 gegen 779 durch `wirkung-cell`/`mods-details` der Karte „Spontane Modifikationen“; dotted Border-Unterstrich des Namenslinks im Druck blass; optional Grid-Stretch (SF-Karte wird bei offenen Ritual-Artikeln gleich hoch, viel Leerfläche). Messung mit Print-Emulation über Static-`http.server` wie in Sprint 020/024 | S | ready | — |
 
-_(Vault-`backlog.md`: offen B-023 wiki, B-025 tooling; Sprint 024 hat B-024 erledigt.)_
+_(Dashboard-Backlog leer. Vault-`backlog.md`: in Sprint 025 B-023 wiki + B-025 tooling.)_
 
 ### Gestrichen
 
