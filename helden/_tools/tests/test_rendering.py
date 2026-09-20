@@ -1203,12 +1203,66 @@ def test_css_print_journal_verlauf_textarea_is_readable_without_printed_backgrou
     assert re.search(r'border-color\s*:\s*var\(--paper-rule\)\s*!important', decls), decls
 
 
+def test_css_print_hides_steigern_cart_bar():
+    # Fix-Runde 3 (Re-Review, PDF-Pfad): .sg-cart (position:sticky, tabs.css:529) klebte bei der PDF-Paginierung auf
+    # Seite 8 ueber einer Zeile der Steigerungstabelle (bestaetigt per page.pdf() + pdftoppm-Rasterung: "CH ·
+    # Charisma" war ueberdeckt). Reines Bedienelement (Session-Zustand des Warenkorbs, keine Heldenbogen-Info) —
+    # wie .inv-stepper/.inv-add-form/.journal-actions/.spell-toolbar ausgeblendet statt kontrastgefixt.
+    rules = _print_rules()
+    assert any(s == '.sg-cart' and re.search(r'display\s*:\s*none\s*!important', d) for s, d in rules)
+
+
+def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
+    # Vollstaendigkeits-Check (Re-Review-Auftrag Punkt 2): jedes position:sticky/fixed im Bildschirm-CSS muss im
+    # Druck entweder auf position:static/relative zurueckgesetzt, per display:none ausgeblendet, oder Nachfahre
+    # eines so behandelten Vorfahren sein — sonst wiederholt sich der .sg-cart-Fund (Screen-Positionierung bleibt
+    # im Druck aktiv). Bekannte, bereits abgedeckte Faelle: body::before/.sparkles (tabs.css frueher Block),
+    # .eig-leiste (base.css:375), #footer-bar + .print-btn darin (per screen-only-Klasse im Template + eigener
+    # position:static-Regel base.css:744), #save-indicator/.vitals-sticky (tabs.css), .dice-panel (tabs.css),
+    # .tab-bar (tabs.css), .sg-cart (siehe oben).
+    full_css = css_bundle()
+    screen = _strip_print_blocks(full_css)
+    sticky_fixed_selectors = set()
+    for m in re.finditer(r'([^{}]+)\{([^{}]*)\}', re.sub(r'/\*.*?\*/', '', screen, flags=re.S)):
+        if re.search(r'(?<![-\w])position\s*:\s*(?:sticky|fixed)\b', m.group(2)):
+            for sel in m.group(1).split(','):
+                sticky_fixed_selectors.add(' '.join(sel.split()))
+    prints = _print_rules()
+    all_rules = _css_rules(full_css)
+    dashboard = (TEMPLATES_DIR / 'dashboard.html.j2').read_text(encoding='utf-8')
+
+    def has_descendant_static_override(sel):
+        # eine spezifischere Regel (irgendeine Media Query) setzt dasselbe Element unbedingt auf static/relative
+        # zurueck, z.B. "#footer-bar .print-btn{ position:static; }" fuer ".print-btn"
+        for s, d in all_rules:
+            if s != sel and re.search(rf'(?:^|[\s>]){re.escape(sel)}$', s) and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b', d):
+                return True
+        return False
+
+    def neutralised(sel):
+        if any(s == sel and re.search(r'display\s*:\s*none\s*!important', d) for s, d in prints):
+            return True
+        if any(s == sel and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b', d) for s, d in prints):
+            return True
+        # das Template-Element traegt "screen-only" (per .screen-only{display:none!important} in base.css abgedeckt)
+        id_match = re.fullmatch(r'#([\w-]+)', sel)
+        if id_match and re.search(rf'id=["\']{id_match.group(1)}["\'][^>]*class=["\'][^"\']*screen-only', dashboard):
+            return True
+        if has_descendant_static_override(sel):
+            return True
+        return False
+
+    unneutralised = sorted(sel for sel in sticky_fixed_selectors if not neutralised(sel))
+    assert not unneutralised, unneutralised
+
+
 def test_css_seven_tabs_print_fix_leaves_screen_css_untouched():
     # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-053 nicht aendern; alle neuen Regeln stehen
     # im Druckblock (Sprint-025-Vorbild: test_css_zauber_tab_print_fix_leaves_screen_css_untouched).
     screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
     new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | set(PRINT_JOURNAL_SELECTORS) | {
         '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta', '.journal-verlauf',
+        '.sg-cart',
     }
     leaked = [(s, d) for s, d in screen_rules if s in new_selectors and re.search(r'paper-(?:ink|rule)|!important|display:\s*none', d)]
     assert not leaked, leaked

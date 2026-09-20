@@ -1296,6 +1296,14 @@ body { padding-top: 46px; }
   .inv-stepper, .inv-add-form { display: none !important; }
   .journal-actions { display: none !important; }
   .spell-toolbar { display: none !important; }
+  /* Fix-Runde 3 (Re-Review, PDF-Pfad): .sg-cart (position:sticky, tabs.css:529) klebte bei der PDF-Paginierung auf
+     Seite 8 ueber einer Zeile der Steigerungstabelle und erschien zusaetzlich als schwarze Leiste (dieselbe
+     Ursache wie bei den anderen sticky/fixed-Elementen: ohne Ausblendung bleibt die Bildschirm-Position im Druck
+     aktiv). Traegt keine Information, die sonst nicht im Ausdruck steht: der Inhalt ("Keine Auswahl" bzw. Anzahl/
+     AP-Summe der Warenkorb-Auswahl) beschreibt nur den Session-Zustand des interaktiven Auswahl-Workflows, nicht
+     den Heldenbogen selbst — die zugrunde liegenden Werte (Talent, Kosten) stehen bereits in der Tabelle. Reines
+     Bedienelement wie .inv-stepper/.inv-add-form/.journal-actions/.spell-toolbar oben. */
+  .sg-cart { display: none !important; }
 }
 /* Steigern Tab */
 .sg-section-head { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
