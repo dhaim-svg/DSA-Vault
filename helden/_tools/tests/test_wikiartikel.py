@@ -8,8 +8,9 @@ import pytest
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
+from parsers.held import split_sections
 from parsers.wikiartikel import load_wiki_artikel
-from rendering import obsidian_uri
+from rendering import VAULT_ROOT, obsidian_uri
 
 ZAUBER = 'wiki/dsa-4.1/zauber'
 
@@ -622,3 +623,49 @@ def test_dangerous_image_protocol_does_not_become_src(vault):
 def test_obsidian_link_survives_harmful_protocol_filter(vault):
     html = _body_html(vault, f'[[{ZAUBER}/y|Text]]')
     assert 'href="obsidian://' in html
+
+
+# --- Echte Stabzauber-Seite: Vorbedingung der Ritual-Artikelvorschau ------------
+# Bewusst gegen die echte Wiki-Datei (LLM-Domäne, kein Live-Bogen; vgl. den zustaende.md-Test in test_rendering.py):
+# der Loader lädt nur '## <Anker>'-Abschnitte, also muss jeder Stabzauber eine H2-Überschrift haben.
+
+STABZAUBER_DATEI = 'wiki/dsa-4.1/rituale/stabzauber'
+STABZAUBER_NAMEN = [
+    'Bindung des Stabes', 'Doppeltes Maß', 'Ewige Flamme', 'Flammenschwert', 'Hammer des Magus', 'Kraftfokus',
+    'Merkmalsfokus', 'Modifikationsfokus', 'Schuppenhaut', 'Seil des Adepten', 'Zauberspeicher',
+]
+
+
+@pytest.fixture(scope='module')
+def stabzauber_sections():
+    text = (VAULT_ROOT / (STABZAUBER_DATEI + '.md')).read_text(encoding='utf-8')
+    return split_sections(text, 2)
+
+
+@pytest.mark.parametrize('name', STABZAUBER_NAMEN)
+def test_stabzauber_article_has_a_nonempty_h2_section_per_stabzauber(stabzauber_sections, name):
+    assert name in stabzauber_sections
+    assert stabzauber_sections[name].strip()
+
+
+@pytest.mark.parametrize('name', STABZAUBER_NAMEN)
+def test_stabzauber_section_has_no_stray_rule_and_renders_no_hr(stabzauber_sections, name):
+    lines = [ln.strip() for ln in stabzauber_sections[name].split('\n') if ln.strip()]
+    assert '---' not in lines[:-1]  # only a single closing rule may remain; the loader cuts it off
+    res = load_wiki_artikel(VAULT_ROOT, [f'{STABZAUBER_DATEI}#{name}'], _link)
+    assert '<hr' not in res[f'{STABZAUBER_DATEI}#{name}']['html']
+
+
+@pytest.mark.parametrize('name, eigen, fremd', [
+    ('Kraftfokus', 'Erschaffungsprobe', 'zusätzliche Spontane Modifikation'),  # Fokus mit Detailtext
+    ('Ewige Flamme', 'Stab brennt auf Kommando', 'Chamäleon'),                 # knapper Abschnitt aus den Tabellen
+])
+def test_stabzauber_anchor_loads_only_its_section_without_warning(caplog, name, eigen, fremd):
+    pfad = f'{STABZAUBER_DATEI}#{name}'
+    with caplog.at_level(logging.WARNING):
+        res = load_wiki_artikel(VAULT_ROOT, [pfad], _link)
+    assert list(res) == [pfad]
+    art = res[pfad]
+    assert art['titel'] == name and art['html'].strip()
+    assert eigen in art['html'] and fremd not in art['html']
+    assert not [r for r in caplog.records if r.levelno == logging.WARNING]

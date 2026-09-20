@@ -29,6 +29,8 @@ Tabelle aller 13 Stabzauber. **Vol** = Volumen (eine Waffe verbraucht Vol, Stab 
 
 *Alle Erschaffungsproben werden um die Zahl der bereits vorhandenen Stabzauber erschwert.*
 
+*(Zählung „13“ vs. 11 Namen in der Tabelle offen — siehe [[wiki-luecken]])*
+
 ### Aktivierung der Stabzauber *(korrigiert 16.09.2026 — vorherige Fassung widersprach sich selbst, siehe [[wiki-luecken]])*
 Allgemeine Ritualregel (WdZ S. 106): die meisten gebundenen Kräfte müssen vom Magier **aktiviert** werden, wofür — sofern nicht anders angegeben — eine **Aktivierungsprobe auf Ritualkenntnis** mit voller Aktion Zeitaufwand fällig wird. Bei den Stabzaubern ist das **pro Ritual individuell geregelt** und keineswegs einheitlich „freie Aktion ohne Probe":
 
@@ -52,9 +54,66 @@ Nur beim **Zauberspeicher** ist die Aktivierung selbst eine echte, gefährliche 
 
 ---
 
-## Detail-Regeln: Fokus-Stabzauber
+## Bindung des Stabes
 
-### Kraftfokus — Vollständige Regeln
+**Erschaffungsprobe:** KL / CH / FF (+3)
+**Erschaffungskosten:** 22 AsP
+**Volumen:** 1 pAsP
+**Effekt:** Grundbindung; erst dann weitere Stabzauber möglich
+**Vol-Angaben:** 24/18/15/27 — Vol je nach Holzart (Esche/Eiche/Ulme/Eibe o.ä.), siehe Abschnitt „Holzarten für Stäbe“ unten
+**Aktivierungsprobe:** — (keine Probe)
+**Aktivierungskosten:** 1 AsP
+**Wirkungsdauer:** beliebig
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+
+## Doppeltes Maß
+
+**Erschaffungsprobe:** KL / FF / GE (+4)
+**Erschaffungskosten:** 19 AsP
+**Effekt:** Träger erhält +3 auf FF, +2 auf KL
+**Aktivierungsprobe:** Probe nötig zum Formwechsel (Details S. 108)
+**Wirkungsdauer:** beliebig; Rückverwandlung = freie Aktion, keine AsP
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Effekt-Angabe der Übersichtstabelle ist ungeprüft (siehe [[wiki-luecken]]).*
+
+## Ewige Flamme
+
+**Erschaffungsprobe:** KL / KL / FF (+4)
+**Erschaffungskosten:** 23 AsP
+**Volumen:** 2
+**Effekt:** Stab brennt auf Kommando; Voraussetzung für Flammenschwert
+**Aktivierungsprobe:** — (keine Probe)
+**Aktivierungskosten:** 1 AsP
+**Wirkungsdauer:** beliebig
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+
+## Flammenschwert
+
+**Erschaffungsprobe:** MU / KL / IN (+7)
+**Erschaffungskosten:** 31 AsP
+**Volumen:** 7
+**Effekt:** Stab als Flammenschwert; benötigt Kraftfokus + Ewige Flamme
+**Aktivierungsprobe:** MU / IN / GE
+**Aktivierungskosten:** 3 AsP (Umwandlung) + 1 AsP/Attacke (Nahkampf) bzw. 2 AsP/Attacke (schwebend)
+**Wirkungsdauer:** beliebig
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+
+## Hammer des Magus
+
+**Erschaffungsprobe:** MU / CH / KK (+6)
+**Erschaffungskosten:** 27 AsP
+**Volumen:** 3
+**Effekt:** Stab als magische Waffe (erhöhte TP)
+**Aktivierungsprobe:** — (keine Probe)
+**Aktivierungskosten:** 1 AsP
+**Wirkungsdauer:** beliebig
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+
+## Kraftfokus
 
 **Voraussetzungen:** Ritualkenntnis (Gildenmagie) 11
 **Lernkosten:** 150 AP
@@ -73,9 +132,7 @@ Beispiele aus dem Regelwerk:
 
 *Fazit: Der Kraftfokus gilt automatisch für jeden Zauber ohne Ausnahme, aber der Mindestwert von 1 AsP pro Zauber bleibt immer bestehen.*
 
----
-
-### Merkmalsfokus — Vollständige Regeln
+## Merkmalsfokus
 
 **Voraussetzungen:** Ritualkenntnis (Gildenmagie) 11; der Stab muss zum Zeitpunkt des Rituals bereits einen **Kraftfokus** tragen.
 **Lernkosten:** 150 AP
@@ -92,9 +149,7 @@ Beispiele aus dem Regelwerk:
 
 *Fazit: Das Merkmal wird fest bei Erschaffung gewählt (nicht flexibel). Die Erleichterung gilt für die Zauberprobe selbst.*
 
----
-
-### Modifikationsfokus — Vollständige Regeln
+## Modifikationsfokus
 
 **Voraussetzungen:** Ritualkenntnis (Gildenmagie) 11; der Stab muss zum Zeitpunkt des Rituals bereits einen **Kraftfokus** tragen.
 **Lernkosten:** 200 AP
@@ -113,9 +168,31 @@ Beispiele aus dem Regelwerk:
 
 *Fazit: Mehrere Modifikationsfoki auf einem Stab sind möglich und stapeln sich. Der Berührungs-Bonus ist bereits beim ersten Modifikationsfokus aktiv.*
 
----
+## Schuppenhaut
 
-### Zauberspeicher — Vollständige Regeln
+**Erschaffungsprobe:** MU / IN / KO (+varies)
+**Erschaffungskosten:** 24 AsP
+**Volumen:** 5
+**Effekt:** Chamäleon-Tarnung oder Kobra-Angriff (Variante)
+**Aktivierungsprobe:** MU / IN / KO
+**Aktivierungskosten:** 3 AsP
+**Wirkungsdauer:** beliebig (Aktivierungsdauer 5 Aktionen)
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet; die Erschaffungsprobe der Übersichtstabelle ist ungeprüft (siehe [[wiki-luecken]]).*
+
+## Seil des Adepten
+
+**Erschaffungsprobe:** KL / IN / GE (+5)
+**Erschaffungskosten:** 21 AsP
+**Volumen:** 2
+**Effekt:** Stab als magisches Seil/Kletterseil; auf Befehl steif oder flexibel
+**Aktivierungsprobe:** — (keine Probe)
+**Aktivierungskosten:** 1 AsP
+**Wirkungsdauer:** beliebig
+
+*Detailregeln: WdZ S. 108–114 — im Wiki noch nicht ausgearbeitet (siehe [[wiki-luecken]]).*
+
+## Zauberspeicher
 
 **Voraussetzungen:** Ritualkenntnis (Gildenmagie) 11; der Stab muss zum Zeitpunkt des Rituals bereits einen **Kraftfokus** tragen.
 **Lernkosten:** 200 AP
@@ -125,14 +202,14 @@ Beispiele aus dem Regelwerk:
 
 **Wirkung:** Der Magier richtet einen Teil des Stab-Fassungsvermögens als Speicherkammer ein. In diese Kammer kann er Zauber vorbereitet hinterlegen und später ohne erneute Probe aktivieren.
 
-#### Speichervorgang (Ritual)
+### Speichervorgang (Ritual)
 - Dauert **doppelt so lange** wie das normale Sprechen des Zaubers.
 - Probe auf die **Zauberfertigkeit, +2 erschwert**.
 - Alle **AsP-Kosten** des Zaubers werden beim Speichern bezahlt.
 - Varianten und Spontane Modifikationen sind zu den üblichen Erschwerungen möglich. Bei Zaubern gegen mehrere Gegner oder mit Magieresistenz muss vorab festgelegt werden, gegen welche Anzahl bzw. maximale MR der Zauber wirken soll.
 - **Nicht speicherbar:** Beschwörungen und Herbeirufungen jeglicher Art.
 
-#### Auslösung
+### Auslösung
 - Aktivierungsdauer: **1 Aktion**
 - Aktivierungsprobe: **MU / IN / KL** (+Mod.) — kostet keine AsP
 - Bei Zaubern, bei denen Zauber- und Wirkungsdauer gekoppelt sind (z.B. BALSAM: 1 SR bis Einsetzen), gilt der längere Zeitraum.
@@ -140,10 +217,10 @@ Beispiele aus dem Regelwerk:
 - **Patzer** → weitere im Stab gespeicherte Zauber werden ebenfalls ausgelöst.
 - **Gelingen** → Zauber aktiviert ohne weitere Kosten.
 
-#### Aufrechtzuhaltende Zauber (A)
+### Aufrechtzuhaltende Zauber (A)
 Wird ein Dauereffekt-Zauber (Typ A) aus dem Speicher ausgelöst, trägt der Zauberspeicher die Aufrechterhaltung — der Magier muss jedoch den Stab **während der gesamten Wirkungszeit berühren**. In dieser Zeit kann der Stab zu keinem anderen Zweck genutzt werden (kein anderer Speicher, kein Flammenschwert, kein Seil usw.).
 
-#### Mehrere Speicher
+### Mehrere Speicher
 - Derselbe Stab kann mehrere Zauberspeicher tragen (ein Speicher = ein Ritual = ein gespeicherter Zauber).
 - Bei der Aktivierung wird die Probe um die **Anzahl der noch gespeicherten Zauber erschwert** (2. Speicher noch drin → +1 Erschwernis).
 - Jede Speicherkammer benötigt eigene Erschaffungsprobe und eigene Vol-Punkte.
