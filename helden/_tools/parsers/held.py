@@ -399,6 +399,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
                 if name:
                     stabzauber.append({
                         'name': name,
+                        'wiki_path': extract_wiki_path(row.get('Stabzauber', '')),
                         'erschaffungsprobe': row.get('Erschaffungsprobe', ''),
                         'asp': row.get('AsP', ''),
                         'vol': row.get('Vol', ''),
@@ -427,6 +428,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
         if name:
             andere_rituale.append({
                 'name': name,
+                'wiki_path': extract_wiki_path(row.get('Ritual', '')),
                 'effekt': strip_wikilink(row.get('Effekt (Kurzform)', '') or row.get('Effekt', '')),
             })
 

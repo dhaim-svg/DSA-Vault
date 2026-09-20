@@ -129,9 +129,11 @@ def test_sf_table_rows_with_bracket_anchor_get_wiki_path():
     ]
 
 
-# --- Stabzauber-Zeilen mit Anker-Link (Sprint 023 T6, L25(b)) ----------------------------------------------------
-# Der Heldenbogen verlinkt die Stabzauber-Namen mit Anker auf stabzauber.md; die Dashboard-Daten dürfen sich dadurch
-# nicht ändern: load_held muss den Link über strip_wikilink auf den Anzeigetext zurückführen. Synthetisch, kein Live-Bogen.
+# --- Ritual-Zeilen mit Anker-Link (Sprint 023 T6, L25(b); Sprint 024 T2, D-051) -----------------------------------
+# Der Heldenbogen verlinkt die Ritual-Namen mit Anker auf stabzauber.md. Anzeigetext und alle übrigen Felder bleiben
+# davon unberührt (load_held führt den Link über strip_wikilink auf den Anzeigetext zurück); NEU seit D-051: der Link
+# speist zusätzlich `wiki_path` (Pfad inkl. #Anker, sonst None) für die Ritual-Artikelvorschau. `wiki_path` kommt
+# ausschließlich aus der Namensspalte, nie aus der Effekt-Spalte. Synthetisch, kein Live-Bogen.
 
 STABZAUBER_KOPF = """## Stabzauber (2 Rituale)
 
@@ -144,6 +146,18 @@ STABZAUBER_ZEILE = '| {name} | KL / KL / FF (+4) | 23 | 2 | Stab leuchtet auf Ko
 STABZAUBER_LEERE_ZEILE = '| {name} |  |  | ? | Stab verlängert sich auf Befehl |\n'
 FACKEL_LINK = r'[[wiki/dsa-4.1/rituale/stabzauber#Ewige Flamme\|Stabzauber: Fackel]]'
 VERLAENGERUNG_LINK = r'[[wiki/dsa-4.1/rituale/stabzauber#Doppeltes Maß\|Stabzauber: Stabverlängerung]]'
+FACKEL_PFAD = 'wiki/dsa-4.1/rituale/stabzauber#Ewige Flamme'
+VERLAENGERUNG_PFAD = 'wiki/dsa-4.1/rituale/stabzauber#Doppeltes Maß'
+
+ANDERE_KOPF = """## Andere Rituale
+
+| Ritual | Effekt (Kurzform) |
+|---|---|
+"""
+ANDERE_ZEILE = '| {name} | {effekt} |\n'
+APPORT_LINK = r'[[wiki/dsa-4.1/rituale/stabzauber#Apport\|Apport]]'
+APPORT_PFAD = 'wiki/dsa-4.1/rituale/stabzauber#Apport'
+GRUNDREGELN_LINK = r'[[wiki/dsa-4.1/rituale/rituale-grundregeln\|Rituale Grundregeln]]'
 
 
 def _mini_rituale(tmp_path, fackel, verlaengerung):
@@ -152,17 +166,78 @@ def _mini_rituale(tmp_path, fackel, verlaengerung):
     return load_held(write_mini_held(tmp_path, rituale=text), MINI_SLUG)['rituale']
 
 
+def _mini_andere(tmp_path, *zeilen):
+    """zeilen: (name, effekt)-Paare der Tabelle „Andere Rituale“; liefert rituale['andere']."""
+    text = ANDERE_KOPF + ''.join(ANDERE_ZEILE.format(name=n, effekt=e) for n, e in zeilen)
+    return load_held(write_mini_held(tmp_path, rituale=text), MINI_SLUG)['rituale']['andere']
+
+
 def test_stabzauber_anchor_link_keeps_display_name_and_all_other_fields(tmp_path):
+    # Seit D-051 kommt `wiki_path` hinzu; name/erschaffungsprobe/asp/vol/effekt sind weiterhin die Anzeigewerte.
     rituale = _mini_rituale(tmp_path, FACKEL_LINK, VERLAENGERUNG_LINK)
     assert rituale['stabzauber'] == [
-        {'name': 'Stabzauber: Fackel', 'erschaffungsprobe': 'KL / KL / FF (+4)', 'asp': '23', 'vol': '2',
-         'effekt': 'Stab leuchtet auf Kommando'},
-        {'name': 'Stabzauber: Stabverlängerung', 'erschaffungsprobe': '', 'asp': '', 'vol': '?',
-         'effekt': 'Stab verlängert sich auf Befehl'},
+        {'name': 'Stabzauber: Fackel', 'wiki_path': FACKEL_PFAD, 'erschaffungsprobe': 'KL / KL / FF (+4)',
+         'asp': '23', 'vol': '2', 'effekt': 'Stab leuchtet auf Kommando'},
+        {'name': 'Stabzauber: Stabverlängerung', 'wiki_path': VERLAENGERUNG_PFAD, 'erschaffungsprobe': '',
+         'asp': '', 'vol': '?', 'effekt': 'Stab verlängert sich auf Befehl'},
     ]
 
 
-def test_stabzauber_anchor_link_gives_the_same_rituale_dict_as_plain_name(tmp_path):
+def test_stabzauber_anchor_link_gives_the_same_rituale_dict_as_plain_name_except_wiki_path(tmp_path):
     verlinkt = _mini_rituale(tmp_path / 'verlinkt', FACKEL_LINK, VERLAENGERUNG_LINK)
     schlicht = _mini_rituale(tmp_path / 'schlicht', 'Stabzauber: Fackel', 'Stabzauber: Stabverlängerung')
+    assert [z['wiki_path'] for z in verlinkt['stabzauber']] == [FACKEL_PFAD, VERLAENGERUNG_PFAD]
+    assert [z['wiki_path'] for z in schlicht['stabzauber']] == [None, None]
+    for tabelle in (verlinkt, schlicht):
+        for z in tabelle['stabzauber']:
+            del z['wiki_path']
     assert verlinkt == schlicht
+
+
+def test_stabzauber_plain_name_has_wiki_path_none(tmp_path):
+    rituale = _mini_rituale(tmp_path, 'Stabzauber: Fackel', 'Stabzauber: Stabverlängerung')
+    assert rituale['stabzauber'] == [
+        {'name': 'Stabzauber: Fackel', 'wiki_path': None, 'erschaffungsprobe': 'KL / KL / FF (+4)',
+         'asp': '23', 'vol': '2', 'effekt': 'Stab leuchtet auf Kommando'},
+        {'name': 'Stabzauber: Stabverlängerung', 'wiki_path': None, 'erschaffungsprobe': '',
+         'asp': '', 'vol': '?', 'effekt': 'Stab verlängert sich auf Befehl'},
+    ]
+
+
+def test_stabzauber_mixed_linked_and_plain_rows_keep_order_and_count(tmp_path):
+    rituale = _mini_rituale(tmp_path, FACKEL_LINK, 'Stabzauber: Stabverlängerung')
+    assert [(z['name'], z['wiki_path']) for z in rituale['stabzauber']] == [
+        ('Stabzauber: Fackel', FACKEL_PFAD),
+        ('Stabzauber: Stabverlängerung', None),
+    ]
+    rituale = _mini_rituale(tmp_path / 'umgekehrt', 'Stabzauber: Fackel', VERLAENGERUNG_LINK)
+    assert [(z['name'], z['wiki_path']) for z in rituale['stabzauber']] == [
+        ('Stabzauber: Fackel', None),
+        ('Stabzauber: Stabverlängerung', VERLAENGERUNG_PFAD),
+    ]
+
+
+def test_andere_ritual_name_link_gives_wiki_path_with_anchor(tmp_path):
+    andere = _mini_andere(tmp_path, (APPORT_LINK, 'Telekinesezauber'))
+    assert andere == [{'name': 'Apport', 'wiki_path': APPORT_PFAD, 'effekt': 'Telekinesezauber'}]
+
+
+def test_andere_ritual_without_name_link_ignores_link_in_effect_column(tmp_path):
+    # Falle: der Effekt trägt einen eigenen Link (Grundregeln). Er darf nie zu wiki_path werden – sonst würde eine
+    # unverlinkte Namenszelle den falschen Ganzartikel einbetten.
+    andere = _mini_andere(tmp_path, ('Apport', 'Telekinesezauber; Details → ' + GRUNDREGELN_LINK))
+    assert andere == [{'name': 'Apport', 'wiki_path': None,
+                       'effekt': 'Telekinesezauber; Details → Rituale Grundregeln'}]
+
+
+def test_andere_ritual_name_link_wins_over_link_in_effect_column(tmp_path):
+    andere = _mini_andere(tmp_path, (APPORT_LINK, 'Telekinesezauber; Details → ' + GRUNDREGELN_LINK))
+    assert andere == [{'name': 'Apport', 'wiki_path': APPORT_PFAD,
+                       'effekt': 'Telekinesezauber; Details → Rituale Grundregeln'}]
+
+
+def test_andere_ritual_mixed_linked_and_plain_rows_keep_order_and_count(tmp_path):
+    andere = _mini_andere(tmp_path, ('Erstes', 'a'), (APPORT_LINK, 'b'), ('Drittes', 'c'))
+    assert [(r['name'], r['wiki_path']) for r in andere] == [
+        ('Erstes', None), ('Apport', APPORT_PFAD), ('Drittes', None),
+    ]
