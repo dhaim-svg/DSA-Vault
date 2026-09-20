@@ -10,7 +10,7 @@ Traditionsrituale der Gildenmagier. Der **Stab** und die **Kristallkugel** sind 
 
 ## Stabzauber (13 Rituale)
 
-Tabelle aller 13 Stabzauber. **Vol** = Volumen (eine Waffe verbraucht Vol, Stab hat Gesamtkapazität je nach Holzart).
+Tabelle aller 13 Stabzauber *(Zählung und einzelne Werte laut [[wiki-luecken]] L24 nicht durchgehend belegt)*. **Vol** = Volumen (eine Waffe verbraucht Vol, Stab hat Gesamtkapazität je nach Holzart).
 
 | Stabzauber | Erschaffungsprobe | AsP | Vol | Effekt |
 |-----------|------------------|-----|-----|--------|

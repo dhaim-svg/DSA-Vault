@@ -7,7 +7,7 @@
 | Artikel | Inhalt | Quelle | Seite |
 |---------|--------|--------|-------|
 | [[rituale-grundregeln\|Rituale — Grundregeln]] | Ritualprobe, Objektrituale allgemein, Apport / Bannschwert / Druidenrache | WdZ | 105–108 |
-| [[stabzauber\|Stabzauber & Kugelzauber]] | 13 Gildenmagier-Stabzauber, Kristallkugel-Bindung, Kugelzauber-Übersicht | WdZ | 108–114 |
+| [[stabzauber\|Stabzauber & Kugelzauber]] | Gildenmagier-Stabzauber (Zählung „13“ nicht belegt, siehe [[wiki-luecken]] L24), Kristallkugel-Bindung, Kugelzauber-Übersicht | WdZ | 108–114 |
 | [[hexenrituale\|Hexenrituale]] | Hexenbesen (Sildanyasch), Vertrautenbindung (12 Tierarten), Vertrautenzauber (11 SF), Hexenflüche | WdZ | 115–128 |
 | [[geoden-rituale\|Geoden-Rituale]] | Ring des Lebens (10 Rituale), Gestalt aus Rauch, Trank des ungehinderten Weges | WdZ | 128–131 |
 | [[druiden-rituale\|Druiden-Rituale]] | Herrschaftsrituale (5; Körperteil-Fokus, Mondphasen), Dolchzauber (12 SF) | WdZ | 131–135 |

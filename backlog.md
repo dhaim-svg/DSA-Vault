@@ -7,20 +7,17 @@
 
 ## In Progress
 
-_Sprint 022 (Hygiene-Sprint) — B-015…B-018, Plan: `helden/_tools/sprints/sprint-022/plan.md`_
-
-| ID    | Kat.  | Titel                                                                                                   | Effort |
-|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
-| B-015 | tooling | Test-Helfer deduplizieren + Live-Vault-Kopplung lösen (Final-Review Sprint 020/021; Rendertests `test_render_wiki_artikel_details…`, `test_build_context_has_wiki_artikel_from_live_vault`, `_sf_context` lesen den echten Heldenbogen → synthetische Fixtures): `needs_node` (test_register/test_rendering/test_wundregeln), `_js_function` == `_function_body`, drei fast identische node-Fake-DOM-Runner → gemeinsames `helden/_tools/tests/jsfixtures.py` | S |
-| B-016 | tooling | Repo-Hygiene (Final-Review Sprint 020, Sprint-019-Erbe): nur noch `.gitattributes` mit `* text=auto` offen (gemischte LF/CRLF-Working-Copies, `core.autocrlf=true`; ohne `--renormalize`, danach `git status` prüfen). Erledigt 2026-09-19: `.playwright-mcp/` in `.gitignore`, `.claude/settings.json` versioniert, `.obsidian/workspace.json` untracked + ignoriert | S |
-| B-017 | tooling | `WIKILINK_RE` härten (Final-Review Sprint 021): seit dem `]`-Fix kann ein ungeschlossenes `[[` im Wiki-Body bis zum nächsten `]]` schlucken (`[[` im Pfad verbieten; Vorschlag im Sprint-021-Handoff) + Test für ein unabgeschlossenes `[[` vor einem echten Link; im Korpus aktuell kein Fall | S |
-| B-018 | wiki | Ritual-Artikelvorschau vorbereiten (Sprint 021, D-050 ausgeklammert): `wiki/dsa-4.1/rituale/stabzauber.md` braucht `##`-Überschrift je Stabzauber, `helden/…/rituale.md` (User-Domäne) bräuchte Wikilinks mit Anker — als `wiki-luecken.md`-Eintrag anlegen; nebenbei Horriphobus-Artikel: Roh-Sternchen `**1 ZfP***` im Text prüfen | S |
+_(keine)_
 
 ---
 
 ## Backlog
 
-_(keine)_
+| ID    | Kat.  | Titel                                                                                                   | Effort |
+|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
+| B-019 | wiki | `wiki/dsa-4.1/rituale/stabzauber.md` gegen WdZ S. 106–111 neu aufsetzen (`wiki-luecken.md` L24, Final-Review Sprint 022): Apport ergänzen (12 Rituale, Gruppen Meta/profan/arkan/esoterisch; „13“ ist nicht belegt — auch in `rituale/_rituale.md`), Doppeltes Maß / Schuppenhaut / Bindung des Stabes korrigieren (Fassungsvermögen statt „Vol je Holzart“), die 7 knappen `##`-Abschnitte auf Buchwerte + Detailregeln nachziehen (L9/L10/L25), Frontmatter mit `quelle` ergänzen (sonst leere Quelle in Anker-Vorschauen), Fettwert-Zeilen als Liste; Voraussetzung der Ritual-Vorschau (L25) | M |
+| B-020 | wiki | Rohsternchen `**…ZfP***` in `zauber/odem-arcanum.md` (Z. 35–38), `alchimie/alchimie-grundregeln.md` (Z. 123), `alchimie/artefakt-herstellung.md` (Z. 89) escapen (Muster wie Horriphobus, Sprint 022: `**N ZfP\***`); danach Static-Render auf erwarteten Render-Diff prüfen, falls der Artikel im Bogen verlinkt ist | S |
+| B-021 | tooling | Test-Härtung / Restkopplung (Final-Review Sprint 022): `test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats` pinnt genau 1 Waffenkarte im echten Bogen, `test_steigerbar.py` 7× `load_held` live, `test_rendering.py` (~Z. 583) hängt an der Reihenfolge Zauberliste→SF-Karte (`ValueError` bei Umbau), `test_wikiartikel.py` (~Z. 868) `'---' not in lines[:-1]` lässt ein Rest-`---` als letzte Zeile durch; dazu `WIKILINK_RE`-Anzeigetext-Gruppe `([^\]]+)` akzeptiert weiterhin `[[` (im Korpus kein Fall) | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
@@ -44,6 +41,10 @@ _(keine)_
 | B-012 | dashboard | Interaktives Dashboard Phase 1: Flask-Server, PATCH-API, LeP/AsP/AuP-Steppers, session.js | L | 2026-05-30 |
 | B-014 | tooling   | `/sprint-wrap` repariert: Render-Aufruf mit Helden-Slug, Sprint-Nr.-Wortlaut („= zuletzt abgeschlossener Sprint“, nicht erhöhen), Phase 3a entfernt EPICs aus `## In Progress` | S | 2026-09-19 |
 | B-013 | wiki | Zauberartikel-Frontmatter repariert: 104 Artikel (103 Zauber + `goetter/bund-wahren-glaubens.md`, 114 Zeilen) quotiert, Round-Trip gegen den Fallback-Parser 0 Abweichungen auf den Zeilen; `raw/pdf-extracted/_tools/check-frontmatter.py` (wiki/ 682 Artikel, 0 Fehler), Konvention in `EXTRACTION-PLAN.md`, `wiki-luecken.md` L22 ✅; Fallback-Parser im Dashboard samt 9 Tests entfernt (Sprint 021) | M | 2026-09-19 |
+| B-015 | tooling   | Test-Helfer dedupliziert: `tests/jsfixtures.py` (`needs_node`, `js_function`/`js_function_body`, `run_node`; 4 Kopien Funktionsextraktion + 6 node-Aufrufe — die drei Runner-Skripte unterscheiden sich echt und bleiben) + SF-/Artikel-Render-Tests auf synthetischen Vault umgestellt (ein Live-Smoke-Test bleibt); `test_jsfixtures.py` 7 Tests, Mutationsprobe je Assert (Sprint 022) | S | 2026-09-20 |
+| B-016 | tooling   | `.gitattributes` `* text=auto` (ohne `--renormalize`; Index war schon durchgängig LF, `git status` blieb sauber) — Repo-Hygiene damit abgeschlossen (Sprint 022) | S | 2026-09-20 |
+| B-017 | tooling   | `WIKILINK_RE` verbietet `[[` im Pfad (einzelnes `[` bleibt erlaubt); 4 Tests, Korpus-Gegenprobe 3718 = 3718 Matches (einzige Abweichung: ein Prosa-Handoff mit literalem `[[`) (Sprint 022) | S | 2026-09-20 |
+| B-018 | wiki      | `stabzauber.md`: `##`-Abschnitt je Stabzauber (11) + Test als Voraussetzung der Ritual-Vorschau; Horriphobus-Stern escaped (Vorschau zeigte Rohtext); `wiki-luecken.md` L24 (Tabelle weicht vom Buch ab, Apport fehlt, „13“ nicht belegt) + L25 (Voraussetzungen, Namensabgleich Held↔Wiki); `helden/…/rituale.md` unberührt (Sprint 022) | S | 2026-09-20 |
 
 ---
 
