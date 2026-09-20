@@ -8,8 +8,8 @@
 | T1 | **B-023** — Buch-Notation (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) im Artikelparser per Platzhalter (U+E000) neutralisieren, Funktion `render_markdown`, Tests + Korpus-Gegenprobe | ✅ done (`3f9fce1`, 604 Tests) | parsers/wikiartikel.py, tests/test_wikiartikel.py |
 | T2 | **D-052 Vermessung** — Browser-Agent misst in der Print-Emulation Ist-Kontraste und die echte Überlauf-Quelle, liefert die Selektorliste für T3 (nur lesend) | ✅ done (20 Kontrast-Gruppen, Überlauf-Quelle `.spell`-Grid) | — |
 | T3 | **D-052 Fix** — Druck-Regeln im `@media print`-Block nach Befund aus T2 | ✅ done (`178bf37`, 610 Tests) | static/tabs.css (ggf. static/base.css), tests/test_rendering.py |
-| T4 | **B-025** — Geld-Unittests auf `load_held` umstellen, Replik `_make_geld_dict` streichen | ⬜ todo | tests/test_inventar_model.py |
-| T5 | Browser-Nachmessung — Druck-Emulation + Bildschirm-Regression (1280/400 px), nur lesend | ⬜ todo | — |
+| T4 | **B-025** — Geld-Unittests auf `load_held` umstellen, Replik `_make_geld_dict` streichen | ✅ done (`5e38ed4`, 615 Tests) | tests/test_inventar_model.py |
+| T5 | Browser-Nachmessung — Druck-Emulation + Bildschirm-Regression (1280/400 px), nur lesend | ✅ done (BESTANDEN: Überlauf 881 → 779/703/600, 0 Kontrast-Restgruppen, 0 Bildschirm-Abweichungen) | — |
 | T6 | Verifikation + `/sprint-wrap` | ⬜ todo | sprints/sprint-025/verification.md, Tracker |
 
 ## Key Design Decisions
