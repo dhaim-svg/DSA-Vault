@@ -1,61 +1,55 @@
-"""Tests for structured geld frontmatter and inventar weight parsing (D-004)."""
+"""Tests for structured geld frontmatter (load_held) and inventar weight parsing (D-004, B-025)."""
 import sys
 from pathlib import Path
 
+import pytest
+
 TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
+
+GELD_KEYS = {'dukaten', 'silbertaler', 'heller', 'kreuzer', 'gesamt_kreuzer'}
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _make_geld_dict(geld_fm: dict) -> dict:
-    """Replicate the held.py geld-parsing logic for unit testing."""
-    if isinstance(geld_fm, dict):
-        geld = {
-            'dukaten': int(geld_fm.get('dukaten', 0)),
-            'silbertaler': int(geld_fm.get('silbertaler', 0)),
-            'heller': int(geld_fm.get('heller', 0)),
-            'kreuzer': int(geld_fm.get('kreuzer', 0)),
-        }
-        geld['gesamt_kreuzer'] = (
-            geld['dukaten'] * 1000 +
-            geld['silbertaler'] * 100 +
-            geld['heller'] * 10 +
-            geld['kreuzer']
-        )
-        return geld
-    return {'dukaten': 0, 'silbertaler': 0, 'heller': 0, 'kreuzer': 0, 'gesamt_kreuzer': 0}
+def _geld(tmp_path, illaen: str) -> dict:
+    """Ruft den echten Parser: load_held auf einem Mini-Helden mit dem gegebenen _illaen.md-Text."""
+    from parsers.held import load_held
+    from tests.heldfixtures import MINI_SLUG, write_mini_held
+
+    root = write_mini_held(tmp_path, illaen=illaen)
+    return load_held(root, MINI_SLUG)['ausruestung']['geld']
+
+
+def _frontmatter(body: str) -> str:
+    return f'---\n{body}\n---\n'
 
 
 # ---------------------------------------------------------------------------
 # test_geld_structure
 # ---------------------------------------------------------------------------
 
-def test_geld_structure():
-    """parse_frontmatter + geld logic yields all 5 expected keys with correct values."""
-    from parsers.held import parse_frontmatter
+def test_geld_structure(tmp_path):
+    """load_held liefert genau die 5 Geld-Schluessel mit den Frontmatter-Werten."""
+    geld = _geld(tmp_path, _frontmatter('geld: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}'))
 
-    md = "---\ngeld: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}\n---\n"
-    fm, _ = parse_frontmatter(md)
-    geld = _make_geld_dict(fm.get('geld', {}))
-
-    assert set(geld.keys()) == {'dukaten', 'silbertaler', 'heller', 'kreuzer', 'gesamt_kreuzer'}, \
-        f"Unexpected keys: {set(geld.keys())}"
+    assert set(geld.keys()) == GELD_KEYS, f"Unexpected keys: {set(geld.keys())}"
     assert geld['dukaten'] == 10
     assert geld['silbertaler'] == 64
     assert geld['heller'] == 0
     assert geld['kreuzer'] == 0
+    assert geld['gesamt_kreuzer'] == 16400
 
 
 # ---------------------------------------------------------------------------
 # test_gesamt_kreuzer_math
 # ---------------------------------------------------------------------------
 
-def test_gesamt_kreuzer_math():
-    """Conversion formula: 1D + 2ST + 3H + 4Kr = 1000+200+30+4 = 1234 Kreuzer."""
-    geld = _make_geld_dict({'dukaten': 1, 'silbertaler': 2, 'heller': 3, 'kreuzer': 4})
+def test_gesamt_kreuzer_math(tmp_path):
+    """Kurs: 1D + 2ST + 3H + 4Kr = 1000+200+30+4 = 1234 Kreuzer (jede Sorte anders gewichtet)."""
+    geld = _geld(tmp_path, _frontmatter('geld: {dukaten: 1, silbertaler: 2, heller: 3, kreuzer: 4}'))
     assert geld['gesamt_kreuzer'] == 1234, \
         f"Expected 1234, got {geld['gesamt_kreuzer']}"
 
@@ -64,16 +58,36 @@ def test_gesamt_kreuzer_math():
 # test_geld_fallback
 # ---------------------------------------------------------------------------
 
-def test_geld_fallback():
-    """When frontmatter has no geld key, fallback dict has all 5 keys valued 0."""
-    from parsers.held import parse_frontmatter
+# kein-geld-schluessel und kein-frontmatter laufen durch den ersten Zweig (fm.get('geld', {}) ist ein dict);
+# nur geld-null, geld-skalar und geld-liste erreichen den else-Zweig (geld ist kein dict).
+@pytest.mark.parametrize('illaen', [
+    pytest.param(_frontmatter('name: Test'), id='kein-geld-schluessel'),
+    pytest.param('Nur Text, kein Frontmatter.\n', id='kein-frontmatter'),
+    pytest.param(_frontmatter('geld:'), id='geld-null'),
+    pytest.param(_frontmatter('geld: 5'), id='geld-skalar'),
+    pytest.param(_frontmatter('geld: [1, 2]'), id='geld-liste'),
+])
+def test_geld_fallback(tmp_path, illaen):
+    """Fehlt das geld-Dict (in jeder Form), liefert load_held alle 5 Schluessel mit Wert 0."""
+    geld = _geld(tmp_path, illaen)
 
-    md = "---\nname: Test\n---\n"
-    fm, _ = parse_frontmatter(md)
-    geld = _make_geld_dict(fm.get('geld', {}))
-
-    assert set(geld.keys()) == {'dukaten', 'silbertaler', 'heller', 'kreuzer', 'gesamt_kreuzer'}
+    assert set(geld.keys()) == GELD_KEYS
     assert all(v == 0 for v in geld.values()), f"Expected all zeros, got {geld}"
+
+
+# ---------------------------------------------------------------------------
+# test_geld_krumme_werte
+# ---------------------------------------------------------------------------
+
+def test_geld_krumme_werte(tmp_path):
+    """Unbrauchbare Werte fallen auf 0 (safe_int), gueltige Strings werden zahlenwertig gelesen."""
+    geld = _geld(tmp_path, _frontmatter('geld: {dukaten: abc, silbertaler: "12", heller: , kreuzer: 7}'))
+
+    assert geld['dukaten'] == 0
+    assert geld['silbertaler'] == 12
+    assert geld['heller'] == 0
+    assert geld['kreuzer'] == 7
+    assert geld['gesamt_kreuzer'] == 1207
 
 
 # ---------------------------------------------------------------------------
