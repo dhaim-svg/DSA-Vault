@@ -45,4 +45,4 @@ Alle Stabzauber sind an Illaens gebundenen Magierstab geknüpft. Aktivierung = f
 
 | Ritual | Effekt (Kurzform) |
 |--------|------------------|
-| Apport | Telekinesezauber; Details → [[wiki/dsa-4.1/rituale/rituale-grundregeln\|Rituale Grundregeln]] |
+| [[wiki/dsa-4.1/rituale/stabzauber#Apport\|Apport]] | Telekinesezauber; Details → [[wiki/dsa-4.1/rituale/rituale-grundregeln\|Rituale Grundregeln]] |
