@@ -1038,9 +1038,10 @@ PRINT_SEVEN_TABS_PAPER_INK_SELECTORS = (
     '.weapon-card + div', '.weapon-card + div *',
     # Talente (T1: 3 Gruppen; .talent-row.zero siehe test_css_print_talente_zero_meets_contrast_threshold)
     '.talent-grp h4 .skt',
-    # Steigern (T1: 10 Gruppen)
+    # Steigern (T1: 10 Gruppen; .sg-name > span faengt seit der Gesamt-Review-Fixwelle auch .sg-cap-warn mit,
+    # siehe test_css_print_cap_warn_family_meets_contrast_threshold)
     '.sg-section-head', '.sg-ap-label', '.sg-ap-val', '.sg-val', '.sg-cost', '.sg-select-hint',
-    '.sg-name > span:not(.sg-cap-warn)', '.steiger-table th',
+    '.sg-name > span', '.steiger-table th',
 )
 
 
@@ -1166,6 +1167,46 @@ def test_css_print_sprachen_colors_are_paper_ink():
     assert re.search(r'@media\s+print\s*\{[^@]*\.lang-table\s+th', sprachen_css)
 
 
+# "Nicht ausgeloest"-Familie (Gesamt-Review-Fixwelle, war I1): drei Badges/Platzhalter, die sich nur in
+# Datenzustaenden zeigen, die illaen-baernhold heute nicht hat (Komplexitaetsgrenze erreicht bzw. leeres Register).
+# R6 (kampf.j2, vorsorglich) galt bisher nur fuer EINEN solchen Fall — jetzt konsequent fuer alle drei. Gemessen per
+# DOM-Simulation (siehe Bericht): .lang-cap-warn/.sg-cap-warn 1,744:1 (eigene accent-gold-Bildschirm-color),
+# .register-leer/.register-empty 4,282:1 (ink-dim). Rahmen/Hintergrund bleiben bewusst unangetastet (Badge-Optik).
+PRINT_CAP_WARN_FAMILY = ('.lang-cap-warn', '.register-leer', '.register-empty')
+
+
+def test_css_print_cap_warn_family_meets_contrast_threshold():
+    rules = _print_rules()
+    missing = [
+        sel for sel in PRINT_CAP_WARN_FAMILY
+        if not any(
+            s == sel and re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decl)
+            for s, decl in rules
+        )
+    ]
+    assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+    # .sg-cap-warn haengt nicht an einem eigenen Selektor, sondern wird von .sg-name > span mitgefangen, seit die
+    # :not(.sg-cap-warn)-Ausnahme entfernt wurde (Wirkungstest statt Literalvergleich; Kommentare koennen die
+    # Zeichenfolge weiterhin erwaehnen, daher Pruefung ueber die geparsten Selektoren, nicht den Rohtext).
+    assert not any(s == '.sg-name > span:not(.sg-cap-warn)' for s, _ in rules)
+    assert any(s == '.sg-name > span' for s, _ in rules)
+
+
+def test_css_print_cap_warn_family_lives_at_its_origin_file():
+    # Fix an der Datei der Ursprungsregel: .lang-cap-warn in sprachen.css, .register-leer/.register-empty in
+    # chronik.css (nicht in tabs.css gesammelt). Kommentare werden vorher entfernt — sie duerfen die Klasse
+    # erwaehnen (z. B. tabs.css' Verweis "dieselbe Klasse wie .lang-cap-warn/sprachen.css"), ohne die Pruefung zu
+    # verfaelschen.
+    def print_selectors_of(filename):
+        css = (STATIC_DIR / filename).read_text(encoding='utf-8')
+        return {s for s, _ in _css_rules(''.join(_media_blocks(css, r'@media\s+print')))}
+
+    assert '.lang-cap-warn' in print_selectors_of('sprachen.css')
+    assert '.lang-cap-warn' not in print_selectors_of('tabs.css')
+    chronik_selectors = print_selectors_of('chronik.css')
+    assert '.register-leer' in chronik_selectors and '.register-empty' in chronik_selectors
+
+
 # Chronik "Kompiliert"-Ansicht (D-053, Sprint 026 T2, Fix-Runde 1 — Review-Fund): T1 mass fuer #tab-chronik 0
 # Verstoesse, aber nur die Default-Ansicht "Roh" (chronik.css: .chronik-view{display:none}, nur die aktive Ansicht
 # ist sichtbar; das Journal-Partial liegt in "Kompiliert"). Eigene Messung (Playwright, Print-Emulation, 718px,
@@ -1217,9 +1258,14 @@ def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
     # Druck entweder auf position:static/relative zurueckgesetzt, per display:none ausgeblendet, oder Nachfahre
     # eines so behandelten Vorfahren sein — sonst wiederholt sich der .sg-cart-Fund (Screen-Positionierung bleibt
     # im Druck aktiv). Bekannte, bereits abgedeckte Faelle: body::before/.sparkles (tabs.css frueher Block),
-    # .eig-leiste (base.css:375), #footer-bar + .print-btn darin (per screen-only-Klasse im Template + eigener
-    # position:static-Regel base.css:744), #save-indicator/.vitals-sticky (tabs.css), .dice-panel (tabs.css),
-    # .tab-bar (tabs.css), .sg-cart (siehe oben).
+    # .eig-leiste (base.css:375), #footer-bar + .print-btn darin (per screen-only-Klasse im Template — der ganze
+    # Teilbaum wird im Druck nicht gerendert, siehe PRINT_BTN_ANCESTOR_HIDDEN unten), #save-indicator/.vitals-sticky
+    # (tabs.css), .dice-panel (tabs.css), .tab-bar (tabs.css), .sg-cart (siehe oben).
+    #
+    # Gesamt-Review-Fixwelle (M1): zwei Luecken gehaertet — (a) has_descendant_static_override durchsuchte zuvor
+    # ALLE Regeln (auch Bildschirm-CSS ohne Druckkontext), (b) eine Druckregel position:static OHNE !important galt
+    # als Neutralisierung, obwohl Fix-Runde 1 an .sg-erf bewiesen hat, dass eine spaetere Bildschirm-Regel mit
+    # gleicher Spezifitaet dann gewinnt. Beide Zweige jetzt auf Druckregeln MIT !important beschraenkt.
     full_css = css_bundle()
     screen = _strip_print_blocks(full_css)
     sticky_fixed_selectors = set()
@@ -1228,27 +1274,35 @@ def test_css_no_other_sticky_or_fixed_element_leaks_into_print():
             for sel in m.group(1).split(','):
                 sticky_fixed_selectors.add(' '.join(sel.split()))
     prints = _print_rules()
-    all_rules = _css_rules(full_css)
     dashboard = (TEMPLATES_DIR / 'dashboard.html.j2').read_text(encoding='utf-8')
+    # .print-btn: base.css:744 setzt "#footer-bar .print-btn{ position:static; }" unbedingt (nicht nur im Druck,
+    # kein !important) — reicht am Bildschirm, weil es dort die einzige Regel mit dieser Spezifitaet ist. Im Druck
+    # zaehlt das nach der obigen Haertung nicht mehr als Nachweis, ist aber ohnehin wirkungslos: jede .print-btn-
+    # Instanz liegt ausschliesslich in #footer-bar (grep templates/**/*.j2 bestaetigt), das per screen-only komplett
+    # display:none ist — ein nicht gerenderter Teilbaum kann nicht ueberlappen, unabhaengig von seiner eigenen
+    # position. Explizite, begruendete Ausnahme statt eines Kaskaden-Nachweises, den es hier nicht gibt.
+    PRINT_BTN_ANCESTOR_HIDDEN = {'.print-btn'}
 
     def has_descendant_static_override(sel):
-        # eine spezifischere Regel (irgendeine Media Query) setzt dasselbe Element unbedingt auf static/relative
-        # zurueck, z.B. "#footer-bar .print-btn{ position:static; }" fuer ".print-btn"
-        for s, d in all_rules:
-            if s != sel and re.search(rf'(?:^|[\s>]){re.escape(sel)}$', s) and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b', d):
+        # nur DRUCK-Regeln (nicht das ganze Bundle) UND nur mit !important zaehlen als Nachweis — sonst gewinnt
+        # ggf. eine spaetere Bildschirm-Regel gleicher Spezifitaet (exakt der .sg-erf-Fund aus Fix-Runde 1).
+        for s, d in prints:
+            if s != sel and re.search(rf'(?:^|[\s>]){re.escape(sel)}$', s) and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b[^;]*!important', d):
                 return True
         return False
 
     def neutralised(sel):
         if any(s == sel and re.search(r'display\s*:\s*none\s*!important', d) for s, d in prints):
             return True
-        if any(s == sel and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b', d) for s, d in prints):
+        if any(s == sel and re.search(r'(?<![-\w])position\s*:\s*(?:static|relative)\b[^;]*!important', d) for s, d in prints):
             return True
         # das Template-Element traegt "screen-only" (per .screen-only{display:none!important} in base.css abgedeckt)
         id_match = re.fullmatch(r'#([\w-]+)', sel)
         if id_match and re.search(rf'id=["\']{id_match.group(1)}["\'][^>]*class=["\'][^"\']*screen-only', dashboard):
             return True
         if has_descendant_static_override(sel):
+            return True
+        if sel in PRINT_BTN_ANCESTOR_HIDDEN:
             return True
         return False
 
@@ -1260,7 +1314,7 @@ def test_css_seven_tabs_print_fix_leaves_screen_css_untouched():
     # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-053 nicht aendern; alle neuen Regeln stehen
     # im Druckblock (Sprint-025-Vorbild: test_css_zauber_tab_print_fix_leaves_screen_css_untouched).
     screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
-    new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | set(PRINT_JOURNAL_SELECTORS) | {
+    new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | set(PRINT_JOURNAL_SELECTORS) | set(PRINT_CAP_WARN_FAMILY) | {
         '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta', '.journal-verlauf',
         '.sg-cart',
     }

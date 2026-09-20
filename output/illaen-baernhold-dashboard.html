@@ -979,12 +979,17 @@ body::before{
   .talent-grp h4 .skt{ color:var(--paper-ink) !important; } /* 1,95:1, eigene Bildschirm-color auf base.css:565 */
   /* Steigern (T1: 10 Gruppen) */
   .sg-section-head,.sg-ap-label,.sg-ap-val,.sg-val,.sg-cost,.sg-select-hint,
-  .sg-name > span:not(.sg-cap-warn),.steiger-table th{ color:var(--paper-ink) !important; }
-  /* .sg-ap-val/.sg-name-Span/.sg-val 1,07:1; .sg-cost 1,49:1 (affordable) / 4,28:1 (expensive, hier vereinheitlicht);
-     .sg-section-head 1,59:1 (Akzent-Blau); .sg-ap-val.avail 1,74:1 (Gold, durch !important auf .sg-ap-val mitgefixt,
-     da beide Regeln dasselbe Element treffen und Wichtigkeit vor Spezifitaet geht); .sg-ap-label/.steiger-table th/
-     .sg-select-hint 1,95:1. .sg-cap-warn (Komplexitaetsgrenze-Badge) bleibt aussen vor: im Ist-Render 0 Elemente,
-     nicht Teil der T1-Messung. */
+  .sg-name > span,.steiger-table th{ color:var(--paper-ink) !important; }
+  /* .sg-ap-val/.sg-name-Span/.sg-val 1,07:1; .sg-section-head 1,59:1 (Akzent-Blau); .sg-ap-val.avail 1,74:1 (Gold,
+     durch !important auf .sg-ap-val mitgefixt, da beide Regeln dasselbe Element treffen und Wichtigkeit vor
+     Spezifitaet geht); .sg-ap-label/.steiger-table th/.sg-select-hint 1,95:1.
+     .sg-cost vereinheitlicht affordable (1,49:1, gruen) und expensive (4,28:1, grau) auf eine Farbe: die
+     Bezahlbar/teuer-Unterscheidung ist eine Bildschirm-Bequemlichkeit (Ampelfarbe neben dem Kontostand oben), keine
+     Information, die im Druck fehlen wuerde — der AP-Preis selbst und die verfuegbaren AP (.sg-ap-val) stehen
+     weiterhin als Zahl auf dem Papier, ein Vergleich beider Werte ersetzt die Farbe.
+     Gesamt-Review-Fixwelle: .sg-name > span faengt jetzt auch .sg-cap-warn mit (die :not(.sg-cap-warn)-Ausnahme fiel
+     weg — dieselbe Klasse wie .lang-cap-warn/sprachen.css, 1,744:1, im Ist-Render 0 Elemente (row.komplexitaet nicht
+     erreicht), ungemessen/zustandsabhaengig; Rahmen/Hintergrund bewusst unangetastet, siehe sprachen.css). */
   /* Ruling R7 (revidiert, Sprint 026 T2-Nachtrag 2): <select class="sg-erf"> druckte als voller schwarzer Kasten
      (Screenshot-Fund) — das kam von der Bildschirm-Optik (Hintergrund/Rahmen/native Pfeilgrafik), nicht davon, dass
      ein <select> grundsaetzlich nicht druckbar waere: der Browser rendert den gewaehlten <option>-Text. Statt
@@ -1432,6 +1437,12 @@ body { padding-top: 46px; }
 @media print {
   .lang-table th,.l-name,.l-taw,.l-kompl,.lang-section-head{ color:var(--paper-ink) !important; }
   /* .l-name/.l-taw 1,07:1; .lang-table th/.l-kompl/.lang-section-head(--first) 1,95:1 */
+  /* Gesamt-Review-Fixwelle: .lang-cap-warn (sprachen.j2:24/53, "Grenze K…") zeigt sich nur, wenn taw >= komplexitaet
+     ist — im Ist-Render 0 Elemente, ungemessen/zustandsabhaengig. Eigene accent-gold-Bildschirm-color, 1,744:1 auf
+     Papier (gleicher Wert wie .sg-cap-warn/.sg-ap-val.avail). Rahmen/Hintergrund (rgba(212,168,75,...), ohnehin
+     schon unter 1,3:1 auf Papier, also praktisch unsichtbar) bleiben bewusst unangetastet, damit das Badge seine
+     Kastenform behaelt — nur die Textfarbe muss tragen. */
+  .lang-cap-warn{ color:var(--paper-ink) !important; }
 }
 /* ---- Chronik tab ---- */
 .chronik-view { display: none; }
@@ -1518,6 +1529,11 @@ body { padding-top: 46px; }
   .chronik-abend { break-inside: auto; }
   .chronik-igtag-datum, .chronik-szene { break-inside: avoid; }
   .chronik-igtag-datum, .chronik-szene { break-after: avoid; }
+  /* Gesamt-Review-Fixwelle: .register-leer ("Keine Treffer.", register.j2:39, per [hidden] gesteuert) und
+     .register-empty ("Noch kein Register vorhanden…", register.j2:42) zeigen sich nur, wenn eine Suche 0 Treffer
+     liefert bzw. das Register komplett leer ist — im Ist-Render 0 sichtbare Elemente, ungemessen/zustandsabhaengig.
+     Eigene ink-dim-Bildschirm-color, 4,282:1 auf Papier. */
+  .register-leer, .register-empty { color: var(--paper-ink) !important; }
 }
 </style>
 </head>

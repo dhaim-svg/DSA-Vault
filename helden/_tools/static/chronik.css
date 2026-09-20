@@ -83,4 +83,9 @@
   .chronik-abend { break-inside: auto; }
   .chronik-igtag-datum, .chronik-szene { break-inside: avoid; }
   .chronik-igtag-datum, .chronik-szene { break-after: avoid; }
+  /* Gesamt-Review-Fixwelle: .register-leer ("Keine Treffer.", register.j2:39, per [hidden] gesteuert) und
+     .register-empty ("Noch kein Register vorhanden…", register.j2:42) zeigen sich nur, wenn eine Suche 0 Treffer
+     liefert bzw. das Register komplett leer ist — im Ist-Render 0 sichtbare Elemente, ungemessen/zustandsabhaengig.
+     Eigene ink-dim-Bildschirm-color, 4,282:1 auf Papier. */
+  .register-leer, .register-empty { color: var(--paper-ink) !important; }
 }
