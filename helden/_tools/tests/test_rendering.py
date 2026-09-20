@@ -176,7 +176,10 @@ def test_build_context_has_register_from_live_vault():
     assert ctx['register']['orte']
 
 
-def test_build_context_has_wiki_artikel_from_live_vault():
+def test_build_context_wiki_artikel_smoke_live_vault():
+    """Bewusst live: Rauchtest, dass die Kette Bogen -> Artikel-Pfade -> geladene Artikel mit dem echten Vault noch
+    zusammenpasst (ein zerschossener Bogen faellt hier auf). Keine Zusicherung ueber einzelne Zauber/SF -- welche
+    einen Artikel-Link haben, aendert der User; das pruefen die synthetischen Tests."""
     ctx = build_context('illaen-baernhold')
     artikel = ctx['wiki_artikel']
     assert isinstance(artikel, dict)
@@ -184,8 +187,6 @@ def test_build_context_has_wiki_artikel_from_live_vault():
     zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
     sf_pfade = {sf['wiki_path'] for sf in ctx['held']['sf']['magisch'] + ctx['held']['sf']['allgemein'] if sf['wiki_path']}
     assert set(artikel) <= zauber_pfade | sf_pfade
-    assert set(artikel) & zauber_pfade
-    assert set(artikel) & sf_pfade
     # completeness (incl. unquoted ': ' frontmatter) is pinned by the synthetic loader tests, not by the live vault
     for pfad, art in artikel.items():
         assert set(art) == {'titel', 'quelle', 'meta', 'html'}, pfad
@@ -297,6 +298,109 @@ def test_render_zauber_rows_all_inside_list_wrapper(live_html):
     assert 'spell-head' not in inside
 
 
+# -- Synthetischer Vault: Artikel-/SF-Render-Tests haengen nicht am echten Heldenbogen ---------------------------
+# Live-Zusicherungen ("Zauber X hat einen Artikel-Link") brechen, sobald der User seinen Bogen aendert, ohne dass ein
+# Codefehler vorliegt. Der Vault unten hat genau die Faelle, die die Tests brauchen; die einzige bewusst live
+# gebliebene Pruefung dieser Kette ist test_build_context_wiki_artikel_smoke_live_vault.
+
+SYNTH_SLUG = 'synth'
+ZAUBER_ALPHA = 'wiki/dsa-4.1/zauber/alpha'
+ZAUBER_BETA = 'wiki/dsa-4.1/zauber/beta'
+ZAUBER_OHNE_DATEI = 'wiki/dsa-4.1/zauber/gamma'  # Link im Bogen, aber kein Artikel im Wiki
+
+_SYNTH_ILLAEN = """---
+typ: held
+name: Synth Held
+stufe: 1
+---
+
+## Eigenschaften & Basiswerte
+
+### Eigenschaften
+
+| Eigenschaft | Mod. | Start | Aktuell |
+|-------------|------|-------|---------|
+| Mut (MU) | 0 | 12 | 12 |
+| Klugheit (KL) | 0 | 12 | 12 |
+| Intuition (IN) | 0 | 12 | 12 |
+| Charisma (CH) | 0 | 12 | 12 |
+| Fingerfertigkeit (FF) | 0 | 12 | 12 |
+| Gewandtheit (GE) | 0 | 12 | 12 |
+| Konstitution (KO) | 0 | 12 | 12 |
+| Körperkraft (KK) | 0 | 12 | 12 |
+
+### Basiswerte
+
+| Basiswert | Formel | Mod. | Start | Max | Akt. |
+|-----------|--------|------|-------|-----|------|
+| Lebensenergie (LE) | (KO+KO+KK)/2 | 0 | 18 | 18 | 18 |
+| Ausdauer (AU) | (MU+KO+GE)/2 | 0 | 18 | 18 | 18 |
+| Astralenergie (AE) | (MU+IN+CH)/2 | 0 | 18 | 18 | 18 |
+"""
+
+_SYNTH_ZAUBER = r"""## Zauberliste
+
+| Zauber | Probe | ZfW | Merkmale | Haus | Komp | Lern | ZD | Kosten | Wirkung | Modifikationen | Notizen |
+|--------|-------|-----|----------|------|------|------|----|--------|---------|----------------|---------|
+| [[wiki/dsa-4.1/zauber/alpha\|Alpha Zauber]] | KL/KL/FF | 7 | Objk | | C | C | 15 A | 4 AsP | Wirkung A | — | |
+| [[wiki/dsa-4.1/zauber/beta\|Beta Zauber]] | KL/IN/CH | 5 | Hell | | C | C | 30 A | 6 AsP | Wirkung B | — | |
+| [[wiki/dsa-4.1/zauber/gamma\|Gamma Zauber]] | IN/GE/KO | 3 | Eign | | C | C | 1 A | 2 AsP | Wirkung G | — | |
+"""
+
+_SYNTH_SF = r"""## Magische Sonderfertigkeiten
+
+| Sonderfertigkeit | Beschreibung / Nutzen |
+|------------------|-----------------------|
+| [[wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Alpha\|Alpha]] | Beschreibung-A |
+| Beta | Beschreibung-B |
+
+## Allgemeine Sonderfertigkeiten
+
+| Sonderfertigkeit | Beschreibung / Nutzen |
+|------------------|-----------------------|
+| [[wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Delta\|Delta]] | Beschreibung-D |
+"""
+
+
+def _write(path, text):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding='utf-8')
+
+
+@pytest.fixture(scope='module')
+def synth_vault(tmp_path_factory):
+    """Minimaler Vault mit einem Helden (3 Zauber, 3 SF) und den zugehoerigen Wiki-Artikeln.
+
+    Mit Artikel: Zauber Alpha/Beta, SF Alpha (magisch, Anker) und Delta (allgemein, Anker).
+    Ohne Artikel: Zauber Gamma (Link ohne Datei), SF Beta (ohne Link)."""
+    root = tmp_path_factory.mktemp('synth_vault')
+    held = root / 'helden' / SYNTH_SLUG
+    for name in ('talente', 'rituale', 'vor-nachteile', 'ausruestung', 'steigerungs-log', 'vorgeschichte'):
+        _write(held / f'{name}.md', '')
+    _write(held / '_illaen.md', _SYNTH_ILLAEN)
+    _write(held / 'zauber.md', _SYNTH_ZAUBER)
+    _write(held / 'sonderfertigkeiten.md', _SYNTH_SF)
+    wiki = root / 'wiki' / 'dsa-4.1'
+    for name, quelle in (('alpha', 'LC'), ('beta', 'WdZ')):
+        _write(wiki / 'zauber' / f'{name}.md',
+               f'---\nname: {name.title()}\nquelle: {quelle}\nseite: 1\n---\n# {name.title()}\n\n## Wirkung\n\nText {name.upper()}.\n')
+    _write(wiki / 'sonderfertigkeiten' / 'magische-sonderfertigkeiten.md',
+           '---\nquelle: WdZ\n---\n# M\n\n## Alpha\n\nText SF-ALPHA.\n')
+    _write(wiki / 'sonderfertigkeiten' / 'allgemeine-sonderfertigkeiten.md',
+           '---\nquelle: WdH\n---\n# A\n\n## Delta\n\nText SF-DELTA.\n')
+    return root
+
+
+@pytest.fixture(scope='module')
+def synth_ctx(synth_vault):
+    return build_context(SYNTH_SLUG, synth_vault)
+
+
+@pytest.fixture(scope='module')
+def synth_html(synth_ctx):
+    return render_dashboard(synth_ctx)
+
+
 VOID_TAGS = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
 
 
@@ -331,27 +435,20 @@ def _spell_list_fragment(html):
     return html[html.index('<div class="spell-list" data-spell-list>'):html.index('class="legend-row"')]
 
 
-def _first_wiki_path(ctx):
-    return next(z['wiki_path'] for z in ctx['held']['zauber'] if z.get('wiki_path'))
-
-
-def test_render_wiki_artikel_details_one_per_spell_with_article(live_html):
-    ctx = build_context('illaen-baernhold')
-    erwartet = sum(1 for z in ctx['held']['zauber'] if z.get('wiki_path') in ctx['wiki_artikel'])
-    assert erwartet
-    sf = ctx['held']['sf']['magisch'] + ctx['held']['sf']['allgemein']
-    erwartet_sf = sum(1 for e in sf if e.get('wiki_path') in ctx['wiki_artikel'])
-    assert erwartet_sf
-    assert live_html.count('class="artikel-details"') == erwartet + erwartet_sf
-    assert len(_artikel_details_parents(_sf_card(live_html))) == erwartet_sf  # D-050: SF-Zeilen, nicht die Zauberliste
-    parents = _artikel_details_parents(_spell_list_fragment(live_html))
-    assert len(parents) == erwartet
+def test_render_wiki_artikel_details_one_per_spell_with_article(synth_ctx, synth_html):
+    assert set(synth_ctx['wiki_artikel']) == {ZAUBER_ALPHA, ZAUBER_BETA, SF_A, SF_D}  # Zauber Gamma / SF Beta: kein Artikel
+    assert synth_html.count('class="artikel-details"') == 2 + 2
+    assert len(_artikel_details_parents(_sf_card(synth_html))) == 2  # D-050: SF-Zeilen, nicht die Zauberliste
+    fragment = _spell_list_fragment(synth_html)
+    assert len(re.findall(r'<div class="spell"[ >]', fragment)) == 3  # Gamma behaelt seine Zeile, nur ohne Details
+    parents = _artikel_details_parents(fragment)
+    assert len(parents) == 2
     # direktes Kind der Zeile (wandert beim Sortieren mit), Zeile direkt im Listen-Wrapper
     assert all(p == (('div', 'spell'), ('div', True)) for p in parents)
 
 
-def test_render_wiki_artikel_empty_or_missing_has_no_details_but_keeps_name_links():
-    ctx = build_context('illaen-baernhold')
+def test_render_wiki_artikel_empty_or_missing_has_no_details_but_keeps_name_links(synth_vault):
+    ctx = build_context(SYNTH_SLUG, synth_vault)
     ctx['wiki_artikel'] = {}
     html = render_dashboard(ctx)
     assert html.count('class="artikel-details"') == 0
@@ -362,10 +459,9 @@ def test_render_wiki_artikel_empty_or_missing_has_no_details_but_keeps_name_link
     assert 'class="nlink"' in html
 
 
-def test_render_wiki_artikel_escapes_text_fields_but_not_html():
-    ctx = build_context('illaen-baernhold')
-    pfad = _first_wiki_path(ctx)
-    ctx['wiki_artikel'] = {pfad: {
+def test_render_wiki_artikel_escapes_text_fields_but_not_html(synth_vault):
+    ctx = build_context(SYNTH_SLUG, synth_vault)
+    ctx['wiki_artikel'] = {ZAUBER_ALPHA: {
         'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [{'label': 'L<u>', 'wert': 'W<s>'}], 'html': '<p>ok</p>',
     }}
     html = render_dashboard(ctx)
@@ -378,14 +474,14 @@ def test_render_wiki_artikel_escapes_text_fields_but_not_html():
     assert '<div class="artikel-body"><p>ok</p></div>' in block
 
 
-def test_render_wiki_artikel_has_single_obsidian_link_without_nlink(live_html):
-    block = re.search(r'<details class="artikel-details">.*?</details>', live_html, re.S).group(0)
+def test_render_wiki_artikel_has_single_obsidian_link_without_nlink(synth_html):
+    block = re.search(r'<details class="artikel-details">.*?</details>', synth_html, re.S).group(0)
     kopf = re.search(r'<div class="artikel-kopf">.*?</div>', block, re.S).group(0)
     assert kopf.count('href="obsidian://') == 1
     assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', kopf)
     assert 'nlink' not in block
     # der ↗ am Zaubernamen bleibt Sache des Namenslinks in .name (CSS ::after)
-    row = live_html[:live_html.index('class="artikel-details"')]
+    row = synth_html[:synth_html.index('class="artikel-details"')]
     assert row.rindex('class="nlink"') > row.rindex('<div class="spell"')
 
 
@@ -395,24 +491,28 @@ SF_A = 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Alpha'
 SF_D = 'wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Delta'
 
 
-def _sf_context(wiki_artikel):
-    """Kontext mit synthetischen SF: Alpha (magisch) und Delta (allgemein) haben einen Anker-Link, Gamma/Eps
-    einen ohne geladenen Artikel, Beta keinen Link."""
-    ctx = build_context('illaen-baernhold')
-    ctx['held']['sf'] = {
-        'magisch': [
-            {'name': 'Alpha', 'wiki_path': SF_A, 'desc': 'Beschreibung-A'},
-            {'name': 'Beta', 'wiki_path': None, 'desc': 'Beschreibung-B'},
-            {'name': 'Gamma', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Gamma',
-             'desc': 'Beschreibung-G'},
-        ],
-        'allgemein': [
-            {'name': 'Delta', 'wiki_path': SF_D, 'desc': 'Beschreibung-D'},
-            {'name': 'Eps', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Eps', 'desc': ''},
-        ],
-    }
-    ctx['wiki_artikel'] = wiki_artikel
-    return ctx
+@pytest.fixture
+def sf_context(synth_vault):
+    """Fabrik (wiki_artikel) -> frischer Kontext des synthetischen Vaults mit fuenf SF: Alpha (magisch) und Delta
+    (allgemein) haben einen Anker-Link, Gamma/Eps einen ohne geladenen Artikel, Beta keinen Link. Jeder Aufruf
+    baut den Kontext neu, damit Tests, die mehrere Varianten vergleichen, sich nicht ueber ein Dict beeinflussen."""
+    def make(wiki_artikel):
+        ctx = build_context(SYNTH_SLUG, synth_vault)
+        ctx['held']['sf'] = {
+            'magisch': [
+                {'name': 'Alpha', 'wiki_path': SF_A, 'desc': 'Beschreibung-A'},
+                {'name': 'Beta', 'wiki_path': None, 'desc': 'Beschreibung-B'},
+                {'name': 'Gamma', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/magische-sonderfertigkeiten#Gamma',
+                 'desc': 'Beschreibung-G'},
+            ],
+            'allgemein': [
+                {'name': 'Delta', 'wiki_path': SF_D, 'desc': 'Beschreibung-D'},
+                {'name': 'Eps', 'wiki_path': 'wiki/dsa-4.1/sonderfertigkeiten/allgemeine-sonderfertigkeiten#Eps', 'desc': ''},
+            ],
+        }
+        ctx['wiki_artikel'] = wiki_artikel
+        return ctx
+    return make
 
 
 def _sf_artikel(titel='Titel A', html='<p>Body A</p>'):
@@ -457,8 +557,8 @@ def _sf_items(html_fragment):
     return items
 
 
-def test_render_sf_artikel_details_inside_their_own_li_with_title_source_and_body():
-    html = render_dashboard(_sf_context({SF_A: _sf_artikel(), SF_D: _sf_artikel('Titel D', '<p>Body D</p>')}))
+def test_render_sf_artikel_details_inside_their_own_li_with_title_source_and_body(sf_context):
+    html = render_dashboard(sf_context({SF_A: _sf_artikel(), SF_D: _sf_artikel('Titel D', '<p>Body D</p>')}))
     items = _sf_items(_sf_card(html))
     assert [i['details'] for i in items] == [['li'], [], [], ['li'], []]
     assert 'Alpha' in items[0]['text'] and 'Titel A' in items[0]['text'] and 'Body A' in items[0]['text']
@@ -469,15 +569,15 @@ def test_render_sf_artikel_details_inside_their_own_li_with_title_source_and_bod
     assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', block)
 
 
-def test_render_sf_artikel_details_follow_the_description():
-    html = _sf_card(render_dashboard(_sf_context({SF_A: _sf_artikel()})))
+def test_render_sf_artikel_details_follow_the_description(sf_context):
+    html = _sf_card(render_dashboard(sf_context({SF_A: _sf_artikel()})))
     li = html[html.index('Alpha'):html.index('</li>', html.index('Alpha'))]
     assert li.index('Beschreibung-A') < li.index('class="artikel-details"')
 
 
-def test_render_sf_without_article_has_no_details_and_keeps_its_row():
-    ctx = _sf_context({SF_A: _sf_artikel()})
-    unveraendert = _sf_card(render_dashboard(_sf_context({})))
+def test_render_sf_without_article_has_no_details_and_keeps_its_row(sf_context):
+    ctx = sf_context({SF_A: _sf_artikel()})
+    unveraendert = _sf_card(render_dashboard(sf_context({})))
     assert 'artikel-details' not in unveraendert
     ctx['wiki_artikel'] = {}
     assert _sf_card(render_dashboard(ctx)) == unveraendert
@@ -487,9 +587,9 @@ def test_render_sf_without_article_has_no_details_and_keeps_its_row():
         assert name in unveraendert
 
 
-def test_render_sf_artikel_escapes_text_fields_but_not_html():
+def test_render_sf_artikel_escapes_text_fields_but_not_html(sf_context):
     art = {'titel': '<b>T</b>', 'quelle': 'Q<i>', 'meta': [], 'html': '<p>ok</p>'}
-    html = render_dashboard(_sf_context({SF_A: art}))
+    html = render_dashboard(sf_context({SF_A: art}))
     block = re.search(r'<details class="artikel-details">.*?</details>', _sf_card(html), re.S).group(0)
     for roh in ('<b>T</b>', 'Q<i>'):
         assert roh not in block
