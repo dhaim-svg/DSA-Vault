@@ -11,7 +11,11 @@
 
 ## Backlog
 
-_(keine — Dashboard-Backlog leer; Vault-`backlog.md` B-024 läuft in Sprint 024 mit, offen dort B-023)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-052 | Druck-Restposten der Zauber-Tab-Karten (Fund der Sprint-024-Browser-Runde, alle vorbestehend): `.meta` 1,95 : 1 und `.vol-badge` 4,12 : 1 der Stabzauber-Zeilen, `.speicher-box` 1,04 : 1 (seit Sprint 005) auf ≥ 4,5 : 1; Druck-Überlauf `docScrollWidth` 881 gegen 779 durch `wirkung-cell`/`mods-details` der Karte „Spontane Modifikationen“; dotted Border-Unterstrich des Namenslinks im Druck blass; optional Grid-Stretch (SF-Karte wird bei offenen Ritual-Artikeln gleich hoch, viel Leerfläche). Messung mit Print-Emulation über Static-`http.server` wie in Sprint 020/024 | S | ready | — |
+
+_(Vault-`backlog.md`: offen B-023 wiki, B-025 tooling; Sprint 024 hat B-024 erledigt.)_
 
 ### Gestrichen
 

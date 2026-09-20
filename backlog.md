@@ -7,9 +7,7 @@
 
 ## In Progress
 
-| ID    | Kat.    | Titel | Effort |
-|-------|---------|-------|--------|
-| B-024 | tooling | Test-Restkopplung II (Reviews Sprint 023 T5): `test_inventar_model.py::test_load_held_geld_integration` pinnt Live-Geldwerte (Dukaten 10, Silbertaler 64); `test_rendering.py` Fall „mit Waffe“ der Kampf-Wund-Hooks hängt nur am Live-Bogen (synthetisch per `write_mini_held(ausruestung=…)` möglich; `kampf.j2` rendert nur `waffen[0]`); `test_rendering.py` ~Z. 293–297 und ~939 noch rohes `.index` (ValueError bei Umbau) — **Sprint 024 T5** | S |
+_(keine)_
 
 ---
 
@@ -18,6 +16,7 @@
 | ID    | Kat.    | Titel | Effort |
 |-------|---------|-------|--------|
 | B-023 | wiki    | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) werden von mistune zu `<em>` gepaart und rendern die Artikelvorschau falsch (Fund Sprint 023 T3): 113 Zeilen in 81 Wiki-Dateien + 5 Zeilen mit Kursiv um einen escapten Stern (4 Dateien); Trefferliste als Anlage im T3-Report (`.superpowers/`, lokal). Lösungsweg offen: Wiki-Massenedit (`\*`) vs. Vorbehandlung im Parser (`parsers/wikiartikel.py`) vor dem Markdown-Rendern; im Wiki ist der Stern absichtliche Buchnotation | M |
+| B-025 | tooling | Unit-Tests gegen Replik statt Parser (Review Sprint 024 T5): `test_inventar_model.py` `test_geld_structure`/`test_geld_fallback`/`test_gesamt_kreuzer_math` prüfen die Test-Replik `_make_geld_dict`, nicht den Parser `load_held` — nur `test_load_held_geld_integration` (seit Sprint 024 synthetisch) trifft den echten Geld-Code; vorbestehend. Entweder auf `load_held` umstellen (Mini-Held per `write_mini_held(illaen=…)`) oder die Replik streichen | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
@@ -27,6 +26,7 @@
 
 | ID    | Kat.      | Titel                                                                                | Effort | Erledigt   |
 |-------|-----------|--------------------------------------------------------------------------------------|--------|------------|
+| B-024 | tooling | Test-Restkopplung II: `test_load_held_geld_integration` auf synthetischen Mini-Helden (krumme Werte, Kurs 1000/100/10/1 aus dem Parser), Kampf-Wund-Hooks Fall „mit Waffe“ synthetisch und nicht-vakuös (`_weapon_cards == 1`; die drei Live-Tests bleiben, waren aber bei 0 Waffen vakuös), rohe `.index` an den zwei benannten Stellen durch `_pos()` mit lesbarer Meldung ersetzt (übrige ~14 `.index` bewusst unverändert); +4 Tests (Sprint 024) | S | 2026-09-20 |
 | B-019 | wiki | `stabzauber.md` buchgenau neu aufgesetzt (WdZ S. 105–115): 12 Rituale in 4 Gruppen inkl. Apport, Fehlwerte korrigiert (Doppeltes Maß, Schuppenhaut, Bindung, Hammer des Magus), Fassungsvermögen 24/18/15/27 statt „Vol je Holzart“, Detailregeln der 7 knappen Abschnitte inkl. Flammenschwert-Misslingens-Tabelle (L10) und Schuppenhaut-Risiko (L9), Zauberspeicher-Komplexität, Kopfblöcke als Listen; L9/L10/L24/L25 geschlossen; > 100 Werte gegen das Buch geprüft (Quelle bewusst per Parser-Fallback B-022 statt Frontmatter) (Sprint 023) | M | 2026-09-20 |
 | B-020 | wiki | Rohsternchen `**…ZfP***` in 10 Artikeln escaped (39 Zeilen; Backlog nannte 3 Dateien) + 26 Tests gegen die echten Wiki-Dateien; Render-Diff = die 4 Odem-Arcanum-Zeilen; verwandtes Muster (freistehende Sterne → `<em>`) → B-023 (Sprint 023) | S | 2026-09-20 |
 | B-021 | tooling | Test-Härtung: `test_steigerbar.py` auf synthetischen Mini-Helden (`tests/heldfixtures.py`), Kampf-Wund-Hooks unabhängig von der Waffenzahl, `.index`-Stellen der SF-/Zauberlisten-Tests robust, `WIKILINK_RE`-Anzeigetext verbietet `[[` (Korpus 3760 = 3760 Matches); Teil „`'---' not in lines[:-1]` lässt Rest-`---` durch“ **nicht reproduzierbar** (2× unabhängig belegt) und gestrichen; Restkopplung → B-024 (Sprint 023) | S | 2026-09-20 |
