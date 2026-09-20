@@ -5,16 +5,15 @@
 
 ## In Progress
 
-| EPIC | Title | Effort | State | Sprint |
-|------|-------|--------|-------|--------|
-| D-052 | Druck-Restposten der Zauber-Tab-Karten (Fund der Sprint-024-Browser-Runde, alle vorbestehend): `.meta` 1,95 : 1 und `.vol-badge` 4,12 : 1 der Stabzauber-Zeilen, `.speicher-box` 1,04 : 1 (seit Sprint 005) auf ≥ 4,5 : 1; Druck-Überlauf `docScrollWidth` 881 gegen 779 (Backlog-Zuordnung zu `wirkung-cell`/`mods-details` der Karte „Spontane Modifikationen“ ungeprüft — Sprint-025-Pre-flight vermutet das `.spell`-Grid, Minima-Summe 878 px; T2 misst zuerst); dotted Border-Unterstrich des Namenslinks im Druck blass; Grid-Stretch bleibt Out of Scope. Messung mit Print-Emulation über Static-`http.server` wie in Sprint 020/024 | S | in-progress | 025 |
+_(keine)_
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
+| D-053 | Druck-Kontrast-Sweep der übrigen 7 Tabs: der Sprint-025-Fix (D-052) deckt **nur den Zauber-Tab**, die anderen Tabs wurden nie in der Print-Emulation vermessen. Konkrete Funde: T5 maß außerhalb des Zauber-Tabs `.card-title .meta` und `.card > h4` bei 1,59–1,95 : 1; im Druck-Screenshot sind die AP-Zahlen „3845“/„3858“ der Zeile „AP & Steigerung“ fast unsichtbar. Vorgehen wie D-052: erst je Tab messen (Print-Emulation über Static-`http.server`, WCAG-Sweep über alle Elemente mit eigenem Text, Gruppen nach Selektor-Signatur, Ursprungsregel je Verstoß), dann im `@media print`-Block von `tabs.css` fixen. Selektor-Falle: ein Kind mit eigener Bildschirm-`color` erbt das `!important` des Elterns nicht; die vier `#tab-zauber`-präfixierten Selektoren des D-052-Fixes bleiben bewusst auf den Zauber-Tab begrenzt und müssen für andere Tabs eigene Regeln bekommen | S–M | ready | — |
 
-_(Dashboard-Backlog leer. Vault-`backlog.md`: in Sprint 025 B-023 wiki + B-025 tooling.)_
+_(Vault-`backlog.md`: offen B-026 tooling; Sprint 025 hat B-023 und B-025 erledigt.)_
 
 ### Gestrichen
 
@@ -34,6 +33,7 @@ Beide Live-Editing-Features setzten eine synchron beschreibbare Chronik-Datei im
 
 | EPIC | Title | Effort | Sprint |
 |------|-------|--------|--------|
+| D-052 | Druck des Zauber-Tabs: **Vermessung vor dem Fix (T2) widerlegte die Backlog-Zuordnung** — der Überlauf (`docScrollWidth` 881 gegen 779) kam aus dem `.spell`-Grid der Zauberliste (Spaltenminima 160/240/38/80/90/200 = 858 px inkl. Gaps gegen 733 px Innenbreite, im echten Druck ≈ 703 px Seitenbreite), nicht aus „Spontane Modifikationen“; statt der drei bekannten Kontrastwerte fanden sich **20 Gruppen 1,04–4,28 : 1** (`.sf-name .meta` maß 4,28 statt 1,95, die 1,04 stammten von `.slot-zauber`, nicht vom Kasten) → alle auf `paper-ink` 14,62 : 1; Druck-Grid mit `minmax(0,Xfr)` (überlaufsicher: `scrollWidth` 779/703/600 px bei 794/718/615 px Viewport), Slot-Schaltflächen im Druck ausgeblendet, Namenslink-Unterstrich 1,13 → 14,62 : 1, Vol-Badge/Speicherkasten als Kästen mit sichtbarem Rand; **nur Zauber-Tab — die übrigen 7 Tabs sind nicht vermessen (→ D-053)**; Bildschirm unverändert (400 Werte verglichen, 0 Abweichungen); Grid-Stretch der Ritual-/SF-Karte nicht angefasst; kosmetisch: Probe bricht in 25/25 Zeilen zweizeilig, der Pfeil ↗ steht @ 703 px bei 5 von 25 Namen allein in der Folgezeile | S | 025 |
 | D-051 | Ritual-Artikelvorschau: Stabzauber- (9) und Apport-Zeile im Zauber-Tab zeigen ihren `##`-Abschnitt aus `stabzauber.md` als `<details>` (Makro `partials/_artikel.j2`, geteilt mit SF/Zauber); Parser liefert `wiki_path` je Ritual-Zeile (nur Namensspalte), `build_context` bettet die 10 Artikel ein, Apport-Namenszelle im Bogen als Anker-Link (einmalige User-Freigabe); Browser-Fund: Namenslink im Druck 1,07 : 1 (eigene Bildschirm-`color` erbt die Druckfarbe von `.sf-name` nicht) → `tabs.css` 14,62 : 1, bessert auch die 15 SF-Links; Static-Render 481 641 → 508 457 B, 40 → 50 Vorschauen, längster Artikel 962 px @1280 | M | 024 |
 | D-050 | Artikelvorschau für Sonderfertigkeiten: 15 von 17 SF-Zeilen zeigen nur ihren `##`-Abschnitt (`load_wiki_artikel`, Anker → `split_sections`, Warnung bei fehlendem/leerem Abschnitt), `<details>`-Block als Makro `partials/_artikel.j2` geteilt mit Zauber, `WIKILINK_RE` erlaubt einzelnes `]` (Merkmalskenntnis-Anker); Browser-Fund: SF-Zeilenregeln trafen auch `li` im Artikeltext → `.sf-list > li` + Invariante (längster Artikel 7 841 → 808 px); Static-Render 450 → 481 KB, 40 Vorschauen | M | 021 |
 | D-049 | Desktop-Footer über dem offenen Würfelpanel: `#footer-bar{bottom:calc(28px + var(--dice-panel-h,0px))}` (Panel z-index 200 verdeckte die Leiste, −277 px @ 1280 → Abstand 28 px); ≤ 480 px unberührt | S | 021 |

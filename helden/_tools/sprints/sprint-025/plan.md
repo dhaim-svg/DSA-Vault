@@ -10,7 +10,7 @@
 | T3 | **D-052 Fix** — Druck-Regeln im `@media print`-Block nach Befund aus T2 | ✅ done (`178bf37`, 610 Tests) | static/tabs.css (ggf. static/base.css), tests/test_rendering.py |
 | T4 | **B-025** — Geld-Unittests auf `load_held` umstellen, Replik `_make_geld_dict` streichen | ✅ done (`5e38ed4`, 615 Tests) | tests/test_inventar_model.py |
 | T5 | Browser-Nachmessung — Druck-Emulation + Bildschirm-Regression (1280/400 px), nur lesend | ✅ done (BESTANDEN: Überlauf 881 → 779/703/600, 0 Kontrast-Restgruppen, 0 Bildschirm-Abweichungen) | — |
-| T6 | Verifikation + `/sprint-wrap` | ⬜ todo | sprints/sprint-025/verification.md, Tracker |
+| T6 | Verifikation + `/sprint-wrap` (Gesamt-Review Opus: Ready to merge mit 1 Important = Doku, behoben; Polish-Commit `076421b`) | ✅ done | sprints/sprint-025/verification.md, handoff.md, Tracker |
 
 ## Key Design Decisions
 
@@ -27,9 +27,26 @@
 
 ## Out of Scope
 
+- **Druck-Kontrast der übrigen 7 Tabs — nicht vermessen (Ruling R7).** D-052 deckt ausschließlich den Zauber-Tab; „D-052 done“ heißt **nicht**, dass der Druck insgesamt lesbar ist. Bekannt: `.card-title .meta` und `.card > h4` außerhalb des Zauber-Tabs 1,59–1,95 : 1, AP-Zahlen der Zeile „AP & Steigerung“ im Druck fast unsichtbar → BACKLOG.md D-053.
 - **Grid-Stretch der Ritual-/SF-Karte** — in D-052 als optional geführt, Einzelöffnen ist unauffällig.
 - **Wiki-Massenedit der Buch-Sternchen** — bewusst abgewählt, der Parser löst es.
 - **Echter Druckdialog, `file://`, echter `PATCH`-Pfad** — weiter ungeprüft; Messungen sind Print-Emulation.
 - **Deferred Minors aus Sprint 024** (Testhygiene `test_held.py`/`test_rendering.py`, ~14 rohe `.index`) — bleiben deferred.
 - **Neue EPIC-Kandidaten aus dem Handoff** (Footer-Einblenden glätten, PATCH-Pfad im Browser, optionale LE-/AU-Mali) — nicht im Backlog, kein Auftrag.
 - **Push nach `origin`** — 34 Commits liegen lokal, kein Auftrag.
+
+## Rulings (Sprint 025, vollständige Fassung im Ledger `.superpowers/sdd/sprint-025/progress.md`, git-ignoriert)
+
+| # | Ruling | Kosten falls falsch |
+|---|--------|---------------------|
+| R1 | Arbeit direkt auf `master`, kein Worktree, kein Push (CLAUDE.md-Workflow, Sprint-024-R1) | Commits einzeln auf einen Branch heben |
+| R2 | B-023 per Platzhalter (U+E000) statt mistune-Inline-Regel — Prototyp am Korpus: Inline-Regel scheitert an umschließendem `*…*` | Vorbehandlung in einer Funktion ersetzen |
+| R3 | Vorbehandlung als eigene Funktion `render_markdown`; B-020-Tests darauf umgestellt (sonst am Loader vorbei getestet) | Testumbenennung |
+| R4 | Abnahme-Metrik B-023 = Stern-Bilanz je Ganzdatei (82 → 0), nicht „123 Zeilen“ | nur Messmethode |
+| R5 | `<em>` im Static-Render 16 → 14 (nicht 10 → 8; Pre-flight zählte mit 80-Zeichen-Regex) | Doku |
+| R6 | Überlauf-Fix = Druck-Grid `minmax(0,Xfr)`, nicht Kompaktlayout im Druck und nicht nur Minima senken | Grid-Regel im Druckblock tauschen |
+| R7 | Scope D-052 = alle 20 gemessenen Kontrast-Gruppen im Zauber-Tab; die übrigen 7 Tabs nicht vermessen → D-053 | Backlog-Eintrag |
+| R8 | Backlog-Zahlen korrigiert: `.sf-name .meta` 4,28 (nicht 1,95), `.speicher-box` selbst 14,19 (die 1,04 = `.slot-zauber`), Überlauf-Quelle `.spell`-Grid | Doku |
+| R9 | Slot-Schaltflächen im Druck ausblenden statt umfärben | Regel entfernen |
+
+Gesamt-Review (Opus): R2, R6, R7, R9 bestätigt, keine Regel überstimmt.
