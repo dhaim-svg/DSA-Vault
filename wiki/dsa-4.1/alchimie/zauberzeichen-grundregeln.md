@@ -71,7 +71,7 @@
 - Wirkung tritt mit Ende der Aktivierung sofort ein
 - Ersteller ist direkt nach Aktivierung von der eigenen Wirkung ausgenommen – aber nur bis er den Wirkungsbereich verlässt
 - Arkanoglyphen: Zusatzzeichen Zielbeschränkung kann dauerhaften Ausschluss des Erstellers ermöglichen
-- Wirkungsstärke richtet sich nach **RkP*** der Aktivierungsprobe
+- Wirkungsstärke richtet sich nach **RkP\*** der Aktivierungsprobe
 
 ## Entdecken, Verbergen, Zerstören
 

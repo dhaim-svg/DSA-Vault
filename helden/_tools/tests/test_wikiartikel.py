@@ -1,4 +1,5 @@
 """Tests for parsers.wikiartikel — wiki article/section loader (synthetic vault only)."""
+import html
 import logging
 import re
 import sys
@@ -10,7 +11,7 @@ TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 from parsers.held import split_sections
-from parsers.wikiartikel import load_wiki_artikel
+from parsers.wikiartikel import _MARKDOWN, load_wiki_artikel
 from rendering import VAULT_ROOT, obsidian_uri
 
 ZAUBER = 'wiki/dsa-4.1/zauber'
@@ -712,3 +713,69 @@ def test_flammenschwert_misslingens_table_lists_every_w6_result():
 def test_stabzauber_anchor_html_text_has_no_literal_double_asterisk(name):
     text = re.sub(r'<[^>]+>', '', _stabzauber_html(name))
     assert '**' not in text
+
+
+# --- Rohsternchen am Fettrand (Sprint 023 T3, B-020) -----------------------------
+# Bewusst gegen die echten Wiki-Dateien (LLM-Domäne): Buchnotation `ZfP*`/`TaP*`/`RkP*` am Ende eines Fettbereichs muss
+# als `**… ZfP\***` geschrieben sein, sonst zeigt die Artikelvorschau (mistune) rohes `**…***`. Der Test rendert die echte
+# Zeile bzw. die ganze Datei mit derselben Renderer-Konfiguration wie der Loader.
+
+ROHSTERN_DATEIEN = [
+    'wiki/dsa-4.1/zauber/odem-arcanum',
+    'wiki/dsa-4.1/alchimie/alchimie-grundregeln',
+    'wiki/dsa-4.1/alchimie/artefakt-herstellung',
+    'wiki/dsa-4.1/alchimie/zauberzeichen-grundregeln',
+    'wiki/dsa-4.1/goetter/liturgien-grundregeln',
+    'wiki/dsa-4.1/grundregeln/erfahrung',
+    'wiki/dsa-4.1/magie/magische-bibliothek',
+    'wiki/dsa-4.1/rituale/rituale-grundregeln',
+    'wiki/dsa-4.1/magie/metamagie',
+    'wiki/dsa-4.1/vor-nachteile/sonderfertigkeiten-allgemein',
+]
+
+# (Datei, eindeutiger Zeilenausschnitt, erwarteter <strong>-Inhalt)
+ROHSTERN_ZEILEN = [
+    ('wiki/dsa-4.1/zauber/odem-arcanum', '- **0–2 ZfP', '0–2 ZfP*'),
+    ('wiki/dsa-4.1/zauber/odem-arcanum', '- **3 ZfP', '3 ZfP*'),
+    ('wiki/dsa-4.1/zauber/odem-arcanum', '- **7 ZfP', '7 ZfP*'),
+    ('wiki/dsa-4.1/zauber/odem-arcanum', '- **12+ ZfP', '12+ ZfP*'),
+    ('wiki/dsa-4.1/alchimie/alchimie-grundregeln', 'Je **4 ZfP', '4 ZfP*'),
+    ('wiki/dsa-4.1/alchimie/artefakt-herstellung', '**Maximale akkumulierbare ZfP', 'Maximale akkumulierbare ZfP*'),
+    ('wiki/dsa-4.1/alchimie/zauberzeichen-grundregeln', 'richtet sich nach **RkP', 'RkP*'),
+    ('wiki/dsa-4.1/goetter/liturgien-grundregeln', 'im Sinne der ZfP', 'LkP*'),
+    ('wiki/dsa-4.1/grundregeln/erfahrung', 'Nur durch besondere Erleichterungen', 'A*'),
+    ('wiki/dsa-4.1/magie/magische-bibliothek', 'mindestens **30 TaP', '30 TaP*'),
+    ('wiki/dsa-4.1/rituale/rituale-grundregeln', 'Die **RkP', 'RkP*'),
+    ('wiki/dsa-4.1/magie/metamagie', 'Modifikationen werden durch **Ansammeln', 'Ansammeln von TaP* + ZfP*'),
+    ('wiki/dsa-4.1/vor-nachteile/sonderfertigkeiten-allgemein', '| **Apport (OR)', 'Apport (OR)*'),
+    ('wiki/dsa-4.1/vor-nachteile/sonderfertigkeiten-allgemein', '| **Zibilja-Rituale', 'Zibilja-Rituale*'),
+    ('wiki/dsa-4.1/vor-nachteile/sonderfertigkeiten-allgemein', '| **Kontakt zum Großen Geist', 'Kontakt zum Großen Geist*'),
+    ('wiki/dsa-4.1/vor-nachteile/sonderfertigkeiten-allgemein', '| **Ritualkenntnis [Schamanentradition]',
+     'Ritualkenntnis [Schamanentradition] (H)*'),
+]
+
+
+def _rohstern_html(zeile):
+    if zeile.lstrip().startswith('|'):  # Tabellenzeile: ohne Kopf/Trennzeile würde sie als Absatz gerendert
+        n = zeile.count('|') - 1
+        zeile = '|' + ' a |' * n + '\n' + '|' + '---|' * n + '\n' + zeile
+    return _MARKDOWN(zeile)
+
+
+def _sichtbarer_text(rendered):
+    return html.unescape(re.sub(r'<[^>]+>', '', rendered))
+
+
+@pytest.mark.parametrize('datei, ausschnitt, erwartet', ROHSTERN_ZEILEN)
+def test_rohsternchen_am_fettrand_rendert_als_strong_mit_literalem_stern(datei, ausschnitt, erwartet):
+    zeilen = [z for z in (VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8').split('\n') if ausschnitt in z]
+    assert len(zeilen) == 1, zeilen
+    rendered = _rohstern_html(zeilen[0])
+    assert f'<strong>{erwartet}</strong>' in rendered
+    assert '**' not in _sichtbarer_text(rendered)
+
+
+@pytest.mark.parametrize('datei', ROHSTERN_DATEIEN)
+def test_rohsternchen_datei_zeigt_kein_woertliches_doppelsternchen(datei):
+    rendered = _MARKDOWN((VAULT_ROOT / (datei + '.md')).read_text(encoding='utf-8'))
+    assert '**' not in _sichtbarer_text(rendered)

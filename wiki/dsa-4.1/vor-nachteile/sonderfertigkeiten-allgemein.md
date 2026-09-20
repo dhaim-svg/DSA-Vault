@@ -274,36 +274,36 @@ Mit Gutem oder Eidetischem Gedächtnis verbilligt erlernbar *(Errata 2007)*: all
 
 | SF | Tradition | Kosten (Auswahl) |
 |----|-----------|------------------|
-| **Apport (OR)*** | Alle Traditionen mit Traditionsartefakt | 200 AP |
+| **Apport (OR)\*** | Alle Traditionen mit Traditionsartefakt | 200 AP |
 | **Bann- und Schutzkreise** | Mag/Alc/Zib (je nach Kreis) | 25–75 AP je Kreis |
-| **Bannschwert (OR)*** | Druide, Geode, Hexe, Kristallomant, Gildenmagier, Schamane | 200 AP |
-| **Druidische Dolchrituale (OR)*** | Druide / Geode | 25–150 AP je Ritual |
-| **Druidische Herrschaftsrituale*** | Druide / Ferkina-Schamane | 100–200 AP je Ritual |
-| **Elfenlieder*** | Elfen | 50–250 AP je Lied (10 Lieder) |
+| **Bannschwert (OR)\*** | Druide, Geode, Hexe, Kristallomant, Gildenmagier, Schamane | 200 AP |
+| **Druidische Dolchrituale (OR)\*** | Druide / Geode | 25–150 AP je Ritual |
+| **Druidische Herrschaftsrituale\*** | Druide / Ferkina-Schamane | 100–200 AP je Ritual |
+| **Elfenlieder\*** | Elfen | 50–250 AP je Lied (10 Lieder) |
 | **Elementarharmonisierte Aura (ZH)** | Elementaristen | 700 AP / 500 AP mit Affinität zu Elementaren |
-| **Geodenrituale*** | Geoden (Diener Sumus) | 250 AP (Gestalt aus Rauch) |
-| **Hexenflüche*** | Hexen | 50–150 AP je Fluch (17 bekannte Flüche) |
-| **Keulenrituale (OR)*** | Schamanen | 100–200 AP je Ritual (12 Rituale) |
+| **Geodenrituale\*** | Geoden (Diener Sumus) | 250 AP (Gestalt aus Rauch) |
+| **Hexenflüche\*** | Hexen | 50–150 AP je Fluch (17 bekannte Flüche) |
+| **Keulenrituale (OR)\*** | Schamanen | 100–200 AP je Ritual (12 Rituale) |
 | **Kraftlinienmagie I** | Druide, Gildenmagier, Geode, Kristallomant | 50 AP |
 | **Kraftlinienmagie II (ZH)** | Wie I, sehr selten | 200 AP (zusätzlich zu I) |
-| **Kristallomantische Rituale (OR)*** | Achaz-Kristallomanten | 100–300 AP je Ritual |
-| **Kugelzauber (OR)*** | Gildenmagie, Achaz, Scharlatane | 50–200 AP je Ritual (12 Rituale) |
-| **Lockeres Zaubern*** | Schelme (nur von koboldischen Lehrmeistern) | 200 AP |
-| **Odûn-Gaben (V)*** | Durro-Dûn | 100–300 AP (5 Stufen) |
-| **Ottagaldr*** | Thorwalsche Schiffsmagier (nur Runajasko) | 200 AP (Zauberer), 50 AP (Beteiligte) |
-| **Runenkunde (ZHV)*** | Thorwal (auch einige Hexen/Druiden) | 200 AP + einzelne Runen |
-| **Salasandra*** | Elfen | 0 AP (eigene Sippe), 200 AP (neue Sippe) |
-| **Schalenzauber (OR)*** | Alchimisten | 75–125 AP je Ritual (5 Rituale) |
-| **Schamanistische Rituale (H)*** | Schamanen (6 Grade) | 50 AP × Grad |
-| **Schlangenring-Zauber (OR)*** | Geoden | 75–250 AP je Ritual (10 Rituale) |
-| **Schuppenbeutel (OR)*** | Achaz-Kristallomanten | 100–200 AP (3 Rituale) |
-| **Stabzauber (OR)*** | Gildenmagier | 50–300 AP je Ritual (~12 Rituale) |
-| **Tanz der Mada*** | Gildenmagier (tulamidisch); ähnliche Stile auch Derwische/Novadis | 50 AP; 50 Dukaten an bestimmten Akademien |
-| **Tierischer Begleiter*** | Elfen | 100 AP (1. Tier), 200 AP (weitere) |
-| **Trommelzauber*** | Derwische (Dabla) | 100–250 AP je Trommelzauber (5 Rituale) |
-| **Zaubertänze*** | Zaubertänzer (Sharisad, Hazaqi, Majuna) | 100–250 AP je Tanz (~15 Tänze) |
+| **Kristallomantische Rituale (OR)\*** | Achaz-Kristallomanten | 100–300 AP je Ritual |
+| **Kugelzauber (OR)\*** | Gildenmagie, Achaz, Scharlatane | 50–200 AP je Ritual (12 Rituale) |
+| **Lockeres Zaubern\*** | Schelme (nur von koboldischen Lehrmeistern) | 200 AP |
+| **Odûn-Gaben (V)\*** | Durro-Dûn | 100–300 AP (5 Stufen) |
+| **Ottagaldr\*** | Thorwalsche Schiffsmagier (nur Runajasko) | 200 AP (Zauberer), 50 AP (Beteiligte) |
+| **Runenkunde (ZHV)\*** | Thorwal (auch einige Hexen/Druiden) | 200 AP + einzelne Runen |
+| **Salasandra\*** | Elfen | 0 AP (eigene Sippe), 200 AP (neue Sippe) |
+| **Schalenzauber (OR)\*** | Alchimisten | 75–125 AP je Ritual (5 Rituale) |
+| **Schamanistische Rituale (H)\*** | Schamanen (6 Grade) | 50 AP × Grad |
+| **Schlangenring-Zauber (OR)\*** | Geoden | 75–250 AP je Ritual (10 Rituale) |
+| **Schuppenbeutel (OR)\*** | Achaz-Kristallomanten | 100–200 AP (3 Rituale) |
+| **Stabzauber (OR)\*** | Gildenmagier | 50–300 AP je Ritual (~12 Rituale) |
+| **Tanz der Mada\*** | Gildenmagier (tulamidisch); ähnliche Stile auch Derwische/Novadis | 50 AP; 50 Dukaten an bestimmten Akademien |
+| **Tierischer Begleiter\*** | Elfen | 100 AP (1. Tier), 200 AP (weitere) |
+| **Trommelzauber\*** | Derwische (Dabla) | 100–250 AP je Trommelzauber (5 Rituale) |
+| **Zaubertänze\*** | Zaubertänzer (Sharisad, Hazaqi, Majuna) | 100–250 AP je Tanz (~15 Tänze) |
 | **Zauberzeichen (ZHV)** | Allgemein | 200 AP + je Arkanoglyphe (→ SRD 65ff.) |
-| **Zibilja-Rituale*** | Zibiljas | 50–300 AP je Ritual (~15 Rituale) |
+| **Zibilja-Rituale\*** | Zibiljas | 50–300 AP je Ritual (~15 Rituale) |
 
 ---
 
@@ -316,10 +316,10 @@ Wissen, das sich schlecht in Talent- oder Zauberfertigkeitswerten ausdrücken l�
 | **Akoluth** | Laienpriester/Altarhelfer; Liturgiekenntnis der Kirche auf Startwert 3; SO+1; Entrückung möglich; Unterstützung bei Mirakelproben | 50 AP; werden bei Spätweihe angerechnet | Götter/Kulte 5; Initiat der Kirche; Eigenschafts-Voras. je 1 Punkt niedriger als Geweihten-Profession |
 | **Aura der Heiligkeit (G)** | Göttliche Kraft verströmen wie leibhaftige Gottheit (Erscheinungen/Aura); aktiviert/deaktiviert via Liturgiekenntnis-Probe; kostet 1 KaP/SR | 250 AP | IN 15, CH 15; Liturgiekenntnis der eigenen Religion 12 |
 | **Karmalqueste (G)** | 2-wöchige Versenkung → Mirakelprobe → IN/4 + LkP*/10 KaP dauerhaft (+Entrückung in 10-facher Höhe); nur 1×/Jahr | 50 AP (Anrufungen lernen, in Geweiht-Vorteilen enthalten) + 300 AP (je Durchführung); 250 AP für nicht-alveranische Götter | Götter/Kulte 7; LkW 7 oder SF Kontakt zum Großen Geist |
-| **Kontakt zum Großen Geist*** | Zweite Initiation zum Hochschamanen (Nivesen/Waldmenschen/Utulus/Orks-Tairach); 12 KaP; Mirakelwirkung; 8 Liturgiegrade erwerbbar; **erhält 4 GP zum Erwerb passender Liturgien** *(Errata 2007)* | 700 AP | Schamane der genannten Kulturen; CH 15; alle 4 Ritualfertigkeiten 10+ |
+| **Kontakt zum Großen Geist\*** | Zweite Initiation zum Hochschamanen (Nivesen/Waldmenschen/Utulus/Orks-Tairach); 12 KaP; Mirakelwirkung; 8 Liturgiegrade erwerbbar; **erhält 4 GP zum Erwerb passender Liturgien** *(Errata 2007)* | 700 AP | Schamane der genannten Kulturen; CH 15; alle 4 Ritualfertigkeiten 10+ |
 | **Liturgiekenntnis [Kirche] (G)** | Liturgien und Anrufungen erlernen/wirken; wird wie Gabe behandelt (Probe MU/IN/CH); Startwert 3; Steigerung Spalte F | SKT-Spalte F | Vorteil Geweiht, SF Spätweihe oder Akoluth |
 | **Liturgien (G)** | Karmaenergie in formalisiertes Ritual kanalisieren; 6 Grade; LkW ≥ 3×Grad zum Erlernen; Probe = Mirakelprobe + KaP | 50 AP × Grad | Vorteil Geweiht oder SF Spätweihe + passende Liturgiekenntnis |
-| **Ritualkenntnis [Schamanentradition] (H)*** | 4 Ritualfertigkeiten: Geister rufen (MU/IN/CH), Geister bannen (MU/CH/KK), Geister binden (KL/IN/CH), Geister aufnehmen (MU/IN/KO); Startwert je 3; Steigerung Spalte E (eigene), G (fremd) | Aktivierung = Teil des Vorteil Halbzauberer; 250 AP für Fremdtradition | Profession Schamane |
+| **Ritualkenntnis [Schamanentradition] (H)\*** | 4 Ritualfertigkeiten: Geister rufen (MU/IN/CH), Geister bannen (MU/CH/KK), Geister binden (KL/IN/CH), Geister aufnehmen (MU/IN/KO); Startwert je 3; Steigerung Spalte E (eigene), G (fremd) | Aktivierung = Teil des Vorteil Halbzauberer; 250 AP für Fremdtradition | Profession Schamane |
 | **Spätweihe [alveranische Gottheit]** | Priesterweihe im Erwachsenenalter; 24 KaP; Liturgiekenntnis 3; Liturgien im Gegenwert von 16 Liturgiegraden; SO auf Mindestwert der Profession | 1.000 AP (normal), 1.500 AP (Halb.), 2.000 AP (Vollz.) | CH 11; Eigenschafts-Voras. wie Profession; freiwilliges Bekenntnis; kann nicht bei Spielbeginn gewählt werden |
 | **Spätweihe [nicht-alveranische Gottheit]** | Wie oben, aber 12 KaP; 8 Liturgiegrade | 700 AP (normal), 1.000 AP (Halb.), 1.500 AP (Vollz.) | Wie oben |
 

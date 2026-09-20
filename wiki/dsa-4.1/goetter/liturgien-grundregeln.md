@@ -31,7 +31,7 @@
 ## Liturgiekenntnis (LK)
 
 - Gabe, nur für Geweihte/Akoluthen (Probe: MU/IN/CH, Startwert 3, Steigerung nach Spalte F)
-- Abkürzungen: **LkW** = Liturgiekenntnis-Wert · **LkP** = übrig behaltene Liturgiepunkte · **LkP*** = im Sinne der ZfP*
+- Abkürzungen: **LkW** = Liturgiekenntnis-Wert · **LkP** = übrig behaltene Liturgiepunkte · **LkP\*** = im Sinne der ZfP*
 - Mit LkW als Ausgleichswert bei der **Mirakelprobe** (analog Talentprobe)
 - Zweite Liturgiekenntnis möglich, erfordert aber neue Spätweihe (erste LkW kann nicht mehr gesteigert werden)
 - Beim Erwerb einer zweiten Liturgiekenntnis sinkt die erste außerdem um 7 Punkte *(Errata 2009: Ergänzung aus WdS S. 173)*

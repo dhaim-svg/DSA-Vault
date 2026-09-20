@@ -120,7 +120,7 @@ Drei Stufen, die zugleich Mindestvoraussetzung für bestimmte Rezepte sind:
 ## Zauber einbinden (Experte: Herausragende Zauberproben)
 
 - Manche Rezepte erfordern das Wirken von Zaubersprüchen während des Brauprozesses.
-- Je **4 ZfP*** aus einer Zauberprobe → +1 auf die Qualitätszahl (nur für wirkende Sprüche, nicht Rahmen-Zauber).
+- Je **4 ZfP\*** aus einer Zauberprobe → +1 auf die Qualitätszahl (nur für wirkende Sprüche, nicht Rahmen-Zauber).
 - Misslingt eine Zauberprobe → Elixier misslingt.
 - Zaubersprüche können durch materielle Komponenten **substituiert** werden (s. u.).
 

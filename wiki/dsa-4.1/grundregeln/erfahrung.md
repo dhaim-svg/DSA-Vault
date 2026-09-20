@@ -100,7 +100,7 @@ Zeile = angestrebter Wert; Spalte = Steigerungskategorie.
 
 | Spalte | Gilt für |
 |--------|---------|
-| **A*** | Nur durch besondere Erleichterungen verfügbar |
+| **A\*** | Nur durch besondere Erleichterungen verfügbar |
 | **A** | (Fast alle) Sprachen/Schriften der eigenen Sprachfamilie |
 | **B** | Gesellschaftliche, Natur-, Wissens-, Handwerkstalente; die meisten Fremdsprachen |
 | **C** | Einige Waffentalente (Armbrust, Raufen, Wurfmesser, Wurfspeere); sehr komplexe Fremdsprachen |

@@ -33,7 +33,7 @@ Die **Zauberwerkstatt** erlaubt es, Spontane Modifikationen **permanent** in der
 
 ## Schrittweise Forschung
 
-Modifikationen werden durch **Ansammeln von TaP* + ZfP*** über mehrere Schritte abgewickelt.
+Modifikationen werden durch **Ansammeln von TaP\* + ZfP\*** über mehrere Schritte abgewickelt.
 
 **Schritte berechnen:**
 - Kleine Modifikation: Gesamtzuschlag ÷ 4 (mindestens 1)

@@ -61,7 +61,7 @@ Für alle Rituale gilt die Ritualprobe auf Ritualkenntnis (RK) mit den bei dem R
 RK-Probe: Eigenschaft 1 / Eigenschaft 2 / Eigenschaft 3 (± Modifikatoren)
 ```
 
-Die **RkP*** bestimmen die Wirkungsstärke oder -dauer des Rituals.
+Die **RkP\*** bestimmen die Wirkungsstärke oder -dauer des Rituals.
 
 ---
 

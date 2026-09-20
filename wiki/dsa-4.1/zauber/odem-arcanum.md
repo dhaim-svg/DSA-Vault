@@ -32,10 +32,10 @@ seite: 197
 ## Wirkung
 
 Erkennt Zauberei als rötlichen Schimmer um das Ziel. Detailgrad nach ZfP*:
-- **0–2 ZfP***: nur Aussage ob Magie vorhanden.
-- **3 ZfP***: Intensität (kaum / wenig / viel / sehr viel).
-- **7 ZfP***: grobes Bild (Konzentration der Kraft, ob durch LE oder Dämonen verunreinigt).
-- **12+ ZfP***: feinstrukturiertes Bild, Fließrichtung erkennbar; Magiekunde-Probe erleichtert.
+- **0–2 ZfP\***: nur Aussage ob Magie vorhanden.
+- **3 ZfP\***: Intensität (kaum / wenig / viel / sehr viel).
+- **7 ZfP\***: grobes Bild (Konzentration der Kraft, ob durch LE oder Dämonen verunreinigt).
+- **12+ ZfP\***: feinstrukturiertes Bild, Fließrichtung erkennbar; Magiekunde-Probe erleichtert.
 
 Erkennt nicht: Art der Kraft (Repr., Merkmale), göttliches Wirken, Karmaenergie. Zu starke Quellen erscheinen als hellrotes Gleißen oder Teclador-Effekt (Blendung, KL-Minderung).
 

@@ -22,7 +22,7 @@ Buch enthält keine vollständige Thesis, aber eine **Rekonstruktionsmöglichkei
 Angabenformat: `100/4x8/30` bedeutet:
 - **100** Zeiteinheiten Studium
 - **4 Proben** auf Magiekunde, jeweils +8 erschwert
-- Am Ende mindestens **30 TaP*** angesammelt
+- Am Ende mindestens **30 TaP\*** angesammelt
 
 Qualität der rekonstruierten Thesis: 7 (Kompl. A), 6 (B), 5 (C) etc. — sehr niedrig.  
 Misslingt das Studium: Hälfte der TaP* als Grundstock behalten; Dauer halbiert; wiederholbar.

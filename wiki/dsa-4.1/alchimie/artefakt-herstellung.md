@@ -86,7 +86,7 @@ Die benötigten ZfP* aus der ARCANOVI-Probe ergeben sich als Summe mehrerer Fakt
 
 **Stapeleffekt** (nur mit SF Stapeleffekt): +4 ZfP* bei 2 Sprüchen, +6 ZfP* bei 3 Sprüchen.
 
-**Maximale akkumulierbare ZfP***: doppelter ZfW des Erschaffers im ARCANOVI.
+**Maximale akkumulierbare ZfP\***: doppelter ZfW des Erschaffers im ARCANOVI.
 
 ---
 
