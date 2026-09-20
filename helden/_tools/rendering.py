@@ -86,7 +86,9 @@ def build_context(slug: str, vault_root: Path = VAULT_ROOT, *,
     kampagne = load_kampagne(vault_root, KAMPAGNE_SLUG)
     held = load_held(vault_root, slug)
     sf = held.get('sf') or {}
-    artikel_eintraege = ((held.get('zauber') or []) + (sf.get('magisch') or []) + (sf.get('allgemein') or []))
+    rituale = held.get('rituale') or {}
+    artikel_eintraege = ((held.get('zauber') or []) + (sf.get('magisch') or []) + (sf.get('allgemein') or [])
+                         + (rituale.get('stabzauber') or []) + (rituale.get('andere') or []))
     artikel_pfade = [e['wiki_path'] for e in artikel_eintraege if e.get('wiki_path')]
     return {
         'held': held,

@@ -178,15 +178,17 @@ def test_build_context_has_register_from_live_vault():
 
 def test_build_context_wiki_artikel_smoke_live_vault():
     """Bewusst live: Rauchtest, dass die Kette Bogen -> Artikel-Pfade -> geladene Artikel mit dem echten Vault noch
-    zusammenpasst (ein zerschossener Bogen faellt hier auf). Keine Zusicherung ueber einzelne Zauber/SF -- welche
-    einen Artikel-Link haben, aendert der User; das pruefen die synthetischen Tests."""
+    zusammenpasst (ein zerschossener Bogen faellt hier auf). Keine Zusicherung ueber einzelne Zauber/SF/Rituale --
+    welche einen Artikel-Link haben, aendert der User; das pruefen die synthetischen Tests."""
     ctx = build_context('illaen-baernhold')
     artikel = ctx['wiki_artikel']
     assert isinstance(artikel, dict)
     assert artikel
     zauber_pfade = {z['wiki_path'] for z in ctx['held']['zauber']}
     sf_pfade = {sf['wiki_path'] for sf in ctx['held']['sf']['magisch'] + ctx['held']['sf']['allgemein'] if sf['wiki_path']}
-    assert set(artikel) <= zauber_pfade | sf_pfade
+    rituale = ctx['held']['rituale']
+    ritual_pfade = {r['wiki_path'] for r in rituale['stabzauber'] + rituale['andere'] if r['wiki_path']}
+    assert set(artikel) <= zauber_pfade | sf_pfade | ritual_pfade
     # completeness (incl. unquoted ': ' frontmatter) is pinned by the synthetic loader tests, not by the live vault
     for pfad, art in artikel.items():
         assert set(art) == {'titel', 'quelle', 'meta', 'html'}, pfad
@@ -234,6 +236,55 @@ def test_build_context_wiki_artikel_includes_sf_anchor_sections(tmp_path, monkey
     assert ctx['wiki_artikel'][pfad + 'magische#Eins']['titel'] == 'Eins'
     assert 'ZWEI' not in ctx['wiki_artikel'][pfad + 'magische#Eins']['html']
     assert ctx['wiki_artikel'][pfad + 'allgemeine#Drei']['quelle'] == 'WdH'
+
+
+def test_build_context_wiki_artikel_includes_ritual_rows(tmp_path, monkeypatch):
+    rit_dir = tmp_path / 'wiki' / 'dsa-4.1' / 'rituale'
+    rit_dir.mkdir(parents=True)
+    # frontmatterlos: die Quelle kommt aus dem Kopfblock (B-022-Fallback), nicht aus dem YAML
+    (rit_dir / 'stabzauber.md').write_text(
+        '# Stabzauber\n\n> **Quelle:** WdZ S. 99\n\n## Eins\n\nText EINS.\n\n---\n\n## Zwei\n\nText ZWEI.\n',
+        encoding='utf-8')
+    (rit_dir / 'andere.md').write_text('# Andere\n\n> **Quelle:** WdH S. 7\n\n## Apport\n\nText APPORT.\n',
+                                       encoding='utf-8')
+    pfad = 'wiki/dsa-4.1/rituale/'
+    monkeypatch.setattr(rendering, 'load_held', lambda root, slug: {
+        'zauber': [],
+        'sf': {'magisch': [], 'allgemein': []},
+        'rituale': {
+            'stabzauber': [
+                {'name': 'Eins', 'wiki_path': pfad + 'stabzauber#Eins'},
+                {'name': 'Eins b', 'wiki_path': pfad + 'stabzauber#Eins'},
+                {'name': 'Ohne', 'wiki_path': None},
+                {'name': 'Fehlt', 'wiki_path': pfad + 'stabzauber#Fehlt'},
+            ],
+            'andere': [{'name': 'Apport', 'wiki_path': pfad + 'andere#Apport'}, {'name': 'Leer', 'wiki_path': None}],
+        },
+    })
+    monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
+    ctx = build_context('x', tmp_path)
+    assert list(ctx['wiki_artikel']) == [pfad + 'stabzauber#Eins', pfad + 'andere#Apport']
+    eins = ctx['wiki_artikel'][pfad + 'stabzauber#Eins']
+    assert eins['titel'] == 'Eins'
+    assert eins['quelle'] == 'WdZ S. 99'
+    assert 'EINS' in eins['html']
+    assert 'ZWEI' not in eins['html']
+    apport = ctx['wiki_artikel'][pfad + 'andere#Apport']
+    assert apport['titel'] == 'Apport'
+    assert apport['quelle'] == 'WdH S. 7'
+    assert 'APPORT' in apport['html']
+
+
+@pytest.mark.parametrize('rituale', [None, {}, {'stabzauber': None, 'andere': None}, {'stabzauber': [], 'andere': []}])
+def test_build_context_wiki_artikel_tolerates_missing_ritual_lists(tmp_path, monkeypatch, rituale):
+    artikel_dir = tmp_path / 'wiki' / 'dsa-4.1' / 'zauber'
+    artikel_dir.mkdir(parents=True)
+    (artikel_dir / 'da.md').write_text('---\nname: DA\n---\n# DA\n\n## Wirkung\n\nText.\n', encoding='utf-8')
+    monkeypatch.setattr(rendering, 'load_held', lambda root, slug: {
+        'zauber': [{'name': 'Da', 'wiki_path': 'wiki/dsa-4.1/zauber/da'}], 'rituale': rituale})
+    monkeypatch.setattr(rendering, 'load_kampagne', lambda root, slug: {})
+    ctx = build_context('x', tmp_path)
+    assert list(ctx['wiki_artikel']) == ['wiki/dsa-4.1/zauber/da']
 
 
 BILD = 'drachenchronik-daten/pergament-abschrift.png'
