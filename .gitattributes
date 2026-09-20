@@ -1,0 +1,3 @@
+# Zeilenenden: Git erkennt Textdateien selbst und normalisiert sie im Index auf LF.
+# Working Copies bleiben unangetastet (kein --renormalize); Binaerdateien werden automatisch ausgenommen.
+* text=auto
