@@ -29,10 +29,10 @@ seite: 120
 
 Der Magier erscheint seinem Opfer als bedrohliche Gestalt. MR des Opfers wird um die Hälfte der stärksten vorhandenen Angst-Schlechten-Eigenschaft reduziert. Reaktion nach ZfP*:
 
-- **1 ZfP***: Respekt, vorsichtige Annäherung; AT gegen den Zaubernden erst nach MU-Probe (–ZfP*).
-- **4 ZfP***: Furcht, Rückzug; AT/PA/INI-Basis je –1W6 bei missglungener MU-Probe.
-- **7 ZfP***: Angst, Flucht oder Zusammenkauern; MU-Probe (–ZfP*), bei Misslingen –1W6 auf MU/KL/CH/FF/AT/PA/FK/INI-Basis (baut fern vom Zaubernden mit 1 Punkt/SR ab).
-- **10+ ZfP***: Heillose Panik und Flucht; MU-Probe + Abzüge wie bei 7 ZfP*.
+- **1 ZfP\***: Respekt, vorsichtige Annäherung; AT gegen den Zaubernden erst nach MU-Probe (–ZfP*).
+- **4 ZfP\***: Furcht, Rückzug; AT/PA/INI-Basis je –1W6 bei missglungener MU-Probe.
+- **7 ZfP\***: Angst, Flucht oder Zusammenkauern; MU-Probe (–ZfP*), bei Misslingen –1W6 auf MU/KL/CH/FF/AT/PA/FK/INI-Basis (baut fern vom Zaubernden mit 1 Punkt/SR ab).
+- **10+ ZfP\***: Heillose Panik und Flucht; MU-Probe + Abzüge wie bei 7 ZfP*.
 
 Wirkt gegen alle denkenden Lebewesen und einige Geisterwesen (Meisterentscheid). Schleimgetier, Insekten, Elementare, Untote und Dämonen unbeeindruckt.
 
