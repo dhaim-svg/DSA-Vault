@@ -7,18 +7,16 @@
 
 ## In Progress
 
-| ID    | Kat.  | Titel                                                                                                   | Effort |
-|-------|-------|---------------------------------------------------------------------------------------------------------|--------|
-| B-019 | wiki | `wiki/dsa-4.1/rituale/stabzauber.md` gegen WdZ S. 106–111 neu aufsetzen (`wiki-luecken.md` L24, Final-Review Sprint 022): Apport ergänzen (12 Rituale, Gruppen Meta/profan/arkan/esoterisch; „13“ ist nicht belegt — auch in `rituale/_rituale.md`), Doppeltes Maß / Schuppenhaut / Bindung des Stabes korrigieren (Fassungsvermögen statt „Vol je Holzart“), die 7 knappen `##`-Abschnitte auf Buchwerte + Detailregeln nachziehen (L9/L10/L25), Quelle in Anker-Vorschauen über B-022 (Parser-Fallback auf die `> **Quelle:**`-Zeile) statt Frontmatter, Fettwert-Zeilen als Liste; Voraussetzung der Ritual-Vorschau (L25) | M |
-| B-020 | wiki | Rohsternchen `**…ZfP***` in `zauber/odem-arcanum.md` (Z. 35–38), `alchimie/alchimie-grundregeln.md` (Z. 123), `alchimie/artefakt-herstellung.md` (Z. 89), `magie/metamagie.md` (Z. 36, `**… ZfP***` mit `TaP*` im Fettbereich — Sprint 023 T3 ergänzt) escapen (Muster wie Horriphobus, Sprint 022: `**N ZfP\***`); danach Static-Render auf erwarteten Render-Diff prüfen, falls der Artikel im Bogen verlinkt ist | S |
-| B-021 | tooling | Test-Härtung / Restkopplung (Final-Review Sprint 022): `test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats` pinnt genau 1 Waffenkarte im echten Bogen, `test_steigerbar.py` 7× `load_held` live, `test_rendering.py` (~Z. 583) hängt an der Reihenfolge Zauberliste→SF-Karte (`ValueError` bei Umbau), `test_wikiartikel.py` (~Z. 868) `'---' not in lines[:-1]` lässt ein Rest-`---` als letzte Zeile durch; dazu `WIKILINK_RE`-Anzeigetext-Gruppe `([^\]]+)` akzeptiert weiterhin `[[` (im Korpus kein Fall) | S |
-| B-022 | tooling | Quelle-Fallback im Artikelparser (`parsers/wikiartikel.py`): fehlt `quelle` im Frontmatter, nutzt `_quelle` die `> **Quelle:** …`-Zeile des Artikels — Anker-Vorschauen von Kapitelartikeln (Stabzauber, 15 SF-Anker) zeigen sonst eine leere Quelle; `_split_title()` schneidet die Zeile schon heraus, wertet sie aber nie aus (Sprint 023 T4) | S |
+_(keine)_
 
 ---
 
 ## Backlog
 
-_(keine — Sprint 023 hat B-019…B-022 aufgenommen)_
+| ID    | Kat.    | Titel | Effort |
+|-------|---------|-------|--------|
+| B-023 | wiki    | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) werden von mistune zu `<em>` gepaart und rendern die Artikelvorschau falsch (Fund Sprint 023 T3): 113 Zeilen in 81 Wiki-Dateien + 5 Zeilen mit Kursiv um einen escapten Stern (4 Dateien); Trefferliste als Anlage im T3-Report (`.superpowers/`, lokal). Lösungsweg offen: Wiki-Massenedit (`\*`) vs. Vorbehandlung im Parser (`parsers/wikiartikel.py`) vor dem Markdown-Rendern; im Wiki ist der Stern absichtliche Buchnotation | M |
+| B-024 | tooling | Test-Restkopplung II (Reviews Sprint 023 T5): `test_inventar_model.py::test_load_held_geld_integration` pinnt Live-Geldwerte (Dukaten 10, Silbertaler 64); `test_rendering.py` Fall „mit Waffe“ der Kampf-Wund-Hooks hängt nur am Live-Bogen (synthetisch per `write_mini_held(ausruestung=…)` möglich; `kampf.j2` rendert nur `waffen[0]`); `test_rendering.py` ~Z. 293–297 und ~939 noch rohes `.index` (ValueError bei Umbau) | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
@@ -28,6 +26,10 @@ _(keine — Sprint 023 hat B-019…B-022 aufgenommen)_
 
 | ID    | Kat.      | Titel                                                                                | Effort | Erledigt   |
 |-------|-----------|--------------------------------------------------------------------------------------|--------|------------|
+| B-019 | wiki | `stabzauber.md` buchgenau neu aufgesetzt (WdZ S. 105–115): 12 Rituale in 4 Gruppen inkl. Apport, Fehlwerte korrigiert (Doppeltes Maß, Schuppenhaut, Bindung, Hammer des Magus), Fassungsvermögen 24/18/15/27 statt „Vol je Holzart“, Detailregeln der 7 knappen Abschnitte inkl. Flammenschwert-Misslingens-Tabelle (L10) und Schuppenhaut-Risiko (L9), Zauberspeicher-Komplexität, Kopfblöcke als Listen; L9/L10/L24/L25 geschlossen; > 100 Werte gegen das Buch geprüft (Quelle bewusst per Parser-Fallback B-022 statt Frontmatter) (Sprint 023) | M | 2026-09-20 |
+| B-020 | wiki | Rohsternchen `**…ZfP***` in 10 Artikeln escaped (39 Zeilen; Backlog nannte 3 Dateien) + 26 Tests gegen die echten Wiki-Dateien; Render-Diff = die 4 Odem-Arcanum-Zeilen; verwandtes Muster (freistehende Sterne → `<em>`) → B-023 (Sprint 023) | S | 2026-09-20 |
+| B-021 | tooling | Test-Härtung: `test_steigerbar.py` auf synthetischen Mini-Helden (`tests/heldfixtures.py`), Kampf-Wund-Hooks unabhängig von der Waffenzahl, `.index`-Stellen der SF-/Zauberlisten-Tests robust, `WIKILINK_RE`-Anzeigetext verbietet `[[` (Korpus 3760 = 3760 Matches); Teil „`'---' not in lines[:-1]` lässt Rest-`---` durch“ **nicht reproduzierbar** (2× unabhängig belegt) und gestrichen; Restkopplung → B-024 (Sprint 023) | S | 2026-09-20 |
+| B-022 | tooling | Quelle-Fallback im Artikelparser: fehlt `quelle` im Frontmatter, nutzt `_quelle(fm, body)` die `> **Quelle:**`-Zeile des Kopfblocks (vor dem Anker-Schnitt); 809 Wiki-Artikel geprüft, 129 mit vorher leerer Quelle jetzt gefüllt, kein bisher gefüllter Wert geändert; heute nur Vorbau (alle 40 eingebetteten Vorschauen hatten schon Frontmatter-`quelle`), Voraussetzung der Ritual-Vorschau (Sprint 023) | S | 2026-09-20 |
 | B-001 | dashboard | Talent-Tabelle: Eigenschafts-Kürzel kontrastreicher                                  | S      | 2026-05-16 |
 | B-002 | held      | zauber.md: Spalten ZD/Kosten/Wirkung/Mods für alle Zauber                           | M      | 2026-05-16 |
 | B-003 | dashboard | Zauber-Tabelle: neue Spalten im Parser + Template                                    | S      | 2026-05-16 |
