@@ -432,7 +432,11 @@ def _artikel_details_parents(html_fragment):
 
 
 def _spell_list_fragment(html):
-    return html[html.index('<div class="spell-list" data-spell-list>'):html.index('class="legend-row"')]
+    start = html.find('<div class="spell-list" data-spell-list>')
+    assert start != -1, 'Zauberliste (data-spell-list) fehlt im Render'
+    end = html.find('class="legend-row"', start)
+    assert end != -1, 'Legende (legend-row) folgt nicht auf die Zauberliste'
+    return html[start:end]
 
 
 def test_render_wiki_artikel_details_one_per_spell_with_article(synth_ctx, synth_html):
@@ -475,14 +479,18 @@ def test_render_wiki_artikel_escapes_text_fields_but_not_html(synth_vault):
 
 
 def test_render_wiki_artikel_has_single_obsidian_link_without_nlink(synth_html):
-    block = re.search(r'<details class="artikel-details">.*?</details>', synth_html, re.S).group(0)
+    fragment = _spell_list_fragment(synth_html)  # Zauberliste isolieren: die SF-Karte hat eigene Details
+    found = re.search(r'<details class="artikel-details">.*?</details>', fragment, re.S)
+    assert found, 'kein artikel-details in der Zauberliste'
+    block = found.group(0)
     kopf = re.search(r'<div class="artikel-kopf">.*?</div>', block, re.S).group(0)
     assert kopf.count('href="obsidian://') == 1
     assert re.search(r'<a class="artikel-obsidian" href="obsidian://[^"]+">↗ Obsidian</a>', kopf)
     assert 'nlink' not in block
     # der ↗ am Zaubernamen bleibt Sache des Namenslinks in .name (CSS ::after)
-    row = synth_html[:synth_html.index('class="artikel-details"')]
-    assert row.rindex('class="nlink"') > row.rindex('<div class="spell"')
+    row = fragment[:fragment.find('class="artikel-details"')]
+    assert '<div class="spell"' in row, 'die Details stehen in keiner Zauberzeile'
+    assert row.rfind('class="nlink"') > row.rfind('<div class="spell"'), 'Zauberzeile ohne Namenslink vor den Details'
 
 
 # -- D-050: Artikelvorschau fuer Sonderfertigkeiten ---------------------------
@@ -520,8 +528,11 @@ def _sf_artikel(titel='Titel A', html='<p>Body A</p>'):
 
 
 def _sf_card(html):
-    start = html.index('<h3 class="card-title">Sonderfertigkeiten</h3>')
-    return html[start:html.index('</section>', start)]
+    start = html.find('<h3 class="card-title">Sonderfertigkeiten</h3>')
+    assert start != -1, 'SF-Karte fehlt im Render'
+    end = html.find('</section>', start)
+    assert end != -1, 'SF-Karte ist nicht geschlossen'
+    return html[start:end]
 
 
 def _sf_items(html_fragment):
@@ -570,9 +581,15 @@ def test_render_sf_artikel_details_inside_their_own_li_with_title_source_and_bod
 
 
 def test_render_sf_artikel_details_follow_the_description(sf_context):
-    html = _sf_card(render_dashboard(sf_context({SF_A: _sf_artikel()})))
-    li = html[html.index('Alpha'):html.index('</li>', html.index('Alpha'))]
-    assert li.index('Beschreibung-A') < li.index('class="artikel-details"')
+    card = _sf_card(render_dashboard(sf_context({SF_A: _sf_artikel()})))
+    start = card.find('Alpha')
+    assert start != -1, 'SF Alpha fehlt in der SF-Karte'
+    end = card.find('</li>', start)
+    assert end != -1, 'Zeile von Alpha ist nicht geschlossen'
+    li = card[start:end]
+    assert 'Beschreibung-A' in li, 'Beschreibung fehlt in der Alpha-Zeile'
+    assert 'class="artikel-details"' in li, 'Details fehlen in der Alpha-Zeile'
+    assert re.search(r'Beschreibung-A.*class="artikel-details"', li, re.S), 'Details stehen vor der Beschreibung'
 
 
 def test_render_sf_without_article_has_no_details_and_keeps_its_row(sf_context):
@@ -874,12 +891,25 @@ def _kampf_tab(html):
     return html[start:end]
 
 
-def test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats(live_html):
-    kampf = _kampf_tab(live_html)
+def _weapon_cards(kampf):
+    return kampf.count('class="weapon-card"')
+
+
+def _assert_wund_stat_hooks(kampf):
     stats = re.findall(r'data-wund-stat="(\w+)"', kampf)
-    # Vitalwerte: INI, GS; Kampfwerte: AT, PA, FK; Waffenkarte: AT, PA
-    assert sorted(stats) == sorted(['INI', 'GS', 'AT', 'PA', 'FK', 'AT', 'PA'])
+    # Vitalwerte: INI, GS; Kampfwerte: AT, PA, FK; je Waffenkarte: AT, PA (Kartenzahl aus demselben HTML, nicht aus dem Bogen)
+    assert sorted(stats) == sorted(['INI', 'GS', 'AT', 'PA', 'FK'] + ['AT', 'PA'] * _weapon_cards(kampf))
     assert len(re.findall(r'data-wund-base="', kampf)) == len(stats)
+
+
+def test_render_kampf_tab_has_wund_stat_hooks_for_wound_stats(live_html):
+    _assert_wund_stat_hooks(_kampf_tab(live_html))
+
+
+def test_render_kampf_tab_without_weapon_has_only_the_five_base_wund_stat_hooks(synth_html):
+    kampf = _kampf_tab(synth_html)  # synthetischer Held ohne Nahkampfwaffe
+    assert _weapon_cards(kampf) == 0
+    _assert_wund_stat_hooks(kampf)
 
 
 def test_render_kampf_tab_wund_stat_hooks_skip_mr_so_and_weapon_ini(live_html):
@@ -889,8 +919,10 @@ def test_render_kampf_tab_wund_stat_hooks_skip_mr_so_and_weapon_ini(live_html):
     # jede Zelle mit dem Hook traegt einen der fuenf Basiswert-Schluessel; Waffen-INI/BF/DK/TP nicht
     for cell in re.findall(r'<div[^>]*>\s*<span class="k">(?:MR|SO|DK|TP|BF)</span>.*?</div>', kampf, re.S):
         assert 'data-wund-stat' not in cell
-    weapon_ini = re.search(r'<span class="k">INI</span><span class="v"[^>]*>', kampf)
-    assert weapon_ini and 'data-wund-stat' not in weapon_ini.group(0)
+    # Waffen-INI: Label vor dem Wert (beim Vitalwert INI steht der Wert vor dem Label) -- je Waffenkarte genau eine
+    weapon_ini = re.findall(r'<span class="k">INI</span><span class="v"[^>]*>', kampf)
+    assert len(weapon_ini) == _weapon_cards(kampf)
+    assert all('data-wund-stat' not in tag for tag in weapon_ini)
 
 
 def test_render_kampf_tab_wund_hooks_keep_click_handlers_on_base_values(live_html):
