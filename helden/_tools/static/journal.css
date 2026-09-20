@@ -22,4 +22,13 @@
 @media print {
   .journal-section h4, .journal-section summary, .journal-readonly { color: var(--paper-ink) !important; }
   /* .journal-section h4/summary 1,95:1 (ink-mute); .journal-readonly 4,28:1 (ink-dim) */
+  /* Fix-Runde 2 (Re-Review): .journal-verlauf (<textarea>) behielt seinen Bildschirm-Look (dunkler --bg-inset-
+     Hintergrund, heller --ink-Text). Ohne print-color-adjust:exact druckt Chromium farbige Hintergruende
+     standardmaessig NICHT — belegt per page.pdf({printBackground:false}) an einer isolierten Testseite: der
+     Kasten blieb weiss, und selbst der helle Text wurde dabei zusaetzlich Chromium-intern abgedunkelt (rgb(232,220,195)
+     wurde zu rgb(148,140,124) gerastert) und blieb trotzdem unter 4,5:1 (~3,33:1 auf Weiss). Am WCAG-Rechenwert
+     (getComputedStyle, wie im Rest dieses Sprints) liegt dieselbe Farbe bei 1,072:1 auf Papier — in beiden Lesarten
+     ein Verstoss. Fix wie bei .sg-erf: Hintergrund transparent, Text paper-ink, Rahmen sichtbar mit paper-rule statt
+     sich auf einen gedruckten Hintergrund zu verlassen. */
+  .journal-verlauf { background: transparent !important; color: var(--paper-ink) !important; border-color: var(--paper-rule) !important; }
 }

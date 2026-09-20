@@ -1189,12 +1189,26 @@ def test_css_print_journal_kompiliert_view_colors_are_paper_ink():
     assert re.search(r'@media\s+print\s*\{[^@]*\.journal-readonly', journal_css)
 
 
+def test_css_print_journal_verlauf_textarea_is_readable_without_printed_background():
+    # Fix-Runde 2 (Re-Review, 1,072:1 gemessen): <textarea class="journal-verlauf"> behielt seinen Bildschirm-Look
+    # (dunkler --bg-inset-Hintergrund, heller --ink-Text). Ohne print-color-adjust:exact druckt Chromium farbige
+    # Hintergruende NICHT (belegt per page.pdf({printBackground:false}) an einer isolierten Testseite: der Kasten
+    # blieb weiss). Der Fix darf sich deshalb nicht auf einen gedruckten Hintergrund verlassen: Text muss auch bei
+    # transparentem/fehlendem Hintergrund lesbar sein.
+    rules = _print_rules()
+    decls = ' '.join(_decls(rules, '.journal-verlauf'))
+    assert decls, '.journal-verlauf hat keine Druck-Regel'
+    assert re.search(r'(?<![-\w])color\s*:\s*var\(--paper-ink\)\s*!important', decls), decls
+    assert re.search(r'background\s*:\s*transparent\s*!important', decls), decls
+    assert re.search(r'border-color\s*:\s*var\(--paper-rule\)\s*!important', decls), decls
+
+
 def test_css_seven_tabs_print_fix_leaves_screen_css_untouched():
     # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-053 nicht aendern; alle neuen Regeln stehen
     # im Druckblock (Sprint-025-Vorbild: test_css_zauber_tab_print_fix_leaves_screen_css_untouched).
     screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
     new_selectors = set(PRINT_SEVEN_TABS_PAPER_INK_SELECTORS) | set(PRINT_SPRACHEN_SELECTORS) | set(PRINT_JOURNAL_SELECTORS) | {
-        '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta',
+        '.talent-row.zero .t-name', '.talent-row.zero .t-zfw', '.sg-erf', '.card-title .meta', '.journal-verlauf',
     }
     leaked = [(s, d) for s, d in screen_rules if s in new_selectors and re.search(r'paper-(?:ink|rule)|!important|display:\s*none', d)]
     assert not leaked, leaked
