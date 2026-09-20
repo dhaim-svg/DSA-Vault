@@ -823,7 +823,7 @@ def test_render_ritual_rows_without_wiki_path_keep_their_exact_markup(ritual_con
 
 
 def test_render_ritual_without_article_has_no_details_and_keeps_its_rows(ritual_context):
-    ctx = ritual_context({RIT_A: _sf_artikel()})
+    ctx = ritual_context({RIT_A: _sf_artikel()})  # bewusst MIT Artikel gebaut und unten geleert bzw. entfernt
     unveraendert = _ritual_card(render_dashboard(ritual_context({})))
     assert 'artikel-details' not in unveraendert
     ctx['wiki_artikel'] = {}
