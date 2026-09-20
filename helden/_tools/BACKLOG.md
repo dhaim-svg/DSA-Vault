@@ -5,15 +5,15 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Sprint |
+|------|-------|--------|-------|--------|
+| D-053 | Druck-Kontrast-Sweep der übrigen 7 Tabs: der Sprint-025-Fix (D-052) deckt **nur den Zauber-Tab**, die anderen Tabs wurden nie in der Print-Emulation vermessen. Konkrete Funde: T5 maß außerhalb des Zauber-Tabs `.card-title .meta` und `.card > h4` bei 1,59–1,95 : 1; im Druck-Screenshot sind die AP-Zahlen „3845“/„3858“ der Zeile „AP & Steigerung“ fast unsichtbar. Vorgehen wie D-052: erst je Tab messen (Print-Emulation über Static-`http.server`, WCAG-Sweep über alle Elemente mit eigenem Text, Gruppen nach Selektor-Signatur, Ursprungsregel je Verstoß), dann im `@media print`-Block von `tabs.css` fixen. Selektor-Falle: ein Kind mit eigener Bildschirm-`color` erbt das `!important` des Elterns nicht; die vier `#tab-zauber`-präfixierten Selektoren des D-052-Fixes bleiben bewusst auf den Zauber-Tab begrenzt und müssen für andere Tabs eigene Regeln bekommen. **Sprint-026-Scope (User-Entscheidung):** alle 7 Tabs inkl. Chronik (`chronik.css`, `.journal-readonly` ~3,3 : 1); Überlauf je Tab wird gemessen, aber nur nach Befund gefixt; Pfeil-Bindung ↗ des Namenslinks ist enthalten, die Probe-Spalte des Zauber-Tabs nicht | S–M | in-progress | 026 |
 
 ## Backlog
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-053 | Druck-Kontrast-Sweep der übrigen 7 Tabs: der Sprint-025-Fix (D-052) deckt **nur den Zauber-Tab**, die anderen Tabs wurden nie in der Print-Emulation vermessen. Konkrete Funde: T5 maß außerhalb des Zauber-Tabs `.card-title .meta` und `.card > h4` bei 1,59–1,95 : 1; im Druck-Screenshot sind die AP-Zahlen „3845“/„3858“ der Zeile „AP & Steigerung“ fast unsichtbar. Vorgehen wie D-052: erst je Tab messen (Print-Emulation über Static-`http.server`, WCAG-Sweep über alle Elemente mit eigenem Text, Gruppen nach Selektor-Signatur, Ursprungsregel je Verstoß), dann im `@media print`-Block von `tabs.css` fixen. Selektor-Falle: ein Kind mit eigener Bildschirm-`color` erbt das `!important` des Elterns nicht; die vier `#tab-zauber`-präfixierten Selektoren des D-052-Fixes bleiben bewusst auf den Zauber-Tab begrenzt und müssen für andere Tabs eigene Regeln bekommen | S–M | ready | — |
+_(keine startbaren EPICs — D-053 läuft in Sprint 026.)_
 
-_(Vault-`backlog.md`: offen B-026 tooling; Sprint 025 hat B-023 und B-025 erledigt.)_
+_(Vault-`backlog.md`: B-026 tooling läuft in Sprint 026 mit; Sprint 025 hat B-023 und B-025 erledigt.)_
 
 ### Gestrichen
 

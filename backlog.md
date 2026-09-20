@@ -7,15 +7,15 @@
 
 ## In Progress
 
-_(keine)_
+| ID    | Kat.    | Titel | Effort | Sprint |
+|-------|---------|-------|--------|--------|
+| B-026 | tooling | Zweite Test-Replik im selben Modul (Fund Sprint 025 T4): `test_inventar_model.py::test_inventar_gewicht` bildet die Inventar-Gewichtsschleife aus `parsers/held.py:534–540` zeichengleich im Test nach und prüft die Kopie, nicht `load_held` — gleiches Muster wie B-025. Umstellen auf `load_held(write_mini_held(tmp_path, ausruestung=…))` (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`), Replik-Schleife streichen; Mutationsprobe am Parser | S | 026 |
 
 ---
 
 ## Backlog
 
-| ID    | Kat.    | Titel | Effort |
-|-------|---------|-------|--------|
-| B-026 | tooling | Zweite Test-Replik im selben Modul (Fund Sprint 025 T4): `test_inventar_model.py::test_inventar_gewicht` bildet die Inventar-Gewichtsschleife aus `parsers/held.py:534–540` zeichengleich im Test nach und prüft die Kopie, nicht `load_held` — gleiches Muster wie B-025. Umstellen auf `load_held(write_mini_held(tmp_path, ausruestung=…))` (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`), Replik-Schleife streichen; Mutationsprobe am Parser | S |
+_(keine offenen Items — B-026 läuft in Sprint 026.)_
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
