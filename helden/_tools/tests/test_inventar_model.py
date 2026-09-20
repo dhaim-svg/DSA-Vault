@@ -116,17 +116,23 @@ def test_inventar_gewicht():
 # test_load_held_geld_integration
 # ---------------------------------------------------------------------------
 
-def test_load_held_geld_integration():
-    """Integration: load_held returns structured geld dict from _illaen.md frontmatter."""
-    from parsers.held import load_held
+def test_load_held_geld_integration(tmp_path):
+    """Integration: load_held liefert das strukturierte geld-Dict aus dem Frontmatter von _illaen.md.
 
-    vault_root = Path(__file__).parent.parent.parent.parent  # DSA-Vault root
-    held = load_held(vault_root, 'illaen-baernhold')
-    geld = held['ausruestung']['geld']
-    # Illaen's frontmatter: {dukaten: 10, silbertaler: 64, heller: 0, kreuzer: 0}
-    assert geld['dukaten'] == 10
-    assert geld['silbertaler'] == 64
-    assert geld['heller'] == 0
-    assert geld['kreuzer'] == 0
-    # gesamt_kreuzer = 10*1000 + 64*100 + 0 + 0 = 16400
-    assert geld['gesamt_kreuzer'] == 16400
+    Synthetisch statt live (B-024): Der Test las vorher den echten Live-Bogen und pinnte dessen
+    Geldstand -- er brach, sobald der User Geld ausgab. Jetzt liefert ein Mini-Held den Frontmatter-Block; die Werte
+    sind bewusst krumm und in allen vier Muenzsorten != 0, damit eine vertauschte Sorte auffaellt.
+    Randfaelle (fehlender geld-Block, Kurs 1234) decken test_geld_fallback / test_gesamt_kreuzer_math ab."""
+    from parsers.held import load_held
+    from tests.heldfixtures import MINI_SLUG, write_mini_held
+
+    illaen = '---\ngeld: {dukaten: 3, silbertaler: 7, heller: 5, kreuzer: 9}\n---\n'
+    root = write_mini_held(tmp_path, illaen=illaen)
+    geld = load_held(root, MINI_SLUG)['ausruestung']['geld']
+    assert geld['dukaten'] == 3
+    assert geld['silbertaler'] == 7
+    assert geld['heller'] == 5
+    assert geld['kreuzer'] == 9
+    # Kurs (parsers/held.py): 1 Dukat = 1000, 1 Silbertaler = 100, 1 Heller = 10 Kreuzer
+    # gesamt_kreuzer = 3*1000 + 7*100 + 5*10 + 9 = 3759
+    assert geld['gesamt_kreuzer'] == 3759

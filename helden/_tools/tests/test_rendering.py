@@ -14,6 +14,7 @@ from rendering import (
     CHRONIK_BILD_PREFIX_SERVER, CHRONIK_BILD_PREFIX_STATIC, CSS_FILES, JS_FILES, STATIC_DIR, VAULT_ROOT,
     build_context, css_bundle, js_files, make_env, render_dashboard,
 )
+from tests.heldfixtures import write_mini_held
 from tests.jsfixtures import js_function, needs_node, run_node
 
 
@@ -328,15 +329,30 @@ def _strip_print_blocks(css):
     return ''.join(out)
 
 
+def _pos(html, marker, was=''):
+    """Position des Markers im HTML; fehlt er, scheitert der Test mit lesbarer Meldung statt mit ValueError (B-024)."""
+    pos = html.find(marker)
+    assert pos != -1, f'{was or marker} fehlt im Render'
+    return pos
+
+
+def test_pos_returns_position_or_fails_with_readable_message():
+    assert _pos('ab<x>cd', '<x>') == 2
+    with pytest.raises(AssertionError, match='Sortier-Button fehlt im Render'):
+        _pos('ab', 'data-spell-sort', 'Sortier-Button')
+    with pytest.raises(AssertionError, match='data-spell-sort fehlt im Render'):
+        _pos('ab', 'data-spell-sort')
+
+
 def test_render_zauber_sort_toolbar_and_list_wrapper(live_html):
     # D-043: Toolbar-Button -> Kopfzeile -> Listen-Wrapper -> Legende; Sortier-JS verschiebt nur Zeilen im Wrapper.
     assert live_html.count('data-spell-list') == 1
     assert live_html.count('data-spell-sort') == 1
     assert '<button type="button" class="spell-sort-btn" data-spell-sort' in live_html
-    toolbar = live_html.index('data-spell-sort')
-    head = live_html.index('class="spell spell-head"')
-    wrapper = live_html.index('data-spell-list')
-    legend = live_html.index('class="legend-row"')
+    toolbar = _pos(live_html, 'data-spell-sort', 'Sortier-Button')
+    head = _pos(live_html, 'class="spell spell-head"', 'Zauber-Kopfzeile')
+    wrapper = _pos(live_html, 'data-spell-list', 'Listen-Wrapper')
+    legend = _pos(live_html, 'class="legend-row"', 'Legende')
     assert toolbar < head < wrapper < legend
 
 
@@ -1121,12 +1137,64 @@ def test_render_kampf_tab_wund_hooks_keep_click_handlers_on_base_values(live_htm
     assert re.search(r'<div class="minor" data-pa="\d+">', kampf)
 
 
+# Fall "mit Waffe" synthetisch (B-024): Die drei Live-Tests oben werden vakuoes (0 == 0), sobald der Live-Bogen keine
+# Nahkampfwaffe fuehrt. Der Mini-Held hat genau eine; kampf.j2 rendert nur waffen[0] (eine Waffenkarte).
+WAFFE_SLUG = 'synth-waffe'
+# _SYNTH_ILLAEN hat nur LE/AU/AE; die Kampfwerte-Karte braucht AT/PA/FK/INI mit Zahlen, sonst waere data-at leer.
+_WAFFE_ILLAEN = _SYNTH_ILLAEN + """| Magieresistenz (MR) | (MU+KL+KO)/5 | 0 | 7 | 7 | — |
+| Initiative (INI) | (MU+MU+IN+GE)/5 | 0 | 10 | 10 | — |
+| Attacke (AT) | (MU+GE+KK)/5 | 0 | 7 | 7 | — |
+| Parade (PA) | (IN+GE+KK)/5 | 0 | 8 | 8 | — |
+| Fernkampf-Basis (FK) | (IN+FF+KK)/5 | 0 | 8 | 8 | — |
+"""
+_WAFFE_AUSRUESTUNG = """## Nahkampfwaffen
+
+| Waffe | Typ/BE | DK | TP | TP/KK | Ini | WM | AT | PA | eff. TP | min BF | akt. BF |
+|-------|--------|----|----|-------|-----|----|----|----|---------|--------|---------|
+| Testdolch | Dolch / BE−1 | H | 1W+2 | 12/4 | 1 | 0/0 | 11 | 9 | 1W+2 | −8 | −8 |
+"""
+
+
+@pytest.fixture(scope='module')
+def waffe_kampf(tmp_path_factory):
+    """Kampf-Tab-HTML eines synthetischen Helden mit genau einer Nahkampfwaffe (ohne Wiki-Artikel)."""
+    root = write_mini_held(tmp_path_factory.mktemp('waffe_vault'), slug=WAFFE_SLUG,
+                           illaen=_WAFFE_ILLAEN, ausruestung=_WAFFE_AUSRUESTUNG)
+    ctx = build_context(WAFFE_SLUG, root)
+    assert [w['name'] for w in ctx['held']['ausruestung']['waffen']] == ['Testdolch']
+    kampf = _kampf_tab(render_dashboard(ctx))
+    assert _weapon_cards(kampf) == 1  # nicht vakuoes: die Waffe kommt wirklich als Karte im HTML an
+    return kampf
+
+
+def test_render_kampf_tab_with_weapon_has_wund_stat_hooks_on_base_values_and_weapon_card(waffe_kampf):
+    _assert_wund_stat_hooks(waffe_kampf)
+    assert len(re.findall(r'data-wund-stat="(?:AT|PA)"', waffe_kampf)) == 4  # AT/PA-Basis + AT/PA der Waffenkarte
+
+
+def test_render_kampf_tab_with_weapon_wund_stat_hooks_skip_mr_so_and_weapon_ini(waffe_kampf):
+    for abbr in ('MR', 'SO'):
+        assert f'data-wund-stat="{abbr}"' not in waffe_kampf
+    cells = re.findall(r'<div[^>]*>\s*<span class="k">(?:MR|SO|DK|TP|BF)</span>.*?</div>', waffe_kampf, re.S)
+    assert len(cells) >= 3  # mindestens DK/TP/BF der Waffenkarte (plus MR/SO), sonst prueft die Schleife nichts
+    for cell in cells:
+        assert 'data-wund-stat' not in cell
+    weapon_ini = re.findall(r'<span class="k">INI</span><span class="v"[^>]*>', waffe_kampf)
+    assert len(weapon_ini) == 1
+    assert 'data-wund-stat' not in weapon_ini[0]
+
+
+def test_render_kampf_tab_with_weapon_wund_hooks_keep_click_handlers_on_base_values(waffe_kampf):
+    assert re.search(r'<div class="minor" data-at="\d+">', waffe_kampf)
+    assert re.search(r'<div class="minor" data-pa="\d+">', waffe_kampf)
+
+
 # -- Zustands-Chips als Hausregel gekennzeichnet (D-041c) --
 
 def test_render_kampf_tab_has_one_zustand_legend_below_chips(live_html):
     kampf = _kampf_tab(live_html)
     assert kampf.count('class="zustand-legend"') == 1
-    chips_at = kampf.index('id="zustand-chips"')
+    chips_at = _pos(kampf, 'id="zustand-chips"', 'Zustands-Chips')
     legend = re.search(r'<div class="zustand-legend">(.*?)</div>', kampf, re.S)
     assert legend and legend.start() > chips_at
     text = legend.group(1)
