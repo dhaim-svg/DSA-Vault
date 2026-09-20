@@ -1,6 +1,6 @@
 # Stabzauber & Kugelzauber (Gildenmagier)
 
-> **Quelle:** WdZ S. 106–115 (Apport S. 106, Stabzauber S. 107–111, Kristallkugel S. 111–115)
+> **Quelle:** WdZ S. 105–115 (Aktivierungsregel S. 105, Apport S. 106, Stabzauber S. 107–111, Kristallkugel S. 111–115)
 
 ## Überblick
 
@@ -40,7 +40,7 @@ Traditionsrituale der Gildenmagier. Der **Stab** und die **Kristallkugel** sind 
 - **Kleine Stäbe:** unter 1 Schritt Länge: Erschaffungsproben +1 und geringeres Fassungsvermögen; Kraftfokus spart nur bei Gesamtkosten > 10 AsP 1 AsP, Seil des Adepten nur 7 Schritt lang, Flammenschwert 2 TP weniger. Noch kleinere Stäbe (Repräsentation): Erschaffungsproben +3, Fassungsvermögen noch deutlich geringer (S. 107/108).
 
 ### Aktivierung der Stabzauber
-Allgemeine Ritualregel (WdZ S. 105): die meisten gebundenen Kräfte müssen vom Magier **aktiviert** werden, wofür — sofern nicht anders angegeben — eine **Aktivierungsprobe auf Ritualkenntnis** mit voller Aktion Zeitaufwand fällig wird. Bei den Stabzaubern ist das **pro Ritual individuell geregelt** und keineswegs einheitlich „freie Aktion ohne Probe":
+Allgemeine Ritualregel (WdZ S. 105): die meisten gebundenen Kräfte müssen vom Magier **aktiviert** werden, wofür — sofern nicht anders angegeben — eine **Aktivierungsprobe auf Ritualkenntnis** mit voller Aktion Zeitaufwand fällig wird. Bei den Stabzaubern ist das **pro Ritual individuell geregelt** und keineswegs einheitlich „freie Aktion ohne Probe“:
 
 | Stabzauber | Aktivierungsprobe | Aktivierungskosten | Wirkungsdauer |
 |-----------|-------------------|--------------------|----------------|
