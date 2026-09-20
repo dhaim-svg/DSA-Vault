@@ -536,7 +536,7 @@ def load_held(vault_root: Path, slug: str) -> dict:
         name = strip_wikilink(row.get('Gegenstand', ''))
         if name:
             gew_raw = row.get('Gewicht (Unzen)', '')
-            gew = safe_int(gew_raw) if gew_raw.strip() not in ('—', '', '-') else 0
+            gew = safe_int(gew_raw)
             inventar_gewicht_unzen += gew
             inventar.append({
                 'name': name,

@@ -135,7 +135,7 @@ def test_inventar_structure(tmp_path):
     pytest.param('-', id='bindestrich'),
 ])
 def test_inventar_leerer_und_bindestrich_wert(tmp_path, wert):
-    """Leerer Gewichtswert und '-' laufen wie '—' in den 0-Zweig (Bedingung `not in ('—', '', '-')`)."""
+    """Leerer Gewichtswert und '-' fallen durch safe_int auf 0."""
     tabelle = INVENTAR_HEADER + f"| Ohne Gewicht | 1 | {wert} |\n"
     aus = _inventar(tmp_path, tabelle)
     assert aus['inventar'][0]['gewicht'] == 0
@@ -148,6 +148,17 @@ def test_inventar_nicht_numerischer_wert(tmp_path):
     aus = _inventar(tmp_path, tabelle)
     assert aus['inventar'][0]['gewicht'] == 0
     assert aus['inventar_gewicht_unzen'] == 0
+
+
+@pytest.mark.parametrize('wert,erwartet', [
+    pytest.param('—', 0, id='em-dash'),
+    pytest.param('', 0, id='leer'),
+    pytest.param('-', 0, id='bindestrich'),
+])
+def test_safe_int_edge_cases_mutation_probe(wert, erwartet):
+    """safe_int selbst bildet Leerwerte und Bindestrich auf 0 ab -- Mutation-Probe gegen Regression."""
+    from parsers.held import safe_int
+    assert safe_int(wert) == erwartet
 
 
 # ---------------------------------------------------------------------------
