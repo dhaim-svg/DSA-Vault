@@ -7,11 +7,7 @@
 
 ## In Progress
 
-_(keine)_
-
----
-
-## Backlog
+_Sprint 022 (Hygiene-Sprint) — B-015…B-018, Plan: `helden/_tools/sprints/sprint-022/plan.md`_
 
 | ID    | Kat.  | Titel                                                                                                   | Effort |
 |-------|-------|---------------------------------------------------------------------------------------------------------|--------|
@@ -19,6 +15,12 @@ _(keine)_
 | B-016 | tooling | Repo-Hygiene (Final-Review Sprint 020, Sprint-019-Erbe): nur noch `.gitattributes` mit `* text=auto` offen (gemischte LF/CRLF-Working-Copies, `core.autocrlf=true`; ohne `--renormalize`, danach `git status` prüfen). Erledigt 2026-09-19: `.playwright-mcp/` in `.gitignore`, `.claude/settings.json` versioniert, `.obsidian/workspace.json` untracked + ignoriert | S |
 | B-017 | tooling | `WIKILINK_RE` härten (Final-Review Sprint 021): seit dem `]`-Fix kann ein ungeschlossenes `[[` im Wiki-Body bis zum nächsten `]]` schlucken (`[[` im Pfad verbieten; Vorschlag im Sprint-021-Handoff) + Test für ein unabgeschlossenes `[[` vor einem echten Link; im Korpus aktuell kein Fall | S |
 | B-018 | wiki | Ritual-Artikelvorschau vorbereiten (Sprint 021, D-050 ausgeklammert): `wiki/dsa-4.1/rituale/stabzauber.md` braucht `##`-Überschrift je Stabzauber, `helden/…/rituale.md` (User-Domäne) bräuchte Wikilinks mit Anker — als `wiki-luecken.md`-Eintrag anlegen; nebenbei Horriphobus-Artikel: Roh-Sternchen `**1 ZfP***` im Text prüfen | S |
+
+---
+
+## Backlog
+
+_(keine)_
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 
