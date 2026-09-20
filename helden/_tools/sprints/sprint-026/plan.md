@@ -4,12 +4,12 @@
 
 | # | Task | State | Files |
 |---|------|-------|-------|
-| T0 | Sprint scaffold (`BACKLOG.md` D-053 → in-progress, Vault-`backlog.md` B-026 → in-progress, `plan.md` anlegen) | ⬜ todo | `helden/_tools/BACKLOG.md`, `backlog.md`, `sprints/sprint-026/plan.md` |
+| T0 | Sprint scaffold (`BACKLOG.md` D-053 → in-progress, Vault-`backlog.md` B-026 → in-progress, `plan.md` anlegen) | ✅ done (`3131626`) | `helden/_tools/BACKLOG.md`, `backlog.md`, `sprints/sprint-026/plan.md` |
 | T1 | **D-053 Vermessung** (Browser, nur lesend): Print-Emulation über Static-`http.server` bei 794/718/615 px; je Tab (`profil`, `talente`, `kampf`, `steigern`, `inventar`, `sprachen`, `chronik`) WCAG-Sweep über alle Elemente mit eigenem Text, Gruppen nach Selektor-Signatur **mit Ursprungsregel Datei:Zeile**, dazu `docScrollWidth` je Tab und Bildschirm-Baseline als JSON. Kein Commit, keine Repo-Spuren | ✅ done (kein Commit) | — (Messbericht unter `.superpowers/sdd/sprint-026/`) |
-| T2 | **D-053 Fix**: `@media print` in `static/tabs.css` (+ `base.css` / `chronik.css`, wo die Ursprungsregel liegt) — alle in T1 gemessenen Gruppen auf `var(--paper-ink)`; bekannte Anhaltspunkte `.card-title .meta` / `.card > h4` (1,59–1,95 : 1), AP-Zahlen der Zeile „AP & Steigerung", `.journal-readonly` (~3,3 : 1, Altbestand seit Sprint 017). Zusätzlich Pfeil ↗ des Namenslinks per geschütztem Leerzeichen an den Namen binden. Tests im Druckblock von `test_rendering.py` | ⬜ todo | `static/tabs.css`, ggf. `static/base.css`, `static/chronik.css`, Template der Namenszelle, `tests/test_rendering.py` |
-| T3 | **Browser-Nachmessung** im selben Agenten-Kontext (`SendMessage` an T1): 0 Kontrast-Restgruppen über alle 7 Tabs, `docScrollWidth` unverändert oder besser, Bildschirm-Gegenprobe 0 Abweichungen gegen die T1-Baseline | ⬜ todo | — |
+| T2 | **D-053 Fix**: `@media print` in `static/tabs.css` (+ `base.css` / `chronik.css`, wo die Ursprungsregel liegt) — alle in T1 gemessenen Gruppen auf `var(--paper-ink)`; bekannte Anhaltspunkte `.card-title .meta` / `.card > h4` (1,59–1,95 : 1), AP-Zahlen der Zeile „AP & Steigerung", `.journal-readonly` (~3,3 : 1, Altbestand seit Sprint 017). Zusätzlich Pfeil ↗ des Namenslinks per geschütztem Leerzeichen an den Namen binden. Tests im Druckblock von `test_rendering.py` | ✅ done (`9cd072c`, `d2b1b84`, `a24686b` + 3 Fix-Runden `a41c6ff`, `2a4ba34`, `6f02095`; alle Re-Reviews clean) | `static/tabs.css`, ggf. `static/base.css`, `static/chronik.css`, Template der Namenszelle, `tests/test_rendering.py` |
+| T3 | **Browser-Nachmessung** im selben Agenten-Kontext (`SendMessage` an T1): 0 Kontrast-Restgruppen über alle 7 Tabs, `docScrollWidth` unverändert oder besser, Bildschirm-Gegenprobe 0 Abweichungen gegen die T1-Baseline | ✅ done (BESTANDEN, kein Commit; 0 Restgruppen / 0 Abweichungen / Zauber 0-500) | — |
 | T4 | **B-026**: `tests/test_inventar_model.py::test_inventar_gewicht` auf `load_held(write_mini_held(tmp_path, ausruestung=…))` umstellen (Tabelle mit Gewicht in Unzen, `—`/leer → 0, Summe `inventar_gewicht_unzen`); Replik der Schleife aus `parsers/held.py:534–540` streichen; Mutationsprobe am Parser | ✅ done (`a0fbb8a`; 618 Tests, Review clean) | `tests/test_inventar_model.py`, ggf. `tests/heldfixtures.py` |
-| T5 | Verifikation + `/sprint-wrap` | ⬜ todo | `sprints/sprint-026/verification.md`, `handoff.md`, Tracker |
+| T5 | Verifikation + `/sprint-wrap` | 🔄 laufend | `sprints/sprint-026/verification.md`, `handoff.md`, Tracker |
 
 ## Key Design Decisions
 
@@ -25,6 +25,13 @@
 
 ## Out of Scope
 
+> **Was „D-053 done" heißt und was nicht.** Gefixt ist der **Kontrast** aller 7 Tabs (0 Restgruppen, nachgemessen) plus drei Druck-Chrome-Fälle, die Inhalt verdeckten. **Nicht** gefixt und weiterhin offen ist die *Vollständigkeit* des Ausdrucks: der Bogen enthält keine LeP/AsP/AuP-Zahlen (D-054) und schneidet 80–89 % des Verlaufstexts ab (D-055). „Der Druck ist lesbar" ist damit korrekt — „der Druck ist vollständig" wäre es nicht.
+
+- **D-054 — LeP/AsP/AuP-Zahlen fehlen im Ausdruck vollständig.** In diesem Sprint gefunden und gemessen, bewusst nicht behoben: der naheliegende Fix druckt auf der servierten Seite einen veralteten Wert. Begründung unter „Funde für das Backlog".
+- **D-055 — Der Verlaufstext wird im Ausdruck zu 80–89 % abgeschnitten** (`<textarea>` druckt nur den sichtbaren Ausschnitt). Braucht eine Design-Entscheidung, nicht eine Kontrastregel.
+- **D-056 — Die getönte Papieroptik erscheint im echten Ausdruck weiß** (ohne `print-color-adjust:exact` druckt Chromium keine Hintergründe). Kein Defekt, aber eine offene Design-Frage; siehe Methodenbefund.
+- **`.sg-cap-warn` (`tabs.css:525`, 1,744 : 1) und `.register-leer`/`.register-empty` (`chronik.css:60`, 4,282 : 1)** — beide nur in Datenzuständen sichtbar, die der heutige Charakter nicht hat. *(Im Gesamt-Review gefunden; zusammen mit `.lang-cap-warn` in der Schluss-Fixwelle behoben — falls ein Fall doch offenbleibt, steht er hier.)*
+- **`#tab-profil table *` (`tabs.css:170`)** — Flächenschlag, der jede künftige Tabelle in diesem Tab miterfasst. Umbau hätte Regressionsrisiko, verschoben auf den nächsten Druck-Sprint.
 - **Probe-Spalte im Zauber-Tab** (bricht in 25/25 Zeilen zweizeilig, Spalte schmaler/einzeilig) — würde das in Sprint 025 frisch vermessene Druck-Grid erneut verschieben; geht als eigener S-EPIC ins `BACKLOG.md`. *(Die Pfeil-Bindung ↗ ist dagegen in T2 enthalten — 5 von 25 Namen @ 703 px.)*
 - **Echter Druckdialog / PDF**: die Print-Emulation kennt `@page`-Ränder nicht, die echte Seitenbreite (≈ 703 px) wird über einen 718-px-Viewport nachgestellt. Unverändert offen seit Sprint 020.
 - **Gefüllte Zauberspeicher-Slots im Druck**: im Ist-Render alle 3 leer, die Slot-Klassen sind nur vorsorglich abgedeckt (Sprint 025).
