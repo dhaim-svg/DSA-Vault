@@ -7,9 +7,7 @@
 
 ## In Progress
 
-| ID    | Kat.    | Titel | Effort |
-|-------|---------|-------|--------|
-| B-027 | tooling | Redundante Bedingung im Inventar-Parser: `parsers/held.py:539` prüft `gew_raw.strip() not in ('—','','-')`, obwohl `safe_int` (`held.py:171–177`) alle drei Werte selbst auf 0 abbildet — von Implementierer und Reviewer unabhängig nachgerechnet (Sprint 026 T4). Kein Verhaltensfehler, aber toter Schutz: eine Mutation der Bedingung lässt sich nicht durch einen Test fangen. Beim Entfernen mitziehen: die Docstring-Zeile in `tests/test_inventar_model.py`, die den Fallback beschreibt | S |
+_(keine)_
 
 
 ---
@@ -27,6 +25,7 @@
 
 | ID    | Kat.      | Titel                                                                                | Effort | Erledigt   |
 |-------|-----------|--------------------------------------------------------------------------------------|--------|------------|
+| B-027 | tooling | Redundante Bedingung im Inventar-Parser entfernt: `parsers/held.py:539` prüfte `gew_raw.strip() not in ('—','','-')`, obwohl `safe_int` (`held.py:171–177`) alle drei Werte selbst auf 0 abbildet. Ersetzt durch `gew = safe_int(gew_raw)`; Docstring `tests/test_inventar_model.py:138` korrigiert; neuer Mutationsprobe-Test direkt auf `safe_int` (isoliert von der bestehenden Integrationsprobe über `load_held`) (Sprint 027) | S | 2026-09-21 |
 | B-026 | tooling | Gewichts-Unittests pruefen `load_held` statt der Test-Replik: `test_inventar_gewicht` bildete die Schleife aus `parsers/held.py:533-544` zeichengleich nach und pruefte die Kopie. Ersetzt durch 3 Tests ueber `load_held(write_mini_held(ausruestung=…))` (Struktur, `—`/leer/`-` → 0, nicht-numerisch via `safe_int`); Mutationsprobe deckte auf, dass die Bedingung in `held.py:539` gegenueber `safe_int` **redundant** ist (Implementierer und Reviewer unabhaengig nachgerechnet) → B-027; +5 Tests (Sprint 026) | S | 2026-09-20 |
 | B-023 | wiki→tooling | Freistehende Buch-Sternchen (`ZfP*`, `LkP*`, `RkP*`, `TaP*`) rendern in der Artikelvorschau literal statt als `<em>`: **Wiki bleibt unberührt** (User-Entscheidung Parser statt Massenedit), `parsers/wikiartikel.py::render_markdown` ersetzt die Notation vor mistune durch U+E000 und danach zurück (Lookahead `(?!\*)` schützt `**LkP**`); Prototyp am Korpus widerlegte den ursprünglich geplanten Weg (mistune-Inline-Regel scheitert an umschließendem `*…*`); **Ganzdatei-Stern-Bilanz 82 → 0 Dateien** (Zeilen-Zählung des Pre-flights war ungenau), im Static-Render `<em>` 16 → 14 (die 2 falsch gepaarten Spannen in Lichtblitz/Antimagie); Korpus-Tests: Bilanz, kein Platzhalter im Wiki, kein Leck in Link-URLs; B-020-Tests auf `render_markdown` umgestellt; +18 Tests (Sprint 025; Polish ohne neuen Test) | M | 2026-09-20 |
 | B-025 | tooling | Geld-Unittests prüfen `load_held` statt der Test-Replik `_make_geld_dict` (gestrichen): Struktur, Kurs 1234, Fallback in 5 Fällen (fehlender Schlüssel/kein Frontmatter → erster Zweig; `geld:` null/skalar/Liste → `else`-Zweig), krumme Werte (`abc`→0, `"12"`→12, leer→0) — die Replik hatte `int` statt `safe_int` und den `else`-Zweig nie getroffen; Mutationsproben je Vertrag; Restmuster → B-026; +5 Tests (Sprint 025) | S | 2026-09-20 |

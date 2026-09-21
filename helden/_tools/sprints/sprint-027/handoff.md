@@ -10,8 +10,8 @@
   Task-Review clean, Gesamt-Review-Fixwelle: Re-Review clean.
 - ✅ **T3 D-056** (Papieroptik-Ruling, kein Code) — `662c5f8`, Controller inline.
 - ✅ **T4 B-027** (Parser-Cleanup) — `082b088`, Review clean beim ersten Durchgang.
-- ✅ **T5** Verifikation, Tracker (BACKLOG.md D-054/D-055 noch "in-progress" — Done-Umzug ist
-  `/sprint-wrap`s Aufgabe), dieses Dokument.
+- ✅ **T5** Verifikation, Tracker (`/sprint-wrap`: BACKLOG.md D-054/D-055 → Done, Vault-`backlog.md`
+  B-027 → Done, beide Backlogs jetzt leer), dieses Dokument.
 - Commits liegen **lokal** auf `master`: **nichts seit Sprint 022 (ab T2) ist gepusht**, Sprint 027
   fügt 7 weitere lokale Commits hinzu.
 
