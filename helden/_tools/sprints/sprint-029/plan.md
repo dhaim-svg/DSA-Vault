@@ -5,7 +5,7 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-061 → in-progress, D-062 neu anlegen, plan.md) | ✅ done | BACKLOG.md, sprints/sprint-029/plan.md |
-| T1 | D-061: Path-Traversal-Fix (`_safe_join` + campaign-Validierung in `_resolve_base`) + Tests | ⬜ todo | writers/held_writer.py, tests/test_held_writer.py, tests/test_server.py |
+| T1 | D-061: Path-Traversal-Fix (`_safe_join` + campaign-Validierung in `_resolve_base`) + Tests | ✅ done | writers/held_writer.py, tests/test_held_writer.py, tests/test_server.py |
 | T2 | Verifikation + `/sprint-wrap` | ⬜ todo | — |
 
 ## Befund (Grundlage für T1)
