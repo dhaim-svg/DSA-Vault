@@ -699,3 +699,88 @@ def test_mtime_map_kampagne_scope(tmp_path):
     result = mtime_map(tmp_path, 'any-slug', scope='kampagne', campaign=campaign)
     assert 'session.md' in result
     assert result['session.md'] == pytest.approx(md_file.stat().st_mtime)
+
+
+# ---------------------------------------------------------------------------
+# Path-traversal tests (D-061)
+# ---------------------------------------------------------------------------
+
+def test_patch_rejects_relative_traversal(tmp_path):
+    """locator['file'] mit '../' darf keine Datei ausserhalb von helden/<slug>/ treffen."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    outside = tmp_path / 'helden' / 'outside.md'
+    outside.write_text('geheim', encoding='utf-8')
+
+    result = patch(tmp_path, slug, {
+        'kind': 'section_body',
+        'file': '../outside.md',
+        'section': 'Verlauf',
+        'value': 'boese',
+    })
+    assert result.ok is False
+    assert outside.read_text(encoding='utf-8') == 'geheim'
+
+
+def test_patch_rejects_absolute_path(tmp_path):
+    """locator['file'] als absoluter Pfad ersetzt bei pathlib-Join den base-Anteil
+    komplett — muss trotzdem abgelehnt werden statt die Fremddatei zu treffen."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    outside = tmp_path.parent / 'd061_outside_probe.md'
+    outside.write_text('geheim', encoding='utf-8')
+
+    try:
+        result = patch(tmp_path, slug, {
+            'kind': 'section_body',
+            'file': str(outside),
+            'section': 'Verlauf',
+            'value': 'boese',
+        })
+        assert result.ok is False
+        assert outside.read_text(encoding='utf-8') == 'geheim'
+    finally:
+        outside.unlink()
+
+
+def test_etag_for_rejects_relative_traversal(tmp_path):
+    """etag_for() muss FileNotFoundError werfen statt den Inhalt der Fremddatei zu hashen."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    outside = tmp_path / 'helden' / 'outside.md'
+    outside.write_text('geheim', encoding='utf-8')
+
+    with pytest.raises(FileNotFoundError):
+        etag_for(tmp_path, slug, '../outside.md')
+
+
+def test_etag_for_rejects_absolute_path(tmp_path):
+    """etag_for() mit absolutem rel_file muss ebenfalls FileNotFoundError werfen."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+    outside = tmp_path.parent / 'd061_outside_probe_etag.md'
+    outside.write_text('geheim', encoding='utf-8')
+
+    try:
+        with pytest.raises(FileNotFoundError):
+            etag_for(tmp_path, slug, str(outside))
+    finally:
+        outside.unlink()
+
+
+def test_patch_kampagne_scope_rejects_campaign_traversal(tmp_path):
+    """scope='kampagne' + campaign='../../x' -> PatchResult(ok=False), kein Crash
+    (statt einer unbehandelten Exception aus _resolve_base)."""
+    result = patch(tmp_path, 'any-slug', {
+        'kind': 'section_body',
+        'file': 'x.md',
+        'section': 'Verlauf',
+        'value': 'x',
+        'scope': 'kampagne',
+        'campaign': '../../x',
+    })
+    assert result.ok is False

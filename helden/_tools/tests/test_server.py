@@ -47,6 +47,14 @@ def _client(slug: str = 'illaen-baernhold'):
     return app.test_client()
 
 
+def _write_held_file(tmp_path: Path, slug: str, filename: str, content: str = FIXTURE_TEXT) -> Path:
+    """Legt eine Datei unter helden/<slug>/ (innerhalb von tmp_path) an und gibt den Pfad zurueck."""
+    target = tmp_path / 'helden' / slug / filename
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding='utf-8')
+    return target
+
+
 # ---------------------------------------------------------------------------
 # PATCH /api/kampagne/<camp>/value — Erfolgsfall
 # ---------------------------------------------------------------------------
@@ -140,3 +148,63 @@ def test_patch_kampagne_route_malformed_json_returns_400(tmp_path):
             assert resp.status_code == 400
     finally:
         server_mod.VAULT_ROOT = original_vault_root
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/held/<slug_param>/value — Path-Traversal-Guard (D-061)
+# ---------------------------------------------------------------------------
+
+def test_patch_held_route_rejects_path_traversal(tmp_path):
+    """Anders als /api/kampagne hat diese Route keinen Regex-Guard vor patch() —
+    der Schutz muss also aus held_writer.py selbst kommen. Traversal im file-Feld
+    -> 400, eine ausserhalb der Fixture liegende Datei bleibt unangetastet."""
+    slug = 'test-held'
+    _write_held_file(tmp_path, slug, 'x.md')
+    outside = tmp_path / 'helden' / 'outside.md'
+    outside.write_text('geheim', encoding='utf-8')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.patch(f'/api/held/{slug}/value', json={
+                'kind': 'section_body',
+                'file': '../outside.md',
+                'section': 'Verlauf',
+                'value': 'boese',
+            })
+            assert resp.status_code == 400
+            data = resp.get_json()
+            assert data['ok'] is False
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    assert outside.read_text(encoding='utf-8') == 'geheim'
+
+
+def test_patch_held_route_rejects_kampagne_campaign_traversal_in_body(tmp_path):
+    """/api/held/<slug>/value reicht den kompletten JSON-Body ungefiltert an patch()
+    durch. Ein Body mit scope='kampagne' + traversal-campaign muss trotzdem an
+    _resolve_base()s Regex-Guard scheitern (400) -- nicht nur ueber die dedizierte
+    /api/kampagne/<camp>/value-Route mit ihrem Route-Level-Regex."""
+    slug = 'test-held'
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.patch(f'/api/held/{slug}/value', json={
+                'scope': 'kampagne',
+                'campaign': '../evil',
+                'kind': 'section_body',
+                'file': 'x.md',
+                'section': 'Verlauf',
+                'value': 'x',
+            })
+            assert resp.status_code == 400
+            data = resp.get_json()
+            assert data['ok'] is False
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    # Nichts darf ausserhalb der Fixture angelegt worden sein.
+    assert not (tmp_path / 'abenteuer').exists()

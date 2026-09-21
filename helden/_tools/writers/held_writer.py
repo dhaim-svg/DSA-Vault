@@ -68,13 +68,13 @@ def patch(vault_root: Path, slug: str, locator: dict) -> PatchResult:
 
     try:
         base = _resolve_base(vault_root, slug, locator.get('scope'), locator.get('campaign'))
-    except (KeyError, TypeError) as exc:
+    except (KeyError, TypeError, ValueError) as exc:
         return PatchResult(ok=False, old_value='', new_value='',
                            mtime_before=0, mtime_after=0,
                            error=f'bad locator: {exc}')
 
-    target = base / rel_file
-    if not target.exists():
+    target = _safe_join(base, rel_file)
+    if target is None or not target.exists():
         return PatchResult(ok=False, old_value='', new_value='',
                            mtime_before=0, mtime_after=0,
                            error=f'file not found: {rel_file}')
@@ -168,7 +168,9 @@ def etag_for(
     Default (scope=None or 'held') resolves to helden/<slug>/<rel_file>.
     """
     base = _resolve_base(vault_root, slug, scope, campaign)
-    path = base / rel_file
+    path = _safe_join(base, rel_file)
+    if path is None:
+        raise FileNotFoundError(rel_file)
     return hashlib.md5(path.read_bytes()).hexdigest()
 
 
@@ -198,8 +200,27 @@ def _resolve_base(vault_root: Path, slug: str, scope: str | None, campaign: str 
     scope='kampagne'       → vault_root/abenteuer/<campaign>
     """
     if scope == 'kampagne':
+        if not re.fullmatch(r'[a-z0-9_-]+', campaign or ''):
+            raise ValueError(f'invalid campaign name: {campaign!r}')
         return vault_root / 'abenteuer' / campaign
     return vault_root / 'helden' / slug
+
+
+def _safe_join(base: Path, rel_file: str) -> Path | None:
+    """Resolve base / rel_file and verify the result stays inside base.
+
+    Returns None for an empty rel_file, an absolute path, or any traversal
+    that would escape base — all three collapse to the same "not found"
+    outcome for callers, so nothing leaks about which case applied.
+    """
+    if not rel_file:
+        return None
+    target = (base / rel_file).resolve()
+    try:
+        target.relative_to(base.resolve())
+    except ValueError:
+        return None
+    return target
 
 
 # ---------------------------------------------------------------------------
