@@ -51,6 +51,15 @@
 
 Zahlen und Belege: `verification.md` im selben Ordner.
 
+- **Test Suite:** 662/662 bestanden (`pytest tests/ -v` und `pytest tests/ -q -W error`,
+  beide grün, `/sprint-wrap`-Phase-2-Gegenprobe).
+- **Static Render:** `python render-held.py illaen-baernhold` exit 0 ✓ — dabei einen
+  letzten Drift gefunden: `output/illaen-baernhold-dashboard.html` war seit der
+  Gesamt-Review-Fixwelle (`ba82764`, kunftigen→kuenftigen-Tippfehler) nicht mehr neu
+  gerendert worden. Nachgezogen, Diff exakt die eine erwartete Zeile (`0ac3fbb`).
+  Vierter Fund derselben Fehlerklasse dieses Sprints (Static-Render-Artefakt driftet
+  unbemerkt, wenn niemand explizit nachfragt — s. Lehren unten).
+
 ## Als nächstes (Sprint 029)
 
 - **`BACKLOG.md` hat jetzt genau 1 Eintrag**: **D-061** (`file`-Locator-Feld der PATCH-Routen

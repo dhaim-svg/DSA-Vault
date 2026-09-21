@@ -7,11 +7,14 @@ nachgerechnet, keine übernommen.
 
 - `python -m pytest -W error -q` aus `helden/_tools/`, nach Löschen aller `__pycache__`:
   **662 passed** (Ausgangsstand Sprint 027: 652).
-- Zuwachs: +2 T1 (D-057, Klassen-Präsenz + Selector-Update), +3 T2 (D-058, fr-Summe +
-  align-top-Präsenz/-Absenz + Render-Level), +5 T3 (D-059, neue `tests/test_server.py`),
-  +1 T4 (D-060, Transition-Präsenz) = +11 Feature-Tasks; unverändert durch die
-  Gesamt-Review-Fixwelle (nur Doku/Kommentare/Umlaute/Docstrings angefasst, keine neuen
-  Assertions außer der Umbau von T4s eigenem Test auf einen relationalen Check statt
+- Zuwachs pro Task (nachgerechnet gegen die tatsächlich berichteten Zwischenstände, nicht
+  nur die Differenzenzeile der Reports übernommen — T2s eigener Report hatte hier selbst
+  einen Rechenfehler, s. Reviews unten): 652 → **653** T1 (D-057, +1: Klassen-Präsenz-Test),
+  → **656** T2 (D-058, +3: fr-Summe + align-top-Präsenz/-Absenz + Render-Level),
+  → **661** T3 (D-059, +5: neue `tests/test_server.py`), → **662** T4 (D-060, +1:
+  Transitions-Präsenz) = **+10** über die vier Feature-Tasks; unverändert durch die
+  Gesamt-Review-Fixwelle (nur Doku/Kommentare/Umlaute/Docstrings angefasst, keine neue
+  Assertion außer dem Umbau von T4s eigenem Test auf einen relationalen Check statt
   zweier hartkodierter Werte).
 
 ## Sprintziel: 4 lang offene "Bekannte Einschränkungen" geschlossen
