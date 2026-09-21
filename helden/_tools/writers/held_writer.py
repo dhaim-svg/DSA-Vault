@@ -210,10 +210,12 @@ def _safe_join(base: Path, rel_file: str) -> Path | None:
     """Resolve base / rel_file and verify the result stays inside base.
 
     Returns None for an empty rel_file, an absolute path, any traversal
-    that would escape base, or a rel_file the OS itself rejects (e.g. an
-    embedded null byte raises ValueError from .resolve()) — all of these
-    collapse to the same "not found" outcome for callers, so nothing leaks
-    about which case applied.
+    that would escape base, a rel_file the OS itself rejects (e.g. an
+    embedded null byte raises ValueError from .resolve()), or a rel_file
+    that isn't a regular file (a directory would otherwise pass the
+    containment check, report .exists()==True, and then crash read_bytes()
+    unhandled) — all of these collapse to the same "not found" outcome for
+    callers, so nothing leaks about which case applied.
     """
     if not rel_file:
         return None
@@ -224,6 +226,8 @@ def _safe_join(base: Path, rel_file: str) -> Path | None:
     try:
         target.relative_to(base.resolve())
     except ValueError:
+        return None
+    if not target.is_file():
         return None
     return target
 

@@ -706,12 +706,20 @@ def test_mtime_map_kampagne_scope(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_patch_rejects_relative_traversal(tmp_path):
-    """locator['file'] mit '../' darf keine Datei ausserhalb von helden/<slug>/ treffen."""
+    """locator['file'] mit '../' darf keine Datei ausserhalb von helden/<slug>/ treffen.
+
+    Die Fremddatei bekommt einen echten '## Verlauf'-Abschnitt (SECTION_BODY_TEXT):
+    ohne den _safe_join-Guard würde _patch_section_body ihn klaglos überschreiben
+    (ok=True) statt zufällig an einer fehlenden Sektion zu scheitern — der Test muss
+    den Guard selbst treffen, nicht eine unabhängige, andere Fehlerursache. Die exakte
+    Fehlermeldung wird mitgeprüft, damit 'ok is False' nicht auch aus einem anderen
+    Grund (z. B. 'section not found') durchrutscht.
+    """
     slug = 'test-held'
     hero_dir = tmp_path / 'helden' / slug
     hero_dir.mkdir(parents=True)
     outside = tmp_path / 'helden' / 'outside.md'
-    outside.write_text('geheim', encoding='utf-8')
+    outside.write_text(SECTION_BODY_TEXT, encoding='utf-8')
 
     result = patch(tmp_path, slug, {
         'kind': 'section_body',
@@ -720,17 +728,20 @@ def test_patch_rejects_relative_traversal(tmp_path):
         'value': 'boese',
     })
     assert result.ok is False
-    assert outside.read_text(encoding='utf-8') == 'geheim'
+    assert result.error == 'file not found: ../outside.md'
+    assert outside.read_text(encoding='utf-8') == SECTION_BODY_TEXT
 
 
 def test_patch_rejects_absolute_path(tmp_path):
     """locator['file'] als absoluter Pfad ersetzt bei pathlib-Join den base-Anteil
-    komplett — muss trotzdem abgelehnt werden statt die Fremddatei zu treffen."""
+    komplett — muss trotzdem abgelehnt werden statt die Fremddatei zu treffen.
+    Echter '## Verlauf'-Inhalt wie oben, plus Fehlermeldung mitgeprüft — sonst wäre
+    ok=False auch ohne Guard über eine andere Fehlerursache erreichbar."""
     slug = 'test-held'
     hero_dir = tmp_path / 'helden' / slug
     hero_dir.mkdir(parents=True)
     outside = tmp_path.parent / 'd061_outside_probe.md'
-    outside.write_text('geheim', encoding='utf-8')
+    outside.write_text(SECTION_BODY_TEXT, encoding='utf-8')
 
     try:
         result = patch(tmp_path, slug, {
@@ -740,7 +751,8 @@ def test_patch_rejects_absolute_path(tmp_path):
             'value': 'boese',
         })
         assert result.ok is False
-        assert outside.read_text(encoding='utf-8') == 'geheim'
+        assert result.error == f'file not found: {outside}'
+        assert outside.read_text(encoding='utf-8') == SECTION_BODY_TEXT
     finally:
         outside.unlink()
 
@@ -789,15 +801,47 @@ def test_patch_rejects_embedded_null_byte(tmp_path):
     assert result.ok is False
 
 
-def test_patch_kampagne_scope_rejects_campaign_traversal(tmp_path):
-    """scope='kampagne' + campaign='../../x' -> PatchResult(ok=False), kein Crash
-    (statt einer unbehandelten Exception aus _resolve_base)."""
-    result = patch(tmp_path, 'any-slug', {
+def test_patch_rejects_directory_as_file(tmp_path):
+    """locator['file'] = '.' loest nach dem Join+Resolve auf das Basisverzeichnis
+    selbst auf -- ein echtes, existierendes Verzeichnis, das den Containment-Check
+    besteht. Ohne den is_file()-Check in _safe_join wuerde target.exists() True
+    liefern und read_bytes() danach unbehandelt crashen (PermissionError/
+    IsADirectoryError, 500 statt eines normalen PatchResult)."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+
+    result = patch(tmp_path, slug, {
         'kind': 'section_body',
-        'file': 'x.md',
+        'file': '.',
         'section': 'Verlauf',
-        'value': 'x',
-        'scope': 'kampagne',
-        'campaign': '../../x',
+        'value': 'boese',
     })
     assert result.ok is False
+    assert result.error == 'file not found: .'
+
+
+def test_patch_kampagne_scope_rejects_campaign_traversal(tmp_path):
+    """scope='kampagne' + campaign='../helden/test-held' loest (nach Aufloesung) auf
+    einen echten, existierenden Ordner mit echtem '## Verlauf'-Inhalt -- ohne den
+    Regex-Guard in _resolve_base wuerde die darin liegende Datei ganz real
+    ueberschrieben. _safe_join allein greift hier NICHT: base und target werden
+    konsistent aufgeloest, das '..' bleibt also innerhalb des (aufgeloesten)
+    base-Ordners und besteht den Containment-Check anstandslos -- nur der
+    Regex-Guard auf den Kampagnennamen selbst verhindert den Zugriff."""
+    victim_dir = tmp_path / 'helden' / 'test-held'
+    victim_dir.mkdir(parents=True)
+    victim = victim_dir / 'secret.md'
+    victim.write_text(SECTION_BODY_TEXT, encoding='utf-8')
+
+    result = patch(tmp_path, 'any-slug', {
+        'kind': 'section_body',
+        'file': 'secret.md',
+        'section': 'Verlauf',
+        'value': 'boese',
+        'scope': 'kampagne',
+        'campaign': '../helden/test-held',
+    })
+    assert result.ok is False
+    assert 'invalid campaign name' in result.error
+    assert victim.read_text(encoding='utf-8') == SECTION_BODY_TEXT

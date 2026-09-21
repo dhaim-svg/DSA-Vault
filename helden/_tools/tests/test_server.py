@@ -157,11 +157,15 @@ def test_patch_kampagne_route_malformed_json_returns_400(tmp_path):
 def test_patch_held_route_rejects_path_traversal(tmp_path):
     """Anders als /api/kampagne hat diese Route keinen Regex-Guard vor patch() —
     der Schutz muss also aus held_writer.py selbst kommen. Traversal im file-Feld
-    -> 400, eine ausserhalb der Fixture liegende Datei bleibt unangetastet."""
+    -> 400, eine ausserhalb der Fixture liegende Datei bleibt unangetastet.
+
+    Die Fremddatei bekommt FIXTURE_TEXT (echter '## Verlauf'-Abschnitt): ohne den
+    Guard wuerde die Route ihn klaglos ueberschreiben (200/ok=True) statt zufaellig
+    an einer anderen Fehlerursache zu scheitern -- Fehlerfeld wird mitgeprueft."""
     slug = 'test-held'
     _write_held_file(tmp_path, slug, 'x.md')
     outside = tmp_path / 'helden' / 'outside.md'
-    outside.write_text('geheim', encoding='utf-8')
+    outside.write_text(FIXTURE_TEXT, encoding='utf-8')
 
     original_vault_root = server_mod.VAULT_ROOT
     server_mod.VAULT_ROOT = tmp_path
@@ -176,35 +180,49 @@ def test_patch_held_route_rejects_path_traversal(tmp_path):
             assert resp.status_code == 400
             data = resp.get_json()
             assert data['ok'] is False
+            assert data['error'] == 'file not found: ../outside.md'
     finally:
         server_mod.VAULT_ROOT = original_vault_root
 
-    assert outside.read_text(encoding='utf-8') == 'geheim'
+    assert outside.read_text(encoding='utf-8') == FIXTURE_TEXT
 
 
 def test_patch_held_route_rejects_kampagne_campaign_traversal_in_body(tmp_path):
     """/api/held/<slug>/value reicht den kompletten JSON-Body ungefiltert an patch()
     durch. Ein Body mit scope='kampagne' + traversal-campaign muss trotzdem an
     _resolve_base()s Regex-Guard scheitern (400) -- nicht nur ueber die dedizierte
-    /api/kampagne/<camp>/value-Route mit ihrem Route-Level-Regex."""
+    /api/kampagne/<camp>/value-Route mit ihrem Route-Level-Regex.
+
+    Die Kampagne zeigt (nach Aufloesung) auf einen echten, existierenden Ordner mit
+    echtem '## Verlauf'-Inhalt: ohne den Regex-Guard waere die Datei darin real
+    erreichbar und ueberschreibbar -- _safe_join allein greift hier nicht (base und
+    target werden konsistent aufgeloest, das '..' bleibt innerhalb des aufgeloesten
+    base-Ordners), nur der Regex-Guard auf den Kampagnennamen verhindert den Zugriff."""
     slug = 'test-held'
+    victim_dir = tmp_path / 'helden' / 'campaign-traversal-victim'
+    victim_dir.mkdir(parents=True)
+    victim = victim_dir / 'secret.md'
+    victim.write_text(FIXTURE_TEXT, encoding='utf-8')
+
     original_vault_root = server_mod.VAULT_ROOT
     server_mod.VAULT_ROOT = tmp_path
     try:
         with _client() as client:
             resp = client.patch(f'/api/held/{slug}/value', json={
                 'scope': 'kampagne',
-                'campaign': '../evil',
+                'campaign': '../helden/campaign-traversal-victim',
                 'kind': 'section_body',
-                'file': 'x.md',
+                'file': 'secret.md',
                 'section': 'Verlauf',
-                'value': 'x',
+                'value': 'boese',
             })
             assert resp.status_code == 400
             data = resp.get_json()
             assert data['ok'] is False
+            assert 'invalid campaign name' in data['error']
     finally:
         server_mod.VAULT_ROOT = original_vault_root
 
+    assert victim.read_text(encoding='utf-8') == FIXTURE_TEXT
     # Nichts darf ausserhalb der Fixture angelegt worden sein.
     assert not (tmp_path / 'abenteuer').exists()
