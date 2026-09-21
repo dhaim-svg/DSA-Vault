@@ -16,6 +16,7 @@
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
+| D-061 | **PATCH-Routen validieren das `file`/Locator-Feld nicht gegen Path-Traversal.** `writers/held_writer.py:76-77` baut `target = base / rel_file` aus `locator['file']` ohne Pruefung — ein `file`-Wert mit `../` oder ein absoluter Pfad koennte im Prinzip aus dem Kampagnen-/Helden-Verzeichnis ausbrechen. Betrifft beide PATCH-Routen (`/api/held/<slug>/value`, `/api/kampagne/<camp>/value`, server.py:89/109). Vorbestehend (nicht Sprint 028 eingefuehrt), geringes Praxisrisiko (Flask bindet nur an `127.0.0.1`, server.py:154, kein Netzwerkexpositions-Pfad). Entdeckt bei D-059 (PATCH-Routen-Test-Coverage) — dort bewusst nicht mitbehoben, da ausserhalb des Task-Scopes (nur Route-Wiring/JSON-Body/`camp`-Guard-Coverage war beauftragt) | S | ready | — |
 
 _(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 028.)_
 
