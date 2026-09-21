@@ -1058,7 +1058,7 @@ def test_css_print_seven_tabs_colors_are_paper_ink():
 
 
 def test_sessions_table_has_class_in_markup(live_html):
-    """Verifies D-057: Sessions-Tabelle hat .sessions-table Klasse fuer Selector-Scoping."""
+    """Prueft D-057: Sessions-Tabelle hat .sessions-table Klasse fuer Selector-Scoping."""
     assert 'class="sessions-table"' in live_html, 'Sessions-Tabelle in profil.j2 muss .sessions-table Klasse haben'
     # Stelle sicher, dass die alte Tag-basierte Selector-Regel nicht mehr im CSS vorkommt
     rules = _print_rules()
@@ -2046,10 +2046,16 @@ def test_css_footer_bar_rises_above_open_dice_panel_on_desktop():
 
 def test_css_footer_bar_transition_syncs_with_dice_panel_animation():
     # D-060: Footer-Leiste muss ihre bottom-Position mit der Panel-Animation synchronisieren statt sofort zu springen.
-    # Das Panel animiert mit transition:transform 0.2s ease; die Leiste muss gleich schnell ihre bottom-Position aendern.
+    # Dauer wird aus der echten .dice-panel-Regel gelesen statt zweimal hartcodiert (Review-Fund, Sprint-028-Fixwelle):
+    # aendert sich die Panel-Dauer kuenftig, faellt dieser Test durch statt weiterhin bestehen zu bleiben.
     top = _toplevel_rules(css_bundle())
+    panel = ' '.join(_decls(top, '.dice-panel'))
     bar = ' '.join(_decls(top, '#footer-bar'))
-    assert re.search(r'transition\s*:\s*bottom\s+0\.2s\s+ease', bar), 'footer-bar muss transition:bottom 0.2s ease haben'
+    m_panel = re.search(r'transition\s*:\s*transform\s+([\d.]+)s\s+ease', panel)
+    assert m_panel, 'dice-panel hat keine transform-transition mit lesbarer Dauer'
+    duration = m_panel.group(1)
+    assert re.search(r'transition\s*:\s*bottom\s+%ss\s+ease' % re.escape(duration), bar), \
+        f'footer-bar muss dieselbe Dauer wie dice-panel ({duration}s) verwenden'
 
 
 def test_dice_js_publishes_open_panel_height_as_css_variable():
