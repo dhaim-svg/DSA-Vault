@@ -332,14 +332,24 @@ def test_valid_slug_rejects_embedded_slash_traversal():
     assert server_mod._valid_slug('../outside') is False
 
 
-def test_held_page_route_rejects_invalid_slug_param(tmp_path):
+@pytest.mark.parametrize('bad_slug', [
+    '..',            # Traversal auf den Vault-Root
+    '../outside',    # Anders als bei den API-Routen (Standard-'string'-Converter,
+                      # kein '/' moeglich) nutzt /held/<path:s> den 'path'-Converter,
+                      # der '/' explizit erfasst -- ohne Guard laeuft dieser Wert
+                      # tatsaechlich bis in _render_dashboard('../outside') ->
+                      # load_held() -> FileNotFoundError beim Lesen ausserhalb von
+                      # helden/ (empirisch mit einem temporaer deaktivierten Guard
+                      # bestaetigt); mit dem Guard: sauberes 404 vor jedem Datei-Zugriff.
+])
+def test_held_page_route_rejects_invalid_slug_param(tmp_path, bad_slug):
     """GET /held/<path:s> mit ungueltigem slug -> 404 (analog zum chronik_bild()-
     Muster in derselben Datei: abort(404) auf einer Nicht-JSON-Route)."""
     original_vault_root = server_mod.VAULT_ROOT
     server_mod.VAULT_ROOT = tmp_path
     try:
         with _client() as client:
-            resp = client.get('/held/..')
+            resp = client.get(f'/held/{bad_slug}')
             assert resp.status_code == 404
     finally:
         server_mod.VAULT_ROOT = original_vault_root
