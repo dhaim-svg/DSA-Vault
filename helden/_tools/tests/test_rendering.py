@@ -1033,7 +1033,7 @@ PRINT_SEVEN_TABS_PAPER_INK_SELECTORS = (
     '.equip-stat .k', '.equip-stat .v', '.inv-coin-label', '.inv-coin-val', '.inv-coin-total',
     '.inv-weight-note', '.inv-reise-note', '.equip-stat + p', '.inv-list li > span',
     # Profil (T1: 9 Gruppen)
-    '.aussehen-row dt', '.aussehen-row dd', '#tab-profil table', '#tab-profil table *', '.feed li small',
+    '.aussehen-row dt', '.aussehen-row dd', '#tab-profil .sessions-table', '#tab-profil .sessions-table *', '.feed li small',
     # Kampf: R6 (vorsorglich, ungemessen)
     '.weapon-card + div', '.weapon-card + div *',
     # Talente (T1: 3 Gruppen; .talent-row.zero siehe test_css_print_talente_zero_meets_contrast_threshold)
@@ -1055,6 +1055,17 @@ def test_css_print_seven_tabs_colors_are_paper_ink():
         )
     ]
     assert not missing, f'ohne color:var(--paper-ink) !important im Druck-Block: {missing}'
+
+
+def test_sessions_table_has_class_in_markup(live_html):
+    """Verifies D-057: Sessions-Tabelle hat .sessions-table Klasse fuer Selector-Scoping."""
+    assert 'class="sessions-table"' in live_html, 'Sessions-Tabelle in profil.j2 muss .sessions-table Klasse haben'
+    # Stelle sicher, dass die alte Tag-basierte Selector-Regel nicht mehr im CSS vorkommt
+    rules = _print_rules()
+    old_selectors = ['#tab-profil table', '#tab-profil table *']
+    # Finde den alten Selector im CSS
+    old_found = [s for s in old_selectors if any(sel == s for sel, _ in rules)]
+    assert not old_found, f'alte Tag-Selektoren sollten nicht mehr im CSS sein: {old_found}'
 
 
 def _relative_luminance(rgb):

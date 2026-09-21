@@ -165,8 +165,8 @@
   .inv-list li > span{ color:var(--paper-ink) !important; } /* inventar.j2:90 Reise-Anmerkung, Inline-color ink-dim, 4,28:1 */
   /* Profil (T1: 9 Gruppen) */
   .aussehen-row dt,.aussehen-row dd{ color:var(--paper-ink) !important; } /* dt 1,95:1, dd 1,07:1 */
-  #tab-profil table,#tab-profil table *{ color:var(--paper-ink) !important; } /* profil.j2:84-93 Sessions-Tabelle,
-     Inline-color (ink-mute/ink) je Zelle; einzige <table> in #tab-profil, daher als ganze Tabelle gefasst */
+  #tab-profil .sessions-table,#tab-profil .sessions-table *{ color:var(--paper-ink) !important; } /* profil.j2:82-97 Sessions-Tabelle,
+     Inline-color (ink-mute/ink) je Zelle; Klassen-Selektor gegen Regressionsrisiko bei kunftigen Tabellen */
   .feed li small{ color:var(--paper-ink) !important; } /* Steigerungs-Log-Begruendung, Inline-color ink-dim, 4,28:1 */
   /* Kampf (T1: 1 Gruppe span.meta, siehe .card-title .meta oben) + Ruling R6 (vorsorglich): kampf.j2:93-94 hat
      dieselbe Inline-Style-Falle wie profil.j2:84-93, im Ist-Render von illaen-baernhold aber nicht getroffen (keine
