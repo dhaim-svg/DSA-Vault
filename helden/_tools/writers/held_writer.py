@@ -209,13 +209,18 @@ def _resolve_base(vault_root: Path, slug: str, scope: str | None, campaign: str 
 def _safe_join(base: Path, rel_file: str) -> Path | None:
     """Resolve base / rel_file and verify the result stays inside base.
 
-    Returns None for an empty rel_file, an absolute path, or any traversal
-    that would escape base — all three collapse to the same "not found"
-    outcome for callers, so nothing leaks about which case applied.
+    Returns None for an empty rel_file, an absolute path, any traversal
+    that would escape base, or a rel_file the OS itself rejects (e.g. an
+    embedded null byte raises ValueError from .resolve()) — all of these
+    collapse to the same "not found" outcome for callers, so nothing leaks
+    about which case applied.
     """
     if not rel_file:
         return None
-    target = (base / rel_file).resolve()
+    try:
+        target = (base / rel_file).resolve()
+    except (OSError, ValueError):
+        return None
     try:
         target.relative_to(base.resolve())
     except ValueError:

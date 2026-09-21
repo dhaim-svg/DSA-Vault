@@ -772,6 +772,23 @@ def test_etag_for_rejects_absolute_path(tmp_path):
         outside.unlink()
 
 
+def test_patch_rejects_embedded_null_byte(tmp_path):
+    """locator['file'] mit eingebettetem Null-Byte darf nicht crashen (Path.resolve()
+    wirft dafuer ValueError auf Windows) -- muss als normales PatchResult(ok=False)
+    zurueckkommen, nicht als unbehandelte Exception."""
+    slug = 'test-held'
+    hero_dir = tmp_path / 'helden' / slug
+    hero_dir.mkdir(parents=True)
+
+    result = patch(tmp_path, slug, {
+        'kind': 'section_body',
+        'file': 'a\x00b.md',
+        'section': 'Verlauf',
+        'value': 'boese',
+    })
+    assert result.ok is False
+
+
 def test_patch_kampagne_scope_rejects_campaign_traversal(tmp_path):
     """scope='kampagne' + campaign='../../x' -> PatchResult(ok=False), kein Crash
     (statt einer unbehandelten Exception aus _resolve_base)."""
