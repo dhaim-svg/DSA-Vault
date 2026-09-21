@@ -89,6 +89,9 @@ body::before{
 .cols-2{ grid-template-columns:2fr 1fr; }
 .cols-3{ grid-template-columns:1fr 1fr 1fr; }
 @media(max-width:900px){ .cols-2,.cols-3{ grid-template-columns:1fr; } }
+/* D-058: Modifier statt .cols-2-Aenderung (User-Entscheidung) — nur die Zauber-Tab-Grid-Instanz (zauber.j2:91) bekommt
+   .align-top, die 3 anderen .cols-2-Stellen (profil/inventar/kampf) bleiben beim Grid-Default align-items:stretch. */
+.grid.align-top{ align-items:start; }
 
 /* ---- Card ---- */
 .card{
@@ -746,10 +749,12 @@ body::before{
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
 /* D-049: das offene Wuerfelpanel (fixed, z-index 200) verdeckte die Leiste -> sie steigt um die von dice.js gepflegte Panelhoehe. */
+/* D-060: Transition der bottom-Position mit der Panel-Animation synchronisieren statt sofort zu springen. */
 #footer-bar{
   position:fixed; bottom:calc(28px + var(--dice-panel-h, 0px)); right:28px;
   display:flex; gap:8px; align-items:center;
   z-index:100;
+  transition:bottom 0.2s ease;
 }
 #footer-bar .print-btn{ position:static; }
 #save-group{
@@ -923,10 +928,15 @@ body::before{
   /* Ueberlauf: das Bildschirm-Grid (base.css) loest zu 160+240+38+80+90+200 px Minima + 5 Gaps a 10 px = 858 px auf; verfuegbar sind auf A4 nur
      186 mm = 703 px - 26 px Karte - 20 px Zeilen-Padding = 657 px (Emulation 794 px: 733 px). Druck-Grid ohne px-Minimum: die vier variablen Spalten
      sind minmax(0,Xfr) und damit durch Konstruktion nie breiter als der Container; fest sind nur ZfW 28 + ZD 40 = 68 px, dazu 5 Gaps a 8 px = 40 px
-     (108 px). Der Rest (657 - 108 = 549 px) verteilt sich auf 6,4 fr (1 fr = 86 px): Zauber 1,8 (154 px), Probe 1,4 (120 px), Kosten 1 (86 px),
-     Wirkung 2,2 (189 px). Kopfzeile (10 px, Grossbuchstaben, .18em): "WIRKUNG" ~55 px, "ZFW" ~23 px < 28 px; "mind." (ZD) ~35 px < 40 px.
-     Die Probe ("KL 14 / IN 15 / CH 13", 21 Zeichen ~148 px) bricht bei Bedarf an den Leerzeichen um (base.css:406 setzt nowrap). */
-  .spell{ grid-template-columns:minmax(0,1.8fr) minmax(0,1.4fr) 28px 40px minmax(0,1fr) minmax(0,2.2fr); gap:4px 8px; }
+     (108 px). Die fr-Summe bleibt bei 6,4 (D-058 verschiebt nur Anteile, die Gesamtbreite der vier variablen Spalten haengt nur von der
+     verfuegbaren Restbreite ab, nicht vom fr-Verhaeltnis). Kopfzeile (10 px, Grossbuchstaben, .18em): "WIRKUNG" ~55 px, "ZFW" ~23 px < 28 px;
+     "mind." (ZD) ~35 px < 40 px. */
+  /* D-058: Probe brach mit 1,4 fr in allen 25 Zeilen zweizeilig um (Browser-Messung @703 px: Spalte 117 px gegen laengsten realen
+     Probe-Text "MU 12 / KL 14 / KO 13" = 138 px ungewrappt). Probe auf 1,9 fr angehoben (@703 px dadurch 159 px, einzeilig mit Reserve);
+     die 0,5 fr kommen von Kosten (1 -> 0,7 fr — Werte wie "ZfW Wuerfel x 1W6 AsP" liefen mit 1 fr ohnehin schon in den Umbruch) und
+     Wirkung (2,2 -> 2 fr — Wirkungstext ist mehrzeilig, 17 px weniger fallen nicht auf). Summe bleibt 6,4 fr: die Gesamtbreite der Zeile
+     aendert sich dadurch nicht (Browser-Messung scrollWidth @703/718/615 px vor/nach identisch, s. Sprint-028 T2-Report). */
+  .spell{ grid-template-columns:minmax(0,1.8fr) minmax(0,1.9fr) 28px 40px minmax(0,0.7fr) minmax(0,2fr); gap:4px 8px; }
   .spell > *{ min-width:0; overflow-wrap:anywhere; }
   .spell .probe{ white-space:normal; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
@@ -968,8 +978,8 @@ body::before{
   .inv-list li > span{ color:var(--paper-ink) !important; } /* inventar.j2:90 Reise-Anmerkung, Inline-color ink-dim, 4,28:1 */
   /* Profil (T1: 9 Gruppen) */
   .aussehen-row dt,.aussehen-row dd{ color:var(--paper-ink) !important; } /* dt 1,95:1, dd 1,07:1 */
-  #tab-profil table,#tab-profil table *{ color:var(--paper-ink) !important; } /* profil.j2:84-93 Sessions-Tabelle,
-     Inline-color (ink-mute/ink) je Zelle; einzige <table> in #tab-profil, daher als ganze Tabelle gefasst */
+  #tab-profil .sessions-table,#tab-profil .sessions-table *{ color:var(--paper-ink) !important; } /* profil.j2:82-97 Sessions-Tabelle,
+     Inline-color (ink-mute/ink) je Zelle; Klassen-Selektor gegen Regressionsrisiko bei kunftigen Tabellen */
   .feed li small{ color:var(--paper-ink) !important; } /* Steigerungs-Log-Begruendung, Inline-color ink-dim, 4,28:1 */
   /* Kampf (T1: 1 Gruppe span.meta, siehe .card-title .meta oben) + Ruling R6 (vorsorglich): kampf.j2:93-94 hat
      dieselbe Inline-Style-Falle wie profil.j2:84-93, im Ist-Render von illaen-baernhold aber nicht getroffen (keine
@@ -3396,7 +3406,7 @@ body { padding-top: 46px; }
   <a class="mod-footer-link" href="obsidian://open?vault=DSA-Vault&file=wiki/dsa-4.1/magie/zauberregeln.md">Zauberregeln →</a>
 </section>
 
-<div class="grid cols-2" style="margin-top:var(--gap)">
+<div class="grid cols-2 align-top" style="margin-top:var(--gap)">
   <!-- Rituale -->
   <section class="card">
     <h3 class="card-title">Stabzauber &amp; Rituale <span class="meta">Ritualkenntnis 11</span></h3>
@@ -4645,7 +4655,7 @@ body { padding-top: 46px; }
         <span><b>1</b> Held</span>
       </div>
     </div>
-    <table style="width:100%;border-collapse:collapse;margin-top:14px;font-size:12px;font-family:var(--subhead)">
+    <table class="sessions-table" style="width:100%;border-collapse:collapse;margin-top:14px;font-size:12px;font-family:var(--subhead)">
       <thead><tr style="border-bottom:1px solid var(--rule)">
         <th style="text-align:left;padding:4px 0;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">#</th>
         <th style="text-align:left;padding:4px 8px;font-family:var(--mono);font-size:9px;letter-spacing:.15em;color:var(--ink-mute)">Datum</th>
