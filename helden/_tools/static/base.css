@@ -739,10 +739,12 @@ body::before{
 }
 .print-btn::before{ content:"❖  "; color:var(--accent-cold); }
 /* D-049: das offene Wuerfelpanel (fixed, z-index 200) verdeckte die Leiste -> sie steigt um die von dice.js gepflegte Panelhoehe. */
+/* D-060: Transition der bottom-Position mit der Panel-Animation synchronisieren statt sofort zu springen. */
 #footer-bar{
   position:fixed; bottom:calc(28px + var(--dice-panel-h, 0px)); right:28px;
   display:flex; gap:8px; align-items:center;
   z-index:100;
+  transition:bottom 0.2s ease;
 }
 #footer-bar .print-btn{ position:static; }
 #save-group{

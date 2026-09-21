@@ -2044,6 +2044,14 @@ def test_css_footer_bar_rises_above_open_dice_panel_on_desktop():
     assert z_panel > z_bar, 'Panel liegt ueber der Leiste -> Leiste muss um die Panelhoehe steigen'
 
 
+def test_css_footer_bar_transition_syncs_with_dice_panel_animation():
+    # D-060: Footer-Leiste muss ihre bottom-Position mit der Panel-Animation synchronisieren statt sofort zu springen.
+    # Das Panel animiert mit transition:transform 0.2s ease; die Leiste muss gleich schnell ihre bottom-Position aendern.
+    top = _toplevel_rules(css_bundle())
+    bar = ' '.join(_decls(top, '#footer-bar'))
+    assert re.search(r'transition\s*:\s*bottom\s+0\.2s\s+ease', bar), 'footer-bar muss transition:bottom 0.2s ease haben'
+
+
 def test_dice_js_publishes_open_panel_height_as_css_variable():
     js = (STATIC_DIR / 'dice.js').read_text(encoding='utf-8')
     body = js_function(js, 'syncPanelReserve')
