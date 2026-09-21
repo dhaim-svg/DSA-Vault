@@ -5,11 +5,11 @@
 | # | Task | State | Files |
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-057..D-060 anlegen + in-progress, plan.md) | ✅ done | BACKLOG.md, sprints/sprint-028/plan.md |
-| T1 | D-057: `#tab-profil table *`-Flächenschlag entschärfen (Selector-Scoping, kein Verhaltenswechsel) | ⬜ todo | static/tabs.css, templates/partials/profil.j2, tests/test_rendering.py |
-| T2 | D-058: Probe-Spalte im Druck einzeilig (Zauber-Tab) + Ritual-/SF-Karten-Grid-Stretch (Zauber-Tab-scoped) | ⬜ todo | static/tabs.css, static/base.css, templates/partials/zauber.j2, tests/test_rendering.py |
-| T3 | D-059: PATCH-Pfad „Verlauf speichern" — Flask-Route-Test (sicher, Fixture-VAULT_ROOT, kein Live-Write) | ⬜ todo | tests/test_server.py (neu, Muster test_commit.py:107-131) oder Erweiterung test_held_writer.py |
-| T4 | D-060: Footer-Transition beim Einblenden des Würfelpanels glätten | ⬜ todo | static/base.css, tests/test_rendering.py |
-| T5 | Verifikation + `/sprint-wrap` | ⬜ todo | — |
+| T1 | D-057: `#tab-profil table *`-Flächenschlag entschärfen (Selector-Scoping, kein Verhaltenswechsel) | ✅ done | static/tabs.css, templates/partials/profil.j2, tests/test_rendering.py |
+| T2 | D-058: Probe-Spalte im Druck einzeilig (Zauber-Tab) + Ritual-/SF-Karten-Grid-Stretch (Zauber-Tab-scoped) | ✅ done | static/tabs.css, static/base.css, templates/partials/zauber.j2, tests/test_rendering.py |
+| T3 | D-059: PATCH-Pfad „Verlauf speichern" — Flask-Route-Test (sicher, Fixture-VAULT_ROOT, kein Live-Write) | ✅ done | tests/test_server.py (neu) |
+| T4 | D-060: Footer-Transition beim Einblenden des Würfelpanels glätten | ✅ done | static/base.css, tests/test_rendering.py |
+| T5 | Verifikation + `/sprint-wrap` | ✅ done | verification.md, handoff.md, output/illaen-baernhold-dashboard.html |
 
 ## Key Design Decisions
 
