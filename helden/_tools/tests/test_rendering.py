@@ -1433,6 +1433,28 @@ def test_css_print_spell_cells_may_shrink_and_probe_wraps():
     assert any(re.search(r'white-space\s*:\s*normal', d) for d in _decls(rules, '.spell .probe'))
 
 
+def test_css_print_spell_probe_column_fr_grows_without_changing_row_width():
+    # D-058 Sub-Fix A: Probe brach mit 1,4 fr in allen 25 Zeilen der Live-Vault zweizeilig um (Browser-Messung
+    # @703 px: Spalte 116,8 px gegen laengsten realen Probe-Text "MU 12 / KL 14 / KO 13" = 137,6 px ungewrappt).
+    # Probe-Anteil angehoben, Kosten/Wirkung geben ab; die fr-Summe der 4 variablen Spalten bleibt bei 6,4 —
+    # die Gesamtbreite haengt nur von der verfuegbaren Restbreite ab, nicht vom fr-Verhaeltnis (minmax(0,Xfr)
+    # fuellt per CSS-Grid-Konstruktion immer exakt die Restbreite), daher keine Ueberlaufregression moeglich.
+    # Browser-Nachmessung (Sprint-028 T2-Report): scrollWidth @703/718/615 px vor/nach identisch (662/677/574).
+    decl = _print_spell_grid_decl()
+    cols = _top_level_tokens(re.search(r'grid-template-columns\s*:\s*([^;]+?)\s*(?:!important\s*)?(?:;|$)', decl).group(1))
+    fr_values = []
+    for col in cols:
+        m = re.fullmatch(r'minmax\(\s*0\s*,\s*([\d.]+)fr\s*\)', col)
+        if m:
+            fr_values.append(float(m.group(1)))
+    assert len(fr_values) == 4, cols
+    zauber_fr, probe_fr, kosten_fr, wirkung_fr = fr_values
+    assert probe_fr >= 1.9, f'Probe-fr {probe_fr} unter der D-058-Zielbreite (Browser-Messung: 1,9 fr = 158,5 px @703 px)'
+    assert probe_fr > 1.4, 'Probe-Anteil muss gegenueber dem Vorzustand (1.4fr) wachsen'
+    assert kosten_fr < 1.0, 'Kosten muss Anteil abgeben (Vorzustand 1fr)'
+    assert abs((zauber_fr + probe_fr + kosten_fr + wirkung_fr) - 6.4) < 1e-9, fr_values
+
+
 def test_css_zauber_tab_print_fix_leaves_screen_css_untouched():
     # Regressionswaechter: die Bildschirmdarstellung darf sich durch D-052 nicht aendern; alle neuen Regeln stehen im Druckblock.
     screen_rules = _css_rules(_strip_print_blocks(css_bundle()))
@@ -1444,6 +1466,33 @@ def test_css_zauber_tab_print_fix_leaves_screen_css_untouched():
     spell_grid = [d for s, d in screen_rules if s == '.spell' and 'grid-template-columns' in d]
     assert spell_grid and all('minmax(0' not in d for d in spell_grid), spell_grid
     assert not [d for s, d in screen_rules if s == '.spell .probe' and 'white-space:normal' in d.replace(' ', '')]
+
+
+# -- D-058 Sub-Fix B: Ritual-/SF-Karten-Grid-Stretch (nur Zauber-Tab-Instanz) ------------
+
+def test_css_grid_align_top_modifier_sets_align_items_start():
+    # CSS-Grid-Default align-items:stretch zog die (kuerzere) SF-Karte auf die Hoehe der Rituale-Karte, sobald
+    # dort mehrere Artikelvorschauen offen waren (Browser-Messung: 1626,9 px -> 7122,6 px ohne Fix). User-
+    # Entscheidung: Modifier-Klasse statt globaler .cols-2-Aenderung (base.css:78-81 bleibt unangetastet).
+    rules = _css_rules(_strip_print_blocks(css_bundle()))
+    modifier = _decls(rules, '.grid.align-top')
+    assert modifier, 'Modifier-Selektor .grid.align-top fehlt'
+    assert any(re.search(r'align-items\s*:\s*(?:start|flex-start)\b', d) for d in modifier), modifier
+    # .cols-2 selbst bekommt kein align-items -> die 3 anderen Verwendungsstellen (profil/inventar/kampf)
+    # behalten den Grid-Default stretch.
+    cols2 = _decls(rules, '.cols-2')
+    assert cols2 and not any('align-items' in d for d in cols2), cols2
+
+
+def test_render_align_top_modifier_only_on_zauber_tab_grid(live_html):
+    # Nur zauber.j2:91 bekommt den Modifier; profil.j2/inventar.j2/kampf.j2 bleiben bei "grid cols-2" (unveraendert).
+    assert live_html.count('class="grid cols-2 align-top"') == 1
+    zauber_src = (PARTIALS_DIR / 'zauber.j2').read_text(encoding='utf-8')
+    assert '<div class="grid cols-2 align-top"' in zauber_src
+    for name in ('profil', 'inventar', 'kampf'):
+        src = (PARTIALS_DIR / f'{name}.j2').read_text(encoding='utf-8')
+        assert '<div class="grid cols-2">' in src, name
+        assert 'align-top' not in src, name
 
 
 def test_css_has_no_dead_merk_selector():

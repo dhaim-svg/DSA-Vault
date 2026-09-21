@@ -79,6 +79,9 @@ body::before{
 .cols-2{ grid-template-columns:2fr 1fr; }
 .cols-3{ grid-template-columns:1fr 1fr 1fr; }
 @media(max-width:900px){ .cols-2,.cols-3{ grid-template-columns:1fr; } }
+/* D-058: Modifier statt .cols-2-Aenderung (User-Entscheidung) — nur die Zauber-Tab-Grid-Instanz (zauber.j2:91) bekommt
+   .align-top, die 3 anderen .cols-2-Stellen (profil/inventar/kampf) bleiben beim Grid-Default align-items:stretch. */
+.grid.align-top{ align-items:start; }
 
 /* ---- Card ---- */
 .card{

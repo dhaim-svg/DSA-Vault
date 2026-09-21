@@ -120,10 +120,15 @@
   /* Ueberlauf: das Bildschirm-Grid (base.css) loest zu 160+240+38+80+90+200 px Minima + 5 Gaps a 10 px = 858 px auf; verfuegbar sind auf A4 nur
      186 mm = 703 px - 26 px Karte - 20 px Zeilen-Padding = 657 px (Emulation 794 px: 733 px). Druck-Grid ohne px-Minimum: die vier variablen Spalten
      sind minmax(0,Xfr) und damit durch Konstruktion nie breiter als der Container; fest sind nur ZfW 28 + ZD 40 = 68 px, dazu 5 Gaps a 8 px = 40 px
-     (108 px). Der Rest (657 - 108 = 549 px) verteilt sich auf 6,4 fr (1 fr = 86 px): Zauber 1,8 (154 px), Probe 1,4 (120 px), Kosten 1 (86 px),
-     Wirkung 2,2 (189 px). Kopfzeile (10 px, Grossbuchstaben, .18em): "WIRKUNG" ~55 px, "ZFW" ~23 px < 28 px; "mind." (ZD) ~35 px < 40 px.
-     Die Probe ("KL 14 / IN 15 / CH 13", 21 Zeichen ~148 px) bricht bei Bedarf an den Leerzeichen um (base.css:406 setzt nowrap). */
-  .spell{ grid-template-columns:minmax(0,1.8fr) minmax(0,1.4fr) 28px 40px minmax(0,1fr) minmax(0,2.2fr); gap:4px 8px; }
+     (108 px). Die fr-Summe bleibt bei 6,4 (D-058 verschiebt nur Anteile, die Gesamtbreite der vier variablen Spalten haengt nur von der
+     verfuegbaren Restbreite ab, nicht vom fr-Verhaeltnis). Kopfzeile (10 px, Grossbuchstaben, .18em): "WIRKUNG" ~55 px, "ZFW" ~23 px < 28 px;
+     "mind." (ZD) ~35 px < 40 px. */
+  /* D-058: Probe brach mit 1,4 fr in allen 25 Zeilen zweizeilig um (Browser-Messung @703 px: Spalte 117 px gegen laengsten realen
+     Probe-Text "MU 12 / KL 14 / KO 13" = 138 px ungewrappt). Probe auf 1,9 fr angehoben (@703 px dadurch 159 px, einzeilig mit Reserve);
+     die 0,5 fr kommen von Kosten (1 -> 0,7 fr — Werte wie "ZfW Wuerfel x 1W6 AsP" liefen mit 1 fr ohnehin schon in den Umbruch) und
+     Wirkung (2,2 -> 2 fr — Wirkungstext ist mehrzeilig, 17 px weniger fallen nicht auf). Summe bleibt 6,4 fr: die Gesamtbreite der Zeile
+     aendert sich dadurch nicht (Browser-Messung scrollWidth @703/718/615 px vor/nach identisch, s. Sprint-028 T2-Report). */
+  .spell{ grid-template-columns:minmax(0,1.8fr) minmax(0,1.9fr) 28px 40px minmax(0,0.7fr) minmax(0,2fr); gap:4px 8px; }
   .spell > *{ min-width:0; overflow-wrap:anywhere; }
   .spell .probe{ white-space:normal; }
   .talent-row.high .t-name,.talent-row.high .t-zfw{ font-weight:700; }
