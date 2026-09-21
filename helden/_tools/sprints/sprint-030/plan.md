@@ -6,7 +6,7 @@
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-062 → in-progress, plan.md) | ✅ done | BACKLOG.md, sprints/sprint-030/plan.md |
 | T1 | `slug_param`-Guard auf allen 5 Routen (`_valid_slug`-Helper + Route-Checks in server.py) + diskriminierende Traversal-/Regressionstests | ✅ done | server.py, tests/test_server.py |
-| T2 | Verifikation + `/sprint-wrap` | ⬜ todo | — |
+| T2 | Verifikation | ✅ done (Verifikation; `/sprint-wrap` selbst folgt separat) | verification.md |
 
 ## Befund (Grundlage für T1)
 
