@@ -14,6 +14,7 @@ TOOLS_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 import server as server_mod
+from tests.heldfixtures import write_mini_held
 
 FIXTURE_TEXT = """\
 ## Hintergrund
@@ -28,6 +29,30 @@ Mehrere Zeilen.
 ## Notizen
 
 Weitere Notizen.
+"""
+
+# Minimal but valid _illaen.md: dashboard.html.j2 hard-requires all 8 Eigenschaften
+# keys (held.eigenschaften.MU.aktuell etc., no .get() fallback) to render at all.
+MINI_ILLAEN_TEXT = """\
+---
+name: Test Held
+stufe: 1
+---
+
+## Eigenschaften & Basiswerte
+
+### Eigenschaften
+
+| Eigenschaft | Mod. | Start | Aktuell |
+|-------------|------|-------|---------|
+| Mut (MU) | 0 | 12 | 12 |
+| Klugheit (KL) | 0 | 12 | 12 |
+| Intuition (IN) | 0 | 12 | 12 |
+| Charisma (CH) | 0 | 12 | 12 |
+| Fingerfertigkeit (FF) | 0 | 12 | 12 |
+| Gewandtheit (GE) | 0 | 12 | 12 |
+| Konstitution (KO) | 0 | 12 | 12 |
+| Körperkraft (KK) | 0 | 12 | 12 |
 """
 
 
@@ -226,3 +251,151 @@ def test_patch_held_route_rejects_kampagne_campaign_traversal_in_body(tmp_path):
     assert victim.read_text(encoding='utf-8') == FIXTURE_TEXT
     # Nichts darf ausserhalb der Fixture angelegt worden sein.
     assert not (tmp_path / 'abenteuer').exists()
+
+
+# ---------------------------------------------------------------------------
+# slug_param Path-Traversal-Guard (D-062) — _valid_slug() auf allen 5 Routen
+# ---------------------------------------------------------------------------
+#
+# Anders als bei D-061 (file-/campaign-Feld im JSON-Body) liegt die Luecke hier
+# in slug_param selbst: slug_param='..' verschiebt schon die Basis-Verzeichnis-
+# Aufloesung (vault_root/helden/.. == vault_root), sodass D-061s _safe_join
+# (der nur relativ zur -- hier bereits falschen -- base prueft) sie nicht faengt.
+
+def test_patch_held_route_rejects_slug_param_traversal_to_vault_root(tmp_path):
+    """Der Sprint-029-Review-PoC: PATCH /api/held/../value verschiebt die Basis auf
+    den Vault-Root selbst. Eine echte .md-Datei direkt unter tmp_path (Vault-Root,
+    NICHT unter helden/) bekommt FIXTURE_TEXT (echter '## Verlauf'-Abschnitt): ohne
+    den slug_param-Guard wuerde die Route sie klaglos ueberschreiben (200/ok=True) --
+    empirisch mit einem temporaer deaktivierten Guard bestaetigt (200, ok=True, Datei
+    ueberschrieben)."""
+    victim = tmp_path / 'root-victim.md'
+    victim.write_text(FIXTURE_TEXT, encoding='utf-8')
+    (tmp_path / 'helden' / 'test-held').mkdir(parents=True)
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug='test-held') as client:
+            resp = client.patch('/api/held/../value', json={
+                'kind': 'section_body',
+                'file': 'root-victim.md',
+                'section': 'Verlauf',
+                'value': 'boese',
+            })
+            assert resp.status_code == 400
+            data = resp.get_json()
+            assert data == {'error': 'invalid slug'}
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    assert victim.read_text(encoding='utf-8') == FIXTURE_TEXT
+
+
+@pytest.mark.parametrize('bad_slug', [
+    'Illaen-Baernhold',   # Grossbuchstabe
+    'illaen baernhold',   # Leerzeichen
+    'illaen.baernhold',   # Punkt
+    '..',                 # Traversal (siehe PoC-Test oben)
+])
+def test_patch_held_route_rejects_invalid_slug_param(tmp_path, bad_slug):
+    """slug_param ausserhalb von [a-z0-9_-]+ wird mit 400 abgelehnt, patch() wird
+    nie erreicht -- nichts Neues landet unter tmp_path."""
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.patch(f'/api/held/{bad_slug}/value', json={
+                'kind': 'section_body',
+                'file': 'x.md',
+                'section': 'Verlauf',
+                'value': 'x',
+            })
+            assert resp.status_code == 400
+            data = resp.get_json()
+            assert data == {'error': 'invalid slug'}
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    assert not (tmp_path / 'helden').exists()
+
+
+def test_valid_slug_rejects_embedded_slash_traversal():
+    """'../outside' (mit '/') laesst sich ueber diese Route nicht als HTTP-Test
+    fuehren: <slug_param> nutzt Flasks Standard-'string'-Converter, der nie einen
+    '/' erfasst -- Werkzeug dekodiert ein %2F vor dem Routing zurueck in einen
+    echten Trenner, wodurch /api/held/..%2Foutside/value nicht mehr auf das
+    3-Segment-Muster /api/held/<slug_param>/value passt und -- mit oder ohne
+    diesen Guard identisch -- 404 auf Routing-Ebene liefert (empirisch mit
+    app.url_map.bind(...).match(...) bestaetigt; ein HTTP-Test dieses Werts waere
+    also vakuos). Die Regex-Funktion selbst deckt den Fall trotzdem ab."""
+    assert server_mod._valid_slug('../outside') is False
+
+
+def test_held_page_route_rejects_invalid_slug_param(tmp_path):
+    """GET /held/<path:s> mit ungueltigem slug -> 404 (analog zum chronik_bild()-
+    Muster in derselben Datei: abort(404) auf einer Nicht-JSON-Route)."""
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.get('/held/..')
+            assert resp.status_code == 404
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+@pytest.mark.parametrize('suffix', ['', '/mtime', '/etag'])
+def test_api_held_read_routes_reject_invalid_slug_param(tmp_path, suffix):
+    """api_held/api_mtime/api_etag: derselbe 400-JSON-Guard wie bei PATCH /value,
+    hier stichprobenartig fuer alle drei GET-Lese-Routen mit demselben Traversal-Wert."""
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.get(f'/api/held/..{suffix}')
+            assert resp.status_code == 400
+            assert resp.get_json() == {'error': 'invalid slug'}
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+# ---------------------------------------------------------------------------
+# D-062 Regression — gueltige Slugs funktionieren weiterhin
+# ---------------------------------------------------------------------------
+
+def test_api_mtime_route_accepts_valid_slug(tmp_path):
+    """Regression: der neue Guard darf legitime Requests nicht blockieren.
+    api_mtime hatte bisher noch keinen Routen-Test in dieser Datei."""
+    slug = 'test-held'
+    md_file = _write_held_file(tmp_path, slug, 'x.md')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            resp = client.get(f'/api/held/{slug}/mtime')
+            assert resp.status_code == 200
+            data = resp.get_json()
+            assert data == {'x.md': md_file.stat().st_mtime}
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_held_page_route_accepts_valid_slug(tmp_path):
+    """Regression (Seiten-Route): ein vollstaendiger, gueltiger Bogen wird weiterhin
+    gerendert (200, kein 404 durch den neuen Guard). write_mini_held() statt
+    _write_held_file(), weil held_page() ueber render_dashboard()/load_held() alle
+    9 Held-Dateien braucht und das Template alle 8 Eigenschaften-Keys hart voraussetzt."""
+    slug = 'test-held'
+    write_mini_held(tmp_path, slug=slug, illaen=MINI_ILLAEN_TEXT)
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            resp = client.get(f'/held/{slug}')
+            assert resp.status_code == 200
+            assert 'Test Held' in resp.get_data(as_text=True)
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root

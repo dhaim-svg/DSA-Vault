@@ -26,6 +26,10 @@ from git_ops import commit_helden
 CHRONIK_BILD_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp'}
 
 
+def _valid_slug(s: str) -> bool:
+    return bool(re.fullmatch(r'[a-z0-9_-]+', s or ''))
+
+
 def _render_dashboard(slug: str) -> str:
     return render_dashboard(build_context(
         slug, VAULT_ROOT, chronik_bild_prefix=CHRONIK_BILD_PREFIX_SERVER))
@@ -44,6 +48,8 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/held/<path:s>')
     def held_page(s):
+        if not _valid_slug(s):
+            abort(404)
         return _render_dashboard(s)
 
     @app.route('/chronik-bild/<path:name>')
@@ -63,6 +69,8 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/held/<slug_param>')
     def api_held(slug_param):
+        if not _valid_slug(slug_param):
+            return jsonify({'error': 'invalid slug'}), 400
         try:
             held = load_held(VAULT_ROOT, slug_param)
             kampagne = load_kampagne(VAULT_ROOT, 'drachenchronik')
@@ -72,10 +80,14 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/held/<slug_param>/mtime')
     def api_mtime(slug_param):
+        if not _valid_slug(slug_param):
+            return jsonify({'error': 'invalid slug'}), 400
         return jsonify(mtime_map(VAULT_ROOT, slug_param))
 
     @app.route('/api/held/<slug_param>/etag')
     def api_etag(slug_param):
+        if not _valid_slug(slug_param):
+            return jsonify({'error': 'invalid slug'}), 400
         rel_file = request.args.get('file', '_illaen.md')
         try:
             return jsonify({'etag': etag_for(VAULT_ROOT, slug_param, rel_file)})
@@ -88,6 +100,8 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/held/<slug_param>/value', methods=['PATCH'])
     def api_patch_value(slug_param):
+        if not _valid_slug(slug_param):
+            return jsonify({'error': 'invalid slug'}), 400
         locator = request.get_json(force=True)
         if not locator:
             return jsonify({'error': 'missing JSON body'}), 400
