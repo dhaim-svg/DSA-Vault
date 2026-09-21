@@ -5,15 +5,17 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-061 | **PATCH-Routen validieren das `file`/Locator-Feld nicht gegen Path-Traversal.** `writers/held_writer.py:76-77` baut `target = base / rel_file` aus `locator['file']` ohne Pruefung — ein `file`-Wert mit `../` oder ein absoluter Pfad koennte im Prinzip aus dem Kampagnen-/Helden-Verzeichnis ausbrechen. Betrifft beide PATCH-Routen (`/api/held/<slug>/value`, `/api/kampagne/<camp>/value`, server.py:89/109). Vorbestehend (nicht Sprint 028 eingefuehrt), geringes Praxisrisiko (Flask bindet nur an `127.0.0.1`, server.py:154, kein Netzwerkexpositions-Pfad). Entdeckt bei D-059 (PATCH-Routen-Test-Coverage) — dort bewusst nicht mitbehoben, da ausserhalb des Task-Scopes (nur Route-Wiring/JSON-Body/`camp`-Guard-Coverage war beauftragt). Sprint-029-Planung erweiterte den Fund: `campaign`-Feld ist ueber `/api/held/<slug>/value` (JSON-Body, kein Routen-Guard) ebenso angreifbar, gleiche Fehlerklasse — Fix deckt beide Felder ab | S | in-progress | — |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-061 | **PATCH-Routen validieren das `file`/Locator-Feld nicht gegen Path-Traversal.** `writers/held_writer.py:76-77` baut `target = base / rel_file` aus `locator['file']` ohne Pruefung — ein `file`-Wert mit `../` oder ein absoluter Pfad koennte im Prinzip aus dem Kampagnen-/Helden-Verzeichnis ausbrechen. Betrifft beide PATCH-Routen (`/api/held/<slug>/value`, `/api/kampagne/<camp>/value`, server.py:89/109). Vorbestehend (nicht Sprint 028 eingefuehrt), geringes Praxisrisiko (Flask bindet nur an `127.0.0.1`, server.py:154, kein Netzwerkexpositions-Pfad). Entdeckt bei D-059 (PATCH-Routen-Test-Coverage) — dort bewusst nicht mitbehoben, da ausserhalb des Task-Scopes (nur Route-Wiring/JSON-Body/`camp`-Guard-Coverage war beauftragt) | S | ready | — |
+| D-062 | **`slug_param` in den `/api/held/<slug_param>/...`-Routen ist nicht gegen Path-Traversal geprueft** (z. B. `slug_param='..'` -> Basis wird `vault_root/helden/..` = `vault_root` selbst). Verwandt zu D-061, aber ein anderes Feld (URL-Segment statt Locator-Feld) — eigener Fix noetig, vermutlich Regex-Guard analog zur Kampagnen-Route (`server.py:111`), muss aber echte Slug-Formate (Bindestriche, evtl. Ziffern) beruecksichtigen. Entdeckt bei D-061 (Sprint-029-Planung) — dort bewusst nicht mitbehoben, da anderes Feld/eigener Scope | S | ready | — |
 
-_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 028.)_
+_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029.)_
 
 ### Gestrichen
 
