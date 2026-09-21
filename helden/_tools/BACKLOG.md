@@ -5,14 +5,19 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-057 | **`#tab-profil table *` (tabs.css:168) ist ein Flächenschlag ohne aktuelles Regressions-Opfer — nur 1 Tabelle existiert im Tab.** Selector trifft `table` und alle Nachfahren pauschal (2× verschoben: Sprint 026, 027, "Regressionsrisiko"). Ruling (Sprint-028-Planung): Sessions-Tabelle (profil.j2:82-97) bekommt eigene Klasse, Selector zielt darauf statt pauschal auf `table`/`table *` — reines Refactoring, Golden-Render-Diff statt neuer Kontrastmessung | S | in-progress | — |
+| D-058 | **Zwei kleine Druck-/Layout-Reste aus D-052 (Sprint 025): Probe-Spalte im Zauber-Tab bricht im Druck zweizeilig (25/25 Zeilen), Ritual-/SF-Karten-Grid stretcht bei offenen Artikelvorschauen unschön.** Probe-Wrap nur im `@media print`-Block (tabs.css:120-128), Fix reshuffelt die D-052/D-053-Überlaufmessung (Pflicht: `scrollWidth` @703/718/615px neu messen, keine Regression). Grid-Stretch: `.cols-2` (base.css:78-81) mit Browser-Default `align-items:stretch`. Ruling (Sprint-028-Planung): Grid-Stretch-Fix nur auf die Zauber-Tab-Instanz (neue Modifier-Klasse), NICHT global auf `.cols-2` — die Klasse wird auch in profil/inventar/kampf verwendet | S–M | in-progress | — |
+| D-059 | **PATCH-Pfad „Verlauf speichern" (`/api/kampagne/<camp>/value`, server.py:109-123) wurde nie end-to-end getestet — weder automatisiert noch im Browser.** Writer-Logik ist unit-getestet (test_held_writer.py:650-676), die Flask-Route selbst nicht (grep: `test_client()` nur in test_commit.py/test_chronik_bild.py). Ruling (Sprint-028-Planung): sicherer `test_client()`-Test gegen Fixture-VAULT_ROOT (Muster test_commit.py:107-131), kein Live-Browser-Klick gegen echte `abenteuer/`-Dateien diesen Sprint (User-Domäne, keine Freigabe eingeholt) | S | in-progress | — |
+| D-060 | **Footer springt beim Einblenden des Würfelpanels statt sanft mitzugleiten.** `#footer-bar` (base.css:739-744) hat keine `transition`; `bottom` folgt `--dice-panel-h` synchron bei t=0 (dice.js:550-554), während `.dice-panel` selbst über 0,2s transitioned (tabs.css:348) — Lücke gemessen in Sprint 021 (331→197→108→28px), seither unverändert offen. Fix: passende `transition` auf `#footer-bar` | S | in-progress | — |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
 
-_(Vault-`backlog.md`: B-027 hat Sprint 027 erledigt; leer, wie `BACKLOG.md`.)_
+_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 028.)_
 
 ### Gestrichen
 
