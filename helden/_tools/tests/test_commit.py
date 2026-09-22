@@ -1,4 +1,5 @@
 """Tests for git_ops.commit_helden and the /api/commit Flask route."""
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -128,3 +129,40 @@ def test_api_commit_route_returns_json(tmp_path):
             assert 'ok' in data
     finally:
         server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_commit_route_does_not_leak_path_on_git_failure(tmp_path):
+    """A git failure (stale index.lock) must not leak the vault's absolute
+    path into the HTTP error response (D-064)."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    # Force a real git failure whose raw stderr contains the absolute path:
+    # a stale index.lock makes `git add` (and if not, `git commit`) fail
+    # with "fatal: Unable to create '<path>/.git/index.lock': File exists."
+    lock_file = tmp_path / '.git' / 'index.lock'
+    lock_file.write_text('', encoding='utf-8')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            resp = client.post('/api/commit')
+            body = resp.get_data(as_text=True)
+
+            assert resp.status_code == 500
+            data = resp.get_json()
+            assert data['ok'] is False
+            assert data['error'] == 'git operation failed'
+
+            # Neither the raw path text nor a Windows drive-letter path
+            # pattern may appear in the response body.
+            assert str(tmp_path) not in body
+            assert not re.search(r'[A-Za-z]:[\\/]', body)
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+        lock_file.unlink(missing_ok=True)

@@ -146,7 +146,7 @@ def create_app(slug: str) -> Flask:
         message = (body or {}).get('message', None)
         result = commit_helden(VAULT_ROOT, slug, message=message)
         if not result.get('ok'):
-            return jsonify({'ok': False, 'error': result.get('error', 'unknown error')}), 500
+            return jsonify({'ok': False, 'error': 'git operation failed'}), 500
         return jsonify({
             'ok': True,
             'committed': result['committed'],
