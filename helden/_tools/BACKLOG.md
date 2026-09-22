@@ -5,16 +5,16 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-065 | **`POST /api/commit` hat keinen CSRF-Schutz.** `api_commit()` liest den Body per `request.get_json(silent=True)` (toleriert auch Nicht-JSON-Bodies) und prüft keinen Origin/Referer/Token — ein Cross-Origin-Formular-POST (kein Preflight nötig) kann einen echten `helden/`-Commit auf dem laufenden Server auslösen. Die Antwort bleibt Cross-Origin unlesbar (keine CORS-Header), Impact daher ein ungewollter, aber reversibler lokaler Commit (kein Datenverlust, `git reset`/`revert` möglich). Vorbestehend, nicht durch D-064 eingeführt — von der Sprint-032-Gesamtreview beim D-064-Review gefunden. | S | in-progress | — |
+| D-066 | **Verschluckte Fehler (D-063s `FileNotFoundError` in `api_held`, D-064s verworfener Git-Stderr in `api_commit`) landen aktuell nirgends im Server-Log — bewusste „Kein Logging-Ausbau"-Entscheidung pro Einzel-Fix, akkumuliert sich aber sprintübergreifend.** Ein einziges `app.logger.warning(...)` (oder äquivalent), das die gesamte bisher bekannte verschluckte-Fehler-Oberfläche auf einmal abdeckt, statt die Logging-Frage bei jedem neuen Pfad-Leak-Fix erneut aufzuschieben. Von der Sprint-032-Gesamtreview vorgeschlagen (Minor, kein Blocker für D-064). | S | in-progress | — |
 
 ## Backlog
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-065 | **`POST /api/commit` hat keinen CSRF-Schutz.** `api_commit()` liest den Body per `request.get_json(silent=True)` (toleriert auch Nicht-JSON-Bodies) und prüft keinen Origin/Referer/Token — ein Cross-Origin-Formular-POST (kein Preflight nötig) kann einen echten `helden/`-Commit auf dem laufenden Server auslösen. Die Antwort bleibt Cross-Origin unlesbar (keine CORS-Header), Impact daher ein ungewollter, aber reversibler lokaler Commit (kein Datenverlust, `git reset`/`revert` möglich). Vorbestehend, nicht durch D-064 eingeführt — von der Sprint-032-Gesamtreview beim D-064-Review gefunden. | S | ready | — |
-| D-066 | **Verschluckte Fehler (D-063s `FileNotFoundError` in `api_held`, D-064s verworfener Git-Stderr in `api_commit`) landen aktuell nirgends im Server-Log — bewusste „Kein Logging-Ausbau"-Entscheidung pro Einzel-Fix, akkumuliert sich aber sprintübergreifend.** Ein einziges `app.logger.warning(...)` (oder äquivalent), das die gesamte bisher bekannte verschluckte-Fehler-Oberfläche auf einmal abdeckt, statt die Logging-Frage bei jedem neuen Pfad-Leak-Fix erneut aufzuschieben. Von der Sprint-032-Gesamtreview vorgeschlagen (Minor, kein Blocker für D-064). | S | ready | — |
+_(keine sofort startbaren Einträge — D-065/D-066 in Bearbeitung, s. In Progress.)_
 
-_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029/030/031/032.)_
+_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029–033.)_
 
 ### Gestrichen
 
