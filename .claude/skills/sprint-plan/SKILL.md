@@ -1,3 +1,9 @@
+---
+name: sprint-plan
+description: Plant den nächsten Dashboard-Sprint (helden/_tools/) aus BACKLOG.md und dem Handoff des Vorgänger-Sprints, schreibt plan.md und wartet auf Freigabe. Nutzen bei "/sprint-plan", "nächsten Sprint planen".
+disable-model-invocation: true
+---
+
 # /sprint-plan
 
 Plant den nächsten Dashboard-Sprint aus `helden/_tools/BACKLOG.md`.
@@ -75,29 +81,10 @@ Denke durch (intern, vor dem Schreiben):
 
 ## Phase 4: `plan.md` entwerfen
 
-Schreibe `helden/_tools/sprints/sprint-{NNN}/plan.md` in diesem Format
-(exakt wie sprint-004/plan.md):
-
-```
-# Sprint {NNN} — [Kurzer Ziel-Titel]
-
-## Tasks
-
-| # | Task | State | Files |
-|---|------|-------|-------|
-| T0 | Sprint scaffold (BACKLOG.md D-NNN → in-progress, plan.md anlegen) | ⬜ todo | BACKLOG.md, sprints/sprint-{NNN}/plan.md |
-| T1 | [Erster Feature-Task] | ⬜ todo | [betroffene Dateien] |
-| T2 | ... | ⬜ todo | ... |
-| TN | Verifikation + `/sprint-wrap` | ⬜ todo | — |
-
-## Key Design Decisions
-
-- [Wichtige Architektur- oder Implementierungs-Entscheidungen, die die Tasks prägen]
-
-## Out of Scope
-
-[EPICs/Features, die bewusst ausgeklammert werden — mit kurzem Grund]
-```
+Schreibe `helden/_tools/sprints/sprint-{NNN}/plan.md` nach der Vorlage
+`.claude/skills/sprint-plan/templates/plan.md` (Tabelle **und** die `### Task N`-Abschnitte
+darunter — letztere sind Pflicht, `superpowers`' `task-brief`-Skript extrahiert Briefs per
+`^#+ Task N`-Regex daraus; ohne sie müssen Briefs von Hand geschrieben werden).
 
 Effort-Referenz (für eigene Einschätzung, nicht in plan.md-Tabelle):
 S = wenige Stunden, M = halber bis ganzer Tag, L = mehrere Tage
@@ -127,9 +114,9 @@ Erst nach expliziter Freigabe:
    - Ordner `helden/_tools/sprints/sprint-{NNN}/` existiert bereits (plan.md wurde
      geschrieben); kein weiterer Setup-Schritt.
 
-2. **Subagent-Driven Development starten**:
-   Invoke `superpowers:subagent-driven-development` — ein Subagent pro Feature-Task
-   (T1 … TN-1), mit zwei-stufiger Review (spec + code quality) gemäß CLAUDE.md.
+2. Den User auf **`/sprint-run`** verweisen, um die Feature-Tasks (T1 … TN-1) via
+   Subagent-Driven Development umzusetzen (Projekt-Agents `sprint-implementer`,
+   `sprint-task-reviewer`, `sprint-final-reviewer` in `.claude/agents/`).
 
 3. **Nach dem letzten Feature-Task**:
    Den User darauf hinweisen, `/sprint-wrap` auszuführen, um Sprint-{NNN}
