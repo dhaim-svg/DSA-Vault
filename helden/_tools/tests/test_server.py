@@ -5,6 +5,7 @@ test_chronik_bild.py besitzen je eine einzelne Route); diese Datei startet eine 
 /api/kampagne. Muster folgt test_commit.py:107-131 — tmp_path-Fixture + VAULT_ROOT-
 Monkeypatch, im finally zurueckgesetzt, sodass der echte Vault nie beruehrt wird.
 """
+import logging
 import re
 import sys
 from pathlib import Path
@@ -449,6 +450,68 @@ def test_api_held_route_missing_slug_returns_404_without_path_leak(tmp_path):
         server_mod.VAULT_ROOT = original_vault_root
 
 
+def test_api_held_route_logs_missing_slug_without_leaking_body(tmp_path, caplog):
+    """D-066: the swallowed FileNotFoundError must reach the server log (with
+    the full detail, incl. the tmp_path-derived absolute path from
+    load_held()'s read_text() failure), while the JSON response body stays
+    exactly as generic as it was before this task (D-063)."""
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            with caplog.at_level(logging.WARNING):
+                resp = client.get('/api/held/does-not-exist')
+            assert resp.status_code == 404
+
+            body = resp.get_data(as_text=True)
+            assert str(tmp_path) not in body
+            assert not re.search(r'[A-Za-z]:[\\/]', body)
+
+            assert len(caplog.records) == 1
+            assert caplog.records[0].levelno == logging.WARNING
+            msg = caplog.records[0].getMessage()
+            assert 'does-not-exist' in msg
+            # str(tmp_path) itself is not a substring match on Windows: the
+            # errno message repr()-escapes backslashes (doubling them), so
+            # tmp_path's single-backslash form never occurs verbatim -- the
+            # folder name is the unambiguous, escaping-proof detail marker.
+            assert tmp_path.name in msg
+            assert '_illaen.md' in msg
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_etag_route_logs_missing_file_without_leaking_body(tmp_path, caplog):
+    """D-066: api_etag's swallowed FileNotFoundError (raised as
+    FileNotFoundError(rel_file) by etag_for()/_safe_join() when the target
+    file doesn't exist) must reach the server log with slug+file detail,
+    while the JSON response body stays the generic 404 it was before (D-063
+    established the same except-FileNotFoundError pattern for this route)."""
+    slug = 'test-held'
+    write_mini_held(tmp_path, slug=slug, illaen=MINI_ILLAEN_TEXT)
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            with caplog.at_level(logging.WARNING):
+                resp = client.get(f'/api/held/{slug}/etag?file=fehlt.md')
+            assert resp.status_code == 404
+            assert resp.get_json() == {'error': 'not found'}
+
+            body = resp.get_data(as_text=True)
+            assert str(tmp_path) not in body
+            assert not re.search(r'[A-Za-z]:[\\/]', body)
+
+            assert len(caplog.records) == 1
+            assert caplog.records[0].levelno == logging.WARNING
+            msg = caplog.records[0].getMessage()
+            assert slug in msg
+            assert 'fehlt.md' in msg
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
 def test_api_held_route_valid_slug_returns_held_and_kampagne(tmp_path):
     """Testfall (b): Erfolgs-Regression -- der Fix (except Exception -> except
     FileNotFoundError) darf den Erfolgspfad von api_held() nicht anfassen."""
@@ -521,6 +584,46 @@ def test_patch_held_route_rejects_foreign_origin(tmp_path):
                 headers={'Origin': 'http://evil.example'},
             )
             assert resp.status_code == 403
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    assert target.read_bytes() == before
+
+
+def test_patch_held_route_logs_foreign_origin_rejection(tmp_path, caplog):
+    """D-066: the CSRF hook's 403 rejection must be logged with method, path
+    and origin detail, while the JSON response body stays the generic
+    {'error': 'cross-origin request rejected'} it already was (D-065)."""
+    slug = 'test-held'
+    target = _write_held_file(tmp_path, slug, 'x.md')
+    before = target.read_bytes()
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            with caplog.at_level(logging.WARNING):
+                resp = client.patch(
+                    f'/api/held/{slug}/value',
+                    json={
+                        'kind': 'section_body',
+                        'file': 'x.md',
+                        'section': 'Verlauf',
+                        'value': 'boese',
+                    },
+                    headers={'Origin': 'http://evil.example'},
+                )
+            assert resp.status_code == 403
+
+            body = resp.get_data(as_text=True)
+            assert 'evil.example' not in body
+
+            assert len(caplog.records) == 1
+            assert caplog.records[0].levelno == logging.WARNING
+            msg = caplog.records[0].getMessage()
+            assert 'PATCH' in msg
+            assert f'/api/held/{slug}/value' in msg
+            assert 'evil.example' in msg
     finally:
         server_mod.VAULT_ROOT = original_vault_root
 

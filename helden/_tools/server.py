@@ -51,6 +51,7 @@ def create_app(slug: str) -> Flask:
             return None
         expected = request.host_url.rstrip('/')
         if origin != expected:
+            app.logger.warning('csrf: rejected %s %s from origin=%r (expected %r)', request.method, request.path, origin, expected)
             return jsonify({'error': 'cross-origin request rejected'}), 403
         return None
 
@@ -91,7 +92,8 @@ def create_app(slug: str) -> Flask:
             held = load_held(VAULT_ROOT, slug_param)
             kampagne = load_kampagne(VAULT_ROOT, 'drachenchronik')
             return jsonify({'held': held, 'kampagne': kampagne})
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
+            app.logger.warning('api_held: held not found for slug=%r: %s', slug_param, exc)
             return jsonify({'error': 'not found'}), 404
 
     @app.route('/api/held/<slug_param>/mtime')
@@ -107,7 +109,8 @@ def create_app(slug: str) -> Flask:
         rel_file = request.args.get('file', '_illaen.md')
         try:
             return jsonify({'etag': etag_for(VAULT_ROOT, slug_param, rel_file)})
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
+            app.logger.warning('api_etag: file not found for slug=%r file=%r: %s', slug_param, rel_file, exc)
             return jsonify({'error': 'not found'}), 404
 
     # ------------------------------------------------------------------ #
@@ -159,11 +162,13 @@ def create_app(slug: str) -> Flask:
     @app.route('/api/commit', methods=['POST'])
     def api_commit():
         if not request.is_json:
+            app.logger.warning('csrf: rejected non-JSON POST to /api/commit, content-type=%r', request.content_type)
             return jsonify({'ok': False, 'error': 'expected application/json'}), 415
         body = request.get_json(silent=True)
         message = (body or {}).get('message', None)
         result = commit_helden(VAULT_ROOT, slug, message=message)
         if not result.get('ok'):
+            app.logger.warning('api_commit: git operation failed for slug=%r: %s', slug, result.get('error'))
             return jsonify({'ok': False, 'error': 'git operation failed'}), 500
         return jsonify({
             'ok': True,

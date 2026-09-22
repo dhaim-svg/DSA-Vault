@@ -1,4 +1,5 @@
 """Tests for git_ops.commit_helden and the /api/commit Flask route."""
+import logging
 import re
 import subprocess
 import sys
@@ -183,6 +184,50 @@ def test_api_commit_route_does_not_leak_path_on_git_failure(tmp_path):
         lock_file.unlink(missing_ok=True)
 
 
+def test_api_commit_route_logs_git_failure_without_leaking_path(tmp_path, caplog):
+    """D-066: the swallowed git failure (stale index.lock, same trigger as
+    D-064 above) must reach the server log with the full detail incl. the
+    tmp_path-derived absolute path, while the JSON response body stays the
+    generic {'ok': False, 'error': 'git operation failed'} it already was."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    lock_file = tmp_path / '.git' / 'index.lock'
+    lock_file.write_text('', encoding='utf-8')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            with caplog.at_level(logging.WARNING):
+                resp = client.post('/api/commit', json={})
+            body = resp.get_data(as_text=True)
+
+            assert resp.status_code == 500
+            assert resp.get_json() == {'ok': False, 'error': 'git operation failed'}
+
+            assert str(tmp_path) not in body
+            assert not re.search(r'[A-Za-z]:[\\/]', body)
+
+            assert len(caplog.records) == 1
+            assert caplog.records[0].levelno == logging.WARNING
+            msg = caplog.records[0].getMessage()
+            assert 'illaen-baernhold' in msg
+            # str(tmp_path) itself is not a substring match on Windows: git's
+            # stderr uses forward slashes, so tmp_path's backslash form never
+            # occurs verbatim -- the folder name is the unambiguous,
+            # slash-convention-proof detail marker (same lesson as D-064).
+            assert tmp_path.name in msg
+            assert 'index.lock' in msg
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+        lock_file.unlink(missing_ok=True)
+
+
 # ---------------------------------------------------------------------------
 # /api/commit — CSRF-Schutz (D-065)
 # ---------------------------------------------------------------------------
@@ -206,6 +251,35 @@ def test_api_commit_route_rejects_non_json_body(tmp_path):
             assert resp.status_code == 415
             after = _rev_count(tmp_path)
             assert after == before
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_commit_route_logs_non_json_rejection(tmp_path, caplog):
+    """D-066: the 415 non-JSON rejection must be logged with the offending
+    content-type, while the JSON response body stays the generic
+    {'ok': False, 'error': 'expected application/json'} it already was
+    (D-065)."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            with caplog.at_level(logging.WARNING):
+                resp = client.post('/api/commit', content_type='text/plain', data='not json')
+            assert resp.status_code == 415
+            assert resp.get_json() == {'ok': False, 'error': 'expected application/json'}
+
+            assert len(caplog.records) == 1
+            assert caplog.records[0].levelno == logging.WARNING
+            msg = caplog.records[0].getMessage()
+            assert 'text/plain' in msg
     finally:
         server_mod.VAULT_ROOT = original_vault_root
 
