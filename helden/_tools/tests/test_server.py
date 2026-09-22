@@ -5,6 +5,7 @@ test_chronik_bild.py besitzen je eine einzelne Route); diese Datei startet eine 
 /api/kampagne. Muster folgt test_commit.py:107-131 — tmp_path-Fixture + VAULT_ROOT-
 Monkeypatch, im finally zurueckgesetzt, sodass der echte Vault nie beruehrt wird.
 """
+import re
 import sys
 from pathlib import Path
 
@@ -407,5 +408,83 @@ def test_held_page_route_accepts_valid_slug(tmp_path):
             resp = client.get(f'/held/{slug}')
             assert resp.status_code == 200
             assert 'Test Held' in resp.get_data(as_text=True)
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+# ---------------------------------------------------------------------------
+# GET /api/held/<slug_param> — Pfad-Leak im Fehlerhandler (D-063)
+# ---------------------------------------------------------------------------
+#
+# api_held() hatte als einzige Route einen bare `except Exception as exc: ...
+# str(exc)`-Handler. Ein nicht existierender (aber syntaktisch gueltiger) Slug
+# liess load_held() ein FileNotFoundError mit dem vollen Dateisystempfad werfen,
+# das ungefiltert in der JSON-Antwort landete. Fix: exakt das api_etag()-Muster
+# (except FileNotFoundError -> 404/'not found').
+
+def test_api_held_route_missing_slug_returns_404_without_path_leak(tmp_path):
+    """Testfall (a): ein syntaktisch gueltiger, aber nicht existierender Slug besteht
+    _valid_slug(), hat aber keinen helden/<slug>/-Ordner -> load_held() wirft
+    FileNotFoundError. Muss als generisches 404 ankommen, nicht als 500 mit dem
+    vollen tmp_path-Dateisystempfad im Body (der alten str(exc)-Form)."""
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client() as client:
+            resp = client.get('/api/held/does-not-exist')
+            assert resp.status_code == 404
+            assert resp.get_json() == {'error': 'not found'}
+
+            body = resp.get_data(as_text=True)
+            # Nicht nur den erwarteten Body pruefen -- explizit die AFWESENHEIT
+            # jedes Dateisystempfads, auch in einem dritten, unerwarteten Feld.
+            assert str(tmp_path) not in body
+            assert not re.search(r'[A-Za-z]:[\\/]', body)  # kein Windows-Laufwerkspfad
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_held_route_valid_slug_returns_held_and_kampagne(tmp_path):
+    """Testfall (b): Erfolgs-Regression -- der Fix (except Exception -> except
+    FileNotFoundError) darf den Erfolgspfad von api_held() nicht anfassen."""
+    slug = 'test-held'
+    write_mini_held(tmp_path, slug=slug, illaen=MINI_ILLAEN_TEXT)
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            resp = client.get(f'/api/held/{slug}')
+            assert resp.status_code == 200
+            data = resp.get_json()
+            assert 'held' in data
+            assert 'kampagne' in data
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_held_route_non_filenotfound_exception_is_not_swallowed(tmp_path, monkeypatch):
+    """Testfall (c), Anti-Blanket-Catch-Beleg: die alte Handler-Form haette JEDE
+    Exception mit {'error': str(exc)}/500 abgefangen. Der neue Handler faengt nur
+    FileNotFoundError -- eine ValueError aus load_held() muss unbehandelt
+    durchschlagen. _client() setzt app.config['TESTING'] = True, wodurch Flasks
+    Testclient nicht abgefangene Exceptions propagiert statt sie in eine generische
+    500-Antwort umzuwandeln -- pytest.raises() ist hier also der direkte Nachweis,
+    dass die ValueError-Nachricht in KEINER Response landet (weder alte str(exc)-
+    Form noch irgendein anderer Body)."""
+    slug = 'test-held'
+    (tmp_path / 'helden' / slug).mkdir(parents=True)
+
+    def _boom(*args, **kwargs):
+        raise ValueError('boom: geheime interna')
+
+    monkeypatch.setattr(server_mod, 'load_held', _boom)
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            with pytest.raises(ValueError, match='boom: geheime interna'):
+                client.get(f'/api/held/{slug}')
     finally:
         server_mod.VAULT_ROOT = original_vault_root

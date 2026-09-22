@@ -75,8 +75,8 @@ def create_app(slug: str) -> Flask:
             held = load_held(VAULT_ROOT, slug_param)
             kampagne = load_kampagne(VAULT_ROOT, 'drachenchronik')
             return jsonify({'held': held, 'kampagne': kampagne})
-        except Exception as exc:
-            return jsonify({'error': str(exc)}), 500
+        except FileNotFoundError:
+            return jsonify({'error': 'not found'}), 404
 
     @app.route('/api/held/<slug_param>/mtime')
     def api_mtime(slug_param):
