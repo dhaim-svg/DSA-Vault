@@ -438,6 +438,11 @@ def test_api_held_route_missing_slug_returns_404_without_path_leak(tmp_path):
             body = resp.get_data(as_text=True)
             # Nicht nur den erwarteten Body pruefen -- explizit die AFWESENHEIT
             # jedes Dateisystempfads, auch in einem dritten, unerwarteten Feld.
+            # Hinweis (Gesamtreview Sprint 031): auf Windows landet der Pfad im
+            # alten str(exc)-Leak doppelt escaped (repr() in der errno-Message,
+            # dann JSON) -- die folgende str(tmp_path)-Prüfung besteht deshalb
+            # sogar gegen den ungefixten Code. Der Regex-Assert darunter ist der
+            # tatsaechlich diskriminierende Beleg.
             assert str(tmp_path) not in body
             assert not re.search(r'[A-Za-z]:[\\/]', body)  # kein Windows-Laufwerkspfad
     finally:
@@ -473,7 +478,6 @@ def test_api_held_route_non_filenotfound_exception_is_not_swallowed(tmp_path, mo
     dass die ValueError-Nachricht in KEINER Response landet (weder alte str(exc)-
     Form noch irgendein anderer Body)."""
     slug = 'test-held'
-    (tmp_path / 'helden' / slug).mkdir(parents=True)
 
     def _boom(*args, **kwargs):
         raise ValueError('boom: geheime interna')
