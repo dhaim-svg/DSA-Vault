@@ -5,15 +5,16 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-063 | **`api_held`s Exception-Handler (`server.py:78-79`, `except Exception: return jsonify({'error': str(exc)}), 500`) leakt absolute Dateisystempfade in der Fehler-JSON.** Vorbestehend, nicht durch D-062 eingefuehrt — von der Sprint-030-Gesamtreview beim Scratch-Worktree-Test gegen den ungefixten `eeb8736`-Stand gefunden (`GET /api/held/..` -> 500 mit vollem Pfad `C:\Users\...\helden\..\_illaen.md` im Fehlerstring). Gilt fuer jede Exception aus `load_held()`/`load_kampagne()`, nicht nur Traversal-Faelle. Fix: gezielt `FileNotFoundError` abfangen wie `api_etag` es bereits tut (Sprint-031-Planung). | S | in-progress | — |
 
 ## Backlog
 
 | EPIC | Title | Effort | State | Blocked by |
 |------|-------|--------|-------|------------|
-| D-063 | **`api_held`s Exception-Handler (`server.py:78-79`, `except Exception: return jsonify({'error': str(exc)}), 500`) leakt absolute Dateisystempfade in der Fehler-JSON.** Vorbestehend, nicht durch D-062 eingefuehrt — von der Sprint-030-Gesamtreview beim Scratch-Worktree-Test gegen den ungefixten `eeb8736`-Stand gefunden (`GET /api/held/..` -> 500 mit vollem Pfad `C:\Users\...\helden\..\_illaen.md` im Fehlerstring). Gilt fuer jede Exception aus `load_held()`/`load_kampagne()`, nicht nur Traversal-Faelle. Fix vermutlich: generische Fehlermeldung ohne `str(exc)`, oder gezielt `FileNotFoundError` abfangen wie `api_etag` es bereits tut. | S | ready | — |
 
-_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029/030.)_
+_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029/030/031.)_
 
 ### Gestrichen
 
