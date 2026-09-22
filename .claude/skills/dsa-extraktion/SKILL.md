@@ -1,0 +1,103 @@
+---
+name: dsa-extraktion
+description: DSA-4.1-Regelwerk-PDF-Extraktion in wiki/dsa-4.1/ -- Session-Start-Status, Kapitel-Workflow, Templates, Errata, Long-Session-Modus für ganze Bücher. Nutzen bei "compile DSA", "nächstes Kapitel", "Buch extrahieren", "Errata einarbeiten", "/dsa-buch".
+---
+
+# DSA-Regelwerk PDF-Extraktion
+
+DSA-Regelwerke liegen als PDFs unter:
+  `C:\Users\David\Google Drive\DSA\DSA_Buecher\001. Regelwerke\005. DSA4.1\`
+
+Statt raw/ zu nutzen, werden PDFs systematisch in wiki/ extrahiert.
+
+**Stand:** Alle 6 Bücher (WdH, WdS, WdZ, WdG, WdA, WdE) und ihre Errata sind ✅ abgeschlossen
+(siehe `DSA-STATUS.md`, letzte Aktivität 2026-05-15). Dieser Skill greift, wenn ein **neues** Buch,
+eine **neue** Errata-Quelle oder eine Korrektur an bestehenden Artikeln anfällt.
+
+## Session-Start: Status lesen
+
+Bevor an einem Kapitel/Buch gearbeitet wird, **`DSA-STATUS.md` lesen**, um zu sehen welches
+Buch/Kapitel als nächstes dran ist und welche Konventionen bereits festgelegt wurden:
+- `DSA-STATUS.md` (Vault-Root) — aktueller Fortschritt, Kapitel-Checklist, offene Punkte
+- `raw/pdf-extracted/EXTRACTION-PLAN.md` — permanenter Langzeit-Plan (Pipeline, Templates, Buch-Reihenfolge)
+
+Am Ende jedes Kapitels `DSA-STATUS.md` aktualisieren: Kapitel auf ✅ setzen, nächstes auf 🟢,
+„Letzte Aktivität" ergänzen.
+
+## Ordnerstruktur (topic-basiert)
+
+wiki/dsa-4.1/ enthält Unterordner pro Thema (rassen/, zauber/, rituale/, …), nicht pro Quellenbuch.
+Jeder Unterordner hat ein `_<ordnername>.md` mit Übersichtstabelle (z. B. rassen/_rassen.md,
+kulturen/_kulturen.md). Unterstrich-Prefix = Top-Sortierung + eindeutiger Graph-Name.
+
+## Extraktions-Workflow pro Buch
+
+1. `pdftotext -layout -enc UTF-8 "<pdf>" raw/pdf-extracted/<buch>/full.txt`
+2. `raw/pdf-extracted/_tools/split-chapters.py` zerlegt full.txt in Kapitel-Dateien
+3. Pro Kapitel interaktiv: Ankündigung → OK vom User → Extraktion → Artikel schreiben → Report
+
+## Artikel-Templates
+
+- Kapitelartikel: kein Frontmatter, Zitatblock mit Quelle+Seite, `## Key Takeaways`,
+  `## Verwandte Artikel`
+- Nachschlage-Einheit (Rasse, Zauber, Ritual, …): YAML-Frontmatter (typ, gp, quelle, seite, …)
+- `_<ordnername>.md` pro Ordner: Übersichtstabelle mit `[[wiki links]]` (z. B. `_kulturen.md`, `_rassen.md`)
+
+## Errata
+
+Errata-PDFs (`001. Errata/`) direkt in betroffene Artikel einarbeiten, Fußnote *(Errata <jahr>)*.
+
+## Rituale vs. Zauber vs. Liturgien
+
+- `zauber/` — einzelne Zauber
+- `rituale/` — alle Rituale (flach, Frontmatter `tradition: stabzauber/kugelzauber/…`)
+- `liturgien/` — einzelne Liturgien
+
+## Compile-Befehl für DSA
+
+Wenn der User „compile DSA" oder „nächstes Kapitel" sagt:
+- Nächstes unbearbeitetes Kapitel aus dem aktiven Buch ankündigen
+- Auf OK warten
+- Artikel schreiben, `_<ordnername>.md` aktualisieren, `wiki/_master-index.md` aktualisieren
+- Abschlussreport mit neuen Dateien und offenen Fragen
+
+## Long-Session-Modus für ganze Bücher
+
+Wenn der User „ganzes Buch in einer Session", `/dsa-buch <kürzel>`, oder explizit „ohne Stops
+durchziehen" sagt: **Long-Session-Modus** aktivieren.
+
+**Kernidee:** Bulk-Texte (30k+ Zeilen) passen nicht in einen einzelnen Kontext. Lösung: Pro Kapitel
+(oder Buchstaben-Batch) einen `general-purpose`-Sub-Agent dispatchen. Der Sub-Agent liest seinen
+Abschnitt und schreibt die Artikel selbst. Die Hauptsession orchestriert nur — der Bulk-Text liegt
+nie im Hauptkontext.
+
+### Setup (einmalig pro Buch)
+
+1. `full.txt` prüfen — falls fehlt: `pdftotext` ausführen (PDF-Pfad aus DSA-STATUS.md)
+2. Kapitel-Splits prüfen — falls fehlen UND Buch ist kapitelbasiert:
+   `python raw/pdf-extracted/_tools/split-chapters.py <buch-slug>`
+3. Alphabetische Bücher (LC-Stil, z. B. Liber Liturgium): kein Split nötig. Stattdessen:
+   Buchstaben-Batches à ~25–35 Einträge direkt aus `full.txt`.
+
+### Sub-Agent-Briefing (Pflichtinhalt)
+
+Jedes Briefing muss enthalten:
+- Exakter Pfad zur Kapitel-/Batch-Datei
+- Ziel-Ordner und Frontmatter-Schema (Pflichtfelder: typ, quelle, seite, …)
+- Konventionen aus DSA-STATUS.md → „Zentrale Design-Entscheidungen"
+- Liste bereits vorhandener Artikel (keine Duplikate)
+- Auftrag: Artikel schreiben + `_<ordner>.md` updaten + DSA-STATUS.md updaten + Kurzreport
+
+### Interaktivitäts-Modus (Hybrid)
+
+- **Kapitel 1:** Sub-Agent dispatchen → Stichprobe → **User-OK einholen**
+- **Kapitel 2+:** Autonom durchziehen ohne Rückfragen
+- **Unterbrechen NUR bei:** fehlenden Pflicht-Frontmatter-Feldern in >3 Artikeln, unklarer
+  Quellenseite, Errata-Konflikten, fehlgeschlagenem Kapitel-Split
+
+### Verifikation nach jedem Sub-Agent
+
+- `git status --short` — neue Dateien vorhanden?
+- `_<ordner>.md` — neue Zeilen eingetragen?
+- DSA-STATUS.md — Kapitel auf ✅ gesetzt?
+- 1 Stichproben-Artikel: Frontmatter korrekt, Wiki-Links syntaktisch ok?
