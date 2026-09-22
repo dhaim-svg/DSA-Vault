@@ -5,15 +5,15 @@
 
 ## In Progress
 
-_(keine)_
+| EPIC | Title | Effort | State | Blocked by |
+|------|-------|--------|-------|------------|
+| D-064 | **`api_commit`s Fehlerpfad (`server.py:149`, `return jsonify({'ok': False, 'error': result.get('error', ...)}), 500`) leakt rohen Git-Stderr-Text in die JSON-Antwort.** `git_ops.py:45,62` füllt `result['error']` mit unbereinigtem `subprocess`-Stderr — z. B. ein `stale index.lock` liefert `fatal: Unable to create '<absoluter Vault-Pfad>/.git/index.lock': File exists.` direkt in den Body. Gleiche Fehlerklasse wie D-063 (Pfad-Leak in Fehler-JSON), anderes Feld/anderer Endpunkt (`git_ops.py`/`api_commit` statt `load_held`/`api_held`), HTTP-erreichbar über `static/commit.js:20`. Von der Sprint-031-Gesamtreview beim empirischen Fix-Vergleich gefunden (isoliertes Wegwerf-Repo, gemessen, nicht nur vermutet), bewusst nicht in D-063 mitgefixt (anderer Ticket-Scope). | S | in-progress | — |
 
 ## Backlog
 
-| EPIC | Title | Effort | State | Blocked by |
-|------|-------|--------|-------|------------|
-| D-064 | **`api_commit`s Fehlerpfad (`server.py:149`, `return jsonify({'ok': False, 'error': result.get('error', ...)}), 500`) leakt rohen Git-Stderr-Text in die JSON-Antwort.** `git_ops.py:45,62` füllt `result['error']` mit unbereinigtem `subprocess`-Stderr — z. B. ein `stale index.lock` liefert `fatal: Unable to create '<absoluter Vault-Pfad>/.git/index.lock': File exists.` direkt in den Body. Gleiche Fehlerklasse wie D-063 (Pfad-Leak in Fehler-JSON), anderes Feld/anderer Endpunkt (`git_ops.py`/`api_commit` statt `load_held`/`api_held`), HTTP-erreichbar über `static/commit.js:20`. Von der Sprint-031-Gesamtreview beim empirischen Fix-Vergleich gefunden (isoliertes Wegwerf-Repo, gemessen, nicht nur vermutet), bewusst nicht in D-063 mitgefixt (anderer Ticket-Scope). | S | ready | — |
+_(keine)_
 
-_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029/030/031.)_
+_(Vault-`backlog.md`: weiterhin leer, kein B-Task in Sprint 029/030/031/032.)_
 
 ### Gestrichen
 
