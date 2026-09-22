@@ -37,6 +37,17 @@ def _write_helden_file(repo: Path, slug: str, content: str = 'test') -> Path:
     return target
 
 
+def _rev_count(repo: Path) -> int:
+    """Number of commits reachable from HEAD (0 if there is no HEAD yet)."""
+    result = subprocess.run(
+        ['git', '-C', str(repo), 'rev-list', '--count', 'HEAD'],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        return 0
+    return int(result.stdout.strip())
+
+
 # ---------------------------------------------------------------------------
 # Unit tests: commit_helden
 # ---------------------------------------------------------------------------
@@ -122,7 +133,7 @@ def test_api_commit_route_returns_json(tmp_path):
         app = server_mod.create_app('illaen-baernhold')
         app.config['TESTING'] = True
         with app.test_client() as client:
-            resp = client.post('/api/commit')
+            resp = client.post('/api/commit', json={})
             assert resp.status_code in (200, 500)
             data = resp.get_json()
             assert data is not None
@@ -151,7 +162,7 @@ def test_api_commit_route_does_not_leak_path_on_git_failure(tmp_path):
         app = server_mod.create_app('illaen-baernhold')
         app.config['TESTING'] = True
         with app.test_client() as client:
-            resp = client.post('/api/commit')
+            resp = client.post('/api/commit', json={})
             body = resp.get_data(as_text=True)
 
             assert resp.status_code == 500
@@ -170,3 +181,119 @@ def test_api_commit_route_does_not_leak_path_on_git_failure(tmp_path):
     finally:
         server_mod.VAULT_ROOT = original_vault_root
         lock_file.unlink(missing_ok=True)
+
+
+# ---------------------------------------------------------------------------
+# /api/commit — CSRF-Schutz (D-065)
+# ---------------------------------------------------------------------------
+
+def test_api_commit_route_rejects_non_json_body(tmp_path):
+    """A non-JSON POST to /api/commit must be rejected with 415 and must not
+    trigger a commit as a side effect."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            before = _rev_count(tmp_path)
+            resp = client.post('/api/commit', content_type='text/plain', data='not json')
+            assert resp.status_code == 415
+            after = _rev_count(tmp_path)
+            assert after == before
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_commit_route_rejects_foreign_origin(tmp_path):
+    """A POST to /api/commit with a cross-origin Origin header must be
+    rejected with 403 and must not trigger a commit."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            before = _rev_count(tmp_path)
+            resp = client.post(
+                '/api/commit',
+                json={'message': 'x'},
+                headers={'Origin': 'http://evil.example'},
+            )
+            assert resp.status_code == 403
+            data = resp.get_json()
+            assert 'error' in data
+            after = _rev_count(tmp_path)
+            assert after == before
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_commit_route_rejects_null_origin(tmp_path):
+    """Browsers send the literal 'Origin: null' for some cross-origin/opaque
+    contexts (e.g. sandboxed iframes, file:// pages) -- it must never match
+    the expected same-origin value and so must be rejected with 403."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            before = _rev_count(tmp_path)
+            resp = client.post(
+                '/api/commit',
+                json={'message': 'x'},
+                headers={'Origin': 'null'},
+            )
+            assert resp.status_code == 403
+            data = resp.get_json()
+            assert 'error' in data
+            after = _rev_count(tmp_path)
+            assert after == before
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+
+def test_api_commit_route_allows_same_origin(tmp_path):
+    """A POST to /api/commit whose Origin header matches request.host_url
+    must not be rejected by the CSRF hook (final status depends on whether
+    the commit itself succeeds, which is not what this test checks)."""
+    import server as server_mod
+
+    _init_repo(tmp_path)
+    _write_helden_file(tmp_path, 'illaen-baernhold')
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        app = server_mod.create_app('illaen-baernhold')
+        app.config['TESTING'] = True
+        # Determine the test client's actual host_url empirically instead of
+        # assuming Flask's documented default ('http://localhost/').
+        with app.test_request_context('/'):
+            from flask import request as flask_request
+            expected_origin = flask_request.host_url.rstrip('/')
+        with app.test_client() as client:
+            resp = client.post(
+                '/api/commit',
+                json={'message': 'x'},
+                headers={'Origin': expected_origin},
+            )
+            assert resp.status_code != 403
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root

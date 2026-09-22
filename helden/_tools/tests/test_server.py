@@ -492,3 +492,36 @@ def test_api_held_route_non_filenotfound_exception_is_not_swallowed(tmp_path, mo
                 client.get(f'/api/held/{slug}')
     finally:
         server_mod.VAULT_ROOT = original_vault_root
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/held/<slug_param>/value — CSRF-Schutz (D-065)
+# ---------------------------------------------------------------------------
+
+def test_patch_held_route_rejects_foreign_origin(tmp_path):
+    """Der app-weite before_request-Hook muss auch die PATCH-Route schuetzen,
+    nicht nur /api/commit. Ein Cross-Origin-Header -> 403, die Zieldatei bleibt
+    byte-identisch (kein patch()-Aufruf hat stattgefunden)."""
+    slug = 'test-held'
+    target = _write_held_file(tmp_path, slug, 'x.md')
+    before = target.read_bytes()
+
+    original_vault_root = server_mod.VAULT_ROOT
+    server_mod.VAULT_ROOT = tmp_path
+    try:
+        with _client(slug=slug) as client:
+            resp = client.patch(
+                f'/api/held/{slug}/value',
+                json={
+                    'kind': 'section_body',
+                    'file': 'x.md',
+                    'section': 'Verlauf',
+                    'value': 'boese',
+                },
+                headers={'Origin': 'http://evil.example'},
+            )
+            assert resp.status_code == 403
+    finally:
+        server_mod.VAULT_ROOT = original_vault_root
+
+    assert target.read_bytes() == before

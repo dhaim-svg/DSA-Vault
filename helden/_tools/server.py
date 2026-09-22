@@ -39,6 +39,22 @@ def create_app(slug: str) -> Flask:
     app = Flask(__name__, static_folder=str(STATIC_DIR), static_url_path='/static')
 
     # ------------------------------------------------------------------ #
+    # CSRF: reject cross-origin writes (D-065)
+    # ------------------------------------------------------------------ #
+
+    @app.before_request
+    def _reject_cross_origin_writes():
+        if request.method in ('GET', 'HEAD', 'OPTIONS'):
+            return None
+        origin = request.headers.get('Origin')
+        if origin is None:
+            return None
+        expected = request.host_url.rstrip('/')
+        if origin != expected:
+            return jsonify({'error': 'cross-origin request rejected'}), 403
+        return None
+
+    # ------------------------------------------------------------------ #
     # Page routes
     # ------------------------------------------------------------------ #
 
@@ -142,6 +158,8 @@ def create_app(slug: str) -> Flask:
 
     @app.route('/api/commit', methods=['POST'])
     def api_commit():
+        if not request.is_json:
+            return jsonify({'ok': False, 'error': 'expected application/json'}), 415
         body = request.get_json(silent=True)
         message = (body or {}).get('message', None)
         result = commit_helden(VAULT_ROOT, slug, message=message)
