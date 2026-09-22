@@ -160,7 +160,11 @@ def test_api_commit_route_does_not_leak_path_on_git_failure(tmp_path):
             assert data['error'] == 'git operation failed'
 
             # Neither the raw path text nor a Windows drive-letter path
-            # pattern may appear in the response body.
+            # pattern may appear in the response body. Both checks are
+            # required: the plain substring check alone passes vacuously
+            # on Windows (git's stderr uses forward slashes, so it never
+            # matches str(tmp_path)'s backslashes) -- only the drive-letter
+            # regex actually discriminates (Sprint 031/D-063 lesson).
             assert str(tmp_path) not in body
             assert not re.search(r'[A-Za-z]:[\\/]', body)
     finally:
