@@ -6,7 +6,7 @@
 |---|------|-------|-------|
 | T0 | Sprint scaffold (BACKLOG.md D-063 → in-progress, plan.md) | ✅ done | BACKLOG.md, sprints/sprint-031/plan.md |
 | T1 | `api_held`-Fehlerhandler: `FileNotFoundError` → 404 `{'error': 'not found'}` (Muster `api_etag`), bare `except Exception`/`str(exc)` entfernt; Tests für Leak-Fall (kein Pfad im Body), Erfolgsfall (Regression) und Diskriminierung (ein anderer Exception-Typ wird NICHT abgefangen, propagiert zu Flasks generischem 500) | ✅ done | server.py, tests/test_server.py |
-| T2 | Verifikation (volle Suite + `-W error`) + Gesamt-Review + `/sprint-wrap` | ⬜ todo | — |
+| T2 | Verifikation (volle Suite + `-W error`) + Gesamt-Review | ✅ done (Verifikation; `/sprint-wrap` selbst folgt separat) | verification.md |
 
 ## Befund (Grundlage für T1)
 
