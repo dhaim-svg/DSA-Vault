@@ -16,6 +16,9 @@ _(keine)_
 
 | ID    | Kat.    | Titel | Effort |
 |-------|---------|-------|--------|
+| B-029 | meta    | **User:** `git push` — `master` ist 45 Commits vor `origin/master` (letzter Push Sprint 022); vorher prüfen, dass nichts aus `raw/pdf-extracted/` im Diff liegt. Danach Push nach jedem `/sprint-wrap` als Routine | S |
+| B-030 | tooling | **User (Rest aus B-028):** pixellab-Token rotieren und als Projekt-MCP umziehen | S |
+| B-031 | tooling | **User (Rest aus B-028):** github-Token erneuern | S |
 
 *Session 2026-05-16: Alle ursprünglichen Backlog-Items abgearbeitet.*
 

@@ -86,6 +86,16 @@ Schreibe `helden/_tools/sprints/sprint-{NNN}/plan.md` nach der Vorlage
 darunter — letztere sind Pflicht, `superpowers`' `task-brief`-Skript extrahiert Briefs per
 `^#+ Task N`-Regex daraus; ohne sie müssen Briefs von Hand geschrieben werden).
 
+**Proportionalität:** Mehrere S-EPICs derselben Fläche in **einen** Sprint bündeln, statt pro
+S-EPIC einen Sprint zu fahren. Ein Sprint mit genau einem Task braucht keine eigene Opus-
+Gesamtreview zusätzlich zum Task-Review, außer der User verlangt sie (Security-Sprints:
+Gesamtreview bleibt).
+
+**Security-/Härtungs-Sprints:** Nur gegen ein festgehaltenes Bedrohungsmodell
+(`helden/_tools/SECURITY.md`) planen. Die Gesamtreview prüft **gegen dieses Modell**; Funde
+innerhalb des Modells werden im Sprint behoben, nur Funde **außerhalb** des Modells kommen
+als neues EPIC ins Backlog. So entsteht keine Kette aus Nachbar-EPICs (D-061…D-067).
+
 Effort-Referenz (für eigene Einschätzung, nicht in plan.md-Tabelle):
 S = wenige Stunden, M = halber bis ganzer Tag, L = mehrere Tage
 
